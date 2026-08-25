@@ -1,0 +1,37 @@
+# Module
+
+## Package: Serializer
+
+**Purpose:** Serializes Art documents back to markdown.
+
+**Description:** Serializes Art documents back to markdown.
+
+**Path:** `libs/serializer/`
+
+**Canonical Name:** `@art-js/serializer`
+
+**Version:** `0.0.1`
+
+**Private:** `false`
+
+**Published:** `true`
+
+**Language:** Typescript
+
+**Dependencies:**
+
+- Runtime:
+  - `@art-js/primitives`
+  - `@art-js/constructs`
+
+**Scripts:**
+
+- Package Script Set: Lib Build
+- Package Script Set: Common Scripts
+
+**Scaffolders:**
+
+- Scaffolder Skeleton: Lib Package
+- Scaffolder Skeleton: Package Common
+
+**PackageFile:** package.json

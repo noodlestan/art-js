@@ -1,0 +1,25 @@
+# Module
+
+## Project: Art JS
+
+**Purpose:** md-art-md parser/serializer pipeline and supporting packages.
+
+**Description:** Art JS provides the markdown-art-markdown roundtrip pipeline including parser, serializer, constructs, primitives, and pipeline tests.
+
+**Owner:** Project: Artificials
+
+**Author:** Noodlestan Collective
+
+**Repository:** Repository: Art JS
+
+**Resources:**
+
+- Package: Parser
+- Package: Serializer
+- Package: Constructs
+- Package: Primitives
+- Package: Pipeline Tests
+
+**Private:** `false`
+
+**License:** License: Noodlestan 2026 MIT

@@ -1,0 +1,44 @@
+{
+  "name": "@art-js/serializer",
+  "version": "0.0.1",
+  "description": "Serializes Art AST back to markdown.",
+  "author": "Noodlestan Collective",
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noodlestan/art-js",
+    "directory": "libs/serializer/"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "main": "./src/index.ts",
+  "files": [
+    "dist",
+    "LICENSE-MIT",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "lint": "prettier . -c && eslint . && tsc --noEmit",
+    "lint:fix": "prettier . -c --write && eslint . --fix",
+    "build:clean": "rm -rf dist",
+    "ci": "npm run lint && npm run build && npm run test",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@art-js/primitives": "*",
+    "@art-js/constructs": "*",
+    "mdast-util-to-markdown": "^2.0.0"
+  },
+  "devDependencies": {
+    "vite": "8.0.16",
+    "vite-plugin-solid": "2.11.12",
+    "vite-plugin-solid-svg": "0.8.1",
+    "solid-js": "1.9.13"
+  }
+}

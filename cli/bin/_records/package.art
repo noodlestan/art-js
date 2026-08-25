@@ -1,0 +1,56 @@
+# Module
+
+## Package: Bin
+
+**Purpose:** CLI for developing and building Art modules.
+
+**Description:** Provides an entry point to bundler, program, validator, parser, and watcher.
+
+**Owner:** Project: Art JS
+
+**Author:** Noodlestan Collective
+
+**Path:** `cli/bin/`
+
+**Canonical Name:** `@art-js/bin`
+
+**Published:** `true`
+
+**Private:** `false`
+
+**Deployment:** NPM Package Deployment: Bin
+
+**Files:**
+
+- `dist`
+- `LICENSE-MIT`
+- `README.md`
+
+**Language:** Typescript
+
+**Main:** `dist/cjs/index.js`
+
+**Engines:**
+
+- Node: `>= 22`
+
+**PackageManager:** `npm@10.2.3`
+
+**PackageFile:** `package.json`
+
+**Dependencies:**
+
+- Dev:
+  - Package Dependency Set: Cli Development
+
+**Scripts:**
+
+- Package Script Set: Artificials Cli Build
+- Package Script Set: Common Scripts
+
+**Scaffolders:**
+
+- Scaffolder Skeleton: CLI Package
+- Scaffolder Skeleton: Package Common
+
+**License:** License: Noodlestan 2026 MIT

@@ -1,0 +1,61 @@
+# Module
+
+## Package: Parser
+
+**Purpose:** Parses Art modules (.art) and markdown files (.md).
+
+**Description:** Parses context files and art modules into structured representations.
+
+**Owner:** Project: Art JS
+
+**Author:** Noodlestan Collective
+
+**Path:** `libs/parser/`
+
+**Canonical Name:** `@art-js/parser`
+
+**Published:** `true`
+
+**Private:** `false`
+
+**Deployment:** NPM Package Deployment: Parser
+
+**Files:**
+
+- `dist`
+- `LICENSE-MIT`
+- `README.md`
+
+**Language:** Typescript
+
+**Engines:**
+
+- Node: `>= 22`
+
+**PackageManager:** `npm@10.2.3`
+
+**PackageFile:** `package.json`
+
+**Dependencies:**
+
+- Runtime:
+  - `@art-js/primitives`
+  - `@art-js/constructs`
+  - `mdast-util-from-markdown` @ `^2.0.0` — Generates mdast from MD.
+  - `unist-util-visit` @ `^5.0.0` — mdast traversing.
+- Dev:
+  - Package Dependency Set: Solid Lib Development
+  - `tsx`: `^4.8.1` - WIP REMOVE when pipeline-tests exist
+  - `@art-js/serializer` — WIP REMOVE same reason
+
+**Scripts:**
+
+- Package Script Set: Artificial Lib Build
+- Package Script Set: Common Scripts
+
+**Scaffolders:**
+
+- Scaffolder Skeleton: Lib Package
+- Scaffolder Skeleton: Package Common
+
+**License:** License: Noodlestan 2026 MIT

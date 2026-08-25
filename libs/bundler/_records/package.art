@@ -1,0 +1,54 @@
+# Module
+
+## Package: Bundler
+
+**Purpose:** Bundler for Art modules.
+
+**Description:** Bundles Art modules for distribution.
+
+**Owner:** Project: Art JS
+
+**Author:** Noodlestan Collective
+
+**Path:** `libs/bundler/`
+
+**Canonical Name:** `@art-js/bundler`
+
+**Published:** `true`
+
+**Private:** `false`
+
+**Deployment:** NPM Package Deployment: Bundler
+
+**Files:**
+
+- `dist`
+- `LICENSE-MIT`
+- `README.md`
+
+**Language:** Typescript
+
+**Engines:**
+
+- Node: `>= 22`
+
+**PackageManager:** `npm@10.2.3`
+
+**PackageFile:** `package.json`
+
+**Dependencies:**
+
+- Dev:
+  - Package Dependency Set: Solid Lib Development
+
+**Scripts:**
+
+- Package Script Set: Artificial Lib Build
+- Package Script Set: Common Scripts
+
+**Scaffolders:**
+
+- Scaffolder Skeleton: Lib Package
+- Scaffolder Skeleton: Package Common
+
+**License:** License: Noodlestan 2026 MIT

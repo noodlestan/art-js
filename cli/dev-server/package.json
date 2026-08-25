@@ -1,0 +1,45 @@
+{
+  "name": "@art-js/dev-server",
+  "version": "0.0.1",
+  "description": "Local development server for testing Art modules.",
+  "author": "Noodlestan Collective",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noodlestan/art-js",
+    "directory": "cli/dev-server/"
+  },
+  "type": "module",
+  "module": "dist/esm/index.mjs",
+  "main": "dist/cjs/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.mjs",
+      "types": "./dist/esm/index.d.ts",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE-MIT",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "esbuild-cli-watch",
+    "build": "esbuild-cli",
+    "build:types:esm": "tsc --project tsconfig.esm.json",
+    "build:types:cjs": "tsc --project tsconfig.cjs.json",
+    "lint": "prettier . -c && eslint . && tsc --noEmit",
+    "lint:fix": "prettier . -c --write && eslint . --fix",
+    "build:clean": "rm -rf dist",
+    "ci": "npm run lint && npm run build && npm run test",
+    "test": "echo none yet"
+  },
+  "devDependencies": {
+    "@noodlestan/esbuild": "^0.0.12",
+    "@types/node": "^25.9.5",
+    "typescript": "^5.4.0",
+    "vitest": "^1.4.0"
+  }
+}

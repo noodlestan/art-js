@@ -1,0 +1,52 @@
+# Module
+
+## Uses
+
+::READ (NaturalExpression, Identifier, NaturalName) FROM `language/grammar/index.art`.
+
+## Declares
+
+### Primitive: Record
+
+**Id**: `record`
+
+**Name**: Record
+
+**Kind**: Primitive
+
+**Purpose:** Defines structured values with named attributes.
+
+**ValueType:**
+
+```ts
+type PrimitiveRecordFieldValueType = PrimitiveScalar | PrimitiveStructure | NaturalExpression ... WIP
+
+type PrimitiveRecordField = {
+  name: string;
+  valueType: PrimitiveRecordFieldValueType;
+  description: string;
+  examples: string;
+};
+
+type PrimitiveRecord = {
+  [key: string]: PrimitiveRecordField;
+};
+```
+
+**Value:**
+
+```ts
+type PrimitiveRecordValue = {
+  values: Record<string, PrimitiveRecordFieldValueType>;
+};
+```
+
+#### Art
+
+#### Declaration
+
+#### Generation
+
+#### Consumption
+
+#### Discovery

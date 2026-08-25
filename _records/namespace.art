@@ -1,0 +1,17 @@
+# Module
+
+## Namespace: Art JS
+
+**Purpose:** Tools for working with Art files.
+
+**Description:** Art Language and modules implementation. The (reactive) pipeline flows from bundler to compiler to validator to parser to sources.
+
+**Owner:** Project: Art JS
+
+**Author:** Noodlestan Collective
+
+**Scaffolders:**
+
+- Scaffolder Files: Namespace README
+
+**License:** License: Noodlestan 2026 MIT

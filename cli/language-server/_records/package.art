@@ -1,0 +1,54 @@
+# Module
+
+## Package: Language Server
+
+**Purpose:** Language server for Art modules.
+
+**Description:** Provides IDE support for Art module development.
+
+**Owner:** Project: Art JS
+
+**Author:** Noodlestan Collective
+
+**Path:** `cli/language-server/`
+
+**Canonical Name:** `@art-js/language-server`
+
+**Published:** `false`
+
+**Private:** `false`
+
+**Deployment:** NPM Package Deployment: Language Server
+
+**Files:**
+
+- `dist`
+- `LICENSE-MIT`
+- `README.md`
+
+**Language:** Typescript
+
+**Engines:**
+
+- Node: `>= 22`
+
+**PackageManager:** `npm@10.2.3`
+
+**PackageFile:** `package.json`
+
+**Dependencies:**
+
+- Dev:
+  - Package Dependency Set: Cli Development
+
+**Scripts:**
+
+- Package Script Set: Artificials Cli Build
+- Package Script Set: Common Scripts
+
+**Scaffolders:**
+
+- Scaffolder Skeleton: Lib Package
+- Scaffolder Skeleton: Package Common
+
+**License:** License: Noodlestan 2026 MIT

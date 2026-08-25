@@ -1,0 +1,2498 @@
+{
+  "construct": "Document",
+  "children": [
+    {
+      "construct": "SectionBlock",
+      "name": "Module",
+      "depth": 1,
+      "position": {
+        "end": {
+          "column": 9,
+          "line": 1,
+          "offset": 8
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": [
+        {
+          "construct": "NaturalBlock",
+          "type": "text",
+          "value": "\n\n"
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "html",
+          "value": "<!-- WIP add Validate field to constructs (extra rules, oriented for validation) -->",
+          "position": {
+            "end": {
+              "column": 85,
+              "line": 3,
+              "offset": 94
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 10
+            }
+          }
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "text",
+          "value": "\n\n"
+        },
+        {
+          "construct": "FieldInline",
+          "name": "Purpose",
+          "value": [
+            {
+              "construct": "NaturalExpression",
+              "type": "text",
+              "attributes": {},
+              "value": "Define the meaning and interpretation rules of artificial instructions, enabling the generation of instructions that express intent clearly and their consistent interpretation with minimal ambiguity.",
+              "position": {
+                "end": {
+                  "column": 213,
+                  "line": 5,
+                  "offset": 308
+                },
+                "start": {
+                  "column": 13,
+                  "line": 5,
+                  "offset": 108
+                }
+              }
+            }
+          ],
+          "position": {
+            "end": {
+              "column": 213,
+              "line": 5,
+              "offset": 308
+            },
+            "start": {
+              "column": 1,
+              "line": 5,
+              "offset": 96
+            }
+          }
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "text",
+          "value": "\n\n"
+        },
+        {
+          "construct": "FieldInline",
+          "name": "Description",
+          "value": [
+            {
+              "construct": "NaturalExpression",
+              "type": "text",
+              "attributes": {},
+              "value": "Semantics define how artificial language constructs communicate intent through explicit notation, conventions, and interpretation rules. They guide how instructions are generated and interpreted but do not define how an artificial system performs internal reasoning, reference resolution, execution, or data management.",
+              "position": {
+                "end": {
+                  "column": 337,
+                  "line": 7,
+                  "offset": 646
+                },
+                "start": {
+                  "column": 17,
+                  "line": 7,
+                  "offset": 326
+                }
+              }
+            }
+          ],
+          "position": {
+            "end": {
+              "column": 337,
+              "line": 7,
+              "offset": 646
+            },
+            "start": {
+              "column": 1,
+              "line": 7,
+              "offset": 310
+            }
+          }
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "text",
+          "value": "\n\n"
+        },
+        {
+          "construct": "SectionBlock",
+          "name": "Declares",
+          "depth": 2,
+          "position": {
+            "end": {
+              "column": 12,
+              "line": 9,
+              "offset": 659
+            },
+            "start": {
+              "column": 1,
+              "line": 9,
+              "offset": 648
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "SectionBlock",
+              "name": "Semantics",
+              "depth": 3,
+              "position": {
+                "end": {
+                  "column": 14,
+                  "line": 11,
+                  "offset": 674
+                },
+                "start": {
+                  "column": 1,
+                  "line": 11,
+                  "offset": 661
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                },
+                {
+                  "construct": "SectionBlock",
+                  "kind": "Semantics",
+                  "name": "Interpretation and Resolution",
+                  "depth": 4,
+                  "position": {
+                    "end": {
+                      "column": 46,
+                      "line": 13,
+                      "offset": 721
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 13,
+                      "offset": 676
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "FieldInline",
+                      "name": "Important",
+                      "value": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "Resolution mechanisms are entirely artificial and therefore outside the scope of this language.",
+                          "position": {
+                            "end": {
+                              "column": 111,
+                              "line": 15,
+                              "offset": 833
+                            },
+                            "start": {
+                              "column": 15,
+                              "line": 15,
+                              "offset": 737
+                            }
+                          }
+                        }
+                      ],
+                      "position": {
+                        "end": {
+                          "column": 111,
+                          "line": 15,
+                          "offset": 833
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 15,
+                          "offset": 723
+                        }
+                      }
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "The language defines constructs, notation, and interpretation rules for expressing intent. It does not define how an artificial system resolves symbols, aliases, scope, dependencies, state, context propagation, persistence, execution planning, or other internal mechanisms required to process instructions.",
+                      "position": {
+                        "end": {
+                          "column": 307,
+                          "line": 17,
+                          "offset": 1141
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 17,
+                          "offset": 835
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "The language defines constructs, notation, and interpretation rules for expressing intent. It does not define how an artificial system resolves symbols, aliases, scope, dependencies, state, context propagation, persistence, execution planning, or other internal mechanisms required to process instructions.",
+                          "position": {
+                            "end": {
+                              "column": 307,
+                              "line": 17,
+                              "offset": 1141
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 17,
+                              "offset": 835
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "The terms \"input identification\" and \"output identification\" describe how instructions express references and relationships, not how an artificial system internally resolves or manages them.",
+                      "position": {
+                        "end": {
+                          "column": 191,
+                          "line": 19,
+                          "offset": 1333
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 19,
+                          "offset": 1143
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "The terms \"input identification\" and \"output identification\" describe how instructions express references and relationships, not how an artificial system internally resolves or manages them.",
+                          "position": {
+                            "end": {
+                              "column": 191,
+                              "line": 19,
+                              "offset": 1333
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 19,
+                              "offset": 1143
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    }
+                  ]
+                },
+                {
+                  "construct": "SectionBlock",
+                  "kind": "Semantics",
+                  "name": "Routine Invocation",
+                  "depth": 4,
+                  "position": {
+                    "end": {
+                      "column": 35,
+                      "line": 21,
+                      "offset": 1369
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 21,
+                      "offset": 1335
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "FieldInline",
+                      "name": "Purpose",
+                      "value": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "Allow reusable capabilities to be invoked consistently using natural language.",
+                          "position": {
+                            "end": {
+                              "column": 92,
+                              "line": 23,
+                              "offset": 1462
+                            },
+                            "start": {
+                              "column": 13,
+                              "line": 23,
+                              "offset": 1383
+                            }
+                          }
+                        }
+                      ],
+                      "position": {
+                        "end": {
+                          "column": 92,
+                          "line": 23,
+                          "offset": 1462
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 23,
+                          "offset": 1371
+                        }
+                      }
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "FieldInline",
+                      "name": "Description",
+                      "value": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "Defines the conventions for invoking Commands, Processes, and Templates using identified inputs and outcomes.",
+                          "position": {
+                            "end": {
+                              "column": 127,
+                              "line": 25,
+                              "offset": 1590
+                            },
+                            "start": {
+                              "column": 17,
+                              "line": 25,
+                              "offset": 1480
+                            }
+                          }
+                        }
+                      ],
+                      "position": {
+                        "end": {
+                          "column": 127,
+                          "line": 25,
+                          "offset": 1590
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 25,
+                          "offset": 1464
+                        }
+                      }
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "FieldBlock",
+                      "name": "Syntax",
+                      "value": [
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "paragraph",
+                          "value": "A routine invocation combines an optional contextualisation, a routine invocation, optional additional context, and an optional identified outcome.",
+                          "position": {
+                            "end": {
+                              "column": 148,
+                              "line": 29,
+                              "offset": 1752
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 29,
+                              "offset": 1605
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "A routine invocation combines an optional contextualisation, a routine invocation, optional additional context, and an optional identified outcome.",
+                              "position": {
+                                "end": {
+                                  "column": 148,
+                                  "line": 29,
+                                  "offset": 1752
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 29,
+                                  "offset": 1605
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "code",
+                          "lang": "art",
+                          "meta": null,
+                          "value": "```art\n[<Contextualise>,] execute the **<Routine>** [, with <Context>] [to <Outcome>]\n```",
+                          "position": {
+                            "end": {
+                              "column": 4,
+                              "line": 33,
+                              "offset": 1843
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 31,
+                              "offset": 1754
+                            }
+                          }
+                        }
+                      ],
+                      "position": {
+                        "end": {
+                          "column": 12,
+                          "line": 27,
+                          "offset": 1603
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 27,
+                          "offset": 1592
+                        }
+                      }
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "FieldBlock",
+                      "name": "Rules",
+                      "value": [
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "list",
+                          "ordered": false,
+                          "spread": false,
+                          "start": null,
+                          "value": "- A routine invocation SHOULD identify required inputs when they are not already unambiguous from context.\n- Additional context MAY be supplied using a trailing `with <ContextValue>` clause.\n- An `<Outcome>` SHOULD be identified when the generated result is referenced subsequently.\n- Routine names SHOULD match their corresponding declaration names.",
+                          "position": {
+                            "end": {
+                              "column": 68,
+                              "line": 40,
+                              "offset": 2207
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 37,
+                              "offset": 1857
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalBlock",
+                              "type": "listItem",
+                              "checked": null,
+                              "spread": false,
+                              "value": "- A routine invocation SHOULD identify required inputs when they are not already unambiguous from context.",
+                              "position": {
+                                "end": {
+                                  "column": 107,
+                                  "line": 37,
+                                  "offset": 1963
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 37,
+                                  "offset": 1857
+                                }
+                              },
+                              "children": [
+                                {
+                                  "construct": "NaturalBlock",
+                                  "type": "paragraph",
+                                  "value": "A routine invocation SHOULD identify required inputs when they are not already unambiguous from context.",
+                                  "position": {
+                                    "end": {
+                                      "column": 107,
+                                      "line": 37,
+                                      "offset": 1963
+                                    },
+                                    "start": {
+                                      "column": 3,
+                                      "line": 37,
+                                      "offset": 1859
+                                    }
+                                  },
+                                  "children": [
+                                    {
+                                      "construct": "NaturalExpression",
+                                      "type": "text",
+                                      "attributes": {},
+                                      "value": "A routine invocation SHOULD identify required inputs when they are not already unambiguous from context.",
+                                      "position": {
+                                        "end": {
+                                          "column": 107,
+                                          "line": 37,
+                                          "offset": 1963
+                                        },
+                                        "start": {
+                                          "column": 3,
+                                          "line": 37,
+                                          "offset": 1859
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "construct": "NaturalBlock",
+                              "type": "listItem",
+                              "checked": null,
+                              "spread": false,
+                              "value": "- Additional context MAY be supplied using a trailing `with <ContextValue>` clause.",
+                              "position": {
+                                "end": {
+                                  "column": 84,
+                                  "line": 38,
+                                  "offset": 2047
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 38,
+                                  "offset": 1964
+                                }
+                              },
+                              "children": [
+                                {
+                                  "construct": "NaturalBlock",
+                                  "type": "paragraph",
+                                  "value": "Additional context MAY be supplied using a trailing `with <ContextValue>` clause.",
+                                  "position": {
+                                    "end": {
+                                      "column": 84,
+                                      "line": 38,
+                                      "offset": 2047
+                                    },
+                                    "start": {
+                                      "column": 3,
+                                      "line": 38,
+                                      "offset": 1966
+                                    }
+                                  },
+                                  "children": [
+                                    {
+                                      "construct": "NaturalExpression",
+                                      "type": "text",
+                                      "attributes": {},
+                                      "value": "Additional context MAY be supplied using a trailing ",
+                                      "position": {
+                                        "end": {
+                                          "column": 55,
+                                          "line": 38,
+                                          "offset": 2018
+                                        },
+                                        "start": {
+                                          "column": 3,
+                                          "line": 38,
+                                          "offset": 1966
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "construct": "NaturalExpression",
+                                      "type": "inlineCode",
+                                      "attributes": {},
+                                      "value": "with <ContextValue>",
+                                      "position": {
+                                        "end": {
+                                          "column": 76,
+                                          "line": 38,
+                                          "offset": 2039
+                                        },
+                                        "start": {
+                                          "column": 55,
+                                          "line": 38,
+                                          "offset": 2018
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "construct": "NaturalExpression",
+                                      "type": "text",
+                                      "attributes": {},
+                                      "value": " clause.",
+                                      "position": {
+                                        "end": {
+                                          "column": 84,
+                                          "line": 38,
+                                          "offset": 2047
+                                        },
+                                        "start": {
+                                          "column": 76,
+                                          "line": 38,
+                                          "offset": 2039
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "construct": "NaturalBlock",
+                              "type": "listItem",
+                              "checked": null,
+                              "spread": false,
+                              "value": "- An `<Outcome>` SHOULD be identified when the generated result is referenced subsequently.",
+                              "position": {
+                                "end": {
+                                  "column": 92,
+                                  "line": 39,
+                                  "offset": 2139
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 39,
+                                  "offset": 2048
+                                }
+                              },
+                              "children": [
+                                {
+                                  "construct": "NaturalBlock",
+                                  "type": "paragraph",
+                                  "value": "An `<Outcome>` SHOULD be identified when the generated result is referenced subsequently.",
+                                  "position": {
+                                    "end": {
+                                      "column": 92,
+                                      "line": 39,
+                                      "offset": 2139
+                                    },
+                                    "start": {
+                                      "column": 3,
+                                      "line": 39,
+                                      "offset": 2050
+                                    }
+                                  },
+                                  "children": [
+                                    {
+                                      "construct": "NaturalExpression",
+                                      "type": "text",
+                                      "attributes": {},
+                                      "value": "An ",
+                                      "position": {
+                                        "end": {
+                                          "column": 6,
+                                          "line": 39,
+                                          "offset": 2053
+                                        },
+                                        "start": {
+                                          "column": 3,
+                                          "line": 39,
+                                          "offset": 2050
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "construct": "NaturalExpression",
+                                      "type": "inlineCode",
+                                      "attributes": {},
+                                      "value": "<Outcome>",
+                                      "position": {
+                                        "end": {
+                                          "column": 17,
+                                          "line": 39,
+                                          "offset": 2064
+                                        },
+                                        "start": {
+                                          "column": 6,
+                                          "line": 39,
+                                          "offset": 2053
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "construct": "NaturalExpression",
+                                      "type": "text",
+                                      "attributes": {},
+                                      "value": " SHOULD be identified when the generated result is referenced subsequently.",
+                                      "position": {
+                                        "end": {
+                                          "column": 92,
+                                          "line": 39,
+                                          "offset": 2139
+                                        },
+                                        "start": {
+                                          "column": 17,
+                                          "line": 39,
+                                          "offset": 2064
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "construct": "NaturalBlock",
+                              "type": "listItem",
+                              "checked": null,
+                              "spread": false,
+                              "value": "- Routine names SHOULD match their corresponding declaration names.",
+                              "position": {
+                                "end": {
+                                  "column": 68,
+                                  "line": 40,
+                                  "offset": 2207
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 40,
+                                  "offset": 2140
+                                }
+                              },
+                              "children": [
+                                {
+                                  "construct": "NaturalBlock",
+                                  "type": "paragraph",
+                                  "value": "Routine names SHOULD match their corresponding declaration names.",
+                                  "position": {
+                                    "end": {
+                                      "column": 68,
+                                      "line": 40,
+                                      "offset": 2207
+                                    },
+                                    "start": {
+                                      "column": 3,
+                                      "line": 40,
+                                      "offset": 2142
+                                    }
+                                  },
+                                  "children": [
+                                    {
+                                      "construct": "NaturalExpression",
+                                      "type": "text",
+                                      "attributes": {},
+                                      "value": "Routine names SHOULD match their corresponding declaration names.",
+                                      "position": {
+                                        "end": {
+                                          "column": 68,
+                                          "line": 40,
+                                          "offset": 2207
+                                        },
+                                        "start": {
+                                          "column": 3,
+                                          "line": 40,
+                                          "offset": 2142
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "position": {
+                        "end": {
+                          "column": 11,
+                          "line": 35,
+                          "offset": 1855
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 35,
+                          "offset": 1845
+                        }
+                      }
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "FieldBlock",
+                      "name": "Examples",
+                      "value": [
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "paragraph",
+                          "value": "Simple invocation:",
+                          "position": {
+                            "end": {
+                              "column": 19,
+                              "line": 44,
+                              "offset": 2242
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 44,
+                              "offset": 2224
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Simple invocation:",
+                              "position": {
+                                "end": {
+                                  "column": 19,
+                                  "line": 44,
+                                  "offset": 2242
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 44,
+                                  "offset": 2224
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "code",
+                          "lang": "md",
+                          "meta": null,
+                          "value": "```md\nExecute the **Process: Render Resources**.\n```",
+                          "position": {
+                            "end": {
+                              "column": 4,
+                              "line": 48,
+                              "offset": 2296
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 46,
+                              "offset": 2244
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "paragraph",
+                          "value": "Invocation with contextualised input:",
+                          "position": {
+                            "end": {
+                              "column": 38,
+                              "line": 50,
+                              "offset": 2335
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 50,
+                              "offset": 2298
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Invocation with contextualised input:",
+                              "position": {
+                                "end": {
+                                  "column": 38,
+                                  "line": 50,
+                                  "offset": 2335
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 50,
+                                  "offset": 2298
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "code",
+                          "lang": "md",
+                          "meta": null,
+                          "value": "```md\nWith the `%filtered-feedback`, execute the **Process: Consolidate Feedback**.\n```",
+                          "position": {
+                            "end": {
+                              "column": 4,
+                              "line": 54,
+                              "offset": 2424
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 52,
+                              "offset": 2337
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "paragraph",
+                          "value": "Invocation with aliased input:",
+                          "position": {
+                            "end": {
+                              "column": 31,
+                              "line": 56,
+                              "offset": 2456
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 56,
+                              "offset": 2426
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Invocation with aliased input:",
+                              "position": {
+                                "end": {
+                                  "column": 31,
+                                  "line": 56,
+                                  "offset": 2456
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 56,
+                                  "offset": 2426
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "code",
+                          "lang": "md",
+                          "meta": null,
+                          "value": "```md\nWith the matching feedback items as `%items`, execute the **Process: Consolidate Feedback**.\n```",
+                          "position": {
+                            "end": {
+                              "column": 4,
+                              "line": 60,
+                              "offset": 2560
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 58,
+                              "offset": 2458
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "paragraph",
+                          "value": "Invocation with ContextValue containing multitple input:",
+                          "position": {
+                            "end": {
+                              "column": 57,
+                              "line": 62,
+                              "offset": 2618
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 62,
+                              "offset": 2562
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Invocation with ContextValue containing multitple input:",
+                              "position": {
+                                "end": {
+                                  "column": 57,
+                                  "line": 62,
+                                  "offset": 2618
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 62,
+                                  "offset": 2562
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "code",
+                          "lang": "md",
+                          "meta": null,
+                          "value": "```md\nWith `%items`, `%filter`, and `%scope`, Execute the **Process: Search Feedback**.\n```",
+                          "position": {
+                            "end": {
+                              "column": 4,
+                              "line": 66,
+                              "offset": 2711
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 64,
+                              "offset": 2620
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "paragraph",
+                          "value": "Invocation with transformed input:",
+                          "position": {
+                            "end": {
+                              "column": 35,
+                              "line": 68,
+                              "offset": 2747
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 68,
+                              "offset": 2713
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Invocation with transformed input:",
+                              "position": {
+                                "end": {
+                                  "column": 35,
+                                  "line": 68,
+                                  "offset": 2747
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 68,
+                                  "offset": 2713
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "code",
+                          "lang": "md",
+                          "meta": null,
+                          "value": "```md\nWith the `%filtered-feedback` grouped by target, execute the **Process: Consolidate Feedback**.\n```",
+                          "position": {
+                            "end": {
+                              "column": 4,
+                              "line": 72,
+                              "offset": 2854
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 70,
+                              "offset": 2749
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "paragraph",
+                          "value": "Invocation with additional context:",
+                          "position": {
+                            "end": {
+                              "column": 36,
+                              "line": 74,
+                              "offset": 2891
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 74,
+                              "offset": 2856
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Invocation with additional context:",
+                              "position": {
+                                "end": {
+                                  "column": 36,
+                                  "line": 74,
+                                  "offset": 2891
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 74,
+                                  "offset": 2856
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "code",
+                          "lang": "md",
+                          "meta": null,
+                          "value": "```md\nWith the `%filtered-feedback`, execute the **Process: Generate Report**, with the current `%target` to generate a report.\n```",
+                          "position": {
+                            "end": {
+                              "column": 4,
+                              "line": 78,
+                              "offset": 3024
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 76,
+                              "offset": 2893
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "paragraph",
+                          "value": "Invocation with generic outcome:",
+                          "position": {
+                            "end": {
+                              "column": 33,
+                              "line": 80,
+                              "offset": 3058
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 80,
+                              "offset": 3026
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Invocation with generic outcome:",
+                              "position": {
+                                "end": {
+                                  "column": 33,
+                                  "line": 80,
+                                  "offset": 3058
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 80,
+                                  "offset": 3026
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "code",
+                          "lang": "md",
+                          "meta": null,
+                          "value": "```md\nWith the `%filtered-feedback`, execute the **Process: Generate Report** to generte generate a report.\n```",
+                          "position": {
+                            "end": {
+                              "column": 4,
+                              "line": 84,
+                              "offset": 3171
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 82,
+                              "offset": 3060
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "paragraph",
+                          "value": "Invocation with identified outcome:",
+                          "position": {
+                            "end": {
+                              "column": 36,
+                              "line": 86,
+                              "offset": 3208
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 86,
+                              "offset": 3173
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Invocation with identified outcome:",
+                              "position": {
+                                "end": {
+                                  "column": 36,
+                                  "line": 86,
+                                  "offset": 3208
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 86,
+                                  "offset": 3173
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "code",
+                          "lang": "md",
+                          "meta": null,
+                          "value": "```md\nWith the `%filtered-feedback`, execute the **Process: Consolidate Feedback** to generate the `%grouped-feedback`.\n```",
+                          "position": {
+                            "end": {
+                              "column": 4,
+                              "line": 90,
+                              "offset": 3333
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 88,
+                              "offset": 3210
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "paragraph",
+                          "value": "Invocation with aliased outcome:",
+                          "position": {
+                            "end": {
+                              "column": 33,
+                              "line": 92,
+                              "offset": 3367
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 92,
+                              "offset": 3335
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Invocation with aliased outcome:",
+                              "position": {
+                                "end": {
+                                  "column": 33,
+                                  "line": 92,
+                                  "offset": 3367
+                                },
+                                "start": {
+                                  "column": 1,
+                                  "line": 92,
+                                  "offset": 3335
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "text",
+                          "value": "\n\n"
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "code",
+                          "lang": "md",
+                          "meta": null,
+                          "value": "```md\nWith the `%filtered-feedback`, execute the **Process: Consolidate Feedback** to generate the `%feedback-table` as `%feedback`.\n```",
+                          "position": {
+                            "end": {
+                              "column": 4,
+                              "line": 96,
+                              "offset": 3505
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 94,
+                              "offset": 3369
+                            }
+                          }
+                        }
+                      ],
+                      "position": {
+                        "end": {
+                          "column": 14,
+                          "line": 42,
+                          "offset": 2222
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 42,
+                          "offset": 2209
+                        }
+                      }
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "construct": "SectionBlock",
+              "kind": "Semantics",
+              "name": "Procedure Inputs",
+              "depth": 3,
+              "position": {
+                "end": {
+                  "column": 32,
+                  "line": 98,
+                  "offset": 3538
+                },
+                "start": {
+                  "column": 1,
+                  "line": 98,
+                  "offset": 3507
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                },
+                {
+                  "construct": "FieldInline",
+                  "name": "Purpose",
+                  "value": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "Define how procedure inputs are identified within a procedure block.",
+                      "position": {
+                        "end": {
+                          "column": 82,
+                          "line": 100,
+                          "offset": 3621
+                        },
+                        "start": {
+                          "column": 13,
+                          "line": 100,
+                          "offset": 3552
+                        }
+                      }
+                    }
+                  ],
+                  "position": {
+                    "end": {
+                      "column": 82,
+                      "line": 100,
+                      "offset": 3621
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 100,
+                      "offset": 3540
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                },
+                {
+                  "construct": "FieldInline",
+                  "name": "Description",
+                  "value": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "Procedure inputs are identified by contextualising values before executing a procedure block. The ContextSymbol names the value used by the procedure instructions.",
+                      "position": {
+                        "end": {
+                          "column": 181,
+                          "line": 102,
+                          "offset": 3803
+                        },
+                        "start": {
+                          "column": 17,
+                          "line": 102,
+                          "offset": 3639
+                        }
+                      }
+                    }
+                  ],
+                  "position": {
+                    "end": {
+                      "column": 181,
+                      "line": 102,
+                      "offset": 3803
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 102,
+                      "offset": 3623
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                },
+                {
+                  "construct": "FieldBlock",
+                  "name": "Syntax",
+                  "value": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "code",
+                      "lang": "art",
+                      "meta": null,
+                      "value": "```art\nWith <Contextualise>, execute the following procedure:\n\n<Procedure Block>\n```",
+                      "position": {
+                        "end": {
+                          "column": 4,
+                          "line": 110,
+                          "offset": 3902
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 106,
+                          "offset": 3818
+                        }
+                      }
+                    }
+                  ],
+                  "position": {
+                    "end": {
+                      "column": 12,
+                      "line": 104,
+                      "offset": 3816
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 104,
+                      "offset": 3805
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                },
+                {
+                  "construct": "FieldBlock",
+                  "name": "Rules",
+                  "value": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "list",
+                      "ordered": false,
+                      "spread": false,
+                      "start": null,
+                      "value": "- Procedure inputs MUST be identified using Contextualise when referenced by name within the procedure block.\n- The ContextSymbol used for an input SHOULD match the intended meaning of the input within the procedure.\n- A SymbolAlias SHOULD be used when the input value requires a name different from its existing Symbol.",
+                      "position": {
+                        "end": {
+                          "column": 104,
+                          "line": 116,
+                          "offset": 4236
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 114,
+                          "offset": 3916
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "listItem",
+                          "checked": null,
+                          "spread": false,
+                          "value": "- Procedure inputs MUST be identified using Contextualise when referenced by name within the procedure block.",
+                          "position": {
+                            "end": {
+                              "column": 110,
+                              "line": 114,
+                              "offset": 4025
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 114,
+                              "offset": 3916
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalBlock",
+                              "type": "paragraph",
+                              "value": "Procedure inputs MUST be identified using Contextualise when referenced by name within the procedure block.",
+                              "position": {
+                                "end": {
+                                  "column": 110,
+                                  "line": 114,
+                                  "offset": 4025
+                                },
+                                "start": {
+                                  "column": 3,
+                                  "line": 114,
+                                  "offset": 3918
+                                }
+                              },
+                              "children": [
+                                {
+                                  "construct": "NaturalExpression",
+                                  "type": "text",
+                                  "attributes": {},
+                                  "value": "Procedure inputs MUST be identified using Contextualise when referenced by name within the procedure block.",
+                                  "position": {
+                                    "end": {
+                                      "column": 110,
+                                      "line": 114,
+                                      "offset": 4025
+                                    },
+                                    "start": {
+                                      "column": 3,
+                                      "line": 114,
+                                      "offset": 3918
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "listItem",
+                          "checked": null,
+                          "spread": false,
+                          "value": "- The ContextSymbol used for an input SHOULD match the intended meaning of the input within the procedure.",
+                          "position": {
+                            "end": {
+                              "column": 107,
+                              "line": 115,
+                              "offset": 4132
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 115,
+                              "offset": 4026
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalBlock",
+                              "type": "paragraph",
+                              "value": "The ContextSymbol used for an input SHOULD match the intended meaning of the input within the procedure.",
+                              "position": {
+                                "end": {
+                                  "column": 107,
+                                  "line": 115,
+                                  "offset": 4132
+                                },
+                                "start": {
+                                  "column": 3,
+                                  "line": 115,
+                                  "offset": 4028
+                                }
+                              },
+                              "children": [
+                                {
+                                  "construct": "NaturalExpression",
+                                  "type": "text",
+                                  "attributes": {},
+                                  "value": "The ContextSymbol used for an input SHOULD match the intended meaning of the input within the procedure.",
+                                  "position": {
+                                    "end": {
+                                      "column": 107,
+                                      "line": 115,
+                                      "offset": 4132
+                                    },
+                                    "start": {
+                                      "column": 3,
+                                      "line": 115,
+                                      "offset": 4028
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "listItem",
+                          "checked": null,
+                          "spread": false,
+                          "value": "- A SymbolAlias SHOULD be used when the input value requires a name different from its existing Symbol.",
+                          "position": {
+                            "end": {
+                              "column": 104,
+                              "line": 116,
+                              "offset": 4236
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 116,
+                              "offset": 4133
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalBlock",
+                              "type": "paragraph",
+                              "value": "A SymbolAlias SHOULD be used when the input value requires a name different from its existing Symbol.",
+                              "position": {
+                                "end": {
+                                  "column": 104,
+                                  "line": 116,
+                                  "offset": 4236
+                                },
+                                "start": {
+                                  "column": 3,
+                                  "line": 116,
+                                  "offset": 4135
+                                }
+                              },
+                              "children": [
+                                {
+                                  "construct": "NaturalExpression",
+                                  "type": "text",
+                                  "attributes": {},
+                                  "value": "A SymbolAlias SHOULD be used when the input value requires a name different from its existing Symbol.",
+                                  "position": {
+                                    "end": {
+                                      "column": 104,
+                                      "line": 116,
+                                      "offset": 4236
+                                    },
+                                    "start": {
+                                      "column": 3,
+                                      "line": 116,
+                                      "offset": 4135
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "position": {
+                    "end": {
+                      "column": 11,
+                      "line": 112,
+                      "offset": 3914
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 112,
+                      "offset": 3904
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                },
+                {
+                  "construct": "FieldBlock",
+                  "name": "Syntax",
+                  "value": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "code",
+                      "lang": "art",
+                      "meta": null,
+                      "value": "```art\nWith <Contextualise>, execute the following procedure:\n\n<Procedure Block>\n```",
+                      "position": {
+                        "end": {
+                          "column": 4,
+                          "line": 124,
+                          "offset": 4335
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 120,
+                          "offset": 4251
+                        }
+                      }
+                    }
+                  ],
+                  "position": {
+                    "end": {
+                      "column": 12,
+                      "line": 118,
+                      "offset": 4249
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 118,
+                      "offset": 4238
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                },
+                {
+                  "construct": "FieldBlock",
+                  "name": "Example",
+                  "value": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "code",
+                      "lang": "md",
+                      "meta": null,
+                      "value": "```md\nWith the input `%item`, execute the following workflow:\n\n1. Validate the item.\n2. Classify the item according to its type.\n```",
+                      "position": {
+                        "end": {
+                          "column": 4,
+                          "line": 133,
+                          "offset": 4483
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 128,
+                          "offset": 4351
+                        }
+                      }
+                    }
+                  ],
+                  "position": {
+                    "end": {
+                      "column": 13,
+                      "line": 126,
+                      "offset": 4349
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 126,
+                      "offset": 4337
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                }
+              ]
+            },
+            {
+              "construct": "SectionBlock",
+              "kind": "Semantics",
+              "name": "Procedure Outputs",
+              "depth": 3,
+              "position": {
+                "end": {
+                  "column": 33,
+                  "line": 135,
+                  "offset": 4517
+                },
+                "start": {
+                  "column": 1,
+                  "line": 135,
+                  "offset": 4485
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                },
+                {
+                  "construct": "FieldInline",
+                  "name": "Purpose",
+                  "value": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "Define how procedure results are identified and named.",
+                      "position": {
+                        "end": {
+                          "column": 68,
+                          "line": 137,
+                          "offset": 4586
+                        },
+                        "start": {
+                          "column": 13,
+                          "line": 137,
+                          "offset": 4531
+                        }
+                      }
+                    }
+                  ],
+                  "position": {
+                    "end": {
+                      "column": 68,
+                      "line": 137,
+                      "offset": 4586
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 137,
+                      "offset": 4519
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                },
+                {
+                  "construct": "FieldInline",
+                  "name": "Description",
+                  "value": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "Procedure outputs are identified using the Return statement. A returned value may use an existing ContextSymbol when the output already has an appropriate name or define a new ContextSymbol using an alias.",
+                      "position": {
+                        "end": {
+                          "column": 223,
+                          "line": 139,
+                          "offset": 4810
+                        },
+                        "start": {
+                          "column": 17,
+                          "line": 139,
+                          "offset": 4604
+                        }
+                      }
+                    }
+                  ],
+                  "position": {
+                    "end": {
+                      "column": 223,
+                      "line": 139,
+                      "offset": 4810
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 139,
+                      "offset": 4588
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                },
+                {
+                  "construct": "FieldBlock",
+                  "name": "Syntax",
+                  "value": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "code",
+                      "lang": "art",
+                      "meta": null,
+                      "value": "```art\nReturn <ContextValue>\n```",
+                      "position": {
+                        "end": {
+                          "column": 4,
+                          "line": 145,
+                          "offset": 4857
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 143,
+                          "offset": 4825
+                        }
+                      }
+                    }
+                  ],
+                  "position": {
+                    "end": {
+                      "column": 12,
+                      "line": 141,
+                      "offset": 4823
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 141,
+                      "offset": 4812
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                },
+                {
+                  "construct": "FieldBlock",
+                  "name": "Rules",
+                  "value": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "list",
+                      "ordered": false,
+                      "spread": false,
+                      "start": null,
+                      "value": "- A procedure SHOULD return values using an existing ContextSymbol when the ContextSymbol already represents the intended output.\n- A procedure MUST define an alias when the returned value does not have an appropriate existing ContextSymbol.\n- Returned Symbols SHOULD communicate the intended meaning of the output.",
+                      "position": {
+                        "end": {
+                          "column": 74,
+                          "line": 151,
+                          "offset": 5186
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 149,
+                          "offset": 4871
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "listItem",
+                          "checked": null,
+                          "spread": false,
+                          "value": "- A procedure SHOULD return values using an existing ContextSymbol when the ContextSymbol already represents the intended output.",
+                          "position": {
+                            "end": {
+                              "column": 130,
+                              "line": 149,
+                              "offset": 5000
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 149,
+                              "offset": 4871
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalBlock",
+                              "type": "paragraph",
+                              "value": "A procedure SHOULD return values using an existing ContextSymbol when the ContextSymbol already represents the intended output.",
+                              "position": {
+                                "end": {
+                                  "column": 130,
+                                  "line": 149,
+                                  "offset": 5000
+                                },
+                                "start": {
+                                  "column": 3,
+                                  "line": 149,
+                                  "offset": 4873
+                                }
+                              },
+                              "children": [
+                                {
+                                  "construct": "NaturalExpression",
+                                  "type": "text",
+                                  "attributes": {},
+                                  "value": "A procedure SHOULD return values using an existing ContextSymbol when the ContextSymbol already represents the intended output.",
+                                  "position": {
+                                    "end": {
+                                      "column": 130,
+                                      "line": 149,
+                                      "offset": 5000
+                                    },
+                                    "start": {
+                                      "column": 3,
+                                      "line": 149,
+                                      "offset": 4873
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "listItem",
+                          "checked": null,
+                          "spread": false,
+                          "value": "- A procedure MUST define an alias when the returned value does not have an appropriate existing ContextSymbol.",
+                          "position": {
+                            "end": {
+                              "column": 112,
+                              "line": 150,
+                              "offset": 5112
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 150,
+                              "offset": 5001
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalBlock",
+                              "type": "paragraph",
+                              "value": "A procedure MUST define an alias when the returned value does not have an appropriate existing ContextSymbol.",
+                              "position": {
+                                "end": {
+                                  "column": 112,
+                                  "line": 150,
+                                  "offset": 5112
+                                },
+                                "start": {
+                                  "column": 3,
+                                  "line": 150,
+                                  "offset": 5003
+                                }
+                              },
+                              "children": [
+                                {
+                                  "construct": "NaturalExpression",
+                                  "type": "text",
+                                  "attributes": {},
+                                  "value": "A procedure MUST define an alias when the returned value does not have an appropriate existing ContextSymbol.",
+                                  "position": {
+                                    "end": {
+                                      "column": 112,
+                                      "line": 150,
+                                      "offset": 5112
+                                    },
+                                    "start": {
+                                      "column": 3,
+                                      "line": 150,
+                                      "offset": 5003
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalBlock",
+                          "type": "listItem",
+                          "checked": null,
+                          "spread": false,
+                          "value": "- Returned Symbols SHOULD communicate the intended meaning of the output.",
+                          "position": {
+                            "end": {
+                              "column": 74,
+                              "line": 151,
+                              "offset": 5186
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 151,
+                              "offset": 5113
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalBlock",
+                              "type": "paragraph",
+                              "value": "Returned Symbols SHOULD communicate the intended meaning of the output.",
+                              "position": {
+                                "end": {
+                                  "column": 74,
+                                  "line": 151,
+                                  "offset": 5186
+                                },
+                                "start": {
+                                  "column": 3,
+                                  "line": 151,
+                                  "offset": 5115
+                                }
+                              },
+                              "children": [
+                                {
+                                  "construct": "NaturalExpression",
+                                  "type": "text",
+                                  "attributes": {},
+                                  "value": "Returned Symbols SHOULD communicate the intended meaning of the output.",
+                                  "position": {
+                                    "end": {
+                                      "column": 74,
+                                      "line": 151,
+                                      "offset": 5186
+                                    },
+                                    "start": {
+                                      "column": 3,
+                                      "line": 151,
+                                      "offset": 5115
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "position": {
+                    "end": {
+                      "column": 11,
+                      "line": 147,
+                      "offset": 4869
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 147,
+                      "offset": 4859
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "text",
+                  "value": "\n\n"
+                },
+                {
+                  "construct": "FieldBlock",
+                  "name": "Examples",
+                  "value": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "Example of using an existing output Symbol:",
+                      "position": {
+                        "end": {
+                          "column": 44,
+                          "line": 155,
+                          "offset": 5246
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 155,
+                          "offset": 5203
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "Example of using an existing output Symbol:",
+                          "position": {
+                            "end": {
+                              "column": 44,
+                              "line": 155,
+                              "offset": 5246
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 155,
+                              "offset": 5203
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "code",
+                      "lang": "md",
+                      "meta": null,
+                      "value": "```md\nReturn the generated `%table-of-contents`.\n```",
+                      "position": {
+                        "end": {
+                          "column": 4,
+                          "line": 159,
+                          "offset": 5300
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 157,
+                          "offset": 5248
+                        }
+                      }
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "Example of defining of using ContextAlias to match the procedure output symbol.",
+                      "position": {
+                        "end": {
+                          "column": 80,
+                          "line": 161,
+                          "offset": 5381
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 161,
+                          "offset": 5302
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "Example of defining of using ContextAlias to match the procedure output symbol.",
+                          "position": {
+                            "end": {
+                              "column": 80,
+                              "line": 161,
+                              "offset": 5381
+                            },
+                            "start": {
+                              "column": 1,
+                              "line": 161,
+                              "offset": 5302
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "text",
+                      "value": "\n\n"
+                    },
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "code",
+                      "lang": null,
+                      "meta": null,
+                      "value": "```\nReturn the first row of the table as `%top-priority`.\n```",
+                      "position": {
+                        "end": {
+                          "column": 4,
+                          "line": 165,
+                          "offset": 5444
+                        },
+                        "start": {
+                          "column": 1,
+                          "line": 163,
+                          "offset": 5383
+                        }
+                      }
+                    }
+                  ],
+                  "position": {
+                    "end": {
+                      "column": 14,
+                      "line": 153,
+                      "offset": 5201
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 153,
+                      "offset": 5188
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

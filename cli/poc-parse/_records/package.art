@@ -1,0 +1,49 @@
+# Module
+
+## Package: Poc Parse
+
+**Purpose:** POC spike of the artificials parser: a self-contained, CLI-executable package at `cli/poc-parse/`.
+
+**Description:** Internally partitioned along the pipeline boundaries (parse/extract/transform/render) so it mirrors the future art-js modules. POC step 1 scaffolds the runnable CLI; parsing logic, schema types, and the micromark substrate are deliberately deferred.
+
+**Owner:** Project: Art JS
+
+**Author:** Noodlestan Collective
+
+**Path:** `cli/poc-parse/`
+
+**Canonical Name:** `@art-js/poc-parse`
+
+**Published:** `false`
+
+**Private:** `true`
+
+**Language:** Typescript
+
+**Engines:**
+
+- Node: `>= 22`
+
+**PackageManager:** `npm@10.2.3`
+
+**PackageFile:** `package.json`
+
+**Dependencies:**
+
+- Runtime:
+  - `mdast-util-from-markdown` @ `^2.0.0` — Generates mdast from MD.
+  - `unist-util-visit` @ `^5.0.0` — mdast traversing.
+
+- Dev:
+  - `npx` @ `10.2.2`
+
+**Scripts:**
+
+- Package Script Set: Common Scripts
+
+**Scaffolders:**
+
+- Scaffolder Skeleton: CLI Package
+- Scaffolder Skeleton: Package Common
+
+**License:** License: Noodlestan 2026 MIT

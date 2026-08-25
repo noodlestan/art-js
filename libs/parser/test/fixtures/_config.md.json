@@ -1,0 +1,3944 @@
+{
+  "construct": "Document",
+  "children": [
+    {
+      "construct": "SectionBlock",
+      "name": "Workspace CLI — Configuration",
+      "depth": 1,
+      "position": {
+        "end": {
+          "column": 32,
+          "line": 1,
+          "offset": 31
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": [
+        {
+          "construct": "NaturalBlock",
+          "type": "text",
+          "value": "\n\n"
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "paragraph",
+          "value": "The configuration system of the workspace CLI: the `.art-workspace.mts` manifest, its structure, authoring, loading mechanism, package exports, and type safety.",
+          "position": {
+            "end": {
+              "column": 161,
+              "line": 3,
+              "offset": 193
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 33
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalExpression",
+              "type": "text",
+              "attributes": {},
+              "value": "The configuration system of the workspace CLI: the ",
+              "position": {
+                "end": {
+                  "column": 52,
+                  "line": 3,
+                  "offset": 84
+                },
+                "start": {
+                  "column": 1,
+                  "line": 3,
+                  "offset": 33
+                }
+              }
+            },
+            {
+              "construct": "NaturalExpression",
+              "type": "inlineCode",
+              "attributes": {},
+              "value": ".art-workspace.mts",
+              "position": {
+                "end": {
+                  "column": 72,
+                  "line": 3,
+                  "offset": 104
+                },
+                "start": {
+                  "column": 52,
+                  "line": 3,
+                  "offset": 84
+                }
+              }
+            },
+            {
+              "construct": "NaturalExpression",
+              "type": "text",
+              "attributes": {},
+              "value": " manifest, its structure, authoring, loading mechanism, package exports, and type safety.",
+              "position": {
+                "end": {
+                  "column": 161,
+                  "line": 3,
+                  "offset": 193
+                },
+                "start": {
+                  "column": 72,
+                  "line": 3,
+                  "offset": 104
+                }
+              }
+            }
+          ]
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "text",
+          "value": "\n\n"
+        },
+        {
+          "construct": "SectionBlock",
+          "name": "Overview",
+          "depth": 2,
+          "position": {
+            "end": {
+              "column": 12,
+              "line": 5,
+              "offset": 206
+            },
+            "start": {
+              "column": 1,
+              "line": 5,
+              "offset": 195
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "The workspace configuration is a TypeScript module (`.art-workspace.mts`) at the workspace root that exports workspace paths. It provides type-safe access to workspace structure via `defineConfig` and the `WorkspaceConfig` type.",
+              "position": {
+                "end": {
+                  "column": 229,
+                  "line": 7,
+                  "offset": 436
+                },
+                "start": {
+                  "column": 1,
+                  "line": 7,
+                  "offset": 208
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "The workspace configuration is a TypeScript module (",
+                  "position": {
+                    "end": {
+                      "column": 53,
+                      "line": 7,
+                      "offset": 260
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 7,
+                      "offset": 208
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": ".art-workspace.mts",
+                  "position": {
+                    "end": {
+                      "column": 73,
+                      "line": 7,
+                      "offset": 280
+                    },
+                    "start": {
+                      "column": 53,
+                      "line": 7,
+                      "offset": 260
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": ") at the workspace root that exports workspace paths. It provides type-safe access to workspace structure via ",
+                  "position": {
+                    "end": {
+                      "column": 183,
+                      "line": 7,
+                      "offset": 390
+                    },
+                    "start": {
+                      "column": 73,
+                      "line": 7,
+                      "offset": 280
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "defineConfig",
+                  "position": {
+                    "end": {
+                      "column": 197,
+                      "line": 7,
+                      "offset": 404
+                    },
+                    "start": {
+                      "column": 183,
+                      "line": 7,
+                      "offset": 390
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " and the ",
+                  "position": {
+                    "end": {
+                      "column": 206,
+                      "line": 7,
+                      "offset": 413
+                    },
+                    "start": {
+                      "column": 197,
+                      "line": 7,
+                      "offset": 404
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "WorkspaceConfig",
+                  "position": {
+                    "end": {
+                      "column": 223,
+                      "line": 7,
+                      "offset": 430
+                    },
+                    "start": {
+                      "column": 206,
+                      "line": 7,
+                      "offset": 413
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " type.",
+                  "position": {
+                    "end": {
+                      "column": 229,
+                      "line": 7,
+                      "offset": 436
+                    },
+                    "start": {
+                      "column": 223,
+                      "line": 7,
+                      "offset": 430
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "The config is **manually authored, not generated**. Records (`_records/repositories/{repo}.art`, `_records/workspace.art`) are the source of truth; the config points the CLI at them. A future generator derives the manifest from records, eliminating the manual step.",
+              "position": {
+                "end": {
+                  "column": 266,
+                  "line": 9,
+                  "offset": 703
+                },
+                "start": {
+                  "column": 1,
+                  "line": 9,
+                  "offset": 438
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "The config is ",
+                  "position": {
+                    "end": {
+                      "column": 15,
+                      "line": 9,
+                      "offset": 452
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 9,
+                      "offset": 438
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "strong",
+                  "attributes": {},
+                  "position": {
+                    "end": {
+                      "column": 51,
+                      "line": 9,
+                      "offset": 488
+                    },
+                    "start": {
+                      "column": 15,
+                      "line": 9,
+                      "offset": 452
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "manually authored, not generated",
+                      "position": {
+                        "end": {
+                          "column": 49,
+                          "line": 9,
+                          "offset": 486
+                        },
+                        "start": {
+                          "column": 17,
+                          "line": 9,
+                          "offset": 454
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": ". Records (",
+                  "position": {
+                    "end": {
+                      "column": 62,
+                      "line": 9,
+                      "offset": 499
+                    },
+                    "start": {
+                      "column": 51,
+                      "line": 9,
+                      "offset": 488
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "_records/repositories/{repo}.art",
+                  "position": {
+                    "end": {
+                      "column": 96,
+                      "line": 9,
+                      "offset": 533
+                    },
+                    "start": {
+                      "column": 62,
+                      "line": 9,
+                      "offset": 499
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": ", ",
+                  "position": {
+                    "end": {
+                      "column": 98,
+                      "line": 9,
+                      "offset": 535
+                    },
+                    "start": {
+                      "column": 96,
+                      "line": 9,
+                      "offset": 533
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "_records/workspace.art",
+                  "position": {
+                    "end": {
+                      "column": 122,
+                      "line": 9,
+                      "offset": 559
+                    },
+                    "start": {
+                      "column": 98,
+                      "line": 9,
+                      "offset": 535
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": ") are the source of truth; the config points the CLI at them. A future generator derives the manifest from records, eliminating the manual step.",
+                  "position": {
+                    "end": {
+                      "column": 266,
+                      "line": 9,
+                      "offset": 703
+                    },
+                    "start": {
+                      "column": 122,
+                      "line": 9,
+                      "offset": 559
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            }
+          ]
+        },
+        {
+          "construct": "SectionBlock",
+          "name": "Configuration Structure",
+          "depth": 2,
+          "position": {
+            "end": {
+              "column": 27,
+              "line": 11,
+              "offset": 731
+            },
+            "start": {
+              "column": 1,
+              "line": 11,
+              "offset": 705
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "code",
+              "lang": "typescript",
+              "meta": null,
+              "value": "```typescript\ninterface WorkspaceConfig {\n  root: {\n    path: string; // Workspace root; set by loadWorkspaceConfig to the invocation cwd\n  };\n  clone: {\n    path: string; // Where repos are cloned (e.g., 'repos')\n  };\n  records: {\n    repositories: {\n      path: string; // Path to repository records (e.g., '_records/repositories')\n    };\n    checkouts: {\n      path: string; // Path to checkout records (e.g., '_records/checkouts')\n      template: string; // Template for generating checkout records\n    };\n  };\n}\n```",
+              "position": {
+                "end": {
+                  "column": 4,
+                  "line": 31,
+                  "offset": 1253
+                },
+                "start": {
+                  "column": 1,
+                  "line": 13,
+                  "offset": 733
+                }
+              }
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            }
+          ]
+        },
+        {
+          "construct": "SectionBlock",
+          "name": "Authoring Config",
+          "depth": 2,
+          "position": {
+            "end": {
+              "column": 20,
+              "line": 33,
+              "offset": 1274
+            },
+            "start": {
+              "column": 1,
+              "line": 33,
+              "offset": 1255
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "The manifest imports `defineConfig` from the `/config` subpath:",
+              "position": {
+                "end": {
+                  "column": 64,
+                  "line": 35,
+                  "offset": 1339
+                },
+                "start": {
+                  "column": 1,
+                  "line": 35,
+                  "offset": 1276
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "The manifest imports ",
+                  "position": {
+                    "end": {
+                      "column": 22,
+                      "line": 35,
+                      "offset": 1297
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 35,
+                      "offset": 1276
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "defineConfig",
+                  "position": {
+                    "end": {
+                      "column": 36,
+                      "line": 35,
+                      "offset": 1311
+                    },
+                    "start": {
+                      "column": 22,
+                      "line": 35,
+                      "offset": 1297
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " from the ",
+                  "position": {
+                    "end": {
+                      "column": 46,
+                      "line": 35,
+                      "offset": 1321
+                    },
+                    "start": {
+                      "column": 36,
+                      "line": 35,
+                      "offset": 1311
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "/config",
+                  "position": {
+                    "end": {
+                      "column": 55,
+                      "line": 35,
+                      "offset": 1330
+                    },
+                    "start": {
+                      "column": 46,
+                      "line": 35,
+                      "offset": 1321
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " subpath:",
+                  "position": {
+                    "end": {
+                      "column": 64,
+                      "line": 35,
+                      "offset": 1339
+                    },
+                    "start": {
+                      "column": 55,
+                      "line": 35,
+                      "offset": 1330
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "code",
+              "lang": "typescript",
+              "meta": null,
+              "value": "```typescript\nimport { defineConfig } from '@art-domains/workspace-cli/config';\n\nexport default defineConfig({\n  clone: { path: 'repos' },\n  records: {\n    repositories: { path: '_records/repositories' },\n    checkouts: {\n      path: '_records/checkouts',\n      template: '.agents/domains/workspace/templates/checkout.art.njk',\n    },\n  },\n});\n```",
+              "position": {
+                "end": {
+                  "column": 4,
+                  "line": 50,
+                  "offset": 1688
+                },
+                "start": {
+                  "column": 1,
+                  "line": 37,
+                  "offset": 1341
+                }
+              }
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            }
+          ]
+        },
+        {
+          "construct": "SectionBlock",
+          "name": "Loading Mechanism",
+          "depth": 2,
+          "position": {
+            "end": {
+              "column": 21,
+              "line": 52,
+              "offset": 1710
+            },
+            "start": {
+              "column": 1,
+              "line": 52,
+              "offset": 1690
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "The CLI loads the config at runtime using esbuild bundle-at-runtime (Vite-style):",
+              "position": {
+                "end": {
+                  "column": 82,
+                  "line": 54,
+                  "offset": 1793
+                },
+                "start": {
+                  "column": 1,
+                  "line": 54,
+                  "offset": 1712
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "The CLI loads the config at runtime using esbuild bundle-at-runtime (Vite-style):",
+                  "position": {
+                    "end": {
+                      "column": 82,
+                      "line": 54,
+                      "offset": 1793
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 54,
+                      "offset": 1712
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "list",
+              "ordered": true,
+              "spread": false,
+              "start": 1,
+              "value": "1. Read `.art-workspace.mts`.\n2. Run `esbuild.build({ entryPoints, bundle: true, write: false, format: 'esm', platform: 'node' })`.\n3. Write the bundled output to a temp `.mjs` file.\n4. `await import()` the temp file.",
+              "position": {
+                "end": {
+                  "column": 35,
+                  "line": 59,
+                  "offset": 2012
+                },
+                "start": {
+                  "column": 1,
+                  "line": 56,
+                  "offset": 1795
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "1. Read `.art-workspace.mts`.",
+                  "position": {
+                    "end": {
+                      "column": 30,
+                      "line": 56,
+                      "offset": 1824
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 56,
+                      "offset": 1795
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "Read `.art-workspace.mts`.",
+                      "position": {
+                        "end": {
+                          "column": 30,
+                          "line": 56,
+                          "offset": 1824
+                        },
+                        "start": {
+                          "column": 4,
+                          "line": 56,
+                          "offset": 1798
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "Read ",
+                          "position": {
+                            "end": {
+                              "column": 9,
+                              "line": 56,
+                              "offset": 1803
+                            },
+                            "start": {
+                              "column": 4,
+                              "line": 56,
+                              "offset": 1798
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": ".art-workspace.mts",
+                          "position": {
+                            "end": {
+                              "column": 29,
+                              "line": 56,
+                              "offset": 1823
+                            },
+                            "start": {
+                              "column": 9,
+                              "line": 56,
+                              "offset": 1803
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": ".",
+                          "position": {
+                            "end": {
+                              "column": 30,
+                              "line": 56,
+                              "offset": 1824
+                            },
+                            "start": {
+                              "column": 29,
+                              "line": 56,
+                              "offset": 1823
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "2. Run `esbuild.build({ entryPoints, bundle: true, write: false, format: 'esm', platform: 'node' })`.",
+                  "position": {
+                    "end": {
+                      "column": 102,
+                      "line": 57,
+                      "offset": 1926
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 57,
+                      "offset": 1825
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "Run `esbuild.build({ entryPoints, bundle: true, write: false, format: 'esm', platform: 'node' })`.",
+                      "position": {
+                        "end": {
+                          "column": 102,
+                          "line": 57,
+                          "offset": 1926
+                        },
+                        "start": {
+                          "column": 4,
+                          "line": 57,
+                          "offset": 1828
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "Run ",
+                          "position": {
+                            "end": {
+                              "column": 8,
+                              "line": 57,
+                              "offset": 1832
+                            },
+                            "start": {
+                              "column": 4,
+                              "line": 57,
+                              "offset": 1828
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "esbuild.build({ entryPoints, bundle: true, write: false, format: 'esm', platform: 'node' })",
+                          "position": {
+                            "end": {
+                              "column": 101,
+                              "line": 57,
+                              "offset": 1925
+                            },
+                            "start": {
+                              "column": 8,
+                              "line": 57,
+                              "offset": 1832
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": ".",
+                          "position": {
+                            "end": {
+                              "column": 102,
+                              "line": 57,
+                              "offset": 1926
+                            },
+                            "start": {
+                              "column": 101,
+                              "line": 57,
+                              "offset": 1925
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "3. Write the bundled output to a temp `.mjs` file.",
+                  "position": {
+                    "end": {
+                      "column": 51,
+                      "line": 58,
+                      "offset": 1977
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 58,
+                      "offset": 1927
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "Write the bundled output to a temp `.mjs` file.",
+                      "position": {
+                        "end": {
+                          "column": 51,
+                          "line": 58,
+                          "offset": 1977
+                        },
+                        "start": {
+                          "column": 4,
+                          "line": 58,
+                          "offset": 1930
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "Write the bundled output to a temp ",
+                          "position": {
+                            "end": {
+                              "column": 39,
+                              "line": 58,
+                              "offset": 1965
+                            },
+                            "start": {
+                              "column": 4,
+                              "line": 58,
+                              "offset": 1930
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": ".mjs",
+                          "position": {
+                            "end": {
+                              "column": 45,
+                              "line": 58,
+                              "offset": 1971
+                            },
+                            "start": {
+                              "column": 39,
+                              "line": 58,
+                              "offset": 1965
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " file.",
+                          "position": {
+                            "end": {
+                              "column": 51,
+                              "line": 58,
+                              "offset": 1977
+                            },
+                            "start": {
+                              "column": 45,
+                              "line": 58,
+                              "offset": 1971
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "4. `await import()` the temp file.",
+                  "position": {
+                    "end": {
+                      "column": 35,
+                      "line": 59,
+                      "offset": 2012
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 59,
+                      "offset": 1978
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "`await import()` the temp file.",
+                      "position": {
+                        "end": {
+                          "column": 35,
+                          "line": 59,
+                          "offset": 2012
+                        },
+                        "start": {
+                          "column": 4,
+                          "line": 59,
+                          "offset": 1981
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "await import()",
+                          "position": {
+                            "end": {
+                              "column": 20,
+                              "line": 59,
+                              "offset": 1997
+                            },
+                            "start": {
+                              "column": 4,
+                              "line": 59,
+                              "offset": 1981
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " the temp file.",
+                          "position": {
+                            "end": {
+                              "column": 35,
+                              "line": 59,
+                              "offset": 2012
+                            },
+                            "start": {
+                              "column": 20,
+                              "line": 59,
+                              "offset": 1997
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "The config's `import { defineConfig } from '@art-domains/workspace-cli/config'` is resolved from the consumer `node_modules` and inlined. The `/config` subpath has zero runtime deps beyond `esbuild` (ESM-friendly), so the CLI command surface (commander, simple-git) never enters the manifest bundle. `esbuild` is therefore a **runtime dependency** of `@art-domains/workspace-cli` (see `records/adr/cli.art` — \"Runtime Config Loading — esbuild Bundle-at-Runtime\").",
+              "position": {
+                "end": {
+                  "column": 464,
+                  "line": 61,
+                  "offset": 2477
+                },
+                "start": {
+                  "column": 1,
+                  "line": 61,
+                  "offset": 2014
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "The config's ",
+                  "position": {
+                    "end": {
+                      "column": 14,
+                      "line": 61,
+                      "offset": 2027
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 61,
+                      "offset": 2014
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "import { defineConfig } from '@art-domains/workspace-cli/config'",
+                  "position": {
+                    "end": {
+                      "column": 80,
+                      "line": 61,
+                      "offset": 2093
+                    },
+                    "start": {
+                      "column": 14,
+                      "line": 61,
+                      "offset": 2027
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " is resolved from the consumer ",
+                  "position": {
+                    "end": {
+                      "column": 111,
+                      "line": 61,
+                      "offset": 2124
+                    },
+                    "start": {
+                      "column": 80,
+                      "line": 61,
+                      "offset": 2093
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "node_modules",
+                  "position": {
+                    "end": {
+                      "column": 125,
+                      "line": 61,
+                      "offset": 2138
+                    },
+                    "start": {
+                      "column": 111,
+                      "line": 61,
+                      "offset": 2124
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " and inlined. The ",
+                  "position": {
+                    "end": {
+                      "column": 143,
+                      "line": 61,
+                      "offset": 2156
+                    },
+                    "start": {
+                      "column": 125,
+                      "line": 61,
+                      "offset": 2138
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "/config",
+                  "position": {
+                    "end": {
+                      "column": 152,
+                      "line": 61,
+                      "offset": 2165
+                    },
+                    "start": {
+                      "column": 143,
+                      "line": 61,
+                      "offset": 2156
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " subpath has zero runtime deps beyond ",
+                  "position": {
+                    "end": {
+                      "column": 190,
+                      "line": 61,
+                      "offset": 2203
+                    },
+                    "start": {
+                      "column": 152,
+                      "line": 61,
+                      "offset": 2165
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "esbuild",
+                  "position": {
+                    "end": {
+                      "column": 199,
+                      "line": 61,
+                      "offset": 2212
+                    },
+                    "start": {
+                      "column": 190,
+                      "line": 61,
+                      "offset": 2203
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " (ESM-friendly), so the CLI command surface (commander, simple-git) never enters the manifest bundle. ",
+                  "position": {
+                    "end": {
+                      "column": 301,
+                      "line": 61,
+                      "offset": 2314
+                    },
+                    "start": {
+                      "column": 199,
+                      "line": 61,
+                      "offset": 2212
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "esbuild",
+                  "position": {
+                    "end": {
+                      "column": 310,
+                      "line": 61,
+                      "offset": 2323
+                    },
+                    "start": {
+                      "column": 301,
+                      "line": 61,
+                      "offset": 2314
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " is therefore a ",
+                  "position": {
+                    "end": {
+                      "column": 326,
+                      "line": 61,
+                      "offset": 2339
+                    },
+                    "start": {
+                      "column": 310,
+                      "line": 61,
+                      "offset": 2323
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "strong",
+                  "attributes": {},
+                  "position": {
+                    "end": {
+                      "column": 348,
+                      "line": 61,
+                      "offset": 2361
+                    },
+                    "start": {
+                      "column": 326,
+                      "line": 61,
+                      "offset": 2339
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "runtime dependency",
+                      "position": {
+                        "end": {
+                          "column": 346,
+                          "line": 61,
+                          "offset": 2359
+                        },
+                        "start": {
+                          "column": 328,
+                          "line": 61,
+                          "offset": 2341
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " of ",
+                  "position": {
+                    "end": {
+                      "column": 352,
+                      "line": 61,
+                      "offset": 2365
+                    },
+                    "start": {
+                      "column": 348,
+                      "line": 61,
+                      "offset": 2361
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "@art-domains/workspace-cli",
+                  "position": {
+                    "end": {
+                      "column": 380,
+                      "line": 61,
+                      "offset": 2393
+                    },
+                    "start": {
+                      "column": 352,
+                      "line": 61,
+                      "offset": 2365
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " (see ",
+                  "position": {
+                    "end": {
+                      "column": 386,
+                      "line": 61,
+                      "offset": 2399
+                    },
+                    "start": {
+                      "column": 380,
+                      "line": 61,
+                      "offset": 2393
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "records/adr/cli.art",
+                  "position": {
+                    "end": {
+                      "column": 407,
+                      "line": 61,
+                      "offset": 2420
+                    },
+                    "start": {
+                      "column": 386,
+                      "line": 61,
+                      "offset": 2399
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " — \"Runtime Config Loading — esbuild Bundle-at-Runtime\").",
+                  "position": {
+                    "end": {
+                      "column": 464,
+                      "line": 61,
+                      "offset": 2477
+                    },
+                    "start": {
+                      "column": 407,
+                      "line": 61,
+                      "offset": 2420
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            }
+          ]
+        },
+        {
+          "construct": "SectionBlock",
+          "name": "Package Exports",
+          "depth": 2,
+          "position": {
+            "end": {
+              "column": 19,
+              "line": 63,
+              "offset": 2497
+            },
+            "start": {
+              "column": 1,
+              "line": 63,
+              "offset": 2479
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "The CLI package exports two surfaces:",
+              "position": {
+                "end": {
+                  "column": 38,
+                  "line": 65,
+                  "offset": 2536
+                },
+                "start": {
+                  "column": 1,
+                  "line": 65,
+                  "offset": 2499
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "The CLI package exports two surfaces:",
+                  "position": {
+                    "end": {
+                      "column": 38,
+                      "line": 65,
+                      "offset": 2536
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 65,
+                      "offset": 2499
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "list",
+              "ordered": false,
+              "spread": false,
+              "start": null,
+              "value": "- **`@art-domains/workspace-cli/config`** — Authoring API for the manifest: `defineConfig`, the `WorkspaceConfig` type, and `loadWorkspaceConfig`.\n- **`@art-domains/workspace-cli`** — Main entry (the `art-workspace` binary) re-exports the config module for the CLI commands and backwards compatibility.",
+              "position": {
+                "end": {
+                  "column": 156,
+                  "line": 68,
+                  "offset": 2840
+                },
+                "start": {
+                  "column": 1,
+                  "line": 67,
+                  "offset": 2538
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- **`@art-domains/workspace-cli/config`** — Authoring API for the manifest: `defineConfig`, the `WorkspaceConfig` type, and `loadWorkspaceConfig`.",
+                  "position": {
+                    "end": {
+                      "column": 147,
+                      "line": 67,
+                      "offset": 2684
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 67,
+                      "offset": 2538
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "**`@art-domains/workspace-cli/config`** — Authoring API for the manifest: `defineConfig`, the `WorkspaceConfig` type, and `loadWorkspaceConfig`.",
+                      "position": {
+                        "end": {
+                          "column": 147,
+                          "line": 67,
+                          "offset": 2684
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 67,
+                          "offset": 2540
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "strong",
+                          "attributes": {},
+                          "position": {
+                            "end": {
+                              "column": 42,
+                              "line": 67,
+                              "offset": 2579
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 67,
+                              "offset": 2540
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "inlineCode",
+                              "attributes": {},
+                              "value": "@art-domains/workspace-cli/config",
+                              "position": {
+                                "end": {
+                                  "column": 40,
+                                  "line": 67,
+                                  "offset": 2577
+                                },
+                                "start": {
+                                  "column": 5,
+                                  "line": 67,
+                                  "offset": 2542
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " — Authoring API for the manifest: ",
+                          "position": {
+                            "end": {
+                              "column": 77,
+                              "line": 67,
+                              "offset": 2614
+                            },
+                            "start": {
+                              "column": 42,
+                              "line": 67,
+                              "offset": 2579
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "defineConfig",
+                          "position": {
+                            "end": {
+                              "column": 91,
+                              "line": 67,
+                              "offset": 2628
+                            },
+                            "start": {
+                              "column": 77,
+                              "line": 67,
+                              "offset": 2614
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": ", the ",
+                          "position": {
+                            "end": {
+                              "column": 97,
+                              "line": 67,
+                              "offset": 2634
+                            },
+                            "start": {
+                              "column": 91,
+                              "line": 67,
+                              "offset": 2628
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "WorkspaceConfig",
+                          "position": {
+                            "end": {
+                              "column": 114,
+                              "line": 67,
+                              "offset": 2651
+                            },
+                            "start": {
+                              "column": 97,
+                              "line": 67,
+                              "offset": 2634
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " type, and ",
+                          "position": {
+                            "end": {
+                              "column": 125,
+                              "line": 67,
+                              "offset": 2662
+                            },
+                            "start": {
+                              "column": 114,
+                              "line": 67,
+                              "offset": 2651
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "loadWorkspaceConfig",
+                          "position": {
+                            "end": {
+                              "column": 146,
+                              "line": 67,
+                              "offset": 2683
+                            },
+                            "start": {
+                              "column": 125,
+                              "line": 67,
+                              "offset": 2662
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": ".",
+                          "position": {
+                            "end": {
+                              "column": 147,
+                              "line": 67,
+                              "offset": 2684
+                            },
+                            "start": {
+                              "column": 146,
+                              "line": 67,
+                              "offset": 2683
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- **`@art-domains/workspace-cli`** — Main entry (the `art-workspace` binary) re-exports the config module for the CLI commands and backwards compatibility.",
+                  "position": {
+                    "end": {
+                      "column": 156,
+                      "line": 68,
+                      "offset": 2840
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 68,
+                      "offset": 2685
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "**`@art-domains/workspace-cli`** — Main entry (the `art-workspace` binary) re-exports the config module for the CLI commands and backwards compatibility.",
+                      "position": {
+                        "end": {
+                          "column": 156,
+                          "line": 68,
+                          "offset": 2840
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 68,
+                          "offset": 2687
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "strong",
+                          "attributes": {},
+                          "position": {
+                            "end": {
+                              "column": 35,
+                              "line": 68,
+                              "offset": 2719
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 68,
+                              "offset": 2687
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "inlineCode",
+                              "attributes": {},
+                              "value": "@art-domains/workspace-cli",
+                              "position": {
+                                "end": {
+                                  "column": 33,
+                                  "line": 68,
+                                  "offset": 2717
+                                },
+                                "start": {
+                                  "column": 5,
+                                  "line": 68,
+                                  "offset": 2689
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " — Main entry (the ",
+                          "position": {
+                            "end": {
+                              "column": 54,
+                              "line": 68,
+                              "offset": 2738
+                            },
+                            "start": {
+                              "column": 35,
+                              "line": 68,
+                              "offset": 2719
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "art-workspace",
+                          "position": {
+                            "end": {
+                              "column": 69,
+                              "line": 68,
+                              "offset": 2753
+                            },
+                            "start": {
+                              "column": 54,
+                              "line": 68,
+                              "offset": 2738
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " binary) re-exports the config module for the CLI commands and backwards compatibility.",
+                          "position": {
+                            "end": {
+                              "column": 156,
+                              "line": 68,
+                              "offset": 2840
+                            },
+                            "start": {
+                              "column": 69,
+                              "line": 68,
+                              "offset": 2753
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "The `exports` map (`./config` → `types` + `import`) keeps the authoring surface stable: renaming types or exports is a breaking change once consumers exist — the manifest is the first consumer.",
+              "position": {
+                "end": {
+                  "column": 194,
+                  "line": 70,
+                  "offset": 3035
+                },
+                "start": {
+                  "column": 1,
+                  "line": 70,
+                  "offset": 2842
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "The ",
+                  "position": {
+                    "end": {
+                      "column": 5,
+                      "line": 70,
+                      "offset": 2846
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 70,
+                      "offset": 2842
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "exports",
+                  "position": {
+                    "end": {
+                      "column": 14,
+                      "line": 70,
+                      "offset": 2855
+                    },
+                    "start": {
+                      "column": 5,
+                      "line": 70,
+                      "offset": 2846
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " map (",
+                  "position": {
+                    "end": {
+                      "column": 20,
+                      "line": 70,
+                      "offset": 2861
+                    },
+                    "start": {
+                      "column": 14,
+                      "line": 70,
+                      "offset": 2855
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "./config",
+                  "position": {
+                    "end": {
+                      "column": 30,
+                      "line": 70,
+                      "offset": 2871
+                    },
+                    "start": {
+                      "column": 20,
+                      "line": 70,
+                      "offset": 2861
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " → ",
+                  "position": {
+                    "end": {
+                      "column": 33,
+                      "line": 70,
+                      "offset": 2874
+                    },
+                    "start": {
+                      "column": 30,
+                      "line": 70,
+                      "offset": 2871
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "types",
+                  "position": {
+                    "end": {
+                      "column": 40,
+                      "line": 70,
+                      "offset": 2881
+                    },
+                    "start": {
+                      "column": 33,
+                      "line": 70,
+                      "offset": 2874
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " + ",
+                  "position": {
+                    "end": {
+                      "column": 43,
+                      "line": 70,
+                      "offset": 2884
+                    },
+                    "start": {
+                      "column": 40,
+                      "line": 70,
+                      "offset": 2881
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "import",
+                  "position": {
+                    "end": {
+                      "column": 51,
+                      "line": 70,
+                      "offset": 2892
+                    },
+                    "start": {
+                      "column": 43,
+                      "line": 70,
+                      "offset": 2884
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": ") keeps the authoring surface stable: renaming types or exports is a breaking change once consumers exist — the manifest is the first consumer.",
+                  "position": {
+                    "end": {
+                      "column": 194,
+                      "line": 70,
+                      "offset": 3035
+                    },
+                    "start": {
+                      "column": 51,
+                      "line": 70,
+                      "offset": 2892
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            }
+          ]
+        },
+        {
+          "construct": "SectionBlock",
+          "name": "Type Safety",
+          "depth": 2,
+          "position": {
+            "end": {
+              "column": 15,
+              "line": 72,
+              "offset": 3051
+            },
+            "start": {
+              "column": 1,
+              "line": 72,
+              "offset": 3037
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "The config types mirror the workspace structures:",
+              "position": {
+                "end": {
+                  "column": 50,
+                  "line": 74,
+                  "offset": 3102
+                },
+                "start": {
+                  "column": 1,
+                  "line": 74,
+                  "offset": 3053
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "The config types mirror the workspace structures:",
+                  "position": {
+                    "end": {
+                      "column": 50,
+                      "line": 74,
+                      "offset": 3102
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 74,
+                      "offset": 3053
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "list",
+              "ordered": false,
+              "spread": false,
+              "start": null,
+              "value": "- `WorkspaceConfig` — top-level config with paths (`root.path`, `clone.path`, `records.*`).\n- `RepositoryRecord` — repository facts (name, remote, purpose, description, consumers).\n- `CheckoutRecord` — checkout state (name, location, branch, repository).",
+              "position": {
+                "end": {
+                  "column": 74,
+                  "line": 78,
+                  "offset": 3358
+                },
+                "start": {
+                  "column": 1,
+                  "line": 76,
+                  "offset": 3104
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- `WorkspaceConfig` — top-level config with paths (`root.path`, `clone.path`, `records.*`).",
+                  "position": {
+                    "end": {
+                      "column": 92,
+                      "line": 76,
+                      "offset": 3195
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 76,
+                      "offset": 3104
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "`WorkspaceConfig` — top-level config with paths (`root.path`, `clone.path`, `records.*`).",
+                      "position": {
+                        "end": {
+                          "column": 92,
+                          "line": 76,
+                          "offset": 3195
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 76,
+                          "offset": 3106
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "WorkspaceConfig",
+                          "position": {
+                            "end": {
+                              "column": 20,
+                              "line": 76,
+                              "offset": 3123
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 76,
+                              "offset": 3106
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " — top-level config with paths (",
+                          "position": {
+                            "end": {
+                              "column": 52,
+                              "line": 76,
+                              "offset": 3155
+                            },
+                            "start": {
+                              "column": 20,
+                              "line": 76,
+                              "offset": 3123
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "root.path",
+                          "position": {
+                            "end": {
+                              "column": 63,
+                              "line": 76,
+                              "offset": 3166
+                            },
+                            "start": {
+                              "column": 52,
+                              "line": 76,
+                              "offset": 3155
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": ", ",
+                          "position": {
+                            "end": {
+                              "column": 65,
+                              "line": 76,
+                              "offset": 3168
+                            },
+                            "start": {
+                              "column": 63,
+                              "line": 76,
+                              "offset": 3166
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "clone.path",
+                          "position": {
+                            "end": {
+                              "column": 77,
+                              "line": 76,
+                              "offset": 3180
+                            },
+                            "start": {
+                              "column": 65,
+                              "line": 76,
+                              "offset": 3168
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": ", ",
+                          "position": {
+                            "end": {
+                              "column": 79,
+                              "line": 76,
+                              "offset": 3182
+                            },
+                            "start": {
+                              "column": 77,
+                              "line": 76,
+                              "offset": 3180
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "records.*",
+                          "position": {
+                            "end": {
+                              "column": 90,
+                              "line": 76,
+                              "offset": 3193
+                            },
+                            "start": {
+                              "column": 79,
+                              "line": 76,
+                              "offset": 3182
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": ").",
+                          "position": {
+                            "end": {
+                              "column": 92,
+                              "line": 76,
+                              "offset": 3195
+                            },
+                            "start": {
+                              "column": 90,
+                              "line": 76,
+                              "offset": 3193
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- `RepositoryRecord` — repository facts (name, remote, purpose, description, consumers).",
+                  "position": {
+                    "end": {
+                      "column": 89,
+                      "line": 77,
+                      "offset": 3284
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 77,
+                      "offset": 3196
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "`RepositoryRecord` — repository facts (name, remote, purpose, description, consumers).",
+                      "position": {
+                        "end": {
+                          "column": 89,
+                          "line": 77,
+                          "offset": 3284
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 77,
+                          "offset": 3198
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "RepositoryRecord",
+                          "position": {
+                            "end": {
+                              "column": 21,
+                              "line": 77,
+                              "offset": 3216
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 77,
+                              "offset": 3198
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " — repository facts (name, remote, purpose, description, consumers).",
+                          "position": {
+                            "end": {
+                              "column": 89,
+                              "line": 77,
+                              "offset": 3284
+                            },
+                            "start": {
+                              "column": 21,
+                              "line": 77,
+                              "offset": 3216
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- `CheckoutRecord` — checkout state (name, location, branch, repository).",
+                  "position": {
+                    "end": {
+                      "column": 74,
+                      "line": 78,
+                      "offset": 3358
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 78,
+                      "offset": 3285
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "`CheckoutRecord` — checkout state (name, location, branch, repository).",
+                      "position": {
+                        "end": {
+                          "column": 74,
+                          "line": 78,
+                          "offset": 3358
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 78,
+                          "offset": 3287
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "CheckoutRecord",
+                          "position": {
+                            "end": {
+                              "column": 19,
+                              "line": 78,
+                              "offset": 3303
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 78,
+                              "offset": 3287
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " — checkout state (name, location, branch, repository).",
+                          "position": {
+                            "end": {
+                              "column": 74,
+                              "line": 78,
+                              "offset": 3358
+                            },
+                            "start": {
+                              "column": 19,
+                              "line": 78,
+                              "offset": 3303
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "Type declarations are emitted (`dist/index.d.ts`) and the `exports` map ensures imports resolve and type-check in the `.mts` manifest.",
+              "position": {
+                "end": {
+                  "column": 135,
+                  "line": 80,
+                  "offset": 3494
+                },
+                "start": {
+                  "column": 1,
+                  "line": 80,
+                  "offset": 3360
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "Type declarations are emitted (",
+                  "position": {
+                    "end": {
+                      "column": 32,
+                      "line": 80,
+                      "offset": 3391
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 80,
+                      "offset": 3360
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "dist/index.d.ts",
+                  "position": {
+                    "end": {
+                      "column": 49,
+                      "line": 80,
+                      "offset": 3408
+                    },
+                    "start": {
+                      "column": 32,
+                      "line": 80,
+                      "offset": 3391
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": ") and the ",
+                  "position": {
+                    "end": {
+                      "column": 59,
+                      "line": 80,
+                      "offset": 3418
+                    },
+                    "start": {
+                      "column": 49,
+                      "line": 80,
+                      "offset": 3408
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "exports",
+                  "position": {
+                    "end": {
+                      "column": 68,
+                      "line": 80,
+                      "offset": 3427
+                    },
+                    "start": {
+                      "column": 59,
+                      "line": 80,
+                      "offset": 3418
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " map ensures imports resolve and type-check in the ",
+                  "position": {
+                    "end": {
+                      "column": 119,
+                      "line": 80,
+                      "offset": 3478
+                    },
+                    "start": {
+                      "column": 68,
+                      "line": 80,
+                      "offset": 3427
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": ".mts",
+                  "position": {
+                    "end": {
+                      "column": 125,
+                      "line": 80,
+                      "offset": 3484
+                    },
+                    "start": {
+                      "column": 119,
+                      "line": 80,
+                      "offset": 3478
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " manifest.",
+                  "position": {
+                    "end": {
+                      "column": 135,
+                      "line": 80,
+                      "offset": 3494
+                    },
+                    "start": {
+                      "column": 125,
+                      "line": 80,
+                      "offset": 3484
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            }
+          ]
+        },
+        {
+          "construct": "SectionBlock",
+          "name": "Why `.mts`?",
+          "depth": 2,
+          "position": {
+            "end": {
+              "column": 15,
+              "line": 82,
+              "offset": 3510
+            },
+            "start": {
+              "column": 1,
+              "line": 82,
+              "offset": 3496
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "The root `package.json` has no `\"type\": \"module\"`. The explicit `.mts` extension:",
+              "position": {
+                "end": {
+                  "column": 82,
+                  "line": 84,
+                  "offset": 3593
+                },
+                "start": {
+                  "column": 1,
+                  "line": 84,
+                  "offset": 3512
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "The root ",
+                  "position": {
+                    "end": {
+                      "column": 10,
+                      "line": 84,
+                      "offset": 3521
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 84,
+                      "offset": 3512
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "package.json",
+                  "position": {
+                    "end": {
+                      "column": 24,
+                      "line": 84,
+                      "offset": 3535
+                    },
+                    "start": {
+                      "column": 10,
+                      "line": 84,
+                      "offset": 3521
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " has no ",
+                  "position": {
+                    "end": {
+                      "column": 32,
+                      "line": 84,
+                      "offset": 3543
+                    },
+                    "start": {
+                      "column": 24,
+                      "line": 84,
+                      "offset": 3535
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "\"type\": \"module\"",
+                  "position": {
+                    "end": {
+                      "column": 50,
+                      "line": 84,
+                      "offset": 3561
+                    },
+                    "start": {
+                      "column": 32,
+                      "line": 84,
+                      "offset": 3543
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": ". The explicit ",
+                  "position": {
+                    "end": {
+                      "column": 65,
+                      "line": 84,
+                      "offset": 3576
+                    },
+                    "start": {
+                      "column": 50,
+                      "line": 84,
+                      "offset": 3561
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": ".mts",
+                  "position": {
+                    "end": {
+                      "column": 71,
+                      "line": 84,
+                      "offset": 3582
+                    },
+                    "start": {
+                      "column": 65,
+                      "line": 84,
+                      "offset": 3576
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " extension:",
+                  "position": {
+                    "end": {
+                      "column": 82,
+                      "line": 84,
+                      "offset": 3593
+                    },
+                    "start": {
+                      "column": 71,
+                      "line": 84,
+                      "offset": 3582
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "list",
+              "ordered": false,
+              "spread": false,
+              "start": null,
+              "value": "- Pins ESM for Node and bundlers.\n- Is unambiguous under Node's native type-stripping.\n- Signals TypeScript authoring to editors and tooling.",
+              "position": {
+                "end": {
+                  "column": 55,
+                  "line": 88,
+                  "offset": 3736
+                },
+                "start": {
+                  "column": 1,
+                  "line": 86,
+                  "offset": 3595
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- Pins ESM for Node and bundlers.",
+                  "position": {
+                    "end": {
+                      "column": 34,
+                      "line": 86,
+                      "offset": 3628
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 86,
+                      "offset": 3595
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "Pins ESM for Node and bundlers.",
+                      "position": {
+                        "end": {
+                          "column": 34,
+                          "line": 86,
+                          "offset": 3628
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 86,
+                          "offset": 3597
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "Pins ESM for Node and bundlers.",
+                          "position": {
+                            "end": {
+                              "column": 34,
+                              "line": 86,
+                              "offset": 3628
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 86,
+                              "offset": 3597
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- Is unambiguous under Node's native type-stripping.",
+                  "position": {
+                    "end": {
+                      "column": 53,
+                      "line": 87,
+                      "offset": 3681
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 87,
+                      "offset": 3629
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "Is unambiguous under Node's native type-stripping.",
+                      "position": {
+                        "end": {
+                          "column": 53,
+                          "line": 87,
+                          "offset": 3681
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 87,
+                          "offset": 3631
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "Is unambiguous under Node's native type-stripping.",
+                          "position": {
+                            "end": {
+                              "column": 53,
+                              "line": 87,
+                              "offset": 3681
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 87,
+                              "offset": 3631
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- Signals TypeScript authoring to editors and tooling.",
+                  "position": {
+                    "end": {
+                      "column": 55,
+                      "line": 88,
+                      "offset": 3736
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 88,
+                      "offset": 3682
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "Signals TypeScript authoring to editors and tooling.",
+                      "position": {
+                        "end": {
+                          "column": 55,
+                          "line": 88,
+                          "offset": 3736
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 88,
+                          "offset": 3684
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": "Signals TypeScript authoring to editors and tooling.",
+                          "position": {
+                            "end": {
+                              "column": 55,
+                              "line": 88,
+                              "offset": 3736
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 88,
+                              "offset": 3684
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            }
+          ]
+        },
+        {
+          "construct": "SectionBlock",
+          "name": "Source of Truth",
+          "depth": 2,
+          "position": {
+            "end": {
+              "column": 19,
+              "line": 90,
+              "offset": 3756
+            },
+            "start": {
+              "column": 1,
+              "line": 90,
+              "offset": 3738
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "Records (`_records/repositories/{repo}.art`, `_records/workspace.art`) are the source of truth. The config is manually authored, not generated — the two stay in sync manually until the generator lands.",
+              "position": {
+                "end": {
+                  "column": 202,
+                  "line": 92,
+                  "offset": 3959
+                },
+                "start": {
+                  "column": 1,
+                  "line": 92,
+                  "offset": 3758
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "Records (",
+                  "position": {
+                    "end": {
+                      "column": 10,
+                      "line": 92,
+                      "offset": 3767
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 92,
+                      "offset": 3758
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "_records/repositories/{repo}.art",
+                  "position": {
+                    "end": {
+                      "column": 44,
+                      "line": 92,
+                      "offset": 3801
+                    },
+                    "start": {
+                      "column": 10,
+                      "line": 92,
+                      "offset": 3767
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": ", ",
+                  "position": {
+                    "end": {
+                      "column": 46,
+                      "line": 92,
+                      "offset": 3803
+                    },
+                    "start": {
+                      "column": 44,
+                      "line": 92,
+                      "offset": 3801
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "_records/workspace.art",
+                  "position": {
+                    "end": {
+                      "column": 70,
+                      "line": 92,
+                      "offset": 3827
+                    },
+                    "start": {
+                      "column": 46,
+                      "line": 92,
+                      "offset": 3803
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": ") are the source of truth. The config is manually authored, not generated — the two stay in sync manually until the generator lands.",
+                  "position": {
+                    "end": {
+                      "column": 202,
+                      "line": 92,
+                      "offset": 3959
+                    },
+                    "start": {
+                      "column": 70,
+                      "line": 92,
+                      "offset": 3827
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            }
+          ]
+        },
+        {
+          "construct": "SectionBlock",
+          "name": "Design Decisions",
+          "depth": 2,
+          "position": {
+            "end": {
+              "column": 20,
+              "line": 94,
+              "offset": 3980
+            },
+            "start": {
+              "column": 1,
+              "line": 94,
+              "offset": 3961
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "The configuration design is captured in `records/adr/cli.art`:",
+              "position": {
+                "end": {
+                  "column": 63,
+                  "line": 96,
+                  "offset": 4044
+                },
+                "start": {
+                  "column": 1,
+                  "line": 96,
+                  "offset": 3982
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "The configuration design is captured in ",
+                  "position": {
+                    "end": {
+                      "column": 41,
+                      "line": 96,
+                      "offset": 4022
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 96,
+                      "offset": 3982
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "records/adr/cli.art",
+                  "position": {
+                    "end": {
+                      "column": 62,
+                      "line": 96,
+                      "offset": 4043
+                    },
+                    "start": {
+                      "column": 41,
+                      "line": 96,
+                      "offset": 4022
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": ":",
+                  "position": {
+                    "end": {
+                      "column": 63,
+                      "line": 96,
+                      "offset": 4044
+                    },
+                    "start": {
+                      "column": 62,
+                      "line": 96,
+                      "offset": 4043
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "text",
+              "value": "\n\n"
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "list",
+              "ordered": false,
+              "spread": false,
+              "start": null,
+              "value": "- **Type-safe Configuration in Workspace Root** — `.art-workspace.mts` as a TypeScript ESM module; `/config` subpath for the authoring API; main entry re-exports for the CLI.\n- **Runtime Config Loading — esbuild Bundle-at-Runtime** — the manifest is bundled and imported at runtime; `esbuild` becomes a runtime dependency. Reconsider Node native type-stripping when the minimum Node version is guaranteed (≥ 22.6).\n- **Manifest Mirrors Records Structures; Checkouts Derived at Entry Point** — superseded in part by the Checkout record decision below.\n- **Checkouts as CLI-Managed Records — Structure: Checkout** — status Proposed in the ADR but effectively adopted in implementation: checkouts are persisted in their own records (`_records/checkouts/{repo}.art`) managed by CLI commands, keeping repository records as read-only facts.\n- **Records as Source of Truth** — generated files (`.art-workspace.mts`) are derived from records, not maintained separately.",
+              "position": {
+                "end": {
+                  "column": 127,
+                  "line": 102,
+                  "offset": 5007
+                },
+                "start": {
+                  "column": 1,
+                  "line": 98,
+                  "offset": 4046
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- **Type-safe Configuration in Workspace Root** — `.art-workspace.mts` as a TypeScript ESM module; `/config` subpath for the authoring API; main entry re-exports for the CLI.",
+                  "position": {
+                    "end": {
+                      "column": 175,
+                      "line": 98,
+                      "offset": 4220
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 98,
+                      "offset": 4046
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "**Type-safe Configuration in Workspace Root** — `.art-workspace.mts` as a TypeScript ESM module; `/config` subpath for the authoring API; main entry re-exports for the CLI.",
+                      "position": {
+                        "end": {
+                          "column": 175,
+                          "line": 98,
+                          "offset": 4220
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 98,
+                          "offset": 4048
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "strong",
+                          "attributes": {},
+                          "position": {
+                            "end": {
+                              "column": 48,
+                              "line": 98,
+                              "offset": 4093
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 98,
+                              "offset": 4048
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Type-safe Configuration in Workspace Root",
+                              "position": {
+                                "end": {
+                                  "column": 46,
+                                  "line": 98,
+                                  "offset": 4091
+                                },
+                                "start": {
+                                  "column": 5,
+                                  "line": 98,
+                                  "offset": 4050
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " — ",
+                          "position": {
+                            "end": {
+                              "column": 51,
+                              "line": 98,
+                              "offset": 4096
+                            },
+                            "start": {
+                              "column": 48,
+                              "line": 98,
+                              "offset": 4093
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": ".art-workspace.mts",
+                          "position": {
+                            "end": {
+                              "column": 71,
+                              "line": 98,
+                              "offset": 4116
+                            },
+                            "start": {
+                              "column": 51,
+                              "line": 98,
+                              "offset": 4096
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " as a TypeScript ESM module; ",
+                          "position": {
+                            "end": {
+                              "column": 100,
+                              "line": 98,
+                              "offset": 4145
+                            },
+                            "start": {
+                              "column": 71,
+                              "line": 98,
+                              "offset": 4116
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "/config",
+                          "position": {
+                            "end": {
+                              "column": 109,
+                              "line": 98,
+                              "offset": 4154
+                            },
+                            "start": {
+                              "column": 100,
+                              "line": 98,
+                              "offset": 4145
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " subpath for the authoring API; main entry re-exports for the CLI.",
+                          "position": {
+                            "end": {
+                              "column": 175,
+                              "line": 98,
+                              "offset": 4220
+                            },
+                            "start": {
+                              "column": 109,
+                              "line": 98,
+                              "offset": 4154
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- **Runtime Config Loading — esbuild Bundle-at-Runtime** — the manifest is bundled and imported at runtime; `esbuild` becomes a runtime dependency. Reconsider Node native type-stripping when the minimum Node version is guaranteed (≥ 22.6).",
+                  "position": {
+                    "end": {
+                      "column": 240,
+                      "line": 99,
+                      "offset": 4460
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 99,
+                      "offset": 4221
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "**Runtime Config Loading — esbuild Bundle-at-Runtime** — the manifest is bundled and imported at runtime; `esbuild` becomes a runtime dependency. Reconsider Node native type-stripping when the minimum Node version is guaranteed (≥ 22.6).",
+                      "position": {
+                        "end": {
+                          "column": 240,
+                          "line": 99,
+                          "offset": 4460
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 99,
+                          "offset": 4223
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "strong",
+                          "attributes": {},
+                          "position": {
+                            "end": {
+                              "column": 57,
+                              "line": 99,
+                              "offset": 4277
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 99,
+                              "offset": 4223
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Runtime Config Loading — esbuild Bundle-at-Runtime",
+                              "position": {
+                                "end": {
+                                  "column": 55,
+                                  "line": 99,
+                                  "offset": 4275
+                                },
+                                "start": {
+                                  "column": 5,
+                                  "line": 99,
+                                  "offset": 4225
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " — the manifest is bundled and imported at runtime; ",
+                          "position": {
+                            "end": {
+                              "column": 109,
+                              "line": 99,
+                              "offset": 4329
+                            },
+                            "start": {
+                              "column": 57,
+                              "line": 99,
+                              "offset": 4277
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "esbuild",
+                          "position": {
+                            "end": {
+                              "column": 118,
+                              "line": 99,
+                              "offset": 4338
+                            },
+                            "start": {
+                              "column": 109,
+                              "line": 99,
+                              "offset": 4329
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " becomes a runtime dependency. Reconsider Node native type-stripping when the minimum Node version is guaranteed (≥ 22.6).",
+                          "position": {
+                            "end": {
+                              "column": 240,
+                              "line": 99,
+                              "offset": 4460
+                            },
+                            "start": {
+                              "column": 118,
+                              "line": 99,
+                              "offset": 4338
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- **Manifest Mirrors Records Structures; Checkouts Derived at Entry Point** — superseded in part by the Checkout record decision below.",
+                  "position": {
+                    "end": {
+                      "column": 136,
+                      "line": 100,
+                      "offset": 4596
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 100,
+                      "offset": 4461
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "**Manifest Mirrors Records Structures; Checkouts Derived at Entry Point** — superseded in part by the Checkout record decision below.",
+                      "position": {
+                        "end": {
+                          "column": 136,
+                          "line": 100,
+                          "offset": 4596
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 100,
+                          "offset": 4463
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "strong",
+                          "attributes": {},
+                          "position": {
+                            "end": {
+                              "column": 76,
+                              "line": 100,
+                              "offset": 4536
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 100,
+                              "offset": 4463
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Manifest Mirrors Records Structures; Checkouts Derived at Entry Point",
+                              "position": {
+                                "end": {
+                                  "column": 74,
+                                  "line": 100,
+                                  "offset": 4534
+                                },
+                                "start": {
+                                  "column": 5,
+                                  "line": 100,
+                                  "offset": 4465
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " — superseded in part by the Checkout record decision below.",
+                          "position": {
+                            "end": {
+                              "column": 136,
+                              "line": 100,
+                              "offset": 4596
+                            },
+                            "start": {
+                              "column": 76,
+                              "line": 100,
+                              "offset": 4536
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- **Checkouts as CLI-Managed Records — Structure: Checkout** — status Proposed in the ADR but effectively adopted in implementation: checkouts are persisted in their own records (`_records/checkouts/{repo}.art`) managed by CLI commands, keeping repository records as read-only facts.",
+                  "position": {
+                    "end": {
+                      "column": 284,
+                      "line": 101,
+                      "offset": 4880
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 101,
+                      "offset": 4597
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "**Checkouts as CLI-Managed Records — Structure: Checkout** — status Proposed in the ADR but effectively adopted in implementation: checkouts are persisted in their own records (`_records/checkouts/{repo}.art`) managed by CLI commands, keeping repository records as read-only facts.",
+                      "position": {
+                        "end": {
+                          "column": 284,
+                          "line": 101,
+                          "offset": 4880
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 101,
+                          "offset": 4599
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "strong",
+                          "attributes": {},
+                          "position": {
+                            "end": {
+                              "column": 61,
+                              "line": 101,
+                              "offset": 4657
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 101,
+                              "offset": 4599
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Checkouts as CLI-Managed Records — Structure: Checkout",
+                              "position": {
+                                "end": {
+                                  "column": 59,
+                                  "line": 101,
+                                  "offset": 4655
+                                },
+                                "start": {
+                                  "column": 5,
+                                  "line": 101,
+                                  "offset": 4601
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " — status Proposed in the ADR but effectively adopted in implementation: checkouts are persisted in their own records (",
+                          "position": {
+                            "end": {
+                              "column": 180,
+                              "line": 101,
+                              "offset": 4776
+                            },
+                            "start": {
+                              "column": 61,
+                              "line": 101,
+                              "offset": 4657
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": "_records/checkouts/{repo}.art",
+                          "position": {
+                            "end": {
+                              "column": 211,
+                              "line": 101,
+                              "offset": 4807
+                            },
+                            "start": {
+                              "column": 180,
+                              "line": 101,
+                              "offset": 4776
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": ") managed by CLI commands, keeping repository records as read-only facts.",
+                          "position": {
+                            "end": {
+                              "column": 284,
+                              "line": 101,
+                              "offset": 4880
+                            },
+                            "start": {
+                              "column": 211,
+                              "line": 101,
+                              "offset": 4807
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalBlock",
+                  "type": "listItem",
+                  "checked": null,
+                  "spread": false,
+                  "value": "- **Records as Source of Truth** — generated files (`.art-workspace.mts`) are derived from records, not maintained separately.",
+                  "position": {
+                    "end": {
+                      "column": 127,
+                      "line": 102,
+                      "offset": 5007
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 102,
+                      "offset": 4881
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalBlock",
+                      "type": "paragraph",
+                      "value": "**Records as Source of Truth** — generated files (`.art-workspace.mts`) are derived from records, not maintained separately.",
+                      "position": {
+                        "end": {
+                          "column": 127,
+                          "line": 102,
+                          "offset": 5007
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 102,
+                          "offset": 4883
+                        }
+                      },
+                      "children": [
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "strong",
+                          "attributes": {},
+                          "position": {
+                            "end": {
+                              "column": 33,
+                              "line": 102,
+                              "offset": 4913
+                            },
+                            "start": {
+                              "column": 3,
+                              "line": 102,
+                              "offset": 4883
+                            }
+                          },
+                          "children": [
+                            {
+                              "construct": "NaturalExpression",
+                              "type": "text",
+                              "attributes": {},
+                              "value": "Records as Source of Truth",
+                              "position": {
+                                "end": {
+                                  "column": 31,
+                                  "line": 102,
+                                  "offset": 4911
+                                },
+                                "start": {
+                                  "column": 5,
+                                  "line": 102,
+                                  "offset": 4885
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": " — generated files (",
+                          "position": {
+                            "end": {
+                              "column": 53,
+                              "line": 102,
+                              "offset": 4933
+                            },
+                            "start": {
+                              "column": 33,
+                              "line": 102,
+                              "offset": 4913
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "inlineCode",
+                          "attributes": {},
+                          "value": ".art-workspace.mts",
+                          "position": {
+                            "end": {
+                              "column": 73,
+                              "line": 102,
+                              "offset": 4953
+                            },
+                            "start": {
+                              "column": 53,
+                              "line": 102,
+                              "offset": 4933
+                            }
+                          }
+                        },
+                        {
+                          "construct": "NaturalExpression",
+                          "type": "text",
+                          "attributes": {},
+                          "value": ") are derived from records, not maintained separately.",
+                          "position": {
+                            "end": {
+                              "column": 127,
+                              "line": 102,
+                              "offset": 5007
+                            },
+                            "start": {
+                              "column": 73,
+                              "line": 102,
+                              "offset": 4953
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

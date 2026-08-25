@@ -1,0 +1,13 @@
+# Module
+
+## NPM Package Deployment: Spec
+
+**Canonical Name:** `@art-js/spec`
+
+**Registry:** `https://registry.npmjs.org`
+
+**Access:** `public`
+
+**Build:** Deployment Build: NPM Command
+
+**Deploy:** Deployment Command: NPM Package CLI

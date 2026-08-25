@@ -1,0 +1,54 @@
+# Module
+
+## Package: Constructs
+
+**Purpose:** Construct factories for Art parser records.
+
+**Description:** Creates block and inline construct records from markdown AST nodes.
+
+**Owner:** Project: Art JS
+
+**Author:** Noodlestan Collective
+
+**Path:** `libs/constructs/`
+
+**Canonical Name:** `@art-js/constructs`
+
+**Published:** `true`
+
+**Private:** `false`
+
+**Deployment:** NPM Package Deployment: Constructs
+
+**Files:**
+
+- `dist`
+- `LICENSE-MIT`
+- `README.md`
+
+**Language:** Typescript
+
+**Engines:**
+
+- Node: `>= 22`
+
+**PackageManager:** `npm@10.2.3`
+
+**PackageFile:** `package.json`
+
+**Dependencies:**
+
+- Runtime:
+  - `@art-js/primitives`
+
+**Scripts:**
+
+- Package Script Set: Artificial Lib Build
+- Package Script Set: Common Scripts
+
+**Scaffolders:**
+
+- Scaffolder Skeleton: Lib Package
+- Scaffolder Skeleton: Package Common
+
+**License:** License: Noodlestan 2026 MIT

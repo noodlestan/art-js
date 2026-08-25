@@ -1,0 +1,49 @@
+# Module
+
+## Repository: Art JS
+
+**Purpose:** md-art-md parser/serializer pipeline and supporting packages.
+
+**Description:** Standalone repository extracted from Artificial, owning the parser, serializer, constructs, primitives, and pipeline-tests packages.
+
+**Owner:** Project: Art JS
+
+**Author:** Noodlestan Collective
+
+**Remote:** `git@github.com:noodlestan/art-js.git`
+
+**Consumers:** TBD
+
+**Private:** `false`
+
+**Workspaces:** None
+
+**Language:** TypeScript
+
+**Engines:**
+
+- Node: `>= 22`
+
+**PackageManager:** `npm@10.2.3`
+
+**PackageFile:** package.json
+
+**Dependencies:**
+
+- Runtime:
+  - TBD
+- Dev:
+  - TBD
+
+**Scripts:**
+
+- Package Script Set: Root Lifecycle
+
+**Scaffolders:**
+
+- Scaffolder Skeleton: Project Skeleton
+- Scaffolder Files: Project README
+- Scaffolder Files: Project Package Json
+- Scaffolder Files: Project Lefthook
+
+**License:** License: Noodlestan 2026 MIT

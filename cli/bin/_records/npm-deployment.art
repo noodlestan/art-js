@@ -1,0 +1,17 @@
+# Module
+
+## NPM Package Deployment: Bin
+
+**Owner:** Package: Bin
+
+**Status:** `DEPLOYED`
+
+**Build:** Deployment Build: NPM Command
+
+**Deploy:** Deployment Command: NPM Package CLI
+
+**Canonical Name:** `@art-js/bin`
+
+**Registry:** `https://registry.npmjs.org`
+
+**Access:** `public`
