@@ -2,7 +2,7 @@
 
 **ID:** `implement-serializer`
 
-**Status:** `IN_PROGRESS`
+**Status:** `WORKING`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -70,6 +70,8 @@ This section describes the context feeding (and being affected by) the plan, inc
 
 For the delegatee (shared context; per-step context is in each instruction file):
 
+- `$PACKAGE_PARSER/architecture/parser.md` — parser design principles, block/phrasing boundary, construct API, and serializer pipeline.
+- `$PACKAGE_PARSER/architecture/fixture-tests.md` — test infrastructure, fixture anatomy, CLI flags, and use cases.
 - `$PACKAGE_PARSER/test/fixtures/` — fixture inputs and snapshots used by the two-way tests.
 
 ## Execution Context
@@ -99,7 +101,9 @@ Serializer package: unit tests for `serialize(document): string`. Parser package
 
 ## Commits
 
-### `bootstrap-serializer-lib` - `COMMITTED`
+### `bootstrap-serializer-lib`
+
+**Status:** `COMMITTED`
 
 **Commit id:** `a69f44a`
 
@@ -117,7 +121,9 @@ Serializer package: unit tests for `serialize(document): string`. Parser package
 - Register package record `$PROJECT/_records/packages/artificial-serializer.art`.
 - Verify: `npm run lint`, `npm run build`, `npm run test` in serializer package.
 
-### `two-way-fixture-tests` - `COMMITTED`
+### `two-way-fixture-tests`
+
+**Status:** `COMMITTED`
 
 **Commit id:** `2b3cbd3`
 
@@ -134,7 +140,9 @@ Serializer package: unit tests for `serialize(document): string`. Parser package
 - When `--write` is provided, also write `{fixture}.parsed.md` for debugging.
 - Verify: `npm run test` passes in parser package with the two-way suite.
 
-### `integrate-serializer-reports` - `COMMITTED`
+### `integrate-serializer-reports`
+
+**Status:** `COMMITTED`
 
 **Commit id:** `1bfdbe7`
 
@@ -142,7 +150,9 @@ Serializer package: unit tests for `serialize(document): string`. Parser package
 
 **Instructions File:** Executed in pairing session with user.
 
-### `split-tests-parser-vs-serialize` - `COMMITTED`
+### `split-tests-parser-vs-serialize`
+
+**Status:** `COMMITTED`
 
 **Commit id:** `d8d0135`
 
@@ -157,7 +167,9 @@ Serializer package: unit tests for `serialize(document): string`. Parser package
 - Extract shared utilities (fixture discovery, arg parsing, diffing, summary) into `scripts/test/shared/`
 - Regenerate all 15 fixture snapshots with stable key ordering
 
-### `fix-parser-field-inline-and-test-fixtures` - `COMMITTED`
+### `fix-parser-field-inline-and-test-fixtures`
+
+**Status:** `COMMITTED`
 
 **Commit id:** `8a6415c`
 
@@ -181,7 +193,9 @@ Serializer package: unit tests for `serialize(document): string`. Parser package
 - The serializer-wip `test-parser.ts` writes `.art.json` files as a side-effect of testing; this is the problem this instruction aims to fix.
 - The serializer-wip also contains additional constructs/FieldInline work that may inform implementation, but the real fix is parser-side (see insight in planner reflection).
 
-### `build-incremental-roundtrip-fixtures` - `READY`
+### `build-incremental-roundtrip-fixtures`
+
+**Status:** `READY`
 
 **Commit Message:** `build(md-art-roundtrip): add incremental parser and serializer fixtures`
 
@@ -189,12 +203,20 @@ Serializer package: unit tests for `serialize(document): string`. Parser package
 
 **Scope:**
 
-- Add a fixture ladder from the passing `hello-world.md` baseline through section-only, inline-field-only, block-field-only, and combined section/field cases.
+- Remove stale WIP comments from numbered fixtures (004, 005, 006, 007, 030, 031, 032) where the described issues have been resolved; regenerate snapshots and confirm serializer roundtrip still passes.
+- Fix `_011-section-block-with-formatting.md`: SectionBlock serializer escapes underscores and asterisks in heading names (`# Hello _World_!` becomes `# Hello \_World\_!`). Root cause: `SectionBlock.toMdast()` emits a raw `text` node; `mdast-util-to-markdown` escapes markdown syntax in text nodes. Fix: parse heading name via `fromMarkdown()` to produce proper mdast children instead of a single text node.
+- Add new incremental fixtures that combine constructs not yet covered:
+  - `008-natural-block-with-list-and-link.md` — list items containing links
+  - `009-natural-block-with-list-and-formatting.md` — list items with emphasis/strong
+  - `014-section-block-with-list.md` — section containing a list
+  - `015-section-block-with-code.md` — section containing a code block
+  - `024-field-block-with-formatting.md` — FieldBlock capturing formatted paragraphs
+  - `025-field-block-with-code.md` — FieldBlock capturing code blocks
+  - `040-tag-simple.md` — `(#tagname)` in prose (Tag construct implemented but has zero roundtrip coverage)
+  - `041-tag-in-section.md` — tag inside a section body
+  - `042-tag-in-field-inline.md` — tag inside a FieldInline value
 - For each fixture, generate the parser snapshot, inspect the captured AST, and run the focused serializer roundtrip.
 - Investigate demonstrated failures in parser/construct/serializer code and add focused constructs unit tests when fixes are required.
-- Preserve the block/inline distinction recursively: natural block records contain natural expression records for phrasing children, while list items and other mdast attributes are retained.
-- Make FieldBlock capture construct-owned: it captures following natural blocks and closes itself before the next FieldBlock, FieldInline, or SectionBlock.
-- Simplify construct APIs by removing redundant matching/visit hooks and document the remaining preprocessor, factory, handler, and context responsibilities.
 
 ## Follow ups
 

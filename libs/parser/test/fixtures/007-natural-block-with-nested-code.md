@@ -7,5 +7,3 @@ Some code:
 ```
 // comment
 ````
-
-WIP: Code blocks not captured

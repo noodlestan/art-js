@@ -61,48 +61,6 @@
           "offset": 9
         }
       }
-    },
-    {
-      "construct": "NaturalBlock",
-      "type": "text",
-      "value": "\n\n"
-    },
-    {
-      "construct": "NaturalBlock",
-      "type": "paragraph",
-      "value": "WIP: Code blocks not captured",
-      "position": {
-        "end": {
-          "column": 30,
-          "line": 8,
-          "offset": 91
-        },
-        "start": {
-          "column": 1,
-          "line": 8,
-          "offset": 62
-        }
-      },
-      "children": [
-        {
-          "construct": "NaturalExpression",
-          "type": "text",
-          "attributes": {},
-          "value": "WIP: Code blocks not captured",
-          "position": {
-            "end": {
-              "column": 30,
-              "line": 8,
-              "offset": 91
-            },
-            "start": {
-              "column": 1,
-              "line": 8,
-              "offset": 62
-            }
-          }
-        }
-      ]
     }
   ]
 }

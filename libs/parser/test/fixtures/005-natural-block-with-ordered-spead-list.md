@@ -7,5 +7,3 @@ A list.
 
 4. Hello World
    Once More
-
-WIP: List items do not have `type`.

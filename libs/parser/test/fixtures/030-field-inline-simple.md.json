@@ -58,48 +58,6 @@
               "offset": 15
             }
           }
-        },
-        {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
-          "construct": "NaturalBlock",
-          "type": "paragraph",
-          "value": "WIP: Value is empty array. Expected \"Hello you.\"",
-          "position": {
-            "end": {
-              "column": 49,
-              "line": 5,
-              "offset": 89
-            },
-            "start": {
-              "column": 1,
-              "line": 5,
-              "offset": 41
-            }
-          },
-          "children": [
-            {
-              "construct": "NaturalExpression",
-              "type": "text",
-              "attributes": {},
-              "value": "WIP: Value is empty array. Expected \"Hello you.\"",
-              "position": {
-                "end": {
-                  "column": 49,
-                  "line": 5,
-                  "offset": 89
-                },
-                "start": {
-                  "column": 1,
-                  "line": 5,
-                  "offset": 41
-                }
-              }
-            }
-          ]
         }
       ]
     }
