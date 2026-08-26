@@ -168,48 +168,6 @@
               "offset": 15
             }
           }
-        },
-        {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
-          "construct": "NaturalBlock",
-          "type": "paragraph",
-          "value": "WIP: Only how is included in field value.",
-          "position": {
-            "end": {
-              "column": 42,
-              "line": 6,
-              "offset": 103
-            },
-            "start": {
-              "column": 1,
-              "line": 6,
-              "offset": 62
-            }
-          },
-          "children": [
-            {
-              "construct": "NaturalExpression",
-              "type": "text",
-              "attributes": {},
-              "value": "WIP: Only how is included in field value.",
-              "position": {
-                "end": {
-                  "column": 42,
-                  "line": 6,
-                  "offset": 103
-                },
-                "start": {
-                  "column": 1,
-                  "line": 6,
-                  "offset": 62
-                }
-              }
-            }
-          ]
         }
       ]
     }

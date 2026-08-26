@@ -1,0 +1,23 @@
+{
+  "construct": "Document",
+  "children": [
+    {
+      "construct": "SectionBlock",
+      "name": "Hello _World_! How are **you**?",
+      "depth": 1,
+      "position": {
+        "end": {
+          "column": 34,
+          "line": 1,
+          "offset": 33
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": []
+    }
+  ]
+}

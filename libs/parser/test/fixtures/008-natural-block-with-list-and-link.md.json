@@ -1,0 +1,399 @@
+{
+  "construct": "Document",
+  "children": [
+    {
+      "construct": "NaturalBlock",
+      "type": "paragraph",
+      "value": "A list with links:",
+      "position": {
+        "end": {
+          "column": 19,
+          "line": 1,
+          "offset": 18
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": [
+        {
+          "construct": "NaturalExpression",
+          "type": "text",
+          "attributes": {},
+          "value": "A list with links:",
+          "position": {
+            "end": {
+              "column": 19,
+              "line": 1,
+              "offset": 18
+            },
+            "start": {
+              "column": 1,
+              "line": 1,
+              "offset": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "construct": "NaturalBlock",
+      "type": "text",
+      "value": "\n\n"
+    },
+    {
+      "construct": "NaturalBlock",
+      "type": "list",
+      "ordered": false,
+      "spread": false,
+      "start": null,
+      "value": "- Visit [Example](https://example.com) today\n- Read the [docs](https://docs.example.com)\n  for more info\n- Contact [us](mailto:hello@example.com)",
+      "position": {
+        "end": {
+          "column": 41,
+          "line": 6,
+          "offset": 165
+        },
+        "start": {
+          "column": 1,
+          "line": 3,
+          "offset": 20
+        }
+      },
+      "children": [
+        {
+          "construct": "NaturalBlock",
+          "type": "listItem",
+          "checked": null,
+          "spread": false,
+          "value": "- Visit [Example](https://example.com) today",
+          "position": {
+            "end": {
+              "column": 45,
+              "line": 3,
+              "offset": 64
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 20
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "Visit [Example](https://example.com) today",
+              "position": {
+                "end": {
+                  "column": 45,
+                  "line": 3,
+                  "offset": 64
+                },
+                "start": {
+                  "column": 3,
+                  "line": 3,
+                  "offset": 22
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "Visit ",
+                  "position": {
+                    "end": {
+                      "column": 9,
+                      "line": 3,
+                      "offset": 28
+                    },
+                    "start": {
+                      "column": 3,
+                      "line": 3,
+                      "offset": 22
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "link",
+                  "attributes": {
+                    "title": null,
+                    "url": "https://example.com"
+                  },
+                  "position": {
+                    "end": {
+                      "column": 39,
+                      "line": 3,
+                      "offset": 58
+                    },
+                    "start": {
+                      "column": 9,
+                      "line": 3,
+                      "offset": 28
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "Example",
+                      "position": {
+                        "end": {
+                          "column": 17,
+                          "line": 3,
+                          "offset": 36
+                        },
+                        "start": {
+                          "column": 10,
+                          "line": 3,
+                          "offset": 29
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " today",
+                  "position": {
+                    "end": {
+                      "column": 45,
+                      "line": 3,
+                      "offset": 64
+                    },
+                    "start": {
+                      "column": 39,
+                      "line": 3,
+                      "offset": 58
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "listItem",
+          "checked": null,
+          "spread": false,
+          "value": "- Read the [docs](https://docs.example.com)\n  for more info",
+          "position": {
+            "end": {
+              "column": 16,
+              "line": 5,
+              "offset": 124
+            },
+            "start": {
+              "column": 1,
+              "line": 4,
+              "offset": 65
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "Read the [docs](https://docs.example.com)\n  for more info",
+              "position": {
+                "end": {
+                  "column": 16,
+                  "line": 5,
+                  "offset": 124
+                },
+                "start": {
+                  "column": 3,
+                  "line": 4,
+                  "offset": 67
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "Read the ",
+                  "position": {
+                    "end": {
+                      "column": 12,
+                      "line": 4,
+                      "offset": 76
+                    },
+                    "start": {
+                      "column": 3,
+                      "line": 4,
+                      "offset": 67
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "link",
+                  "attributes": {
+                    "title": null,
+                    "url": "https://docs.example.com"
+                  },
+                  "position": {
+                    "end": {
+                      "column": 44,
+                      "line": 4,
+                      "offset": 108
+                    },
+                    "start": {
+                      "column": 12,
+                      "line": 4,
+                      "offset": 76
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "docs",
+                      "position": {
+                        "end": {
+                          "column": 17,
+                          "line": 4,
+                          "offset": 81
+                        },
+                        "start": {
+                          "column": 13,
+                          "line": 4,
+                          "offset": 77
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "\nfor more info",
+                  "position": {
+                    "end": {
+                      "column": 16,
+                      "line": 5,
+                      "offset": 124
+                    },
+                    "start": {
+                      "column": 44,
+                      "line": 4,
+                      "offset": 108
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "listItem",
+          "checked": null,
+          "spread": false,
+          "value": "- Contact [us](mailto:hello@example.com)",
+          "position": {
+            "end": {
+              "column": 41,
+              "line": 6,
+              "offset": 165
+            },
+            "start": {
+              "column": 1,
+              "line": 6,
+              "offset": 125
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "Contact [us](mailto:hello@example.com)",
+              "position": {
+                "end": {
+                  "column": 41,
+                  "line": 6,
+                  "offset": 165
+                },
+                "start": {
+                  "column": 3,
+                  "line": 6,
+                  "offset": 127
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "Contact ",
+                  "position": {
+                    "end": {
+                      "column": 11,
+                      "line": 6,
+                      "offset": 135
+                    },
+                    "start": {
+                      "column": 3,
+                      "line": 6,
+                      "offset": 127
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "link",
+                  "attributes": {
+                    "title": null,
+                    "url": "mailto:hello@example.com"
+                  },
+                  "position": {
+                    "end": {
+                      "column": 41,
+                      "line": 6,
+                      "offset": 165
+                    },
+                    "start": {
+                      "column": 11,
+                      "line": 6,
+                      "offset": 135
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "us",
+                      "position": {
+                        "end": {
+                          "column": 14,
+                          "line": 6,
+                          "offset": 138
+                        },
+                        "start": {
+                          "column": 12,
+                          "line": 6,
+                          "offset": 136
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

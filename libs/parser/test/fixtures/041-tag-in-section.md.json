@@ -3,13 +3,19 @@
   "children": [
     {
       "construct": "SectionBlock",
-      "name": "Hello _World_! How are **you**?",
+      "name": "Feature  Implementation",
       "depth": 1,
+      "tags": [
+        {
+          "construct": "Tag",
+          "name": "feature"
+        }
+      ],
       "position": {
         "end": {
-          "column": 34,
+          "column": 36,
           "line": 1,
-          "offset": 33
+          "offset": 35
         },
         "start": {
           "column": 1,
@@ -26,17 +32,17 @@
         {
           "construct": "NaturalBlock",
           "type": "paragraph",
-          "value": "WIP: Section Block does not captures formatting and escapes uderscores and asterisks when serializing.",
+          "value": "Details about the feature.",
           "position": {
             "end": {
-              "column": 103,
+              "column": 27,
               "line": 3,
-              "offset": 137
+              "offset": 63
             },
             "start": {
               "column": 1,
               "line": 3,
-              "offset": 35
+              "offset": 37
             }
           },
           "children": [
@@ -44,17 +50,17 @@
               "construct": "NaturalExpression",
               "type": "text",
               "attributes": {},
-              "value": "WIP: Section Block does not captures formatting and escapes uderscores and asterisks when serializing.",
+              "value": "Details about the feature.",
               "position": {
                 "end": {
-                  "column": 103,
+                  "column": 27,
                   "line": 3,
-                  "offset": 137
+                  "offset": 63
                 },
                 "start": {
                   "column": 1,
                   "line": 3,
-                  "offset": 35
+                  "offset": 37
                 }
               }
             }

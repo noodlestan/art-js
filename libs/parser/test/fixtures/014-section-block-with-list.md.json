@@ -1,0 +1,225 @@
+{
+  "construct": "Document",
+  "children": [
+    {
+      "construct": "SectionBlock",
+      "name": "Shopping List",
+      "depth": 1,
+      "position": {
+        "end": {
+          "column": 16,
+          "line": 1,
+          "offset": 15
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": [
+        {
+          "construct": "NaturalBlock",
+          "type": "text",
+          "value": "\n\n"
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "list",
+          "ordered": false,
+          "spread": false,
+          "start": null,
+          "value": "- Milk\n- Eggs\n  Organic preferred\n- Bread",
+          "position": {
+            "end": {
+              "column": 8,
+              "line": 6,
+              "offset": 58
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 17
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "listItem",
+              "checked": null,
+              "spread": false,
+              "value": "- Milk",
+              "position": {
+                "end": {
+                  "column": 7,
+                  "line": 3,
+                  "offset": 23
+                },
+                "start": {
+                  "column": 1,
+                  "line": 3,
+                  "offset": 17
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalBlock",
+                  "type": "paragraph",
+                  "value": "Milk",
+                  "position": {
+                    "end": {
+                      "column": 7,
+                      "line": 3,
+                      "offset": 23
+                    },
+                    "start": {
+                      "column": 3,
+                      "line": 3,
+                      "offset": 19
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "Milk",
+                      "position": {
+                        "end": {
+                          "column": 7,
+                          "line": 3,
+                          "offset": 23
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 3,
+                          "offset": 19
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "listItem",
+              "checked": null,
+              "spread": false,
+              "value": "- Eggs\n  Organic preferred",
+              "position": {
+                "end": {
+                  "column": 20,
+                  "line": 5,
+                  "offset": 50
+                },
+                "start": {
+                  "column": 1,
+                  "line": 4,
+                  "offset": 24
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalBlock",
+                  "type": "paragraph",
+                  "value": "Eggs\n  Organic preferred",
+                  "position": {
+                    "end": {
+                      "column": 20,
+                      "line": 5,
+                      "offset": 50
+                    },
+                    "start": {
+                      "column": 3,
+                      "line": 4,
+                      "offset": 26
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "Eggs\nOrganic preferred",
+                      "position": {
+                        "end": {
+                          "column": 20,
+                          "line": 5,
+                          "offset": 50
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 4,
+                          "offset": 26
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "listItem",
+              "checked": null,
+              "spread": false,
+              "value": "- Bread",
+              "position": {
+                "end": {
+                  "column": 8,
+                  "line": 6,
+                  "offset": 58
+                },
+                "start": {
+                  "column": 1,
+                  "line": 6,
+                  "offset": 51
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalBlock",
+                  "type": "paragraph",
+                  "value": "Bread",
+                  "position": {
+                    "end": {
+                      "column": 8,
+                      "line": 6,
+                      "offset": 58
+                    },
+                    "start": {
+                      "column": 3,
+                      "line": 6,
+                      "offset": 53
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "Bread",
+                      "position": {
+                        "end": {
+                          "column": 8,
+                          "line": 6,
+                          "offset": 58
+                        },
+                        "start": {
+                          "column": 3,
+                          "line": 6,
+                          "offset": 53
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

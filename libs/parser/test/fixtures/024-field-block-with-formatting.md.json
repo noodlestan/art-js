@@ -1,0 +1,211 @@
+{
+  "construct": "Document",
+  "children": [
+    {
+      "construct": "FieldBlock",
+      "name": "Description",
+      "value": [
+        {
+          "construct": "NaturalBlock",
+          "type": "text",
+          "value": "\n\n"
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "paragraph",
+          "value": "This is a _formatted_ description with **bold** and `code`.",
+          "position": {
+            "end": {
+              "column": 60,
+              "line": 3,
+              "offset": 77
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 18
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalExpression",
+              "type": "text",
+              "attributes": {},
+              "value": "This is a ",
+              "position": {
+                "end": {
+                  "column": 11,
+                  "line": 3,
+                  "offset": 28
+                },
+                "start": {
+                  "column": 1,
+                  "line": 3,
+                  "offset": 18
+                }
+              }
+            },
+            {
+              "construct": "NaturalExpression",
+              "type": "emphasis",
+              "attributes": {},
+              "position": {
+                "end": {
+                  "column": 22,
+                  "line": 3,
+                  "offset": 39
+                },
+                "start": {
+                  "column": 11,
+                  "line": 3,
+                  "offset": 28
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "formatted",
+                  "position": {
+                    "end": {
+                      "column": 21,
+                      "line": 3,
+                      "offset": 38
+                    },
+                    "start": {
+                      "column": 12,
+                      "line": 3,
+                      "offset": 29
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalExpression",
+              "type": "text",
+              "attributes": {},
+              "value": " description with ",
+              "position": {
+                "end": {
+                  "column": 40,
+                  "line": 3,
+                  "offset": 57
+                },
+                "start": {
+                  "column": 22,
+                  "line": 3,
+                  "offset": 39
+                }
+              }
+            },
+            {
+              "construct": "NaturalExpression",
+              "type": "strong",
+              "attributes": {},
+              "position": {
+                "end": {
+                  "column": 48,
+                  "line": 3,
+                  "offset": 65
+                },
+                "start": {
+                  "column": 40,
+                  "line": 3,
+                  "offset": 57
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "bold",
+                  "position": {
+                    "end": {
+                      "column": 46,
+                      "line": 3,
+                      "offset": 63
+                    },
+                    "start": {
+                      "column": 42,
+                      "line": 3,
+                      "offset": 59
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "construct": "NaturalExpression",
+              "type": "text",
+              "attributes": {},
+              "value": " and ",
+              "position": {
+                "end": {
+                  "column": 53,
+                  "line": 3,
+                  "offset": 70
+                },
+                "start": {
+                  "column": 48,
+                  "line": 3,
+                  "offset": 65
+                }
+              }
+            },
+            {
+              "construct": "NaturalExpression",
+              "type": "inlineCode",
+              "attributes": {},
+              "value": "code",
+              "position": {
+                "end": {
+                  "column": 59,
+                  "line": 3,
+                  "offset": 76
+                },
+                "start": {
+                  "column": 53,
+                  "line": 3,
+                  "offset": 70
+                }
+              }
+            },
+            {
+              "construct": "NaturalExpression",
+              "type": "text",
+              "attributes": {},
+              "value": ".",
+              "position": {
+                "end": {
+                  "column": 60,
+                  "line": 3,
+                  "offset": 77
+                },
+                "start": {
+                  "column": 59,
+                  "line": 3,
+                  "offset": 76
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "position": {
+        "end": {
+          "column": 17,
+          "line": 1,
+          "offset": 16
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,427 @@
+{
+  "construct": "Document",
+  "children": [
+    {
+      "construct": "NaturalBlock",
+      "type": "paragraph",
+      "value": "A list with formatting:",
+      "position": {
+        "end": {
+          "column": 24,
+          "line": 1,
+          "offset": 23
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": [
+        {
+          "construct": "NaturalExpression",
+          "type": "text",
+          "attributes": {},
+          "value": "A list with formatting:",
+          "position": {
+            "end": {
+              "column": 24,
+              "line": 1,
+              "offset": 23
+            },
+            "start": {
+              "column": 1,
+              "line": 1,
+              "offset": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "construct": "NaturalBlock",
+      "type": "text",
+      "value": "\n\n"
+    },
+    {
+      "construct": "NaturalBlock",
+      "type": "list",
+      "ordered": false,
+      "spread": false,
+      "start": null,
+      "value": "- **Bold** item with _emphasis_\n- Regular item with `inline code`\n- _Emphasized_ item with **strong** text",
+      "position": {
+        "end": {
+          "column": 41,
+          "line": 5,
+          "offset": 131
+        },
+        "start": {
+          "column": 1,
+          "line": 3,
+          "offset": 25
+        }
+      },
+      "children": [
+        {
+          "construct": "NaturalBlock",
+          "type": "listItem",
+          "checked": null,
+          "spread": false,
+          "value": "- **Bold** item with _emphasis_",
+          "position": {
+            "end": {
+              "column": 32,
+              "line": 3,
+              "offset": 56
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 25
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "**Bold** item with _emphasis_",
+              "position": {
+                "end": {
+                  "column": 32,
+                  "line": 3,
+                  "offset": 56
+                },
+                "start": {
+                  "column": 3,
+                  "line": 3,
+                  "offset": 27
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "strong",
+                  "attributes": {},
+                  "position": {
+                    "end": {
+                      "column": 11,
+                      "line": 3,
+                      "offset": 35
+                    },
+                    "start": {
+                      "column": 3,
+                      "line": 3,
+                      "offset": 27
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "Bold",
+                      "position": {
+                        "end": {
+                          "column": 9,
+                          "line": 3,
+                          "offset": 33
+                        },
+                        "start": {
+                          "column": 5,
+                          "line": 3,
+                          "offset": 29
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " item with ",
+                  "position": {
+                    "end": {
+                      "column": 22,
+                      "line": 3,
+                      "offset": 46
+                    },
+                    "start": {
+                      "column": 11,
+                      "line": 3,
+                      "offset": 35
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "emphasis",
+                  "attributes": {},
+                  "position": {
+                    "end": {
+                      "column": 32,
+                      "line": 3,
+                      "offset": 56
+                    },
+                    "start": {
+                      "column": 22,
+                      "line": 3,
+                      "offset": 46
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "emphasis",
+                      "position": {
+                        "end": {
+                          "column": 31,
+                          "line": 3,
+                          "offset": 55
+                        },
+                        "start": {
+                          "column": 23,
+                          "line": 3,
+                          "offset": 47
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "listItem",
+          "checked": null,
+          "spread": false,
+          "value": "- Regular item with `inline code`",
+          "position": {
+            "end": {
+              "column": 34,
+              "line": 4,
+              "offset": 90
+            },
+            "start": {
+              "column": 1,
+              "line": 4,
+              "offset": 57
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "Regular item with `inline code`",
+              "position": {
+                "end": {
+                  "column": 34,
+                  "line": 4,
+                  "offset": 90
+                },
+                "start": {
+                  "column": 3,
+                  "line": 4,
+                  "offset": 59
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "Regular item with ",
+                  "position": {
+                    "end": {
+                      "column": 21,
+                      "line": 4,
+                      "offset": 77
+                    },
+                    "start": {
+                      "column": 3,
+                      "line": 4,
+                      "offset": 59
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "inlineCode",
+                  "attributes": {},
+                  "value": "inline code",
+                  "position": {
+                    "end": {
+                      "column": 34,
+                      "line": 4,
+                      "offset": 90
+                    },
+                    "start": {
+                      "column": 21,
+                      "line": 4,
+                      "offset": 77
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "listItem",
+          "checked": null,
+          "spread": false,
+          "value": "- _Emphasized_ item with **strong** text",
+          "position": {
+            "end": {
+              "column": 41,
+              "line": 5,
+              "offset": 131
+            },
+            "start": {
+              "column": 1,
+              "line": 5,
+              "offset": 91
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "_Emphasized_ item with **strong** text",
+              "position": {
+                "end": {
+                  "column": 41,
+                  "line": 5,
+                  "offset": 131
+                },
+                "start": {
+                  "column": 3,
+                  "line": 5,
+                  "offset": 93
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "emphasis",
+                  "attributes": {},
+                  "position": {
+                    "end": {
+                      "column": 15,
+                      "line": 5,
+                      "offset": 105
+                    },
+                    "start": {
+                      "column": 3,
+                      "line": 5,
+                      "offset": 93
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "Emphasized",
+                      "position": {
+                        "end": {
+                          "column": 14,
+                          "line": 5,
+                          "offset": 104
+                        },
+                        "start": {
+                          "column": 4,
+                          "line": 5,
+                          "offset": 94
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " item with ",
+                  "position": {
+                    "end": {
+                      "column": 26,
+                      "line": 5,
+                      "offset": 116
+                    },
+                    "start": {
+                      "column": 15,
+                      "line": 5,
+                      "offset": 105
+                    }
+                  }
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "strong",
+                  "attributes": {},
+                  "position": {
+                    "end": {
+                      "column": 36,
+                      "line": 5,
+                      "offset": 126
+                    },
+                    "start": {
+                      "column": 26,
+                      "line": 5,
+                      "offset": 116
+                    }
+                  },
+                  "children": [
+                    {
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
+                      "value": "strong",
+                      "position": {
+                        "end": {
+                          "column": 34,
+                          "line": 5,
+                          "offset": 124
+                        },
+                        "start": {
+                          "column": 28,
+                          "line": 5,
+                          "offset": 118
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": " text",
+                  "position": {
+                    "end": {
+                      "column": 41,
+                      "line": 5,
+                      "offset": 131
+                    },
+                    "start": {
+                      "column": 36,
+                      "line": 5,
+                      "offset": 126
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
