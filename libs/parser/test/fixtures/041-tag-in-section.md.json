@@ -1,0 +1,72 @@
+{
+  "construct": "Document",
+  "children": [
+    {
+      "construct": "SectionBlock",
+      "name": "Feature  Implementation",
+      "depth": 1,
+      "tags": [
+        {
+          "construct": "Tag",
+          "name": "feature"
+        }
+      ],
+      "position": {
+        "end": {
+          "column": 36,
+          "line": 1,
+          "offset": 35
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": [
+        {
+          "construct": "NaturalBlock",
+          "type": "text",
+          "value": "\n\n"
+        },
+        {
+          "construct": "NaturalBlock",
+          "type": "paragraph",
+          "value": "Details about the feature.",
+          "position": {
+            "end": {
+              "column": 27,
+              "line": 3,
+              "offset": 63
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 37
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalExpression",
+              "type": "text",
+              "attributes": {},
+              "value": "Details about the feature.",
+              "position": {
+                "end": {
+                  "column": 27,
+                  "line": 3,
+                  "offset": 63
+                },
+                "start": {
+                  "column": 1,
+                  "line": 3,
+                  "offset": 37
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
