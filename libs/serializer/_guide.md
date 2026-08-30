@@ -1,24 +1,20 @@
-# POC Parse
+# Serializer
 
-The `@art-js/poc-parse` package is a POC spike of the artificials parser: a self-contained, CLI-executable package.
+The `@art-js/serializer` package serializes Art AST back to markdown.
 
 ## Recommended Reading
 
 Agents SHOULD scan these files for definitions and resource locations when faced with uncertainty or ambiguity that may result from missing resources.
 
 - `_guide.md` — this file: package overview, layout, and operating instructions.
-- `_pseudo.md` — pseudo code for context-aware visiting.
 - `README.md` — package readme.
 
 ## Package Layout
 
 ```
-_guide.md           — this file
-_pseudo.md          — pseudo code for context-aware visiting
 _records/           — package records
-fixtures/           — test fixtures
-scripts/            — test scripts
 src/                — source code
+test/               — tests
 ```
 
 ## Records Management
@@ -26,6 +22,8 @@ src/                — source code
 Records are co-located with the resources they describe in `_records/` directories:
 
 - **Package:** `_records/package.art`
+- **Deployment:** `_records/npm-deployment.art`
+- **Record:** `_records/artificial-serializer.art`
 
 ## Knowledge References
 
@@ -53,6 +51,7 @@ Run from this package directory:
 npm run lint:fix # to fix formatting issues automatically
 npm run lint # to report other issues (prettier, eslint, tsc --noEmit)
 npm run test # to run all tests
+npm run build # to produce a full build
 ```
 
 ### Operating Instructions: Verifying Completion
@@ -62,5 +61,5 @@ npm run test # to run all tests
 Run from this package directory:
 
 ```bash
-npm run ci # lint and test
+npm run ci # lint, build and test
 ```

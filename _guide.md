@@ -1,69 +1,104 @@
-# Noodlestan Artificial
+# Art JS
 
-A collection of tools and resources to generate and manage agent instructions. Includes the Art Language, and a (reactive) pipeline for bundling instructions.
+A collection of tools and resources to generate and manage agent instructions. Includes the Art Language, and a (reactive) pipeline for bundling, compiling, validating, parsing, and locating resources.
 
 ## Recommended Reading
 
-Agents SHOULD scan these files for relevant clarifications when faced with ambiguity or omissions that may result from missing definitions.
+Agents SHOULD scan these files for definitions and resource locations when faced with uncertainty or ambiguity that may result from missing resources.
 
-- `_guide.md` — this file: system overview, layout, setup, verification.
+- `_guide.md` — this file: system overview, layout, records, workflows, and operating instructions.
+- `_records/project.art` — the project record.
+- `_records/repository.art` — the repository record.
 
 ## Repository Layout
 
 ```
+_guide.md           — this file
 _backlog/           — plans, instructions, reports
-ops/                — records (packages, namespaces, scripts)
-architecture/       — ADRs, index
-art-js/             — (namespace) parser, CLI, spec
-art-domains/        — (namespace) domain packages
-artisans/           — (namespace) experiments
+_records/           — project, repository, namespace, and license records
+cli/                — CLI packages
+libs/               — library packages
+spec/               — the artificial language specification
 ```
 
 ## Projects
 
-| Project            | Guide                                  | Backlog                                      |
-| ------------------ | -------------------------------------- | -------------------------------------------- |
-| Artificials (root) | `_guide.md`                            | `NONE`                                       |
-| POC Parse          | `art-js/cli/poc-parse/_guide.md`       | `_backlog/1-done/plan-poc-parse/` (archived) |
-| Art Mantras        | `artisans/apps/art-mantras/_guide.md`  | `artisans/apps/art-mantras/_backlog/`        |
-| Workspace CLI      | `art-domains/cli/workspace/_guide.md`  | `art-domains/cli/workspace/_backlog/`        |
-| Art JS             | `art-js/_backlog/_parking-lot.md`      | `art-js/_backlog/`                           |
-| Art Domains        | `art-domains/_backlog/_parking-lot.md` | `art-domains/_backlog/_architect.md`         |
-
-## Setup
-
-Run at the root of the repository:
-
-```bash
-npm ci # to install dependencies.
-```
-
-## Verification
-
-Run per package modified:
-
-```bash
-npm run lint:fix # to fix formatting issues automatically
-npm run lint # to report other issues
-npm run build
-npm run test
-```
+| Project            | Guide                           | Backlog     |
+| ------------------ | ------------------------------- | ----------- |
+| Art JS (root)      | `_guide.md`                     | `_backlog/` |
+| Bin                | `cli/bin/_guide.md`             | `NONE`      |
+| Dev Server         | `cli/dev-server/_guide.md`      | `NONE`      |
+| POC Parse          | `cli/poc-parse/_guide.md`       | `NONE`      |
+| Watcher            | `cli/watcher/_guide.md`         | `NONE`      |
+| Bundler            | `libs/bundler/_guide.md`        | `NONE`      |
+| Constructs         | `libs/constructs/_guide.md`     | `NONE`      |
+| Parser             | `libs/parser/_guide.md`         | `NONE`      |
+| Primitives         | `libs/primitives/_guide.md`     | `NONE`      |
+| Program            | `libs/program/_guide.md`        | `NONE`      |
+| Serializer         | `libs/serializer/_guide.md`     | `NONE`      |
+| Validator          | `libs/validator/_guide.md`      | `NONE`      |
+| Spec               | `spec/_guide.md`                | `NONE`      |
 
 ## Records Management
 
 Records are co-located with the resources they describe in `_records/` directories:
 
 - **Project:** `_records/project.art`
-- **Repository:** - `_records/repository.art`
-- **Namespaces:** `{namespace}/_records/namespace.art`
-- **Packages:** `{package-path}/_records/package.art`
-- **NPM Deployments:** `{package-path}/_records/npm-deployment.art`
-- **APP Deployments:** `{app-path}/_records/spa-deployment.art`
+- **Repository:** `_records/repository.art`
+- **Namespace:** `_records/namespace.art`
+- **License:** `_records/license.art`
 
-## References
+## Knowledge References
 
-This repository maintains an architecture reference at `architecture/index.md` and decision records at `architecture/records/adr`.
+This repository maintains an architecture reference at `libs/parser/architecture/index.md`.
 
-## Planning Workflow
+## Workflows
 
-Each project manages its own backlog in a local `_backlog/` directory with a `_guide.md` entry point containing layout, references, verification, and workflows.
+Projects in this repository use the following workflows:
+
+| Workflow / Path                                                            | Purpose                                                                                           |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **Planning Work** `$DOMAINS/work/workflows/planning-work/workflow.art`     | Create and manage work item lifecycles, collecting operational instructions according to context. |
+| **Delegating Work** `$DOMAINS/work/workflows/delegating-work/workflow.art` | Organize work delegation to sub-agents with validation, execution, and verification.              |
+| **Executing Work** `$DOMAINS/work/workflows/executing-work/workflow.art`   | Organize work execution by sub-agents to produce completed, verified outcomes and feedback.       |
+| **Deploying** `$DOMAINS/work/workflows/executing-work/workflow.art`        | Organizes deployment of artefacts in operations.                                                  |
+
+### Planning Work
+
+This project plans its work with the workflow defined in `$DOMAINS/work/workflows/planning-work/workflow.art`.
+
+- The backlog lives at `_backlog/` with subdirectories such as `/3-now` and `/4-next/`.
+- The short-term focus is captured in `_backlog/_parking-lot.md`.
+- The requirements, use cases, and principles are captured in `_backlog/_architect.md`.
+
+## Operating Instructions
+
+#### Operating Instructions: Setting Up
+
+**Instructions:**
+
+Run from the repository root (monorepo):
+
+```bash
+npm ci # to install dependencies.
+```
+
+#### Operating Instructions: Verifying Commit
+
+**Instructions:**
+
+Runs automatically on pre-commit hook (from the repository root):
+
+```bash
+npm run ci # lint, build and test
+```
+
+#### Operating Instructions: Verifying Completion
+
+**Instructions:**
+
+Run from the repository root (monorepo):
+
+```bash
+npm run ci # lint, build and test
+```
