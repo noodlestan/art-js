@@ -2567,40 +2567,6 @@
           "construct": "SectionBlock",
           "name": "Tags in Prose",
           "depth": 2,
-          "tags": [
-            {
-              "construct": "Tag",
-              "name": "generator",
-              "position": {
-                "end": {
-                  "column": 46,
-                  "line": 117,
-                  "offset": 1486
-                },
-                "start": {
-                  "column": 1,
-                  "line": 117,
-                  "offset": 1441
-                }
-              }
-            },
-            {
-              "construct": "Tag",
-              "name": "wip",
-              "position": {
-                "end": {
-                  "column": 46,
-                  "line": 117,
-                  "offset": 1486
-                },
-                "start": {
-                  "column": 1,
-                  "line": 117,
-                  "offset": 1441
-                }
-              }
-            }
-          ],
           "position": {
             "end": {
               "column": 17,

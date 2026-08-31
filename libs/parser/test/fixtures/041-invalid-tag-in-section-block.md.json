@@ -1,0 +1,23 @@
+{
+  "construct": "Document",
+  "children": [
+    {
+      "construct": "SectionBlock",
+      "name": "Section (#foo) Heading",
+      "depth": 1,
+      "position": {
+        "end": {
+          "column": 25,
+          "line": 1,
+          "offset": 24
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": []
+    }
+  ]
+}

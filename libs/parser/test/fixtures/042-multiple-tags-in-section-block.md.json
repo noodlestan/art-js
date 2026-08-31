@@ -1,0 +1,33 @@
+{
+  "construct": "Document",
+  "children": [
+    {
+      "construct": "SectionBlock",
+      "name": "Hello World",
+      "depth": 1,
+      "tags": [
+        {
+          "construct": "Tag",
+          "name": "foo"
+        },
+        {
+          "construct": "Tag",
+          "name": "bar"
+        }
+      ],
+      "position": {
+        "end": {
+          "column": 28,
+          "line": 1,
+          "offset": 27
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": []
+    }
+  ]
+}
