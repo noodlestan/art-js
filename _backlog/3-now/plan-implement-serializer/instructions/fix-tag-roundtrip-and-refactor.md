@@ -11,7 +11,7 @@
 These are your instructions.
 
 - RULE: If at any point you are instructed to **REPORT A BLOCKER** or you encounter a commit with `policy` set to `MANUAL` execute the instruction in the "## How to Report Back to the Delegator" section below and STOP processing any other instructions.
-- RULE: Do not rename or remove existing fixtures beyond the 04* renames specified below.
+- RULE: Do not rename or remove existing fixtures beyond the 04\* renames specified below.
 - RULE: Do not create fixture files beginning with `_`.
 - RULE: If a command reports errors, attempt to fix them; if the error persists, STOP and report a blocker.
 - RULE: If ANY already-passing fixture test starts failing during your work, you MUST highlight in your report: what broke, during which new fixture implementation, and how you fixed it to pass both the existing tests and the new one.
@@ -27,12 +27,12 @@ These are your instructions.
 
 ## Path Variables
 
-| Variable              | Resolved Path                                 | Purpose                                           |
-| --------------------- | --------------------------------------------- | ------------------------------------------------- |
-| `$PROJECT`            | `$WORKSPACE/checkouts/art-js`                 | project repository root                           |
-| `$PACKAGE_PARSER`     | `$PROJECT/libs/parser/`                       | parser package and fixture suite                  |
-| `$PACKAGE_CONSTRUCTS` | `$PROJECT/libs/constructs/`                   | construct implementations and unit tests          |
-| `$PACKAGE_SERIALIZER` | `$PROJECT/libs/serializer/`                   | serializer implementation used by roundtrip tests |
+| Variable              | Resolved Path                 | Purpose                                           |
+| --------------------- | ----------------------------- | ------------------------------------------------- |
+| `$PROJECT`            | `$WORKSPACE/checkouts/art-js` | project repository root                           |
+| `$PACKAGE_PARSER`     | `$PROJECT/libs/parser/`       | parser package and fixture suite                  |
+| `$PACKAGE_CONSTRUCTS` | `$PROJECT/libs/constructs/`   | construct implementations and unit tests          |
+| `$PACKAGE_SERIALIZER` | `$PROJECT/libs/serializer/`   | serializer implementation used by roundtrip tests |
 
 ## Working Agreements
 
@@ -44,7 +44,7 @@ The plan workflow (see the entry point guide → Planning Workflow → Working T
 
 ## Goals
 
-Fix the tag roundtrip for SectionBlock headings: make the serializer emit `(#tag)` syntax when tags are captured, and make the Tag construct only capture tags that appear at the end of a heading name (not in the middle). Rename the 04* fixtures to match their corrected behavior. Refactor the Tag construct to extract `createTag.ts` following the NaturalBlock pattern.
+Fix the tag roundtrip for SectionBlock headings: make the serializer emit `(#tag)` syntax when tags are captured, and make the Tag construct only capture tags that appear at the end of a heading name (not in the middle). Rename the 04\* fixtures to match their corrected behavior. Refactor the Tag construct to extract `createTag.ts` following the NaturalBlock pattern.
 
 ## Mandatory Reading
 
@@ -123,43 +123,69 @@ npm run ci
 
 This section summarises the changes to be made in this iteration.
 
+- Rename and update 04* fixtures to match corrected behavior (043 is new).
 - Refactor Tag construct: extract `createTag.ts` from `createTagCreator.ts` following the NaturalBlock pattern.
 - Fix Tag construct: only capture tags that appear at the END of a text node (not in the middle). Tags in the middle of heading names remain as literal text in the SectionBlock's `name` value.
 - Fix SectionBlock serializer: emit `(#tag)` syntax when tags are present, appending them after the heading name.
-- Rename and update 04* fixtures to match corrected behavior.
 - Verify all numbered fixtures pass both parser and serializer tests with no regressions.
 
 ## Steps
 
 This section contains the detailed steps to execute, including commit steps.
 
-### Step `1 / 5` — Refactor Tag construct: extract `createTag.ts`
+### Step `1 / 5` — Rename and update 04\* fixtures
+
+**Rename and update these fixtures:**
+
+| Current                      | New                                     | New Content                   | Expected Behavior                                                                                                                |
+| ---------------------------- | --------------------------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `040-tag-simple.md`          | `040-tag-in-section-block.md`           | `# Section (#foo)`            | Tag captured: `tags=[Tag(name="foo")]`, name=`"Section"`, serializer outputs `# Section (#foo)`                                  |
+| `041-tag-in-section.md`      | `041-invalid-tag-in-section-block.md`   | `# Section (#foo) Heading`    | Tag NOT captured: no `tags` field, name=`"Section (#foo) Heading"`, serializer outputs `# Section (#foo) Heading`                |
+| `042-tag-in-field-inline.md` | `042-multiple-tags-in-section-block.md` | `# Hello World (#foo) (#bar)` | Tags captured: `tags=[Tag(name="foo"), Tag(name="bar")]`, name=`"Hello World"`, serializer outputs `# Hello World (#foo) (#bar)` |
+| (new)                        | `043-valid-and-invalid-tags-in-section-block.md` | `# Hello (#foo) World (#bar)` | Tags captured: `#bar` only; name=`"Hello (#foo) World"` — validates mid-text tags are NOT captured |
+
+Note: `043` is a new fixture — create it fresh (no old file to delete).
+
+For each fixture:
+
+1. Delete the old `.md` and `.md.json` files (skip for 043 — it's new)
+2. Create the new `.md` file with the specified content
+3. Run `npm run test-parser -- --fixture {new-name} --write` to generate the snapshot
+4. Inspect the `.md.json` snapshot — verify construct names, tags array, and name value
+5. Run `npm run test-serializer -- --fixture {new-name}` — confirm LOSSLESS ROUNDTRIP
+6. Run `npm run test-serializer -- --fixture {new-name} --debug-write` — inspect `.parsed.md`
+
+### Step `2 / 5` — Refactor Tag construct: extract `createTag.ts`
 
 Follow the NaturalBlock pattern where `createNaturalBlockCreator.ts` is a thin wrapper calling `createNaturalBlock.ts`.
 
 **Current structure:**
+
 - `Tag/private/createTagCreator.ts` — contains both `detect()` and `create()` logic inline
 
 **Target structure:**
+
 - `Tag/private/createTagCreator.ts` — thin wrapper: `detect: () => true` (or delegates), `create: (node) => createTag(node)`
-- `Tag/private/createTag.ts` — new file containing the actual tag detection and creation logic (extracted from `createTagCreator.ts`)
+- `Tag/private/createTag.ts` — new file containing the actual tag factory (extracted from `createTagCreator.ts`)
 
 The `createTag.ts` function should:
+
 1. Accept an mdast `Text` node
 2. Return an array of Tag records (same shape as current `create()` output)
-3. Contain the TAG_PATTERN matching logic currently in `createTagCreator.ts`
+3. Contain the TAG_PATTERN extraction logic currently in `createTagCreator.ts`
 
-### Step `2 / 5` — Fix Tag construct: only capture tags at end of text
+### Step `3 / 5` — Fix Tag construct: only capture tags at end of text
 
 **Problem:** The Tag creator currently fires on ANY text node matching `TAG_PATTERN`. For headings like `# Section (#foo) Heading`, the tag `(#foo)` is in the middle of the name but gets captured. The user wants tags to only be captured when they appear at the END of the text (after stripping trailing whitespace).
 
 **Desired behavior:**
 
-| Fixture | Input | Tags captured? | SectionBlock name |
-| --- | --- | --- | --- |
-| `040-tag-in-section-block` | `# Section (#foo)` | Yes | `"Section"` |
-| `041-invalid-tag-in-section-block` | `# Section (#foo) Heading` | No | `"Section (#foo) Heading"` |
-| `042-multiple-tags-in-section-block` | `# Hello World (#foo) (#bar)` | Yes | `"Hello World"` |
+| Fixture                                       | Input                         | Tags captured?       | SectionBlock name          |
+| --------------------------------------------- | ----------------------------- | -------------------- | -------------------------- |
+| `040-tag-in-section-block`                    | `# Section (#foo)`            | Yes                  | `"Section"`                |
+| `041-invalid-tag-in-section-block`            | `# Section (#foo) Heading`    | No                   | `"Section (#foo) Heading"` |
+| `042-multiple-tags-in-section-block`          | `# Hello World (#foo) (#bar)` | Yes                  | `"Hello World"`            |
+| `043-valid-and-invalid-tags-in-section-block` | `# Hello (#foo) World (#bar)` | Yes: #bar ; No: #foo | `"Hello (#foo) World"`     |
 
 **Implementation in `createTag.ts`:**
 
@@ -172,9 +198,9 @@ The `createTag.ts` function should:
 
 This means tags in the middle of a heading name (like `# Section (#foo) Heading`) are NOT captured — they remain in the SectionBlock's `name` value as literal text.
 
-### Step `3 / 5` — Fix SectionBlock serializer: emit tags in heading
+### Step `4 / 5` — Fix SectionBlock serializer: emit tags in heading
 
-**Problem:** `SectionBlock.toMdast()` only outputs `section.name`, not `section.tags`. Fixtures 040 and 042 have captured tags that are lost during serialization.
+**Problem:** `SectionBlock.toMdast()` only outputs `section.name`, not `section.tags`. Fixtures 040, 042, and 043 have captured tags that are lost during serialization.
 
 **Fix in `createSectionBlockToMdast.ts`:**
 
@@ -183,24 +209,6 @@ This means tags in the middle of a heading name (like `# Section (#foo) Heading`
 3. This means the `fromMarkdown` call should use `# ${section.name} ${tags.map(t => `(#${t.name})`).join(' ')}` instead of just `# ${section.name}`
 
 **Important:** The `section.tags` array contains objects like `{ construct: 'Tag', name: 'foo' }`. When serializing, emit `(#foo)` for each tag, space-separated, appended after the name.
-
-### Step `4 / 5` — Rename and update 04* fixtures
-
-**Rename and update these fixtures:**
-
-| Current | New | New Content | Expected Behavior |
-| --- | --- | --- | --- |
-| `040-tag-simple.md` | `040-tag-in-section-block.md` | `# Section (#foo)` | Tag captured: `tags=[Tag(name="foo")]`, name=`"Section"`, serializer outputs `# Section (#foo)` |
-| `041-tag-in-section.md` | `041-invalid-tag-in-section-block.md` | `# Section (#foo) Heading` | Tag NOT captured: no `tags` field, name=`"Section (#foo) Heading"`, serializer outputs `# Section (#foo) Heading` |
-| `042-tag-in-field-inline.md` | `042-multiple-tags-in-section-block.md` | `# Hello World (#foo) (#bar)` | Tags captured: `tags=[Tag(name="foo"), Tag(name="bar")]`, name=`"Hello World"`, serializer outputs `# Hello World (#foo) (#bar)` |
-
-For each fixture:
-1. Delete the old `.md` and `.md.json` files
-2. Create the new `.md` file with the specified content
-3. Run `npm run test-parser -- --fixture {new-name} --write` to generate the snapshot
-4. Inspect the `.md.json` snapshot — verify construct names, tags array, and name value
-5. Run `npm run test-serializer -- --fixture {new-name}` — confirm LOSSLESS ROUNDTRIP
-6. Run `npm run test-serializer -- --fixture {new-name} --debug-write` — inspect `.parsed.md`
 
 ### Step `5 / 5` — Verify all fixtures still pass
 
@@ -212,7 +220,7 @@ npm run test-parser
 npm run test-serializer
 ```
 
-Confirm all numbered fixtures pass (lossless roundtrip for 040, 041, 042; no regressions elsewhere).
+Confirm all numbered fixtures pass (lossless roundtrip for 040, 041, 042, 043; no regressions elsewhere).
 
 ---
 
@@ -236,7 +244,7 @@ This section describes how to confirm the iteration is completed and ready for b
 
 - Verify that commits have been executed and pushed (or not pushed) according to the commit's policy.
 - Verify that all numbered fixtures pass both parser and serializer tests with no regressions.
-- Verify that the 04* fixtures have been renamed and match the corrected behavior.
+- Verify that the 04\* fixtures have been renamed and match the corrected behavior.
 - Verify that the Tag construct refactor follows the NaturalBlock pattern.
 - Execute the **Verifying Completion** step as defined in the "Operating Instructions" section.
 - Report according to the "How to Report Back to the Delegator" instructions.

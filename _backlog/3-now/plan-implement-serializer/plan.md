@@ -131,7 +131,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | Iteration: Split Tests Parser Vs Serialize `./instructions/split-tests-parser-vs-serialize.md`                     | `DONE`  |
 | Iteration: Fix Parser Field Inline And Test Fixtures `./instructions/fix-parser-field-inline-and-test-fixtures.md` | `DONE`  |
 | Iteration: Build Incremental Roundtrip Fixtures `./instructions/build-incremental-roundtrip-fixtures.md`           | `DONE`  |
-| Iteration: Fix Tag Roundtrip And Refactor `./instructions/fix-tag-roundtrip-and-refactor.md`                       | `DRAFT` |
+| Iteration: Fix Tag Roundtrip And Refactor `./instructions/fix-tag-roundtrip-and-refactor.md`                       | `READY` |
 
 ### Iteration: Bootstrap Serializer Lib
 
@@ -283,33 +283,33 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 **Id:** `fix-tag-roundtrip-and-refactor`
 
-**Status:** `DRAFT`
+**Status:** `READY`
 
 **Purpose:** Fix tag roundtrip for SectionBlock headings and refactor the Tag construct.
 
-**Description:** Refactor Tag construct: extract `createTag.ts` from `createTagCreator.ts` following the NaturalBlock pattern. Fix Tag construct: only capture tags that appear at the END of a text node (not in the middle). Fix SectionBlock serializer: emit `(#tag)` syntax when tags are present. Rename and update 04\* fixtures to match corrected behavior.
+**Description:** Rename and update 04\* fixtures to match corrected behavior (043 is new). Refactor Tag construct: extract `createTag.ts` from `createTagCreator.ts` following the NaturalBlock pattern. Fix Tag construct: only capture tags that appear at the END of a text node (not in the middle). Fix SectionBlock serializer: emit `(#tag)` syntax when tags are present.
 
 **Instructions:** `_backlog/3-now/plan-implement-serializer/instructions/fix-tag-roundtrip-and-refactor.md`
 
 **Changes:**
 
+- Rename and update 04\* fixtures to match corrected behavior (043 is new).
 - Refactor Tag construct: extract `createTag.ts` from `createTagCreator.ts`.
 - Fix Tag construct: only capture tags at end of text node.
 - Fix SectionBlock serializer: emit `(#tag)` syntax when tags are present.
-- Rename and update 04\* fixtures to match corrected behavior.
 - Verify all numbered fixtures pass both parser and serializer tests.
 
 #### Commits:
 
-| ID                               | Repository / Checkout / Branch   | Policy       | Hash  | Status        |
-| -------------------------------- | -------------------------------- | ------------ | ----- | ------------- |
-| `fix-tag-roundtrip-and-refactor` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `PLACEHOLDER` |
+| ID                               | Repository / Checkout / Branch   | Policy       | Hash  | Status     |
+| -------------------------------- | -------------------------------- | ------------ | ----- | ---------- |
+| `fix-tag-roundtrip-and-refactor` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ## Work
 
 ### Next
 
-Delegate the next `DRAFT` iteration: `fix-tag-roundtrip-and-refactor`.
+Delegate the next `READY` iteration: `fix-tag-roundtrip-and-refactor`.
 
 ### Blockers
 
