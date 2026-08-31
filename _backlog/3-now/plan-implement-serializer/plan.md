@@ -195,7 +195,9 @@ Serializer package: unit tests for `serialize(document): string`. Parser package
 
 ### `build-incremental-roundtrip-fixtures`
 
-**Status:** `READY`
+**Status:** `COMMITTED`
+
+**Commit id:** `6c4810c`
 
 **Commit Message:** `build(md-art-roundtrip): add incremental parser and serializer fixtures`
 
@@ -218,6 +220,25 @@ Serializer package: unit tests for `serialize(document): string`. Parser package
 - For each fixture, generate the parser snapshot, inspect the captured AST, and run the focused serializer roundtrip.
 - Investigate demonstrated failures in parser/construct/serializer code and add focused constructs unit tests when fixes are required.
 
+### `fix-tag-roundtrip-and-refactor`
+
+**Status:** `PLANNED`
+
+**Commit Message:** `fix(md-art-roundtrip): fix tag roundtrip and refactor Tag construct`
+
+**Instructions File:** `_backlog/3-now/plan-implement-serializer/instructions/fix-tag-roundtrip-and-refactor.md`
+
+**Scope:**
+
+- Refactor Tag construct: extract `createTag.ts` from `createTagCreator.ts` following the NaturalBlock pattern.
+- Fix Tag construct: only capture tags that appear at the END of a text node (not in the middle). Tags in the middle of heading names remain as literal text in the SectionBlock's `name` value.
+- Fix SectionBlock serializer: emit `(#tag)` syntax when tags are present, appending them after the heading name.
+- Rename and update 04* fixtures to match corrected behavior:
+  - `040-tag-simple` → `040-tag-in-section-block` (`# Section (#foo)`) — tag captured, serializer roundtrips.
+  - `041-tag-in-section` → `041-invalid-tag-in-section-block` (`# Section (#foo) Heading`) — tag NOT captured, stays in name.
+  - `042-tag-in-field-inline` → `042-multiple-tags-in-section-block` (`# Hello World (#foo) (#bar)`) — all tags captured, serializer roundtrips.
+- Verify all numbered fixtures pass both parser and serializer tests with no regressions.
+
 ## Follow ups
 
 None.
@@ -228,7 +249,7 @@ None.
 
 - `bootstrap-serializer-lib`: Instructions clear; all 12 unit tests passing; serializer package scaffolded with ToMdast functions for all 5 constructs; CI passes (12/12 tasks).
 - `two-way-fixture-tests`: Instructions clear and self-contained; pseudo-code matched implementation shape closely; 15 fixture snapshot checks pass (forward); return direction serializes without errors; roundtrip overhead logged as informational (1277 lines differ — expected, not failure).
-- `build-incremental-roundtrip-fixtures`: Completed in the workspace after the mandatory-reading blocker was removed; the incremental fixtures were added and verified, parser natural-node conversion and FieldBlock boundaries were corrected, and the parser/serializer/package checks passed for the maintained fixture set.
+- `build-incremental-roundtrip-fixtures`: Committed `6c4810c`. Cleaned WIP from `032`, fixed SectionBlock serializer escaping via `fromMarkdown` parsing, promoted `_011` → `011`. Added 9 new fixtures (008, 009, 011, 014, 015, 024, 025, 040–042). 26/28 numbered fixtures lossless roundtrip; 2 expected tag diffs (040, 041). No regressions in existing fixtures.
 
 ### Planner Reflection
 
@@ -239,3 +260,5 @@ None.
 - **Architecture insight:** FieldBlock, not FieldInline or the generic builder, owns its capture boundary. Its active context closes when the next `FieldBlock`, `FieldInline`, or `SectionBlock` arrives; the builder only invokes `beforeRecord()` and dispatches the returned context.
 - **Architecture insight:** `ConstructCreator.shouldVisit` and `ConstructPreProcessor.canPreProcess` were redundant and were removed. The remaining APIs are `preProcess`, `detect/create`, and `handle`, grouped by `ConstructParser`.
 - The remaining known WIP is formatted SectionBlock heading fidelity and the serializer debug flag naming; neither should be hidden by changing snapshots without inspection.
+- **Test infrastructure insight:** `test-serializer` always exits with code 0 (WIP gap — `return failed === 0 ? 0 : 2` is commented out). Errors are reported to stderr and summary but CI won't catch them. Should be uncommented once all fixtures pass.
+- **Test infrastructure insight:** `--debug-write` in `test-serializer` only writes `.parsed.md` when there IS a diff (the write is inside the "has diffs" branch of `diffFixtureResults`). Passing fixtures never produce `.parsed.md`, which limits visual inspection of correct serializer output.

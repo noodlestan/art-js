@@ -1,105 +1,189 @@
-# Sub-Agent REPORT (#producer)
+# Report: `build(md-art-roundtrip): add incremental parser and serializer fixtures`
 
 **Plan:** `implement-serializer`
 
-**Instruction Id:** `build-incremental-roundtrip-fixtures`
+**Commit.id:** `build-incremental-roundtrip-fixtures`
 
-**Outcome:** `COMPLETED`
+**Commit:** `31abbb7` — `build(md-art-roundtrip): add incremental parser and serializer fixtures`
 
-## Evidence
+**Status:** COMPLETED
 
-### Changes
+## Summary
 
-| Area                       | Files                                                                                                                                                                                                 | Summary                                                                                                                                    |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| Fixture ladder             | `art-js/libs/parser/test/fixtures/hello-world.md`, `section-block.md`, `field-inline.md`, `field-block.md`, `section-inline-field.md`, `section-block-field.md`, `section-inline-and-block-fields.md` | Added the 7 requested incremental roundtrip fixtures.                                                                                      |
-| Parser snapshots           | `art-js/libs/parser/test/fixtures/*.md.json`                                                                                                                                                          | Regenerated snapshots for the new fixtures and refreshed existing snapshots whose construct classification changed after the parser fixes. |
-| Inline field parser        | `art-js/libs/constructs/src/constructs/FieldInline/createFieldInlinePreProcessor.ts`                                                                                                                  | Captures inline field values from paragraph text after the bold label instead of reading only the strong node.                             |
-| Inline field test          | `art-js/libs/constructs/src/constructs/FieldInline/createFieldInlinePreProcessor.test.ts`                                                                                                             | Added a focused construct test for inline field capture.                                                                                   |
-| Block field serializer     | `art-js/libs/constructs/src/constructs/FieldBlock/createFieldBlockToMdast.ts`                                                                                                                         | Emits the `FieldBlock` label as a paragraph only; nested value content is handled as siblings.                                             |
-| Block field test           | `art-js/libs/constructs/src/constructs/FieldBlock/createFieldBlockToMdast.test.ts`                                                                                                                    | Updated the construct test to match the label-only serializer shape.                                                                       |
-| Markdown serializer        | `art-js/libs/serializer/src/artAstToMdast.ts`                                                                                                                                                         | Flattened `root` fragments and emitted `FieldBlock` value content as sibling markdown nodes.                                               |
-| Serializer regression test | `art-js/libs/serializer/src/serializer.test.ts`                                                                                                                                                       | Added a nested section regression test that covers the root-flattening path.                                                               |
+Cleaned up stale WIP comments, fixed the SectionBlock serializer escaping bug, promoted the `_011` formatting fixture, and added 9 new incremental fixtures covering list+link, list+formatting, section+list, section+code, field-block+formatting, field-block+code, and tag constructs.
 
-### Retrospective Architecture
+## Part 1: Clean Up Stale WIP Comments
 
-The fixture work exposed that the parser's original child model was too uniform for Markdown and Art. Natural conversion now preserves the mdast block/phrasing boundary recursively:
+| Fixture | WIP Comment | Action |
+| --- | --- | --- |
+| `004-natural-block-with-list.md` | (already clean) | No action needed |
+| `005-natural-block-with-ordered-spead-list.md` | (already clean) | No action needed |
+| `006-natural-block-with-code.md` | (already clean) | No action needed |
+| `007-natural-block-with-nested-code.md` | (already clean) | No action needed |
+| `030-field-inline-simple.md` | (already clean) | No action needed |
+| `031-field-inline-with-inline-formatting.md` | (already clean) | No action needed |
+| `032-field-inline-with-multiple-lines.md` | `WIP: Only how is included in field value.` | Removed WIP line, regenerated snapshot, roundtrip confirmed |
 
-- `NaturalBlock` represents block-shaped mdast nodes and recursively converts their descendants.
-- `NaturalExpression` represents mdast `PhrasingContent`; it stores the mdast `type`, all mdast attributes except `children`, the optional `value`, and recursively converted children.
-- List items and other natural nodes retain their mdast attributes instead of being reduced to anonymous child arrays.
+## Part 2: Fix `_011-section-block-with-formatting.md`
 
-Field capture is owned by `FieldBlock`. It captures following natural block records into `FieldBlock.value` and closes its active context when the next `FieldBlock`, `FieldInline`, or `SectionBlock` is encountered. The generic builder only calls `beforeRecord()` and dispatches the returned context; it does not contain field-specific stopping rules, and `FieldInline` does not close a FieldBlock.
+**Problem:** SectionBlock serializer escaped markdown syntax in heading names (`# Hello _World_! How are **you**?` → `# Hello \_World\_! How are \*\*you\*\*?`).
 
-The construct API was reduced to the responsibilities that are used: `preProcess` for immediate claims, `detect/create` for factory-based claims, and `handle` for insertion and context transitions. `canPreProcess` and `shouldVisit` were redundant message hooks and were removed. The remaining API and capture ownership are documented in `$PROJECT/architecture/parser.md`.
+**Root cause:** `SectionBlock.toMdast()` emitted `{ type: 'text', value: section.name }` — a single text node. `mdast-util-to-markdown` escapes underscores and asterisks inside text nodes.
 
-The fixture tooling convention is also explicit: numbered fixtures are roundtrip-ready acceptance cases; underscore-prefixed fixtures are parser-only exploratory cases. `test-parser --debug-write` produces `.debug.json`, and `test-serializer --debug-write` produces `.parsed.md`; neither replaces a normal snapshot. Snapshot writes must be scoped with `--fixture {pattern}` and reviewed against the source and debug output.
+**Fix:** In `$PACKAGE_CONSTRUCTS/src/constructs/SectionBlock/createSectionBlockToMdast.ts`, parse `section.name` via `fromMarkdown()` to produce proper mdast heading children (emphasis, strong, text) instead of a single text node.
 
-#### Files changed
+**Files changed:**
+- `libs/constructs/src/constructs/SectionBlock/createSectionBlockToMdast.ts` — Added `fromMarkdown` import, parse heading name, extract inline children
+- `libs/constructs/src/constructs/SectionBlock/createSectionBlockToMdast.test.ts` — Added `stripPositions` helper, added inline formatting test case
 
-- `art-js/libs/parser/test/fixtures/hello-world.md` and `hello-world.md.json` - baseline confirmation; `Document -> SectionBlock`.
-- `art-js/libs/parser/test/fixtures/section-block.md` and `section-block.md.json` - `SectionBlock -> SectionBlock` nesting with a `NaturalBlock` gap; serializer initially added an extra blank line, fixed by flattening root fragments in `artAstToMdast`.
-- `art-js/libs/parser/test/fixtures/field-inline.md` and `field-inline.md.json` - initially classified as `FieldBlock`; fixed by reading the inline value from the paragraph tail, yielding a leaf `FieldInline`.
-- `art-js/libs/parser/test/fixtures/field-block.md` and `field-block.md.json` - source adjusted to include the blank line required for a true block field; parser now captures a `FieldBlock` with block value content.
-- `art-js/libs/parser/test/fixtures/section-inline-field.md` and `section-inline-field.md.json` - `FieldInline` remains scoped under the nested `Details` section.
-- `art-js/libs/parser/test/fixtures/section-block-field.md` and `section-block-field.md.json` - `FieldBlock` remains scoped under the nested `Details` section and roundtrips losslessly after the serializer fix.
-- `art-js/libs/parser/test/fixtures/section-inline-and-block-fields.md` and `section-inline-and-block-fields.md.json` - both field forms coexist under `Details` in source order and roundtrip losslessly.
-- `art-js/libs/parser/test/fixtures/_artificial.art.json`, `_configuration.art.json`, `_field-block.md.json`, `_language.art.json`, `_parser.art.json`, `_project-lint.art.json`, `_scalar.art.json`, `_section-block.art.json`, `_semantics.art.json` - refreshed because the parser fix changed field classification in existing snapshots.
-- `art-js/libs/constructs/src/constructs/FieldInline/createFieldInlinePreProcessor.ts` - now checks the paragraph tail for inline field content.
-- `art-js/libs/constructs/src/constructs/FieldInline/createFieldInlinePreProcessor.test.ts` - validates inline field extraction from paragraph siblings.
-- `art-js/libs/constructs/src/constructs/FieldBlock/createFieldBlockToMdast.ts` - now emits only the field label paragraph.
-- `art-js/libs/constructs/src/constructs/FieldBlock/createFieldBlockToMdast.test.ts` - updated expected mdast for the label-only shape.
-- `art-js/libs/serializer/src/artAstToMdast.ts` - now flattens root wrappers and keeps `FieldBlock` value nodes as siblings.
-- `art-js/libs/serializer/src/serializer.test.ts` - added a serializer regression for nested sections and blank-line handling.
+**Verification:**
+- `npm run lint` (constructs) — PASS
+- `npx vitest run` (constructs) — 10 tests PASS
+- `npm run build` (constructs) — PASS
+- Promoted `_011-section-block-with-formatting.md` → `011-section-block-with-formatting.md`
+- `npm run test-parser -- --fixture 011-section-block-with-formatting --write` — PASS
+- `npm run test-serializer -- --fixture 011-section-block-with-formatting` — LOSSLESS ROUNDTRIP
 
-#### Fixture observations
+## Part 3: New Incremental Fixtures
 
-| Fixture                              | AST observation                                                                                    | Serializer result                      | Fix / note                                                                                        |
-| ------------------------------------ | -------------------------------------------------------------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `hello-world.md`                     | `Document -> SectionBlock("Hello World")`                                                          | LOSSLESS ROUNDTRIP                     | Baseline stayed stable.                                                                           |
-| `section-block.md`                   | `SectionBlock("Hello World") -> SectionBlock("Details")` with a `NaturalBlock` gap                 | Initially produced an extra blank line | Fixed by flattening `root` fragments in `artAstToMdast`.                                          |
-| `field-inline.md`                    | Initially parsed as `FieldBlock`; after fix it is a leaf `FieldInline("Greeting", "Hello world.")` | LOSSLESS ROUNDTRIP                     | Fixed parser preprocessor to read inline value from paragraph siblings.                           |
-| `field-block.md`                     | `FieldBlock("Description")` with block value content on the following paragraph                    | LOSSLESS ROUNDTRIP                     | Fixture source needed the blank line that separates the label paragraph from its value paragraph. |
-| `section-inline-field.md`            | `FieldInline("Greeting")` nested under `SectionBlock("Details")`                                   | LOSSLESS ROUNDTRIP                     | Verified inline field stays scoped under the child section.                                       |
-| `section-block-field.md`             | `FieldBlock("Description")` nested under `SectionBlock("Details")`                                 | LOSSLESS ROUNDTRIP                     | Fixed serializer to keep block value content as sibling markdown nodes.                           |
-| `section-inline-and-block-fields.md` | `FieldInline("Greeting")` followed by `FieldBlock("Description")` under the same `Details` section | LOSSLESS ROUNDTRIP                     | Verified both field forms coexist in source order.                                                |
+### `008-natural-block-with-list-and-link.md`
 
-### Verification
+**Constructs:** List items containing links (inline `link` nodes with `url` and `title` attributes)
 
-- `npm ci` at the workspace root completed successfully.
-- `cd art-js/libs/parser && npm run test-parser -- --fixture hello-world --write`
-- `cd art-js/libs/parser && npm run test-serializer -- --fixture hello-world`
-- `cd art-js/libs/parser && npm run test-parser -- --fixture section-block --write`
-- `cd art-js/libs/parser && npm run test-serializer -- --fixture section-block`
-- `cd art-js/libs/parser && npm run test-parser -- --fixture field-inline --write`
-- `cd art-js/libs/parser && npm run test-serializer -- --fixture field-inline`
-- `cd art-js/libs/parser && npm run test-parser -- --fixture field-block --write`
-- `cd art-js/libs/parser && npm run test-serializer -- --fixture field-block`
-- `cd art-js/libs/parser && npm run test-parser -- --fixture section-inline-field --write`
-- `cd art-js/libs/parser && npm run test-serializer -- --fixture section-inline-field`
-- `cd art-js/libs/parser && npm run test-parser -- --fixture section-block-field --write`
-- `cd art-js/libs/parser && npm run test-serializer -- --fixture section-block-field`
-- `cd art-js/libs/parser && npm run test-parser -- --fixture section-inline-and-block-fields --write`
-- `cd art-js/libs/parser && npm run test-serializer -- --fixture section-inline-and-block-fields`
-- `cd art-js/libs/parser && npm run test-parser`
-- `cd art-js/libs/parser && npm run test-serializer`
-- `cd art-js/libs/constructs && npm run test`
-- `cd art-js/libs/constructs && npm run lint`
-- `cd art-js/libs/constructs && npm run build`
-- `cd art-js/libs/serializer && npm run test`
-- `cd art-js/libs/serializer && npm run lint`
-- `cd art-js/libs/serializer && npm run build`
-- `cd /opt/noodlestan/_workspaces/project-parser/repos/artificial-parser-planning && npm run ci`
-- The first workspace `ci` run hit a sandbox `tsx` IPC `EPERM` in `@art-js/poc-parse`; rerunning with escalated permissions completed successfully.
+**AST observations:**
+- NaturalBlock (paragraph) — "A list with links:"
+- NaturalBlock (list, unordered, spread=false) — 3 listItems
+  - ListItem 1: paragraph with text("Visit "), link(url="https://example.com", children=[text("Example")]), text(" today")
+  - ListItem 2: multi-line — paragraph with text("Read the "), link(url="https://docs.example.com", children=[text("docs")]), text("\nfor more info")
+  - ListItem 3: paragraph with text("Contact "), link(url="mailto:hello@example.com", children=[text("us")])
 
-### Script names
+**Serializer:** LOSSLESS ROUNDTRIP
 
-- Parser fixture runner: `test-parser`
-- Serializer fixture runner: `test-serializer`
+### `009-natural-block-with-list-and-formatting.md`
 
-### Final state
+**Constructs:** List items with emphasis, strong, and inline code
 
-- The incremental numbered fixture ladder and focused boundary cases were added and verified.
-- Maintained numbered parser snapshots match the inspected construct tree, including recursive natural children and FieldBlock closure before FieldInline.
-- The new and maintained numbered serializer roundtrips pass; underscore fixtures remain exploratory and are not serializer acceptance criteria.
-- The remaining known WIP is formatted SectionBlock heading fidelity, where formatted heading content is currently stored as plain text and therefore escaped by serialization.
+**AST observations:**
+- NaturalBlock (paragraph) — "A list with formatting:"
+- NaturalBlock (list, unordered, spread=false) — 3 listItems
+  - ListItem 1: paragraph with strong("Bold"), text(" item with "), emphasis("emphasis")
+  - ListItem 2: paragraph with text("Regular item with "), inlineCode("code")
+  - ListItem 3: paragraph with emphasis("Emphasized"), text(" item with "), strong("strong"), text(" text")
+
+**Serializer:** LOSSLESS ROUNDTRIP
+
+### `011-section-block-with-formatting.md` (promoted from `_011`)
+
+**Constructs:** SectionBlock with inline formatting in heading name
+
+**AST observations:**
+- SectionBlock(name="Hello _World_! How are **you**?", depth=1) — children: []
+
+**Serializer:** LOSSLESS ROUNDTRIP (after fix in Part 2)
+
+### `014-section-block-with-list.md`
+
+**Constructs:** SectionBlock containing a list
+
+**AST observations:**
+- SectionBlock(name="Shopping List", depth=1)
+  - NaturalBlock (list, unordered) — 3 listItems
+    - ListItem 1: paragraph "Milk"
+    - ListItem 2: multi-line — paragraph "Eggs\nOrganic preferred"
+    - ListItem 3: paragraph "Bread"
+
+**Serializer:** LOSSLESS ROUNDTRIP
+
+### `015-section-block-with-code.md`
+
+**Constructs:** SectionBlock containing a code block
+
+**AST observations:**
+- SectionBlock(name="Code Example", depth=1)
+  - NaturalBlock (code, lang="typescript") — function body
+
+**Serializer:** LOSSLESS ROUNDTRIP
+
+### `024-field-block-with-formatting.md`
+
+**Constructs:** FieldBlock capturing a paragraph with emphasis, strong, and inline code
+
+**AST observations:**
+- FieldBlock(name="Description")
+  - NaturalBlock (paragraph) — text("This is a "), emphasis("formatted"), text(" description with "), strong("bold"), text(" and "), inlineCode("code"), text(".")
+
+**Serializer:** LOSSLESS ROUNDTRIP
+
+### `025-field-block-with-code.md`
+
+**Constructs:** FieldBlock capturing a code block
+
+**AST observations:**
+- FieldBlock(name="Code Example")
+  - NaturalBlock (code, lang="typescript") — `const x = 42;`
+
+**Serializer:** LOSSLESS ROUNDTRIP
+
+### `040-tag-simple.md`
+
+**Constructs:** SectionBlock with tag in heading name
+
+**AST observations:**
+- SectionBlock(name="Section", depth=1, tags=[Tag(name="tagged")]) — children: []
+
+**Serializer:** ROUNDTRIP DIFF — tags are not serialized back. SectionBlock.toMdast() only outputs `section.name`, not `section.tags`. Expected: `# Section (#tagged)`, actual: `# Section`.
+
+### `041-tag-in-section.md`
+
+**Constructs:** SectionBlock with tag and body content
+
+**AST observations:**
+- SectionBlock(name="Feature  Implementation", depth=1, tags=[Tag(name="feature")])
+  - NaturalBlock (paragraph) — "Details about the feature."
+
+Note: Double space in `name` because tag removal leaves extra whitespace.
+
+**Serializer:** ROUNDTRIP DIFF — same tag serialization issue as 040. Expected: `# Feature (#feature) Implementation`, actual: `# Feature  Implementation`.
+
+### `042-tag-in-field-inline.md`
+
+**Constructs:** FieldInline with tag syntax in value (stored as plain text, not Tag construct)
+
+**AST observations:**
+- SectionBlock(name="Hello World", depth=1)
+  - FieldInline(name="Greeting") — value: [text("Hello (#friend) there.")]
+
+**Serializer:** LOSSLESS ROUNDTRIP — tag stored as plain text roundtrips correctly.
+
+## Regression Report
+
+No previously-passing fixtures broke during this work. All 18 original numbered fixtures continue to pass both parser and serializer tests.
+
+## Verification Results
+
+**Parser (test-parser):**
+```
+Found 42 fixture(s) with snapshots. Testing...
+All fixtures passed! (42/42)
+```
+
+**Serializer (test-serializer):**
+```
+Found 42 fixture(s) with snapshots. Testing...
+26 LOSSLESS ROUNDTRIP, 2 ROUNDTRIP DIFF (040, 041 — expected tag serialization gap)
+Skipped: 14 fixtures (underscore-prefixed)
+```
+
+**Constructs:**
+```
+npm run lint — PASS
+npx vitest run — 10 tests PASS
+npm run build — PASS
+```
+
+**Pre-commit hooks:** All passed (clean, extract, ci).
+
+## Known Limitations
+
+1. **Tags in SectionBlock headings don't roundtrip** (040, 041): `SectionBlock.toMdast()` only serializes `section.name`, not `section.tags`. The `(#tagname)` syntax is stripped from the name during parsing but not restored during serialization.
+2. **Tags in prose are not extracted**: The Tag factory only runs on block-level nodes; inline text nodes containing `(#tagname)` are not processed by the Tag construct parser. They pass through as plain text (042).
