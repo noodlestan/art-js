@@ -1,12 +1,12 @@
 # Art JS
 
-A collection of tools and resources to generate and manage agent instructions. Includes the Art Language, and a (reactive) pipeline for bundling, compiling, validating, parsing, and locating resources.
+md-art-md parser/serializer pipeline and supporting packages.
 
 ## Recommended Reading
 
-Agents SHOULD scan these files for definitions and resource locations when faced with uncertainty or ambiguity that may result from missing resources.
+Agents SHOULD scan these files for relevant clarifications when faced with ambiguity or omissions that may result from missing definitions.
 
-- `_guide.md` — this file: system overview, layout, records, workflows, and operating instructions.
+- `_guide.md` — this file: system overview, layout, setup, verification.
 - `_records/project.art` — the project record.
 - `_records/repository.art` — the repository record.
 
@@ -65,15 +65,13 @@ Projects in this repository use the following workflows:
 
 ### Planning Work
 
-This project plans its work with the workflow defined in `$DOMAINS/work/workflows/planning-work/workflow.art`.
-
 - The backlog lives at `_backlog/` with subdirectories such as `/3-now` and `/4-next/`.
 - The short-term focus is captured in `_backlog/_parking-lot.md`.
 - The requirements, use cases, and principles are captured in `_backlog/_architect.md`.
 
 ## Operating Instructions
 
-#### Operating Instructions: Setting Up
+### Operating Instructions: Setting Up
 
 **Instructions:**
 
@@ -83,7 +81,7 @@ Run from the repository root (monorepo):
 npm ci # to install dependencies.
 ```
 
-#### Operating Instructions: Verifying Commit
+### Operating Instructions: Verifying Commit
 
 **Instructions:**
 
@@ -93,7 +91,7 @@ Runs automatically on pre-commit hook (from the repository root):
 npm run ci # lint, build and test
 ```
 
-#### Operating Instructions: Verifying Completion
+### Operating Instructions: Verifying Completion
 
 **Instructions:**
 
