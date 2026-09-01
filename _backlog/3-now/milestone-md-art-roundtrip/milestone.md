@@ -2,7 +2,7 @@
 
 **ID:** `md-art-roundtrip`
 
-**Status:** `PREPARING`
+**Status:** `WORKING`
 
 ## Summary
 
@@ -21,8 +21,8 @@ Singularize the accidental `@art-js/artificials-*` plural package names (phase 0
 | 1 — Bootstrap packages            | `_backlog/1-done/plan-bootstrap-packages/plan.md`            | `DONE`      |
 | 2 — Migrate testing fixtures      | `_backlog/1-done/plan-migrate-testing-fixtures/plan.md`      | `DONE`      |
 | 3 — Migrate and verify            | `_backlog/1-done/plan-migrate-and-verify/plan.md`            | `DONE`      |
-| 4 — Implement constructs          | `_backlog/1-done/plan-implement-constructs/plan.md`           | `DONE`      |
-| 5 — Implement serializer          | `_backlog/3-now/plan-implement-serializer/plan.md`           | `READY`     |
+| 4 — Implement constructs          | `_backlog/1-done/plan-implement-constructs/plan.md`          | `DONE`      |
+| 5 — Implement serializer          | `_backlog/3-now/plan-implement-serializer/plan.md`           | `DONE`      |
 | 6 — Migrate tests to pipeline     | `_backlog/4-next/plan-migrate-tests-pipeline/plan.md`        | `PREPARING` |
 | 7 — Create knowledge resources    | `_backlog/4-next/plan-create-knowledge-resources/plan.md`    | `PREPARING` |
 | 8 — Implement gaps                | `_backlog/4-next/plan-implement-gaps/plan.md`                | `PREPARING` |
@@ -30,7 +30,7 @@ Singularize the accidental `@art-js/artificials-*` plural package names (phase 0
 | 10 — Archive and publish          | `_backlog/4-next/plan-archive-poc-and-publish/plan.md`       | `PREPARING` |
 | 11 — Integrate knowledge          | `_backlog/4-next/plan-integrate-knowledge/plan.md`           | `PREPARING` |
 
-**Next step:** Phase 5 — execute `plan-implement-serializer`: scaffold `@art-js/artificial-serializer`, implement artast → mdast → md pipeline, and wire two-way fixture tests.
+**Next step:** Phase 6 — execute `plan-migrate-tests-pipeline`: migrate pipeline test suite, wire `scripts/roundtrip.ts` and `fixtures/roundtrip/` to use the serializer.
 
 ## Commit Conventions
 

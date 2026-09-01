@@ -2,7 +2,7 @@
 
 **Id:** `implement-serializer`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -131,7 +131,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | Iteration: Split Tests Parser Vs Serialize `./instructions/split-tests-parser-vs-serialize.md`                     | `DONE`  |
 | Iteration: Fix Parser Field Inline And Test Fixtures `./instructions/fix-parser-field-inline-and-test-fixtures.md` | `DONE`  |
 | Iteration: Build Incremental Roundtrip Fixtures `./instructions/build-incremental-roundtrip-fixtures.md`           | `DONE`  |
-| Iteration: Fix Tag Roundtrip And Refactor `./instructions/fix-tag-roundtrip-and-refactor.md`                       | `READY` |
+| Iteration: Fix Tag Roundtrip And Refactor `./instructions/fix-tag-roundtrip-and-refactor.md`                       | `DONE` |
 
 ### Iteration: Bootstrap Serializer Lib
 
@@ -283,7 +283,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 **Id:** `fix-tag-roundtrip-and-refactor`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Fix tag roundtrip for SectionBlock headings and refactor the Tag construct.
 
@@ -303,13 +303,13 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 | ID                               | Repository / Checkout / Branch   | Policy       | Hash  | Status     |
 | -------------------------------- | -------------------------------- | ------------ | ----- | ---------- |
-| `fix-tag-roundtrip-and-refactor` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| `fix-tag-roundtrip-and-refactor` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | `0724f61` | `COMMITTED` |
 
 ## Work
 
 ### Next
 
-Delegate the next `READY` iteration: `fix-tag-roundtrip-and-refactor`.
+All iterations completed. Plan is ready to move to DONE.
 
 ### Blockers
 
