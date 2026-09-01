@@ -55,13 +55,3 @@ npm run lint # to report other issues (prettier, eslint, tsc --noEmit)
 npm run test # to run all tests
 npm run build # to produce a full build
 ```
-
-### Operating Instructions: Verifying Completion
-
-**Instructions:**
-
-Run from this package directory:
-
-```bash
-npm run ci # lint, build and test
-```

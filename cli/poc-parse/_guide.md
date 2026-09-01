@@ -53,14 +53,5 @@ Run from this package directory:
 npm run lint:fix # to fix formatting issues automatically
 npm run lint # to report other issues (prettier, eslint, tsc --noEmit)
 npm run test # to run all tests
-```
-
-### Operating Instructions: Verifying Completion
-
-**Instructions:**
-
-Run from this package directory:
-
-```bash
-npm run ci # lint and test
+npm run build # to produce a full build
 ```
