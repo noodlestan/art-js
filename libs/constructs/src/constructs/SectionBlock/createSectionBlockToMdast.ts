@@ -12,7 +12,10 @@ export function createSectionBlockToMdast(): ConstructToMdast {
 		toMdast(node, _children) {
 			const section = node as unknown as SectionBlock;
 			const depth = section.depth ?? 1;
-			const parsed = fromMarkdown(`# ${section.name}`);
+			const tagSyntax = section.tags?.length
+				? ' ' + section.tags.map(t => `(#${t.name})`).join(' ')
+				: '';
+			const parsed = fromMarkdown(`# ${section.name}${tagSyntax}`);
 			const heading = parsed.children.find(child => child.type === 'heading');
 			const children =
 				heading && 'children' in heading

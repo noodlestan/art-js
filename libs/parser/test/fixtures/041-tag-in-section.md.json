@@ -3,14 +3,8 @@
   "children": [
     {
       "construct": "SectionBlock",
-      "name": "Feature  Implementation",
+      "name": "Feature (#feature) Implementation",
       "depth": 1,
-      "tags": [
-        {
-          "construct": "Tag",
-          "name": "feature"
-        }
-      ],
       "position": {
         "end": {
           "column": 36,
