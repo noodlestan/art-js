@@ -57,9 +57,7 @@ async function run(): Promise<number> {
 		failed,
 	});
 
-	// WIP: uncomment when all fixtures pass.
-	// return failed === 0 ? 0 : 2;
-	return 0;
+	return failed === 0 ? 0 : 2;
 }
 
 const code = await run();
