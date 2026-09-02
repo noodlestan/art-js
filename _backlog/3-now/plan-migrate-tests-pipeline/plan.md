@@ -77,8 +77,8 @@ Execution occurs in `$PROJECT` on branch `main`; primary working directory is `$
 | Iteration / Instructions                                                                                                   | Status  |
 | -------------------------------------------------------------------------------------------------------------------------- | ------- |
 | Iteration: Make Serializer Tests Mandatory `./plan-migrate-tests-pipeline/instructions/make-serializer-tests-mandatory.md` | `DONE`  |
-| Iteration: Scaffold Pipeline Tests Package `./plan-migrate-tests-pipeline/instructions/scaffold-pipeline-tests-package.md` | `READY` |
-| Iteration: Migrate Test Scripts `./plan-migrate-tests-pipeline/instructions/migrate-test-scripts.md`                       | `READY` |
+| Iteration: Scaffold Pipeline Tests Package `./plan-migrate-tests-pipeline/instructions/scaffold-pipeline-tests-package.md` | `DONE`  |
+| Iteration: Migrate Test Scripts `./plan-migrate-tests-pipeline/instructions/migrate-test-scripts.md`                       | `DONE`  |
 | Iteration: Update Knowledge And Guide `./plan-migrate-tests-pipeline/instructions/update-knowledge-and-guide.md`           | `READY` |
 
 ### Iteration: Make Serializer Tests Mandatory
@@ -119,13 +119,14 @@ build(art-md-roundtrip): Make serializer tests mandatory.
 
 **Id:** `scaffold-pipeline-tests-package`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Create the `@art-js/pipeline-test-cli` package at `cli/pipeline-tests/` with records, configuration, and repo-level architecture files.
 
 **Description:** Scaffold `cli/pipeline-tests/` following the `cli/bin` pattern. Create `_records/package.art` and `_records/npm-deployment.art`. Create `package.json` with scripts (test, test-parser, test-serializer) and no dependencies. Create tsconfig files. Create repo-level `architecture/` with `art-md-fixture-tests.md` (from `libs/parser/architecture/fixture-tests.md`) and `art-md-roundtrip.md` (from `libs/parser/architecture/index.md`), plus an index. Update `_guide.md` layout and knowledge references.
 
 **Instructions:** `./plan-migrate-tests-pipeline/instructions/scaffold-pipeline-tests-package.md`
+**Report:** `./plan-migrate-tests-pipeline/instructions/scaffold-pipeline-tests-package__report.md`
 
 **Changes:**
 
@@ -161,9 +162,9 @@ Also create repo-level architecture files:
 
 #### Commits:
 
-| ID                                | Repository / Checkout / Branch   | Policy       | Hash  | Status     |
-| --------------------------------- | -------------------------------- | ------------ | ----- | ---------- |
-| `scaffold-pipeline-tests-package` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                                | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
+| --------------------------------- | -------------------------------- | ------------ | --------- | ----------- |
+| `scaffold-pipeline-tests-package` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | `fa9ad3f` | `COMMITTED` |
 
 ##### Commit: `scaffold-pipeline-tests-package`
 
@@ -179,11 +180,12 @@ build(art-md-roundtrip): Scaffold pipeline-tests package.
 
 **Id:** `migrate-test-scripts`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Purpose:** Move test scripts and fixtures from parser to pipeline-tests and constructs packages.
 
 **Description:** Move `test-parser.ts` and `test-serializer.ts` (and their `test/` support directories) from `libs/parser/scripts/` to `cli/pipeline-tests/scripts/`. Move fixtures from `libs/parser/test/fixtures/` to `libs/constructs/test/fixtures/`. Update `FIXTURES_DIR` constant to accept `--path` parameter. Update `package.json` scripts. Verify tests pass from the pipeline-tests package.
+**Report:** `./plan-migrate-tests-pipeline/instructions/migrate-test-scripts__report.md`
 
 **Instructions:** `./plan-migrate-tests-pipeline/instructions/migrate-test-scripts.md`
 
@@ -201,9 +203,9 @@ build(art-md-roundtrip): Scaffold pipeline-tests package.
 
 #### Commits:
 
-| ID                     | Repository / Checkout / Branch   | Policy       | Hash  | Status     |
-| ---------------------- | -------------------------------- | ------------ | ----- | ---------- |
-| `migrate-test-scripts` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                     | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
+| ---------------------- | -------------------------------- | ------------ | --------- | ----------- |
+| `migrate-test-scripts` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | `f05ab4c` | `COMMITTED` |
 
 ##### Commit: `migrate-test-scripts`
 
@@ -253,7 +255,7 @@ docs(art-md-roundtrip): Update knowledge and guide.
 
 ### Next
 
-Delegate the next `READY` iteration: `scaffold-pipeline-tests-package`.
+Delegate the next `READY` iteration: `update-knowledge-and-guide`.
 
 ### Blockers
 
@@ -271,6 +273,8 @@ None.
 - **42 fixtures pass parser tests** — verified via `npm run test-parser`.
 - **42 fixtures lossless roundtrip** — verified via `npm run test-serializer`.
 - **Serializer tests mandatory** — `make-serializer-tests-mandatory` DONE; `test-serializer.ts` returns `failed === 0 ? 0 : 2`; 45 fixtures lossless; commit `e9a21e4` pushed.
+- **Pipeline-tests package scaffolded** — `scaffold-pipeline-tests-package` DONE; `@art-js/pipeline-test-cli` created at `cli/pipeline-tests/` with 12 files; repo-level `architecture/` created; commit `fa9ad3f` pushed.
+- **Test scripts migrated** — `migrate-test-scripts` DONE; `test-parser.ts`, `test-serializer.ts`, and support files moved to `cli/pipeline-tests/scripts/`; 45 fixtures moved to `libs/constructs/test/fixtures/`; `--path` parameter wired; commit `029517d` pushed.
 
 ### Decisions
 
