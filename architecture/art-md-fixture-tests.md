@@ -14,7 +14,7 @@ Both scripts discover fixtures by scanning `libs/constructs/test/fixtures/` for 
 ## Fixture Anatomy
 
 ```
-test/fixtures/
+libs/constructs/test/fixtures/
   000-hello-world.md              ← source input
   000-hello-world.md.json         ← parser snapshot (accepted baseline)
   000-hello-world.debug.json      ← debug snapshot (transient, not committed)
@@ -56,12 +56,12 @@ npm run test-serializer -- --fixture 030 --debug-write  # write .parsed.md for v
 
 ### Write snapshot for a new fixture
 
-1. Create `test/fixtures/{name}.md` with minimal markdown.
+1. Create `libs/constructs/test/fixtures/{name}.md` with minimal markdown.
 2. Generate the accepted snapshot:
    ```bash
    npm run test-parser -- --fixture {name} --write
    ```
-3. Inspect `test/fixtures/{name}.md.json` — verify construct names, nesting, values.
+3. Inspect `libs/constructs/test/fixtures/{name}.md.json` — verify construct names, nesting, values.
 4. Run roundtrip check:
    ```bash
    npm run test-serializer -- --fixture {name}
@@ -97,7 +97,7 @@ Use `--debug-write` to produce a transient `.debug.json` without overwriting the
 npm run test-parser -- --fixture {name} --debug-write
 ```
 
-Open `test/fixtures/{name}.debug.json` and compare against `{name}.md.json`. Differences show what the current parser produces vs what was accepted.
+Open `libs/constructs/test/fixtures/{name}.debug.json` and compare against `{name}.md.json`. Differences show what the current parser produces vs what was accepted.
 
 ### Debugging serializer for one fixture
 
@@ -107,7 +107,7 @@ Use `--debug-write` to produce a `.parsed.md` showing what the serializer render
 npm run test-serializer -- --fixture {name} --debug-write
 ```
 
-Open `test/fixtures/{name}.parsed.md` and diff against `test/fixtures/{name}.md`. This shows the roundtrip delta — what the serializer writes back vs the original source.
+Open `libs/constructs/test/fixtures/{name}.parsed.md` and diff against `libs/constructs/test/fixtures/{name}.md`. This shows the roundtrip delta — what the serializer writes back vs the original source.
 
 ### Run full regression
 

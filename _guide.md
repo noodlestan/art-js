@@ -30,7 +30,6 @@ spec/               — the artificial language specification
 | Bin               | `cli/bin/_guide.md`            | `NONE`      |
 | Dev Server        | `cli/dev-server/_guide.md`     | `NONE`      |
 | Pipeline Test CLI | `cli/pipeline-tests/_guide.md` | `NONE`      |
-| POC Parse         | `cli/poc-parse/_guide.md`      | `NONE`      |
 | Watcher           | `cli/watcher/_guide.md`        | `NONE`      |
 | Bundler           | `libs/bundler/_guide.md`       | `NONE`      |
 | Constructs        | `libs/constructs/_guide.md`    | `NONE`      |
@@ -95,3 +94,15 @@ Runs automatically on pre-commit hook (from the repository root):
 ```bash
 npm run ci # lint, test and build
 ```
+
+### Operating Instructions: Verifying Step
+
+**Instructions:**
+
+When making changes to parser, serializer, or constructs packages, execute from `cli/pipeline-tests/`:
+
+```bash
+npm run test # runs test-parser and test-serializer against stable fixtures
+```
+
+To learn how to debug failed tests, read `./architecture/art-md-fixture-tests.md`.
