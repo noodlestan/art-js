@@ -1,0 +1,25 @@
+{
+  "name": "@art-js/pipeline-test-cli",
+  "version": "0.0.1",
+  "description": "Test scripts for the parser and serializer pipeline.",
+  "author": "Noodlestan Collective",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noodlestan/art-js",
+    "directory": "cli/pipeline-tests"
+  },
+  "type": "module",
+  "files": [
+    "dist",
+    "LICENSE-MIT",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "npm run test-parser && npm run test-serializer",
+    "test-parser": "node dist/test-parser.js",
+    "test-serializer": "node dist/test-serializer.js"
+  },
+  "devDependencies": {}
+}

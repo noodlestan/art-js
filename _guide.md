@@ -16,6 +16,7 @@ Agents SHOULD scan these files for relevant clarifications when faced with ambig
 _guide.md           — this file
 _backlog/           — plans, instructions, reports
 _records/           — project, repository, namespace, and license records
+architecture/       — repository-level architecture documentation
 cli/                — CLI packages
 libs/               — library packages
 spec/               — the artificial language specification
@@ -23,21 +24,22 @@ spec/               — the artificial language specification
 
 ## Projects
 
-| Project       | Guide                       | Backlog     |
-| ------------- | --------------------------- | ----------- |
-| Art JS (root) | `_guide.md`                 | `_backlog/` |
-| Bin           | `cli/bin/_guide.md`         | `NONE`      |
-| Dev Server    | `cli/dev-server/_guide.md`  | `NONE`      |
-| POC Parse     | `cli/poc-parse/_guide.md`   | `NONE`      |
-| Watcher       | `cli/watcher/_guide.md`     | `NONE`      |
-| Bundler       | `libs/bundler/_guide.md`    | `NONE`      |
-| Constructs    | `libs/constructs/_guide.md` | `NONE`      |
-| Parser        | `libs/parser/_guide.md`     | `NONE`      |
-| Primitives    | `libs/primitives/_guide.md` | `NONE`      |
-| Program       | `libs/program/_guide.md`    | `NONE`      |
-| Serializer    | `libs/serializer/_guide.md` | `NONE`      |
-| Validator     | `libs/validator/_guide.md`  | `NONE`      |
-| Spec          | `spec/_guide.md`            | `NONE`      |
+| Project           | Guide                          | Backlog     |
+| ----------------- | ------------------------------ | ----------- |
+| Art JS (root)     | `_guide.md`                    | `_backlog/` |
+| Bin               | `cli/bin/_guide.md`            | `NONE`      |
+| Dev Server        | `cli/dev-server/_guide.md`     | `NONE`      |
+| Pipeline Test CLI | `cli/pipeline-tests/_guide.md` | `NONE`      |
+| POC Parse         | `cli/poc-parse/_guide.md`      | `NONE`      |
+| Watcher           | `cli/watcher/_guide.md`        | `NONE`      |
+| Bundler           | `libs/bundler/_guide.md`       | `NONE`      |
+| Constructs        | `libs/constructs/_guide.md`    | `NONE`      |
+| Parser            | `libs/parser/_guide.md`        | `NONE`      |
+| Primitives        | `libs/primitives/_guide.md`    | `NONE`      |
+| Program           | `libs/program/_guide.md`       | `NONE`      |
+| Serializer        | `libs/serializer/_guide.md`    | `NONE`      |
+| Validator         | `libs/validator/_guide.md`     | `NONE`      |
+| Spec              | `spec/_guide.md`               | `NONE`      |
 
 ## Records Management
 
@@ -50,7 +52,10 @@ Records are co-located with the resources they describe in `_records/` directori
 
 ## Knowledge References
 
-This repository maintains an architecture reference at `libs/parser/architecture/index.md`.
+This repository maintains architecture references at:
+
+- `architecture/index.md` — repository-level architecture.
+- `libs/parser/architecture/index.md` — parser architecture.
 
 ## Workflows
 
