@@ -2,7 +2,7 @@
 
 **Id:** `migrate-tests-pipeline`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -74,12 +74,12 @@ Execution occurs in `$PROJECT` on branch `main`; primary working directory is `$
 
 ## Items:
 
-| Iteration / Instructions                                                                                                   | Status  |
-| -------------------------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Make Serializer Tests Mandatory `./plan-migrate-tests-pipeline/instructions/make-serializer-tests-mandatory.md` | `DONE`  |
-| Iteration: Scaffold Pipeline Tests Package `./plan-migrate-tests-pipeline/instructions/scaffold-pipeline-tests-package.md` | `DONE`  |
-| Iteration: Migrate Test Scripts `./plan-migrate-tests-pipeline/instructions/migrate-test-scripts.md`                       | `DONE`  |
-| Iteration: Update Knowledge And Guide `./plan-migrate-tests-pipeline/instructions/update-knowledge-and-guide.md`           | `READY` |
+| Iteration / Instructions                                                                                                   | Status |
+| -------------------------------------------------------------------------------------------------------------------------- | ------ |
+| Iteration: Make Serializer Tests Mandatory `./plan-migrate-tests-pipeline/instructions/make-serializer-tests-mandatory.md` | `DONE` |
+| Iteration: Scaffold Pipeline Tests Package `./plan-migrate-tests-pipeline/instructions/scaffold-pipeline-tests-package.md` | `DONE` |
+| Iteration: Migrate Test Scripts `./plan-migrate-tests-pipeline/instructions/migrate-test-scripts.md`                       | `DONE` |
+| Iteration: Update Knowledge And Guide `./plan-migrate-tests-pipeline/instructions/update-knowledge-and-guide.md`           | `DONE` |
 
 ### Iteration: Make Serializer Tests Mandatory
 
@@ -221,13 +221,14 @@ build(art-md-roundtrip): Migrate test scripts to pipeline-tests.
 
 **Id:** `update-knowledge-and-guide`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Update the repository guide and knowledge references to reflect the migrated test pipeline, and remove stale poc-parse references.
 
 **Description:** Ensure `_guide.md` verifying operating instructions reference the pipeline-tests package. Clean up any remaining stale references to poc-parse or old fixture paths.
 
 **Instructions:** `./plan-migrate-tests-pipeline/instructions/update-knowledge-and-guide.md`
+**Report:** `./plan-migrate-tests-pipeline/instructions/update-knowledge-and-guide__report.md`
 
 **Changes:**
 
@@ -237,9 +238,9 @@ build(art-md-roundtrip): Migrate test scripts to pipeline-tests.
 
 #### Commits:
 
-| ID                           | Repository / Checkout / Branch   | Policy       | Hash  | Status     |
-| ---------------------------- | -------------------------------- | ------------ | ----- | ---------- |
-| `update-knowledge-and-guide` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                           | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
+| ---------------------------- | -------------------------------- | ------------ | --------- | ----------- |
+| `update-knowledge-and-guide` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | `11c4419` | `COMMITTED` |
 
 ##### Commit: `update-knowledge-and-guide`
 
@@ -255,7 +256,7 @@ docs(art-md-roundtrip): Update knowledge and guide.
 
 ### Next
 
-Delegate the next `READY` iteration: `update-knowledge-and-guide`.
+All iterations DONE.
 
 ### Blockers
 
@@ -275,6 +276,7 @@ None.
 - **Serializer tests mandatory** — `make-serializer-tests-mandatory` DONE; `test-serializer.ts` returns `failed === 0 ? 0 : 2`; 45 fixtures lossless; commit `e9a21e4` pushed.
 - **Pipeline-tests package scaffolded** — `scaffold-pipeline-tests-package` DONE; `@art-js/pipeline-test-cli` created at `cli/pipeline-tests/` with 12 files; repo-level `architecture/` created; commit `fa9ad3f` pushed.
 - **Test scripts migrated** — `migrate-test-scripts` DONE; `test-parser.ts`, `test-serializer.ts`, and support files moved to `cli/pipeline-tests/scripts/`; 45 fixtures moved to `libs/constructs/test/fixtures/`; `--path` parameter wired; commit `029517d` pushed.
+- **Knowledge and guide updated** — `update-knowledge-and-guide` DONE; `_guide.md` updated with `Verifying Step` operating instruction; stale `poc-parse` references removed; `libs/parser/architecture/fixture-tests.md` deleted; commit `11c4419` pushed.
 
 ### Decisions
 
