@@ -1,7 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-import { FIXTURES_DIR } from './test/constants';
 import { parseFixture } from './test/parser/parseFixture';
 import { parseParserArgs } from './test/parser/parseParserArgs';
 import type { ParseResult } from './test/parser/types';
@@ -9,7 +8,7 @@ import { getFixturePairs } from './test/shared/get-fixture-pairs';
 import { printSummary } from './test/shared/printSummary';
 import { stableStringify } from './test/shared/stableStringify';
 
-const { doWrite, doWriteDebug, filterFixture } = parseParserArgs();
+const { doWrite, doWriteDebug, filterFixture, fixturesDir } = parseParserArgs();
 
 function reportFixture(input: string, result: ParseResult, error?: string) {
 	const fixture = path.basename(input);
@@ -23,7 +22,7 @@ function reportFixture(input: string, result: ParseResult, error?: string) {
 }
 
 async function run(): Promise<number> {
-	const pairs = getFixturePairs(FIXTURES_DIR);
+	const pairs = getFixturePairs(fixturesDir);
 	let tested = 0;
 	let failed = 0;
 	let totalParseTime = 0;

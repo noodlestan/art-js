@@ -1,16 +1,15 @@
 import * as path from 'node:path';
 
-import { FIXTURES_DIR } from './test/constants';
 import { diffFixtureResults } from './test/serializer/diffFixtureResults';
 import { parseSerializerArgs } from './test/serializer/parseSerializerArgs';
 import { serializeFixture } from './test/serializer/serializeFixture';
 import { getFixturePairs } from './test/shared/get-fixture-pairs';
 import { printSummary } from './test/shared/printSummary';
 
-const { doWriteDebug, filterFixture } = parseSerializerArgs();
+const { doWriteDebug, filterFixture, fixturesDir } = parseSerializerArgs();
 
 async function run(): Promise<number> {
-	const pairs = getFixturePairs(FIXTURES_DIR);
+	const pairs = getFixturePairs(fixturesDir);
 	let tested = 0;
 	let failed = 0;
 	let totalSerializeTime = 0;

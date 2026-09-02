@@ -179,7 +179,7 @@ build(art-md-roundtrip): Scaffold pipeline-tests package.
 
 **Id:** `migrate-test-scripts`
 
-**Status:** `READY`
+**Status:** `WORKING`
 
 **Purpose:** Move test scripts and fixtures from parser to pipeline-tests and constructs packages.
 

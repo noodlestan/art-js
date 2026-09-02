@@ -17,9 +17,21 @@
     "README.md"
   ],
   "scripts": {
+    "build": "echo no build configured",
+    "lint": "prettier . -c && eslint . && tsc --noEmit",
+    "lint:fix": "prettier . -c --write && eslint . --fix",
+    "build:clean": "rm -rf dist",
+    "test-parser": "npx tsx scripts/test-parser.ts",
+    "test-serializer": "npx tsx scripts/test-serializer.ts",
     "test": "npm run test-parser && npm run test-serializer",
-    "test-parser": "node dist/test-parser.js",
-    "test-serializer": "node dist/test-serializer.js"
+    "ci": "npm run lint && npm run build && npm run test"
   },
-  "devDependencies": {}
+  "dependencies": {
+    "@art-js/constructs": "*",
+    "@art-js/parser": "*",
+    "@art-js/serializer": "*"
+  },
+  "devDependencies": {
+    "tsx": "^4.8.1"
+  }
 }

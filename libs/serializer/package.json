@@ -27,8 +27,8 @@
     "lint": "prettier . -c && eslint . && tsc --noEmit",
     "lint:fix": "prettier . -c --write && eslint . --fix",
     "build:clean": "rm -rf dist",
-    "ci": "npm run lint && npm run build && npm run test",
-    "test": "vitest run"
+    "test": "echo none yet",
+    "ci": "npm run lint && npm run build && npm run test"
   },
   "dependencies": {
     "@art-js/primitives": "*",

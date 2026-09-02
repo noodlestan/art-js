@@ -2,6 +2,7 @@ export interface ParserCliArgs {
 	doWrite: boolean;
 	doWriteDebug: boolean;
 	filterFixture: string | undefined;
+	fixturesDir: string;
 }
 
 export interface ParseResult {
