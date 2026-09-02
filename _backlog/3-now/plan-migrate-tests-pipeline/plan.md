@@ -2,7 +2,7 @@
 
 **Id:** `migrate-tests-pipeline`
 
-**Status:** `READY`
+**Status:** `WORKING`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -76,7 +76,7 @@ Execution occurs in `$PROJECT` on branch `main`; primary working directory is `$
 
 | Iteration / Instructions                                                                                                   | Status  |
 | -------------------------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Make Serializer Tests Mandatory `./plan-migrate-tests-pipeline/instructions/make-serializer-tests-mandatory.md` | `READY` |
+| Iteration: Make Serializer Tests Mandatory `./plan-migrate-tests-pipeline/instructions/make-serializer-tests-mandatory.md` | `DONE`  |
 | Iteration: Scaffold Pipeline Tests Package `./plan-migrate-tests-pipeline/instructions/scaffold-pipeline-tests-package.md` | `READY` |
 | Iteration: Migrate Test Scripts `./plan-migrate-tests-pipeline/instructions/migrate-test-scripts.md`                       | `READY` |
 | Iteration: Update Knowledge And Guide `./plan-migrate-tests-pipeline/instructions/update-knowledge-and-guide.md`           | `READY` |
@@ -85,13 +85,14 @@ Execution occurs in `$PROJECT` on branch `main`; primary working directory is `$
 
 **Id:** `make-serializer-tests-mandatory`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Make the serializer test runner exit with failure code when roundtrip diffs are detected.
 
 **Description:** Replace the WIP comment in `test-serializer.ts` with the actual exit code logic, so CI catches serializer roundtrip failures.
 
 **Instructions:** `./plan-migrate-tests-pipeline/instructions/make-serializer-tests-mandatory.md`
+**Report:** `./plan-migrate-tests-pipeline/instructions/make-serializer-tests-mandatory__report.md`
 
 **Changes:**
 
@@ -100,9 +101,9 @@ Execution occurs in `$PROJECT` on branch `main`; primary working directory is `$
 
 #### Commits:
 
-| ID                                | Repository / Checkout / Branch   | Policy       | Hash  | Status     |
-| --------------------------------- | -------------------------------- | ------------ | ----- | ---------- |
-| `make-serializer-tests-mandatory` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                                | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
+| --------------------------------- | -------------------------------- | ------------ | --------- | ----------- |
+| `make-serializer-tests-mandatory` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | `e9a21e4` | `COMMITTED` |
 
 ##### Commit: `make-serializer-tests-mandatory`
 
@@ -160,9 +161,9 @@ Also create repo-level architecture files:
 
 #### Commits:
 
-| ID                                | Repository / Checkout / Branch   | Policy       | Hash  | Status        |
-| --------------------------------- | -------------------------------- | ------------ | ----- | ------------- |
-| `scaffold-pipeline-tests-package` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `PLACEHOLDER` |
+| ID                                | Repository / Checkout / Branch   | Policy       | Hash  | Status     |
+| --------------------------------- | -------------------------------- | ------------ | ----- | ---------- |
+| `scaffold-pipeline-tests-package` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `scaffold-pipeline-tests-package`
 
@@ -200,9 +201,9 @@ build(art-md-roundtrip): Scaffold pipeline-tests package.
 
 #### Commits:
 
-| ID                     | Repository / Checkout / Branch   | Policy       | Hash  | Status        |
-| ---------------------- | -------------------------------- | ------------ | ----- | ------------- |
-| `migrate-test-scripts` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `PLACEHOLDER` |
+| ID                     | Repository / Checkout / Branch   | Policy       | Hash  | Status     |
+| ---------------------- | -------------------------------- | ------------ | ----- | ---------- |
+| `migrate-test-scripts` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `migrate-test-scripts`
 
@@ -234,9 +235,9 @@ build(art-md-roundtrip): Migrate test scripts to pipeline-tests.
 
 #### Commits:
 
-| ID                           | Repository / Checkout / Branch   | Policy       | Hash  | Status        |
-| ---------------------------- | -------------------------------- | ------------ | ----- | ------------- |
-| `update-knowledge-and-guide` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `PLACEHOLDER` |
+| ID                           | Repository / Checkout / Branch   | Policy       | Hash  | Status     |
+| ---------------------------- | -------------------------------- | ------------ | ----- | ---------- |
+| `update-knowledge-and-guide` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `update-knowledge-and-guide`
 
@@ -252,7 +253,7 @@ docs(art-md-roundtrip): Update knowledge and guide.
 
 ### Next
 
-Delegate the next `READY` iteration: `make-serializer-tests-mandatory`.
+Delegate the next `READY` iteration: `scaffold-pipeline-tests-package`.
 
 ### Blockers
 
@@ -269,6 +270,7 @@ None.
 
 - **42 fixtures pass parser tests** — verified via `npm run test-parser`.
 - **42 fixtures lossless roundtrip** — verified via `npm run test-serializer`.
+- **Serializer tests mandatory** — `make-serializer-tests-mandatory` DONE; `test-serializer.ts` returns `failed === 0 ? 0 : 2`; 45 fixtures lossless; commit `e9a21e4` pushed.
 
 ### Decisions
 
