@@ -12,12 +12,12 @@
 
 #### Files changed
 
-| File | Change |
-|------|--------|
-| `art-js/libs/parser/test/fixtures/` | 31 fixture files copied (8 `.art` + 8 `.md` inputs, 15 `.art.json` snapshots) — byte-identical to poc-parse source |
+| File                                          | Change                                                                                                                                                                           |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `art-js/libs/parser/test/fixtures/`           | 31 fixture files copied (8 `.art` + 8 `.md` inputs, 15 `.art.json` snapshots) — byte-identical to poc-parse source                                                               |
 | `art-js/libs/parser/scripts/test-fixtures.ts` | Self-contained fixture runner — imports `parse` from parser entry point `../src/index` (not from poc-parse), `FIXTURES_DIR` → `../test/fixtures`, identical output format to POC |
-| `art-js/libs/parser/package.json` | `"test"` script wired to `npx tsx scripts/test-fixtures.ts`; `tsx ^4.8.1` and `@types/node ^25.9.3` added to devDependencies |
-| `package-lock.json` | Regenerated via `npm install` — tsx + @types/node resolved |
+| `art-js/libs/parser/package.json`             | `"test"` script wired to `npx tsx scripts/test-fixtures.ts`; `tsx ^4.8.1` and `@types/node ^25.9.3` added to devDependencies                                                     |
+| `package-lock.json`                           | Regenerated via `npm install` — tsx + @types/node resolved                                                                                                                       |
 
 ### Verification
 
@@ -49,6 +49,7 @@ None.
 - **Snippet:** The instruction's code block should use `import { parse } from '../src/index';` (without `.ts` extension). Phase 3 (`plan-migrate-and-verify`) should note that the entry-point stub is at `../src/index` not `../src/index.ts`.
 
 **Note for phase 3 (`plan-migrate-and-verify`):** The runner's `parse()` call is the entry-point stub returning `undefined`. Phase 3 will:
+
 1. Replace the `parse()` stub with a real implementation that reads the file and parses content: `const content = fs.readFileSync(filePath, 'utf-8'); const document = parse(content);`
 2. Remove the `// eslint-disable-next-line @typescript-eslint/no-unused-vars` above `parseFixture` once the `filePath` parameter is used.
 3. The import path is `../src/index` (no `.ts` extension) — phase 3 must preserve this for tsc compatibility.

@@ -10,13 +10,13 @@
 
 ### Changes
 
-| Goal | Outcome |
-| --- | --- |
-| Rename and update 04* fixtures to match corrected behavior | Done — 040, 041, 042 renamed; 043 created fresh |
-| Refactor Tag construct: extract `createTag.ts` | Done — new file follows NaturalBlock pattern |
-| Fix Tag construct: only capture tags at end of text | Done — end-of-text extraction with consecutive tag support |
-| Fix SectionBlock serializer: emit `(#tag)` syntax | Done — appends tags after heading name |
-| Verify all fixtures pass both parser and serializer tests | Done — all 42 fixtures pass, lossless roundtrip confirmed |
+| Goal                                                        | Outcome                                                    |
+| ----------------------------------------------------------- | ---------------------------------------------------------- |
+| Rename and update 04\* fixtures to match corrected behavior | Done — 040, 041, 042 renamed; 043 created fresh            |
+| Refactor Tag construct: extract `createTag.ts`              | Done — new file follows NaturalBlock pattern               |
+| Fix Tag construct: only capture tags at end of text         | Done — end-of-text extraction with consecutive tag support |
+| Fix SectionBlock serializer: emit `(#tag)` syntax           | Done — appends tags after heading name                     |
+| Verify all fixtures pass both parser and serializer tests   | Done — all 42 fixtures pass, lossless roundtrip confirmed  |
 
 #### Files changed
 

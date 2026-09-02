@@ -20,12 +20,12 @@
 
 ## Path Variables
 
-| Variable              | Resolved Path                                 | Purpose                                           |
-| --------------------- | --------------------------------------------- | ------------------------------------------------- |
-| `$PROJECT`            | `$WORKSPACE/checkouts/art-js`                 | project repository root                           |
-| `$PACKAGE_PARSER`     | `$PROJECT/libs/parser/`                       | parser package and fixture suite                  |
-| `$PACKAGE_CONSTRUCTS` | `$PROJECT/libs/constructs/`                   | construct implementations and unit tests          |
-| `$PACKAGE_SERIALIZER` | `$PROJECT/libs/serializer/`                   | serializer implementation used by roundtrip tests |
+| Variable              | Resolved Path                 | Purpose                                           |
+| --------------------- | ----------------------------- | ------------------------------------------------- |
+| `$PROJECT`            | `$WORKSPACE/checkouts/art-js` | project repository root                           |
+| `$PACKAGE_PARSER`     | `$PROJECT/libs/parser/`       | parser package and fixture suite                  |
+| `$PACKAGE_CONSTRUCTS` | `$PROJECT/libs/constructs/`   | construct implementations and unit tests          |
+| `$PACKAGE_SERIALIZER` | `$PROJECT/libs/serializer/`   | serializer implementation used by roundtrip tests |
 
 ## Working Agreements
 
@@ -54,12 +54,12 @@ The test suite is split into two scripts:
 
 **Key flags:**
 
-| Flag              | Script          | Purpose                                                     |
-| ----------------- | --------------- | ----------------------------------------------------------- |
-| `--write`         | test-parser     | Regenerate `.md.json` snapshots from current parser output  |
-| `--fixture {name}`| both            | Scope to a single fixture (partial match on basename)       |
-| `--debug-write`   | test-parser     | Write `{fixture}.debug.json` for inspection without overwriting the accepted snapshot |
-| `--debug-write`   | test-serializer | Write `{fixture}.parsed.md` for visual diff comparison      |
+| Flag               | Script          | Purpose                                                                               |
+| ------------------ | --------------- | ------------------------------------------------------------------------------------- |
+| `--write`          | test-parser     | Regenerate `.md.json` snapshots from current parser output                            |
+| `--fixture {name}` | both            | Scope to a single fixture (partial match on basename)                                 |
+| `--debug-write`    | test-parser     | Write `{fixture}.debug.json` for inspection without overwriting the accepted snapshot |
+| `--debug-write`    | test-serializer | Write `{fixture}.parsed.md` for visual diff comparison                                |
 
 **Important:** `test-serializer` currently always returns exit code 0 (see the WIP comment in `test-serializer.ts`). Check the summary output for any failures; do not rely on exit code alone.
 
@@ -103,15 +103,15 @@ The following numbered fixtures have WIP comments describing issues that have si
 3. Run `npm run test-serializer -- --fixture {number}` to confirm roundtrip still passes.
 4. Run `npm run test-serializer -- --fixture {number} --debug-write` and inspect `.parsed.md` if needed.
 
-| Fixture | WIP Comment | Status |
-| --- | --- | --- |
-| `004-natural-block-with-list.md` | List items do not have `type` | Resolved — snapshot has `type: "listItem"` |
-| `005-natural-block-with-ordered-spead-list.md` | List items do not have `type` | Resolved — snapshot has `type: "listItem"` |
-| `006-natural-block-with-code.md` | Code blocks not captured | Resolved — snapshot has `type: "code"` with `lang` |
-| `007-natural-block-with-nested-code.md` | Code blocks not captured | Resolved — snapshot has `type: "code"` with `lang: "meta"` |
-| `030-field-inline-simple.md` | Value is empty array. Expected "Hello you." | Resolved — snapshot has `value` with `NaturalExpression` |
-| `031-field-inline-with-inline-formatting.md` | Only **you** is included in the field value | Resolved — snapshot has all inline children |
-| `032-field-inline-with-multiple-lines.md` | Only how is included in field value | Resolved — snapshot has all inline children |
+| Fixture                                        | WIP Comment                                 | Status                                                     |
+| ---------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------- |
+| `004-natural-block-with-list.md`               | List items do not have `type`               | Resolved — snapshot has `type: "listItem"`                 |
+| `005-natural-block-with-ordered-spead-list.md` | List items do not have `type`               | Resolved — snapshot has `type: "listItem"`                 |
+| `006-natural-block-with-code.md`               | Code blocks not captured                    | Resolved — snapshot has `type: "code"` with `lang`         |
+| `007-natural-block-with-nested-code.md`        | Code blocks not captured                    | Resolved — snapshot has `type: "code"` with `lang: "meta"` |
+| `030-field-inline-simple.md`                   | Value is empty array. Expected "Hello you." | Resolved — snapshot has `value` with `NaturalExpression`   |
+| `031-field-inline-with-inline-formatting.md`   | Only **you** is included in the field value | Resolved — snapshot has all inline children                |
+| `032-field-inline-with-multiple-lines.md`      | Only how is included in field value         | Resolved — snapshot has all inline children                |
 
 ### Part 2: Fix `_011-section-block-with-formatting.md`
 
@@ -141,17 +141,17 @@ Add these fixtures in order. For each one:
 
 **Proposed fixtures:**
 
-| # | Fixture | Constructs Combined |
-| --- | --- | --- |
-| 1 | `008-natural-block-with-list-and-link.md` | List items containing links |
-| 2 | `009-natural-block-with-list-and-formatting.md` | List items with emphasis/strong |
-| 3 | `014-section-block-with-list.md` | SectionBlock containing a list |
-| 4 | `015-section-block-with-code.md` | SectionBlock containing a code block |
-| 5 | `024-field-block-with-formatting.md` | FieldBlock capturing formatted paragraphs |
-| 6 | `025-field-block-with-code.md` | FieldBlock capturing code blocks |
-| 7 | `040-tag-simple.md` | `(#tagname)` in prose |
-| 8 | `041-tag-in-section.md` | Tag inside a SectionBlock body |
-| 9 | `042-tag-in-field-inline.md` | Tag inside a FieldInline value |
+| #   | Fixture                                         | Constructs Combined                       |
+| --- | ----------------------------------------------- | ----------------------------------------- |
+| 1   | `008-natural-block-with-list-and-link.md`       | List items containing links               |
+| 2   | `009-natural-block-with-list-and-formatting.md` | List items with emphasis/strong           |
+| 3   | `014-section-block-with-list.md`                | SectionBlock containing a list            |
+| 4   | `015-section-block-with-code.md`                | SectionBlock containing a code block      |
+| 5   | `024-field-block-with-formatting.md`            | FieldBlock capturing formatted paragraphs |
+| 6   | `025-field-block-with-code.md`                  | FieldBlock capturing code blocks          |
+| 7   | `040-tag-simple.md`                             | `(#tagname)` in prose                     |
+| 8   | `041-tag-in-section.md`                         | Tag inside a SectionBlock body            |
+| 9   | `042-tag-in-field-inline.md`                    | Tag inside a FieldInline value            |
 
 ## Verification
 

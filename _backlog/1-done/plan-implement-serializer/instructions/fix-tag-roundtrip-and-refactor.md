@@ -123,7 +123,7 @@ npm run ci
 
 This section summarises the changes to be made in this iteration.
 
-- Rename and update 04* fixtures to match corrected behavior (043 is new).
+- Rename and update 04\* fixtures to match corrected behavior (043 is new).
 - Refactor Tag construct: extract `createTag.ts` from `createTagCreator.ts` following the NaturalBlock pattern.
 - Fix Tag construct: only capture tags that appear at the END of a text node (not in the middle). Tags in the middle of heading names remain as literal text in the SectionBlock's `name` value.
 - Fix SectionBlock serializer: emit `(#tag)` syntax when tags are present, appending them after the heading name.
@@ -137,12 +137,12 @@ This section contains the detailed steps to execute, including commit steps.
 
 **Rename and update these fixtures:**
 
-| Current                      | New                                     | New Content                   | Expected Behavior                                                                                                                |
-| ---------------------------- | --------------------------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `040-tag-simple.md`          | `040-tag-in-section-block.md`           | `# Section (#foo)`            | Tag captured: `tags=[Tag(name="foo")]`, name=`"Section"`, serializer outputs `# Section (#foo)`                                  |
-| `041-tag-in-section.md`      | `041-invalid-tag-in-section-block.md`   | `# Section (#foo) Heading`    | Tag NOT captured: no `tags` field, name=`"Section (#foo) Heading"`, serializer outputs `# Section (#foo) Heading`                |
-| `042-tag-in-field-inline.md` | `042-multiple-tags-in-section-block.md` | `# Hello World (#foo) (#bar)` | Tags captured: `tags=[Tag(name="foo"), Tag(name="bar")]`, name=`"Hello World"`, serializer outputs `# Hello World (#foo) (#bar)` |
-| (new)                        | `043-valid-and-invalid-tags-in-section-block.md` | `# Hello (#foo) World (#bar)` | Tags captured: `#bar` only; name=`"Hello (#foo) World"` — validates mid-text tags are NOT captured |
+| Current                      | New                                              | New Content                   | Expected Behavior                                                                                                                |
+| ---------------------------- | ------------------------------------------------ | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `040-tag-simple.md`          | `040-tag-in-section-block.md`                    | `# Section (#foo)`            | Tag captured: `tags=[Tag(name="foo")]`, name=`"Section"`, serializer outputs `# Section (#foo)`                                  |
+| `041-tag-in-section.md`      | `041-invalid-tag-in-section-block.md`            | `# Section (#foo) Heading`    | Tag NOT captured: no `tags` field, name=`"Section (#foo) Heading"`, serializer outputs `# Section (#foo) Heading`                |
+| `042-tag-in-field-inline.md` | `042-multiple-tags-in-section-block.md`          | `# Hello World (#foo) (#bar)` | Tags captured: `tags=[Tag(name="foo"), Tag(name="bar")]`, name=`"Hello World"`, serializer outputs `# Hello World (#foo) (#bar)` |
+| (new)                        | `043-valid-and-invalid-tags-in-section-block.md` | `# Hello (#foo) World (#bar)` | Tags captured: `#bar` only; name=`"Hello (#foo) World"` — validates mid-text tags are NOT captured                               |
 
 Note: `043` is a new fixture — create it fresh (no old file to delete).
 

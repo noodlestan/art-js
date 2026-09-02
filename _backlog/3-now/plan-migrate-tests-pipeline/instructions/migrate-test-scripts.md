@@ -23,12 +23,12 @@ These are your instructions.
 
 ## Path Variables
 
-| Variable              | Resolved Path                         | Purpose                                        |
-| --------------------- | ------------------------------------- | ---------------------------------------------- |
-| `$PROJECT`            | `$WORKSPACE/checkouts/art-js`         | project repository root                        |
-| `$PACKAGE_PIPELINE`   | `$PROJECT/cli/pipeline-tests/`        | pipeline test CLI package (scripts target)     |
-| `$PACKAGE_PARSER`     | `$PROJECT/libs/parser/`               | parser package (scripts move out)              |
-| `$PACKAGE_CONSTRUCTS` | `$PROJECT/libs/constructs/`           | constructs package (fixtures move in)          |
+| Variable              | Resolved Path                  | Purpose                                    |
+| --------------------- | ------------------------------ | ------------------------------------------ |
+| `$PROJECT`            | `$WORKSPACE/checkouts/art-js`  | project repository root                    |
+| `$PACKAGE_PIPELINE`   | `$PROJECT/cli/pipeline-tests/` | pipeline test CLI package (scripts target) |
+| `$PACKAGE_PARSER`     | `$PROJECT/libs/parser/`        | parser package (scripts move out)          |
+| `$PACKAGE_CONSTRUCTS` | `$PROJECT/libs/constructs/`    | constructs package (fixtures move in)      |
 
 ## Working Agreements
 

@@ -40,5 +40,3 @@ Follow ups / Notes:
 
 - The snapshot runner now compares produced JSON to the archived POC `.art.json` files in a one-to-one basename manner.
 - If future fixtures are added that reuse basenames across different extensions, ensure their `.art.json` snapshots use distinct names to avoid collisions.
-
-

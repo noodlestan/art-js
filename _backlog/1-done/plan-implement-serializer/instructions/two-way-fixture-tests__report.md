@@ -12,10 +12,10 @@
 
 #### Files changed
 
-| File | Change |
-| ---- | ------ |
-| `$PACKAGE_PARSER/package.json` | Added `@art-js/artificial-serializer` as devDependency |
-| `$FIXTURE_SNAPSHOT_CHECK` | Extended with return direction test: serialize art.json → markdown, diff against source, log overhead, write `.parsed.md` with `--write` |
+| File                           | Change                                                                                                                                   |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `$PACKAGE_PARSER/package.json` | Added `@art-js/artificial-serializer` as devDependency                                                                                   |
+| `$FIXTURE_SNAPSHOT_CHECK`      | Extended with return direction test: serialize art.json → markdown, diff against source, log overhead, write `.parsed.md` with `--write` |
 
 ### Verification
 

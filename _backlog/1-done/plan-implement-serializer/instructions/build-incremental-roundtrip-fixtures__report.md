@@ -14,15 +14,15 @@ Cleaned up stale WIP comments, fixed the SectionBlock serializer escaping bug, p
 
 ## Part 1: Clean Up Stale WIP Comments
 
-| Fixture | WIP Comment | Action |
-| --- | --- | --- |
-| `004-natural-block-with-list.md` | (already clean) | No action needed |
-| `005-natural-block-with-ordered-spead-list.md` | (already clean) | No action needed |
-| `006-natural-block-with-code.md` | (already clean) | No action needed |
-| `007-natural-block-with-nested-code.md` | (already clean) | No action needed |
-| `030-field-inline-simple.md` | (already clean) | No action needed |
-| `031-field-inline-with-inline-formatting.md` | (already clean) | No action needed |
-| `032-field-inline-with-multiple-lines.md` | `WIP: Only how is included in field value.` | Removed WIP line, regenerated snapshot, roundtrip confirmed |
+| Fixture                                        | WIP Comment                                 | Action                                                      |
+| ---------------------------------------------- | ------------------------------------------- | ----------------------------------------------------------- |
+| `004-natural-block-with-list.md`               | (already clean)                             | No action needed                                            |
+| `005-natural-block-with-ordered-spead-list.md` | (already clean)                             | No action needed                                            |
+| `006-natural-block-with-code.md`               | (already clean)                             | No action needed                                            |
+| `007-natural-block-with-nested-code.md`        | (already clean)                             | No action needed                                            |
+| `030-field-inline-simple.md`                   | (already clean)                             | No action needed                                            |
+| `031-field-inline-with-inline-formatting.md`   | (already clean)                             | No action needed                                            |
+| `032-field-inline-with-multiple-lines.md`      | `WIP: Only how is included in field value.` | Removed WIP line, regenerated snapshot, roundtrip confirmed |
 
 ## Part 2: Fix `_011-section-block-with-formatting.md`
 
@@ -33,10 +33,12 @@ Cleaned up stale WIP comments, fixed the SectionBlock serializer escaping bug, p
 **Fix:** In `$PACKAGE_CONSTRUCTS/src/constructs/SectionBlock/createSectionBlockToMdast.ts`, parse `section.name` via `fromMarkdown()` to produce proper mdast heading children (emphasis, strong, text) instead of a single text node.
 
 **Files changed:**
+
 - `libs/constructs/src/constructs/SectionBlock/createSectionBlockToMdast.ts` — Added `fromMarkdown` import, parse heading name, extract inline children
 - `libs/constructs/src/constructs/SectionBlock/createSectionBlockToMdast.test.ts` — Added `stripPositions` helper, added inline formatting test case
 
 **Verification:**
+
 - `npm run lint` (constructs) — PASS
 - `npx vitest run` (constructs) — 10 tests PASS
 - `npm run build` (constructs) — PASS
@@ -51,6 +53,7 @@ Cleaned up stale WIP comments, fixed the SectionBlock serializer escaping bug, p
 **Constructs:** List items containing links (inline `link` nodes with `url` and `title` attributes)
 
 **AST observations:**
+
 - NaturalBlock (paragraph) — "A list with links:"
 - NaturalBlock (list, unordered, spread=false) — 3 listItems
   - ListItem 1: paragraph with text("Visit "), link(url="https://example.com", children=[text("Example")]), text(" today")
@@ -64,6 +67,7 @@ Cleaned up stale WIP comments, fixed the SectionBlock serializer escaping bug, p
 **Constructs:** List items with emphasis, strong, and inline code
 
 **AST observations:**
+
 - NaturalBlock (paragraph) — "A list with formatting:"
 - NaturalBlock (list, unordered, spread=false) — 3 listItems
   - ListItem 1: paragraph with strong("Bold"), text(" item with "), emphasis("emphasis")
@@ -77,6 +81,7 @@ Cleaned up stale WIP comments, fixed the SectionBlock serializer escaping bug, p
 **Constructs:** SectionBlock with inline formatting in heading name
 
 **AST observations:**
+
 - SectionBlock(name="Hello _World_! How are **you**?", depth=1) — children: []
 
 **Serializer:** LOSSLESS ROUNDTRIP (after fix in Part 2)
@@ -86,6 +91,7 @@ Cleaned up stale WIP comments, fixed the SectionBlock serializer escaping bug, p
 **Constructs:** SectionBlock containing a list
 
 **AST observations:**
+
 - SectionBlock(name="Shopping List", depth=1)
   - NaturalBlock (list, unordered) — 3 listItems
     - ListItem 1: paragraph "Milk"
@@ -99,6 +105,7 @@ Cleaned up stale WIP comments, fixed the SectionBlock serializer escaping bug, p
 **Constructs:** SectionBlock containing a code block
 
 **AST observations:**
+
 - SectionBlock(name="Code Example", depth=1)
   - NaturalBlock (code, lang="typescript") — function body
 
@@ -109,6 +116,7 @@ Cleaned up stale WIP comments, fixed the SectionBlock serializer escaping bug, p
 **Constructs:** FieldBlock capturing a paragraph with emphasis, strong, and inline code
 
 **AST observations:**
+
 - FieldBlock(name="Description")
   - NaturalBlock (paragraph) — text("This is a "), emphasis("formatted"), text(" description with "), strong("bold"), text(" and "), inlineCode("code"), text(".")
 
@@ -119,6 +127,7 @@ Cleaned up stale WIP comments, fixed the SectionBlock serializer escaping bug, p
 **Constructs:** FieldBlock capturing a code block
 
 **AST observations:**
+
 - FieldBlock(name="Code Example")
   - NaturalBlock (code, lang="typescript") — `const x = 42;`
 
@@ -129,6 +138,7 @@ Cleaned up stale WIP comments, fixed the SectionBlock serializer escaping bug, p
 **Constructs:** SectionBlock with tag in heading name
 
 **AST observations:**
+
 - SectionBlock(name="Section", depth=1, tags=[Tag(name="tagged")]) — children: []
 
 **Serializer:** ROUNDTRIP DIFF — tags are not serialized back. SectionBlock.toMdast() only outputs `section.name`, not `section.tags`. Expected: `# Section (#tagged)`, actual: `# Section`.
@@ -138,7 +148,8 @@ Cleaned up stale WIP comments, fixed the SectionBlock serializer escaping bug, p
 **Constructs:** SectionBlock with tag and body content
 
 **AST observations:**
-- SectionBlock(name="Feature  Implementation", depth=1, tags=[Tag(name="feature")])
+
+- SectionBlock(name="Feature Implementation", depth=1, tags=[Tag(name="feature")])
   - NaturalBlock (paragraph) — "Details about the feature."
 
 Note: Double space in `name` because tag removal leaves extra whitespace.
@@ -150,6 +161,7 @@ Note: Double space in `name` because tag removal leaves extra whitespace.
 **Constructs:** FieldInline with tag syntax in value (stored as plain text, not Tag construct)
 
 **AST observations:**
+
 - SectionBlock(name="Hello World", depth=1)
   - FieldInline(name="Greeting") — value: [text("Hello (#friend) there.")]
 
@@ -162,12 +174,14 @@ No previously-passing fixtures broke during this work. All 18 original numbered 
 ## Verification Results
 
 **Parser (test-parser):**
+
 ```
 Found 42 fixture(s) with snapshots. Testing...
 All fixtures passed! (42/42)
 ```
 
 **Serializer (test-serializer):**
+
 ```
 Found 42 fixture(s) with snapshots. Testing...
 26 LOSSLESS ROUNDTRIP, 2 ROUNDTRIP DIFF (040, 041 — expected tag serialization gap)
@@ -175,6 +189,7 @@ Skipped: 14 fixtures (underscore-prefixed)
 ```
 
 **Constructs:**
+
 ```
 npm run lint — PASS
 npx vitest run — 10 tests PASS

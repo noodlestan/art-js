@@ -12,8 +12,8 @@
 
 #### Files changed
 
-| File | Change |
-|------|--------|
+| File                              | Change                                                                                                                   |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | `art-js/libs/parser/src/index.ts` | Added `export function parse(): void { return undefined; }` stub — the entry-point contract for phase 2's fixture runner |
 
 **Note:** The primitives type files (`point.ts`, `record.ts`, `constructs.ts`, `registry.ts`, `index.ts`) already existed and matched the instruction content. The parser's `package.json` already had the `@art-js/artificial-primitives` dependency wired. Only the `parse()` stub was added.
@@ -21,16 +21,19 @@
 #### Verification results
 
 **Primitives (`@art-js/artificial-primitives`):**
+
 - `npm run lint:fix` — passed (no changes needed)
 - `npm run lint` — passed (prettier, eslint, tsc --noEmit)
 - `npm run build` — passed (vite build)
 
 **Parser (`@art-js/artificial-parser`):**
+
 - `npm run lint:fix` — passed (no changes needed)
 - `npm run lint` — passed (prettier, eslint, tsc --noEmit)
 - `npm run build` — passed (vite build, 2 modules transformed)
 
 **Full CI (pre-commit hook):**
+
 - `turbo run ci` across all 12 packages — all passed
 - POC Parse fixture tests: 16/16 passed
 - Workspace CLI tests: 195/195 passed

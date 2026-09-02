@@ -23,12 +23,12 @@ These are your instructions.
 
 ## Path Variables
 
-| Variable              | Resolved Path                         | Purpose                                              |
-| --------------------- | ------------------------------------- | ---------------------------------------------------- |
-| `$PROJECT`            | `$WORKSPACE/checkouts/art-js`         | project repository root                              |
-| `$PACKAGE_PIPELINE`   | `$PROJECT/cli/pipeline-tests/`        | pipeline test CLI package (new)                      |
-| `$PACKAGE_BIN`        | `$PROJECT/cli/bin/`                   | reference package to mirror for scaffold             |
-| `$PACKAGE_PARSER`     | `$PROJECT/libs/parser/`               | parser package (source of architecture files)        |
+| Variable            | Resolved Path                  | Purpose                                       |
+| ------------------- | ------------------------------ | --------------------------------------------- |
+| `$PROJECT`          | `$WORKSPACE/checkouts/art-js`  | project repository root                       |
+| `$PACKAGE_PIPELINE` | `$PROJECT/cli/pipeline-tests/` | pipeline test CLI package (new)               |
+| `$PACKAGE_BIN`      | `$PROJECT/cli/bin/`            | reference package to mirror for scaffold      |
+| `$PACKAGE_PARSER`   | `$PROJECT/libs/parser/`        | parser package (source of architecture files) |
 
 ## Working Agreements
 

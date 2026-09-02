@@ -23,10 +23,10 @@ These are your instructions.
 
 ## Path Variables
 
-| Variable         | Resolved Path                 | Purpose                                        |
-| ---------------- | ----------------------------- | ---------------------------------------------- |
-| `$PROJECT`       | `$WORKSPACE/checkouts/art-js` | project repository root                        |
-| `$PACKAGE_PARSER`| `$PROJECT/libs/parser/`       | parser package (contains `scripts/test-serializer.ts`) |
+| Variable          | Resolved Path                 | Purpose                                                |
+| ----------------- | ----------------------------- | ------------------------------------------------------ |
+| `$PROJECT`        | `$WORKSPACE/checkouts/art-js` | project repository root                                |
+| `$PACKAGE_PARSER` | `$PROJECT/libs/parser/`       | parser package (contains `scripts/test-serializer.ts`) |
 
 ## Working Agreements
 
@@ -80,15 +80,15 @@ To learn how to debug failed tests, read `./architecture/art-md-fixture-tests.md
 Open `$PACKAGE_PARSER/scripts/test-serializer.ts` and locate the WIP block at the end of the run function:
 
 ```ts
-	// WIP: uncomment when all fixtures pass.
-	// return failed === 0 ? 0 : 2;
-	return 0;
+// WIP: uncomment when all fixtures pass.
+// return failed === 0 ? 0 : 2;
+return 0;
 ```
 
 Replace those three lines with:
 
 ```ts
-	return failed === 0 ? 0 : 2;
+return failed === 0 ? 0 : 2;
 ```
 
 Verify the change compiles and the serializer runner now returns exit code `2` on failure and `0` on success.

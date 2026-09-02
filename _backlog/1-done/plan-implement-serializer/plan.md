@@ -123,14 +123,14 @@ Serializer package: unit tests for `serialize(document): string`. Parser package
 
 This section lists the downstream work items produced, coordinated, or advanced by the plan, identifying blocking dependencies across resources of different owners.
 
-| Iteration / Instructions                                                                                           | Status  |
-| ------------------------------------------------------------------------------------------------------------------ | ------- |
-| Iteration: Bootstrap Serializer Lib `./instructions/bootstrap-serializer-lib.md`                                   | `DONE`  |
-| Iteration: Two Way Fixture Tests `./instructions/two-way-fixture-tests.md`                                         | `DONE`  |
-| Iteration: Integrate Serializer Reports `./instructions/integrate-serializer-reports.md`                           | `DONE`  |
-| Iteration: Split Tests Parser Vs Serialize `./instructions/split-tests-parser-vs-serialize.md`                     | `DONE`  |
-| Iteration: Fix Parser Field Inline And Test Fixtures `./instructions/fix-parser-field-inline-and-test-fixtures.md` | `DONE`  |
-| Iteration: Build Incremental Roundtrip Fixtures `./instructions/build-incremental-roundtrip-fixtures.md`           | `DONE`  |
+| Iteration / Instructions                                                                                           | Status |
+| ------------------------------------------------------------------------------------------------------------------ | ------ |
+| Iteration: Bootstrap Serializer Lib `./instructions/bootstrap-serializer-lib.md`                                   | `DONE` |
+| Iteration: Two Way Fixture Tests `./instructions/two-way-fixture-tests.md`                                         | `DONE` |
+| Iteration: Integrate Serializer Reports `./instructions/integrate-serializer-reports.md`                           | `DONE` |
+| Iteration: Split Tests Parser Vs Serialize `./instructions/split-tests-parser-vs-serialize.md`                     | `DONE` |
+| Iteration: Fix Parser Field Inline And Test Fixtures `./instructions/fix-parser-field-inline-and-test-fixtures.md` | `DONE` |
+| Iteration: Build Incremental Roundtrip Fixtures `./instructions/build-incremental-roundtrip-fixtures.md`           | `DONE` |
 | Iteration: Fix Tag Roundtrip And Refactor `./instructions/fix-tag-roundtrip-and-refactor.md`                       | `DONE` |
 
 ### Iteration: Bootstrap Serializer Lib
@@ -301,8 +301,8 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 #### Commits:
 
-| ID                               | Repository / Checkout / Branch   | Policy       | Hash  | Status     |
-| -------------------------------- | -------------------------------- | ------------ | ----- | ---------- |
+| ID                               | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
+| -------------------------------- | -------------------------------- | ------------ | --------- | ----------- |
 | `fix-tag-roundtrip-and-refactor` | Artificial / `$PROJECT` / `main` | `AUTONOMOUS` | `0724f61` | `COMMITTED` |
 
 ## Work

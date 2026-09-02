@@ -23,10 +23,10 @@ These are your instructions.
 
 ## Path Variables
 
-| Variable              | Resolved Path                         | Purpose                                        |
-| --------------------- | ------------------------------------- | ---------------------------------------------- |
-| `$PROJECT`            | `$WORKSPACE/checkouts/art-js`         | project repository root                        |
-| `$PACKAGE_PIPELINE`   | `$PROJECT/cli/pipeline-tests/`        | pipeline test CLI package                      |
+| Variable            | Resolved Path                  | Purpose                   |
+| ------------------- | ------------------------------ | ------------------------- |
+| `$PROJECT`          | `$WORKSPACE/checkouts/art-js`  | project repository root   |
+| `$PACKAGE_PIPELINE` | `$PROJECT/cli/pipeline-tests/` | pipeline test CLI package |
 
 ## Working Agreements
 

@@ -148,11 +148,13 @@ Read the mandatory sources and inspect the primitives and parser package layouts
 #### Parser factory bundling
 
 Each construct exposes a single `create*Parser` factory (e.g. `createFieldBlockParser`) that returns a `ConstructParser` object bundling:
+
 - `preProcessor` — optional construct-specific preprocessor.
 - `handler` — optional construct-specific handler.
 - `factory` — the construct creator (detect + create).
 
 Example:
+
 ```ts
 export const createFieldBlockParser: ConstructParserFactory = () => ({
   preProcessor: createFieldBlockPreProcessor(),
@@ -164,6 +166,7 @@ export const createFieldBlockParser: ConstructParserFactory = () => ({
 #### Private directory pattern
 
 Each construct directory uses a `private/` subdirectory for internal files:
+
 - `private/` — creators, handlers, preprocessors, constants, helpers, concrete types.
 - Root — only `index.ts` (exports parser factory) and `create*Parser.ts` (parser factory).
 
@@ -197,6 +200,7 @@ interface ParserConfig {
 ```
 
 The parser instantiates constructs at build time:
+
 ```ts
 const defaultConstruct = config.defaultConstruct();
 const constructs = [defaultConstruct, ...config.constructs.map(create => create())];

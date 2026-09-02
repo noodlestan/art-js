@@ -26,15 +26,15 @@ These are your instructions. They include a section at the end on how to report 
 
 ## Path Variables
 
-| Variable              | Path                                        | Purpose                                           |
-| --------------------- | ------------------------------------------- | ------------------------------------------------- |
-| `$WORKSPACE`          | Current working directory.                  | explained in `$WORKSPACE/\_guide.md`.             |
-| `$PROJECT`            | Provided with prompt                        | Repository root for all code changes              |
-| `$PACKAGE_SERIALIZER` | `$PROJECT/art-js/libs/serializer/`          | Package being created in this instruction         |
-| `$PACKAGE_PRIMITIVES` | `$PROJECT/art-js/libs/primitives/`          | Reference layout for scaffold; runtime dependency |
-| `$PACKAGE_CONSTRUCTS` | `$PROJECT/art-js/libs/constructs/`          | Reference layout; runtime dependency (types)      |
-| `$PACKAGE_PARSER`     | `$PROJECT/art-js/libs/parser/`              | Reference for parse() entry point pattern         |
-| `$RECORD_SERIALIZER`  | `$PACKAGE_SERIALIZER/_records/package.art`  | Package record to create                          |
+| Variable              | Path                                       | Purpose                                           |
+| --------------------- | ------------------------------------------ | ------------------------------------------------- |
+| `$WORKSPACE`          | Current working directory.                 | explained in `$WORKSPACE/\_guide.md`.             |
+| `$PROJECT`            | Provided with prompt                       | Repository root for all code changes              |
+| `$PACKAGE_SERIALIZER` | `$PROJECT/art-js/libs/serializer/`         | Package being created in this instruction         |
+| `$PACKAGE_PRIMITIVES` | `$PROJECT/art-js/libs/primitives/`         | Reference layout for scaffold; runtime dependency |
+| `$PACKAGE_CONSTRUCTS` | `$PROJECT/art-js/libs/constructs/`         | Reference layout; runtime dependency (types)      |
+| `$PACKAGE_PARSER`     | `$PROJECT/art-js/libs/parser/`             | Reference for parse() entry point pattern         |
+| `$RECORD_SERIALIZER`  | `$PACKAGE_SERIALIZER/_records/package.art` | Package record to create                          |
 
 ## Working Agreements
 
