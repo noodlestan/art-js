@@ -1,8 +1,8 @@
-# Artificial
+# Art JS
 
-> Generate and manage (Art)ificial Driven Development environments.
+> Art MD implemented in JS: parse, validate, transform, and serialize back to Art MD or Markdown.
 
-A collection of tools and resources to generate and manage agent instructions. Includes the Art Language, and a (reactive) pipeline for bundling, compiling, validating, parsing, and locating resources.
+Libraries for parsing and working with Art MD content, resources, modules, programs, and projections.
 
 ## Packages
 

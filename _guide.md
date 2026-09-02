@@ -1,6 +1,10 @@
-# Art JS
+# Guide: Art JS
 
-md-art-md parser/serializer pipeline and supporting packages.
+> Host and manage the Art JS packages and tools, and their planning artefacts.
+
+Monorepo containing the Art JS roadmap, library source code and language spec, and their backlogs.
+
+Uses Workflow: Planning Work with one backlog per package, coordinating with Workflow: Roadmapping from one project-wide roadmap.
 
 ## Recommended Reading
 

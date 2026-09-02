@@ -1,7 +1,7 @@
 {
   "name": "noodlestan/art-js",
   "version": "0.0.1",
-  "description": "A collection of tools and resources to generate and manage agent instructions. Includes the Art Language, and a (reactive) pipeline for bundling, compiling, validating, parsing, and locating resources.",
+  "description": "Libraries for parsing and working with Art MD content, resources, modules, programs, and projections.",
   "author": "Noodlestan",
   "license": "MIT",
   "private": true,

@@ -2,9 +2,9 @@
 
 ## Project: Art JS
 
-**Purpose:** md-art-md parser/serializer pipeline and supporting packages.
+**Purpose:** Art MD implemented in JS: parse, validate, transform, and serialize back to Art MD or Markdown.
 
-**Description:** Art JS provides the markdown-art-markdown roundtrip pipeline including parser, serializer, constructs, primitives, and pipeline tests.
+**Description:** Libraries for parsing and working with Art MD content, resources, modules, programs, and projections.
 
 **Owner:** Project: Artificials
 
@@ -24,6 +24,6 @@
 
 **Private:** `false`
 
-**Management:** Uses Workflow: Planning Work with a backlog at `_backlog/`.
+**Management:** Uses Workflow: Planning Work with one backlog per package, coordinating with Workflow: Roadmapping from one project-wide roadmap.
 
 **License:** License: Noodlestan 2026 MIT

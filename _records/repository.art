@@ -2,9 +2,9 @@
 
 ## Repository: Art JS
 
-**Purpose:** md-art-md parser/serializer pipeline and supporting packages.
+**Purpose:** Host and manage the Art JS packages and tools, and their planning artefacts.
 
-**Description:** Standalone repository extracted from Artificial, owning the parser, serializer, constructs, primitives, and pipeline-tests packages.
+**Description:** Monorepo containing the Art JS roadmap, library source code and language spec, and their backlogs.
 
 **Owner:** Project: Art JS
 
