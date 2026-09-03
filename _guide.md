@@ -69,7 +69,7 @@ Projects in this repository use the following workflows:
 | **Planning Work** `$DOMAINS/work/workflows/planning-work/workflow.art`     | Create and manage work item lifecycles, collecting operational instructions according to context. |
 | **Delegating Work** `$DOMAINS/work/workflows/delegating-work/workflow.art` | Organize work delegation to sub-agents with validation, execution, and verification.              |
 | **Executing Work** `$DOMAINS/work/workflows/executing-work/workflow.art`   | Organize work execution by sub-agents to produce completed, verified outcomes and feedback.       |
-| **Deploying** `$DOMAINS/work/workflows/executing-work/workflow.art`        | Organizes deployment of artefacts in operations.                                                  |
+| **Deploying** `$DOMAINS/deployments/workflows/deploying/workflow.art`      | Organizes deployment of artefacts in operations.                                                  |
 
 ### Planning Work
 
