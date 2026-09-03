@@ -24,7 +24,7 @@ Singularize the accidental `@art-js/artificials-*` plural package names (phase 0
 | 4 — Implement constructs          | `_backlog/1-done/plan-implement-constructs/plan.md`          | `DONE`      |
 | 5 — Implement serializer          | `_backlog/1-done/plan-implement-serializer/plan.md`          | `DONE`      |
 | 6 — Migrate tests to pipeline     | `_backlog/1-done/plan-migrate-tests-pipeline/plan.md`        | `DONE`      |
-| 7 — Create knowledge resources    | `_backlog/4-next/plan-create-knowledge-resources/plan.md`    | `PREPARING` |
+| 7 — Create knowledge resources    | `_backlog/3-now/plan-create-knowledge-resources/plan.md`    | `READY`     |
 | 8 — Implement gaps                | `_backlog/6-plan/plan-implement-gaps/plan.md`                | `DRAFT`     |
 | 9 — Refactoring and Test Coverage | `_backlog/6-plan/plan-refactoring-and-test-coverage/plan.md` | `DRAFT`     |
 | 10 — Archive and publish          | `_backlog/6-plan/plan-archive-poc-and-publish/plan.md`       | `DRAFT`     |
