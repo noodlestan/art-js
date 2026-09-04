@@ -2,7 +2,7 @@
 
 **Id:** `create-knowledge-resources`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -75,27 +75,29 @@ None.
 
 ## Execution Context
 
-Execution occurs in `$PROJECT` on branch `main`.
+Execution occurs in `$PROJECT` on branch `building`.
 
 ## Items:
 
-| Iteration / Instructions                                                                                                                         | Status  |
-| ------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
-| Iteration: Seed Architecture Index And Components Doc `./plan-create-knowledge-resources/instructions/seed-architecture-index-and-components.md` | `READY` |
-| Iteration: Write Ecosystem Overview `./plan-create-knowledge-resources/instructions/write-ecosystem-overview.md`                                 | `READY` |
-| Iteration: Update Knowledge References `./plan-create-knowledge-resources/instructions/update-knowledge-references.md`                           | `READY` |
+| Iteration / Instructions                                                                                                                         | Status |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | ------ |
+| Iteration: Seed Architecture Index And Components Doc `./plan-create-knowledge-resources/instructions/seed-architecture-index-and-components.md` | `DONE` |
+| Iteration: Write Ecosystem Overview `./plan-create-knowledge-resources/instructions/write-ecosystem-overview.md`                                 | `DONE` |
+| Iteration: Update Knowledge References `./plan-create-knowledge-resources/instructions/update-knowledge-references.md`                           | `DONE` |
 
 ### Iteration: Seed Architecture Index And Components Doc
 
 **Id:** `seed-architecture-index-and-components`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Create the repo-level architecture components document and update the architecture index to include lib and cli sub-indexes.
 
 **Description:** Create `$ARCH/components.md` listing the major components of the art-js ecosystem (parser, serializer, constructs, primitives, bundler, program, validator, bin, pipeline-tests, dev-server, language-server, watcher, tools). Update `$ARCH/index.md` to add the components document and the two sub-indexes (lib, cli) as links.
 
 **Instructions:** `./plan-create-knowledge-resources/instructions/seed-architecture-index-and-components.md`
+
+**Report:** `./plan-create-knowledge-resources/instructions/seed-architecture-index-and-components__report.md`
 
 **Changes:**
 
@@ -108,9 +110,9 @@ None.
 
 #### Commits:
 
-| ID                                       | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ---------------------------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `seed-architecture-index-and-components` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                                       | Repository / Checkout / Branch    | Policy       | Hash      | Status      |
+| ---------------------------------------- | --------------------------------- | ------------ | --------- | ----------- |
+| `seed-architecture-index-and-components` | Art JS / `$PROJECT` / `building`  | `AUTONOMOUS` | `33f272c` | `COMMITTED` |
 
 ##### Commit: `seed-architecture-index-and-components`
 
@@ -119,20 +121,22 @@ None.
 **Message:**
 
 ```
-knowledge(art-js): Seed architecture index and components.
+docs(art-js): Seed architecture index and components.
 ```
 
 ### Iteration: Write Ecosystem Overview
 
 **Id:** `write-ecosystem-overview`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Write the art-js ecosystem overview as prose, conveying knowledge beyond facts: how the packages fit together, their roles, patterns, and decisions — not a flat table of package metadata.
 
 **Description:** Write `$ARCH/overview.md` (or fold into `$ARCH/index.md`) as prose, grouping packages by their role in the ecosystem rather than by cli/lib. No tables, no cli/lib separation. Each package is described by its role and how it participates in the ecosystem, in a sentence or two.
 
 **Instructions:** `./plan-create-knowledge-resources/instructions/write-ecosystem-overview.md`
+
+**Report:** `./plan-create-knowledge-resources/instructions/write-ecosystem-overview__report.md`
 
 **Changes:**
 
@@ -170,9 +174,9 @@ None.
 
 #### Commits:
 
-| ID                         | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| -------------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `write-ecosystem-overview` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                         | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
+| -------------------------- | -------------------------------- | ------------ | --------- | ----------- |
+| `write-ecosystem-overview` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` | `2f01ad5` | `COMMITTED` |
 
 ##### Commit: `write-ecosystem-overview`
 
@@ -181,20 +185,22 @@ None.
 **Message:**
 
 ```
-knowledge(art-js): Write ecosystem overview.
+docs(art-js): Write ecosystem overview.
 ```
 
 ### Iteration: Update Knowledge References
 
 **Id:** `update-knowledge-references`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Update `_guide.md` knowledge references to include the new architecture documents. \_guide includes only indexes with terse description of what they index.
 
 **Description:** Update `_guide.md` to add `architecture/lib/index.md` and `architecture/cli/index.md` to the knowledge references section.
 
 **Instructions:** `./plan-create-knowledge-resources/instructions/update-knowledge-references.md`
+
+**Report:** `./plan-create-knowledge-resources/instructions/update-knowledge-references__report.md`
 
 **Changes:**
 
@@ -206,9 +212,9 @@ None.
 
 #### Commits:
 
-| ID                            | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ----------------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `update-knowledge-references` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                            | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
+| ----------------------------- | -------------------------------- | ------------ | --------- | ----------- |
+| `update-knowledge-references` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` | `4a8c9ff` | `COMMITTED` |
 
 ##### Commit: `update-knowledge-references`
 
@@ -224,7 +230,7 @@ docs(art-js): Update knowledge references.
 
 ### Next
 
-Write instructions for the `PLANNING` iterations to make them `READY` for delegation.
+All iterations complete. Plan DONE.
 
 ### Blockers
 
@@ -241,6 +247,9 @@ None.
 
 - `libs/parser/architecture/` exists with `index.md` and `parser.md`.
 - `architecture/art-md-fixture-tests.md` and `architecture/art-md-roundtrip.md` exist (from previous plan).
+- `architecture/components.md` created — prose describing major components and relationships.
+- `architecture/overview.md` created — prose ecosystem overview grouped by role.
+- `_guide.md` updated with new architecture document references.
 
 ### Decisions
 
