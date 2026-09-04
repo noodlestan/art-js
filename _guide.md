@@ -20,6 +20,7 @@ Agents SHOULD scan these files for relevant clarifications when faced with ambig
 _guide.md           — this file
 _backlog/           — plans, instructions, reports
 _records/           — project, repository, namespace, and license records
+_roadmap/           — project roadmap and architect briefing
 architecture/       — repository-level architecture documentation
 cli/                — CLI packages
 libs/               — library packages
@@ -58,7 +59,8 @@ Records are co-located with the resources they describe in `_records/` directori
 This repository maintains architecture references at:
 
 - `architecture/index.md` — repository-level architecture.
-- `libs/parser/architecture/index.md` — parser architecture.
+- `libs/parser/architecture/index.md` — parser architecture index.
+- `libs/parser/architecture/parser.md` — parser design principles and construct API.
 
 ## Workflows
 
