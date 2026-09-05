@@ -1,6 +1,6 @@
 # Plan: Integrate Knowledge
 
-**ID:** `integrate-knowledge`
+**Id:** `integrate-knowledge`
 
 **Status:** `PREPARING`
 
@@ -8,22 +8,109 @@
 
 **Skill:** `write-plan`
 
+**Purpose:** Integrate knowledge and learnings from milestone execution back into briefings, guides, architecture docs, and records.
+
+**Description:** After publishing v0.0.2, update repository architecture documents, ecosystem overview, package records, and guide knowledge references to reflect milestone insights and finalized implementations.
+
+## Mandatory Reading
+
+::READ `$DOMAINS/plans/structures/plan.art` (Structure) — Describe the work-item changes through a series of iterations and commits with detailed instructions.
+
+::READ `$DOMAINS/plans/structures/iteration.art` (Structure) — Define the iteration container for planned changes.
+
+## Path Variables
+
+| Variable     | Resolved Path             | Purpose                              |
+| ------------ | ------------------------- | ------------------------------------ |
+| `$WORKSPACE` | Current working directory | Workspace root directory             |
+| `$PROJECT`   | Provided with prompt      | Repository root for all code changes |
+
 ## Summary
 
-After publish (phase 10), integrate the knowledge and learnings from milestone execution back into briefings, guides, architecture docs, and records — integrate again, closing the MD Art Roundtrip milestone. Executed within the Artificial repository (`checkouts/artificial`) as phase 11 of the MD Art Roundtrip milestone — draft; commit strategy and implementation instructions to be defined during planning.
+Integrate repository learnings, design decisions, and architectural updates back into documentation and records following package publishing.
 
-## Source Tasks
+## Context
 
-- Milestone: `_roadmap/4-now/milestone-consolidate/milestone.md` — defines this plan as phase 4 of the Consolidate milestone, after archive and publish (phase 3).
+### Upstream Work
 
-## Commits
+| Kind      | Path                                                | Role                                                       |
+| --------- | --------------------------------------------------- | ---------------------------------------------------------- |
+| Milestone | `_roadmap/3-now/milestone-consolidate/milestone.md` | Defines this plan as phase 4 of the Consolidate milestone. |
 
-Draft — commit strategy and implementation instructions to be defined during planning.
+### Knowledge
 
-## Follow ups
+- ::READ `architecture/index.md` (Knowledge) — Architecture index.
+- ::READ `_guide.md` (Knowledge) — System guide.
+
+## Scope
+
+### Out of Scope
+
+- Code implementation changes.
+
+### Packages
+
+- Package: Repository Architecture — `architecture/`
+
+### Deployments
 
 None.
 
-## Feedback
+## Execution Context
 
-No sub-agent reports yet.
+Execution occurs in `$PROJECT` on branch `main`.
+
+## Items:
+
+| Iteration / Instructions                                                                          | Status      |
+| ------------------------------------------------------------------------------------------------- | ----------- |
+| Iteration: Integrate Knowledge and Records `./plan-integrate-knowledge/instructions/integrate.md` | `PREPARING` |
+
+### Iteration: Integrate Knowledge and Records
+
+**Id:** `integrate-knowledge-and-records`
+
+**Status:** `PREPARING`
+
+**Purpose:** Update architecture references, ecosystem overview, and project/repository records.
+
+**Description:** Review milestone achievements and update `architecture/overview.md`, `architecture/components.md`, `_guide.md`, and project/repository records.
+
+**Instructions:** `./plan-integrate-knowledge/instructions/integrate.md`
+
+**Changes:**
+
+- Update architecture documentation and knowledge references in `_guide.md`.
+- Ensure project and repository records reflect current package set and versions.
+
+**Dependencies:**
+
+- Plan: `_backlog/6-plan/plan-archive-poc-and-publish/plan.md`
+
+## Work
+
+### Next
+
+Delegate instruction `integrate`.
+
+### Blockers
+
+None.
+
+## Coordination
+
+### Not In Scope
+
+- Code edits.
+
+### Evidence
+
+- Updated architecture documentation and guide references.
+
+### Decisions
+
+- Keep architectural documentation synchronized with published package capabilities.
+
+### Follow Ups
+
+None.

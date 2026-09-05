@@ -1,52 +1,140 @@
 # Plan: Archive and Publish
 
-**ID:** `archive-poc-and-publish`
+**Id:** `archive-poc-and-publish`
 
 **Status:** `PREPARING`
 
-**Milestone:** `consolidate`
+**Template:** `.agents/domains/plans/templates/plan.tart`
 
-**Phase:** 3
+**Skill:** `write-plan`
 
-## Summary
+**Purpose:** Archive poc-parse package and publish v0.0.2 of constructs, parser, and serializer packages.
 
-Archive poc-parse. Publish `@art-js/artificial-primitives` and `@art-js/artificial-parser` v0.0.1.
-
-## Source Tasks
-
-Milestone planning.
+**Description:** Mark `@art-js/poc-parse` as private with an archived README, ensure correct publish configuration, bump version to `0.0.2` for constructs, parser, and serializer, and publish to npm.
 
 ## Mandatory Reading
 
-For the delegator (execution mechanics):
+::READ `$DOMAINS/plans/structures/plan.art` (Structure) — Describe the work-item changes through a series of iterations and commits with detailed instructions.
 
-- `.agents/domains/plans/definitions/index.md` — plan, implementation-instructions, delegation, and report definitions.
-- `.agents/domains/plans/files/index.md` — plan, instruction, delegation, and report file conventions.
-- `.agents/domains/plans/structures/plan.art` — plan record fields and statuses.
-- `.agents/skills/execute-plan/SKILL.md` — how this plan is executed by delegation.
+::READ `$DOMAINS/plans/structures/iteration.art` (Structure) — Define the iteration container for planned changes.
 
-## Commits
+## Path Variables
 
-#### `archive-poc-parse` - `PLANNED`
+| Variable     | Resolved Path             | Purpose                              |
+| ------------ | ------------------------- | ------------------------------------ |
+| `$WORKSPACE` | Current working directory | Workspace root directory             |
+| `$PROJECT`   | Provided with prompt      | Repository root for all code changes |
 
-**Commit Message:** `build(md-art-roundtrip): archive poc-parse package`
+## Summary
 
-**Instructions File:** `_backlog/4-next/plan-archive-poc-and-publish/instructions/archive-poc-parse.md`
+Archive the POC parse package and publish version `0.0.2` of the core Art JS libraries.
 
-**Scope:**
+## Context
 
-- Mark poc-parse as `private: true` in package.json
-- Add README noting it's archived
+### Upstream Work
 
-#### `publish-v0.0.1` - `PLANNED`
+| Kind      | Path                                                | Role                                                       |
+| --------- | --------------------------------------------------- | ---------------------------------------------------------- |
+| Milestone | `_roadmap/3-now/milestone-consolidate/milestone.md` | Defines this plan as phase 3 of the Consolidate milestone. |
 
-**Commit Message:** `build(md-art-roundtrip): publish v0.0.1`
+### Knowledge
 
-**Instructions File:** `_backlog/4-next/plan-archive-poc-and-publish/instructions/publish-v0.0.1.md`
+- ::READ `art-js/cli/poc-parse/` (Knowledge) — POC parse package source.
 
-**Scope:**
+## Scope
 
-- Ensure all packages have correct `publishConfig`
-- Version bump to `0.0.1`
-- Run `npm publish` for primitives and parser
-- Verify: packages installable from npm
+### Out of Scope
+
+- Publishing primitives (already published in v0.0.1).
+
+### Packages
+
+- Package: Artificial POC Parse — `cli/poc-parse/`
+- Package: Artificial Constructs — `libs/constructs/`
+- Package: Artificial Parser — `libs/parser/`
+- Package: Artificial Serializer — `libs/serializer/`
+
+### Deployments
+
+None.
+
+## Execution Context
+
+Execution occurs in `$PROJECT` on branch `main`.
+
+## Items:
+
+| Iteration / Instructions                                                                  | Status      |
+| ----------------------------------------------------------------------------------------- | ----------- |
+| Iteration: Archive POC Parse `./plan-archive-poc-and-publish/instructions/archive-poc.md` | `PREPARING` |
+| Iteration: Publish v0.0.2 `./plan-archive-poc-and-publish/instructions/publish-v0.0.2.md` | `PREPARING` |
+
+### Iteration: Archive POC Parse
+
+**Id:** `archive-poc-parse`
+
+**Status:** `PREPARING`
+
+**Purpose:** Mark poc-parse as private and document its archival.
+
+**Description:** Set `private: true` in `cli/poc-parse/package.json` and add an archival README notice.
+
+**Instructions:** `./plan-archive-poc-and-publish/instructions/archive-poc.md`
+
+**Changes:**
+
+- Update `cli/poc-parse/package.json` (`private: true`).
+- Add archival README in `cli/poc-parse/`.
+
+**Dependencies:**
+
+None.
+
+### Iteration: Publish v0.0.2
+
+**Id:** `publish-v0.0.2`
+
+**Status:** `PREPARING`
+
+**Purpose:** Bump version to `0.0.2` and publish constructs, parser, and serializer packages.
+
+**Description:** Ensure correct publishConfig, bump package versions to `0.0.2`, run `npm publish`, and verify installability.
+
+**Instructions:** `./plan-archive-poc-and-publish/instructions/publish-v0.0.2.md`
+
+**Changes:**
+
+- Bump version to `0.0.2` in constructs, parser, and serializer `package.json`.
+- Execute `npm publish`.
+
+**Dependencies:**
+
+- Iteration: Archive POC Parse
+
+## Work
+
+### Next
+
+Delegate instruction `archive-poc`.
+
+### Blockers
+
+None.
+
+## Coordination
+
+### Not In Scope
+
+- Primitives publish (done in v0.0.1).
+
+### Evidence
+
+- Published packages on npm registry.
+
+### Decisions
+
+- Release as v0.0.2 incorporating all core library refinements and roundtrip fixes.
+
+### Follow Ups
+
+None.

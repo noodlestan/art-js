@@ -18,7 +18,7 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 
 ## Source Tasks
 
-- Milestone (archived): `_roadmap/3-now/milestone-md-art-roundtrip/milestone.md` — phases 8–11 split out into this milestone.
+- Milestone (archived): `_roadmap/1-done/milestone-md-art-roundtrip/milestone.md` — phases 8–11 split out into this milestone.
 - Briefing: `_backlog/_architect.md` — approach (POC-first, schema-first in TS, mdast substrate) and milestone sequence.
 - Parking Lot: `_backlog/_parking-lot.md` — pending items relevant to roundtrip gaps and constructs.
 
@@ -31,17 +31,17 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 | #3    | Archive and publish           | `PREPARING` |
 | #4    | Integrate knowledge           | `PREPARING` |
 
-### Phase: 1 — Implement gaps
+### Phase: 1 — Integrate feedback and follow-ups
 
-**Goal:** Close the roundtrip gaps surfaced by the pipeline suite, one fixture at a time.
+**Goal:** Integrate feedback and follow-ups from completed plans, close the TagReference spec gap, and clean up noisy fixtures.
 
-**Description:** Move from the one-liner markdown fixture toward text, lists, sections, and formatting in small fixture files, refining the parser/serializer as gaps surface. Pure-whitespace gap `NaturalBlock`s stay preserved (milestone decision).
+**Description:** Scan completed plans for feedback and follow-ups, introduce TagReference spec, simplify tag definitions by removing projections prose, and remove noisy `_` fixture files.
 
 **Status:** `PREPARING`
 
 **Dependencies:**
 
-- Plan: `_backlog/6-plan/plan-implement-gaps/plan.md`
+- Plan: `_backlog/6-plan/plan-integrate-feedback-and-follow-ups/plan.md`
 
 ### Phase: 2 — Refactoring and Test Coverage
 
@@ -81,21 +81,21 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 
 ## Items
 
-| Phase | Resource / Record                                                                                | Status      |
-| ----- | ------------------------------------------------------------------------------------------------ | ----------- |
-| 1     | Plan: Implement Gaps `_backlog/6-plan/plan-implement-gaps/plan.md`                               | `PREPARING` |
-| -     |                                                                                                  |             |
-| 2     | Plan: Refactoring and Test Coverage `_backlog/6-plan/plan-refactoring-and-test-coverage/plan.md` | `PREPARING` |
-| -     |                                                                                                  |             |
-| 3     | Plan: Archive and Publish `_backlog/6-plan/plan-archive-poc-and-publish/plan.md`                 | `PREPARING` |
-| -     |                                                                                                  |             |
-| 4     | Plan: Integrate Knowledge `_backlog/6-plan/plan-integrate-knowledge/plan.md`                     | `PREPARING` |
+| Phase | Resource / Record                                                                                        | Status      |
+| ----- | -------------------------------------------------------------------------------------------------------- | ----------- |
+| 1     | Plan: Integrate Feedback and Follow-Ups `_backlog/6-plan/plan-integrate-feedback-and-follow-ups/plan.md` | `PREPARING` |
+| -     |                                                                                                          |             |
+| 2     | Plan: Refactoring and Test Coverage `_backlog/6-plan/plan-refactoring-and-test-coverage/plan.md`         | `PREPARING` |
+| -     |                                                                                                          |             |
+| 3     | Plan: Archive and Publish `_backlog/6-plan/plan-archive-poc-and-publish/plan.md`                         | `PREPARING` |
+| -     |                                                                                                          |             |
+| 4     | Plan: Integrate Knowledge `_backlog/6-plan/plan-integrate-knowledge/plan.md`                             | `PREPARING` |
 
 ## Work
 
 ### Next
 
-Plan Phase 1 — execute `plan-implement-gaps`: close the roundtrip gaps surfaced by the pipeline suite.
+Plan Phase 1 — execute `plan-integrate-feedback-and-follow-ups`: integrate feedback and follow-ups, introduce TagReference spec, and clean up noisy fixtures.
 
 ### Blockers
 

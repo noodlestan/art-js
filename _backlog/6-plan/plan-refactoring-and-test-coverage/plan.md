@@ -1,6 +1,6 @@
 # Plan: Refactoring and Test Coverage
 
-**ID:** `refactoring-and-test-coverage`
+**Id:** `refactoring-and-test-coverage`
 
 **Status:** `PREPARING`
 
@@ -8,38 +8,153 @@
 
 **Skill:** `write-plan`
 
+**Purpose:** Refactor and test coverage across migrated `@art-js/artificial-*` packages, hardening the codebase before archive and publish.
+
+**Description:** Execute targeted refactoring across parser, serializer, and constructs packages: merge near-identical preprocessor and factory handlers, rename `createNestedContext` to `createParserContext`, and scope parser constants into `libs/parser/src/mdast/`.
+
+## Mandatory Reading
+
+::READ `$DOMAINS/plans/structures/plan.art` (Structure) — Describe the work-item changes through a series of iterations and commits with detailed instructions.
+
+::READ `$DOMAINS/plans/structures/iteration.art` (Structure) — Define the iteration container for planned changes.
+
+## Path Variables
+
+| Variable     | Resolved Path             | Purpose                              |
+| ------------ | ------------------------- | ------------------------------------ |
+| `$WORKSPACE` | Current working directory | Workspace root directory             |
+| `$PROJECT`   | Provided with prompt      | Repository root for all code changes |
+
 ## Summary
 
-Refactoring and test coverage across the migrated `@art-js/artificial-*` packages, hardening the codebase before archive and publish. Executed within the Artificial repository (`checkouts/artificial`) as phase 9 of the MD Art Roundtrip milestone — draft; commit strategy and implementation instructions to be defined during planning.
+Harden the migrated parser, serializer, and constructs packages by cleaning up duplicated builder logic, renaming context creation, and properly scoping parser constants.
 
-## Source Tasks
+## Context
 
-- Milestone: `_roadmap/4-now/milestone-consolidate/milestone.md` — defines this plan as phase 2 of the Consolidate milestone, between gap closure (phase 1) and archive and publish (phase 3).
+### Upstream Work
 
-## Items
+| Kind      | Path                                                | Role                                                       |
+| --------- | --------------------------------------------------- | ---------------------------------------------------------- |
+| Milestone | `_roadmap/3-now/milestone-consolidate/milestone.md` | Defines this plan as phase 2 of the Consolidate milestone. |
 
-Things to investitage:
+### Knowledge
 
-- in libs/parser/src/builder.ts both `tryPreProcessors` and `maybeHandleFactory` are very very similar they seem to do the same thing evaluate if constructs could use one or the other and obtain the same results => if there is a difference we need to make it work through a param? or an other constructor hook and merge the 2
+- ::READ `libs/parser/src/builder.ts` (Knowledge) — Parser builder logic.
+- ::READ `libs/parser/src/constants.ts` (Knowledge) — Parser constants.
 
-Things to rename:
+## Scope
 
-- `createNestedContext()` => createParserContext
-- sections ? is it really just sections? if so, ok
+### Out of Scope
 
-Things to refactor:
+- New feature development.
 
-- `createNestedContext()` depends on a global variable
+### Packages
 
-Patterns:
+- Package: Artificial Parser — `libs/parser/`
+- Package: Artificial Constructs — `libs/constructs/`
+- Package: Artificial Serializer — `libs/serializer/`
 
-- libs/parser/src/constants.ts is unscoped move to libs/parser/src/mdast/constants.ts
-- libs/parser/src/constants.ts contains a function extract to libs/parser/src/mdast/isBlockType.ts
-
-## Follow ups
+### Deployments
 
 None.
 
-## Feedback
+## Execution Context
 
-No sub-agent reports yet.
+Execution occurs in `$PROJECT` on branch `main`.
+
+## Items:
+
+| Iteration / Instructions                                                                                                | Status      |
+| ----------------------------------------------------------------------------------------------------------------------- | ----------- |
+| Iteration: Merge Preprocessors and Factories `./plan-refactoring-and-test-coverage/instructions/merge-preprocessors.md` | `PREPARING` |
+| Iteration: Rename Create Nested Context `./plan-refactoring-and-test-coverage/instructions/rename-context.md`           | `PREPARING` |
+| Iteration: Scope Parser Constants `./plan-refactoring-and-test-coverage/instructions/scope-constants.md`                | `PREPARING` |
+
+### Iteration: Merge Preprocessors and Factories
+
+**Id:** `merge-preprocessors-and-factories`
+
+**Status:** `PREPARING`
+
+**Purpose:** Evaluate and merge `tryPreProcessors` and `maybeHandleFactory` in parser builder.
+
+**Description:** In `libs/parser/src/builder.ts`, `tryPreProcessors` and `maybeHandleFactory` perform very similar evaluation steps. Evaluate combining or streamlining them through hook parameters.
+
+**Instructions:** `./plan-refactoring-and-test-coverage/instructions/merge-preprocessors.md`
+
+**Changes:**
+
+- Refactor `libs/parser/src/builder.ts` to streamline `tryPreProcessors` and `maybeHandleFactory`.
+
+**Dependencies:**
+
+None.
+
+### Iteration: Rename Create Nested Context
+
+**Id:** `rename-create-nested-context`
+
+**Status:** `PREPARING`
+
+**Purpose:** Rename `createNestedContext()` to `createParserContext` and remove global dependencies.
+
+**Description:** Rename `createNestedContext()` across parser, constructs, and primitives packages to `createParserContext` and eliminate dependency on global state.
+
+**Instructions:** `./plan-refactoring-and-test-coverage/instructions/rename-context.md`
+
+**Changes:**
+
+- Rename `createNestedContext` to `createParserContext` across `@art-js/artificial-*` packages.
+
+**Dependencies:**
+
+None.
+
+### Iteration: Scope Parser Constants
+
+**Id:** `scope-parser-constants`
+
+**Status:** `PREPARING`
+
+**Purpose:** Move unscoped parser constants and extract block type check helper.
+
+**Description:** Move `libs/parser/src/constants.ts` to `libs/parser/src/mdast/constants.ts` and extract the `isBlockType` function into `libs/parser/src/mdast/isBlockType.ts`.
+
+**Instructions:** `./plan-refactoring-and-test-coverage/instructions/scope-constants.md`
+
+**Changes:**
+
+- Move `libs/parser/src/constants.ts` to `libs/parser/src/mdast/constants.ts`.
+- Extract `isBlockType` to `libs/parser/src/mdast/isBlockType.ts`.
+
+**Dependencies:**
+
+None.
+
+## Work
+
+### Next
+
+Delegate instruction `merge-preprocessors`.
+
+### Blockers
+
+None.
+
+## Coordination
+
+### Not In Scope
+
+- New features.
+
+### Evidence
+
+- Refactored parser source code passing all tests and lint checks.
+
+### Decisions
+
+- Keep constant scoping aligned with mdast subdirectory structure.
+
+### Follow Ups
+
+None.
