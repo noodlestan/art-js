@@ -15,6 +15,9 @@ Agents SHOULD scan these files for definitions and resource locations when faced
 ```
 _records/           — package records
 architecture/       — architecture reference
+  index.md          — architecture document index
+  api.md            — public API and config
+  implementation.md — internal mechanics
 scripts/            — test scripts
 src/                — source code
 test/               — tests
@@ -29,7 +32,10 @@ Records are co-located with the resources they describe in `_records/` directori
 
 ## Knowledge References
 
-This package maintains an architecture reference at `architecture/index.md`.
+This package maintains an architecture reference at `architecture/index.md`:
+
+- `architecture/api.md` — parser API: config shape, entry points, contract references.
+- `architecture/implementation.md` — parser implementation: visit loop, context stack, dispatch.
 
 ## Operating Instructions
 

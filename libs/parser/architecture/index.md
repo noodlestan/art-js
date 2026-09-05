@@ -2,6 +2,7 @@
 
 ## Documents
 
-| Document               | Description                       |
-| ---------------------- | --------------------------------- |
-| [parser.md](parser.md) | Parser principles & construct API |
+| Document                        | Description                          |
+| ------------------------------- | ------------------------------------ |
+| [api.md](api.md)                | Parser API: config, entry points, contract references |
+| [implementation.md](implementation.md) | Parser implementation: visit loop, context stack, dispatch |

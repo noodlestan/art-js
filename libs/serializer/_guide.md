@@ -8,11 +8,16 @@ Agents SHOULD scan these files for definitions and resource locations when faced
 
 - `_guide.md` — this file: package overview, layout, and operating instructions.
 - `README.md` — package readme.
+- `architecture/index.md` — package architecture reference.
 
 ## Package Layout
 
 ```
 _records/           — package records
+architecture/       — architecture reference
+  index.md          — architecture document index
+  api.md            — public API and config
+  implementation.md — internal mechanics
 src/                — source code
 test/               — tests
 ```
@@ -27,7 +32,10 @@ Records are co-located with the resources they describe in `_records/` directori
 
 ## Knowledge References
 
-This package does not maintain a dedicated architecture reference.
+This package maintains an architecture reference at `architecture/index.md`:
+
+- `architecture/api.md` — serializer API: config shape, entry points, contract references.
+- `architecture/implementation.md` — serializer implementation: registry build, visit, sibling placement.
 
 ## Operating Instructions
 
