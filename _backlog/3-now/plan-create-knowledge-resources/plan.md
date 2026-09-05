@@ -83,7 +83,7 @@ Execution occurs in `$PROJECT` on branch `building`.
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------ |
 | Iteration: Seed Architecture Index And Components Doc `./plan-create-knowledge-resources/instructions/seed-architecture-index-and-components.md` | `DONE` |
 | Iteration: Write Ecosystem Overview `./plan-create-knowledge-resources/instructions/write-ecosystem-overview.md`                                 | `DONE` |
-| Iteration: Update Knowledge References `./plan-create-knowledge-resources/instructions/update-knowledge-references.md`                           | `DONE` |
+| Iteration: Update Knowledge References `./plan-create-knowledge-resources/instructions/consolidate-knowledge-references.md`                      | `DONE` |
 
 ### Iteration: Seed Architecture Index And Components Doc
 
@@ -91,7 +91,7 @@ Execution occurs in `$PROJECT` on branch `building`.
 
 **Status:** `DONE`
 
-**Purpose:** Create the repo-level architecture components document and update the architecture index to include lib and cli sub-indexes.
+**Purpose:** Create the repo-level architecture components document and update the architecture index to list sub-indexes.
 
 **Description:** Create `$ARCH/components.md` listing the major components of the art-js ecosystem (parser, serializer, constructs, primitives, bundler, program, validator, bin, pipeline-tests, dev-server, language-server, watcher, tools). Update `$ARCH/index.md` to add the components document and the two sub-indexes (lib, cli) as links.
 
@@ -110,9 +110,9 @@ None.
 
 #### Commits:
 
-| ID                                       | Repository / Checkout / Branch    | Policy       | Hash      | Status      |
-| ---------------------------------------- | --------------------------------- | ------------ | --------- | ----------- |
-| `seed-architecture-index-and-components` | Art JS / `$PROJECT` / `building`  | `AUTONOMOUS` | `33f272c` | `COMMITTED` |
+| ID                                       | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
+| ---------------------------------------- | -------------------------------- | ------------ | --------- | ----------- |
+| `seed-architecture-index-and-components` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` | `33f272c` | `COMMITTED` |
 
 ##### Commit: `seed-architecture-index-and-components`
 
@@ -188,9 +188,9 @@ None.
 docs(art-js): Write ecosystem overview.
 ```
 
-### Iteration: Update Knowledge References
+### Iteration: Consolidate Knowledge References
 
-**Id:** `update-knowledge-references`
+**Id:** `consolidate-knowledge-references`
 
 **Status:** `DONE`
 
@@ -198,13 +198,16 @@ docs(art-js): Write ecosystem overview.
 
 **Description:** Update `_guide.md` to add `architecture/lib/index.md` and `architecture/cli/index.md` to the knowledge references section.
 
-**Instructions:** `./plan-create-knowledge-resources/instructions/update-knowledge-references.md`
+**Instructions:** `./plan-create-knowledge-resources/instructions/consolidate-knowledge-references.md`
 
-**Report:** `./plan-create-knowledge-resources/instructions/update-knowledge-references__report.md`
+**Report:** `./plan-create-knowledge-resources/instructions/consolidate-knowledge-references__report.md`
 
 **Changes:**
 
-- Update `_guide.md` knowledge references to include lib and cli architecture indexes.
+- Add architecture reference to libs/constructs
+- Add architecture reference to libs/serializer
+- Deduplicate Art JS vs libs knowledge
+- Update `_guide.md` knowledge references to list architecture indexes.
 
 **Dependencies:**
 
@@ -212,18 +215,40 @@ None.
 
 #### Commits:
 
-| ID                            | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
-| ----------------------------- | -------------------------------- | ------------ | --------- | ----------- |
-| `update-knowledge-references` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` | `4a8c9ff` | `COMMITTED` |
+| ID                              | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
+| ------------------------------- | -------------------------------- | ------------ | --------- | ----------- |
+| `consolidate-lib-architecture`  | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` | `4a8c9ff` | `COMMITTED` |
+| `consolidate-repo-architecture` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` | `4a8c9ff` | `COMMITTED` |
 
-##### Commit: `update-knowledge-references`
+##### Commit: `consolidate-lib-architecture`
 
 **Repository:** Art JS
 
 **Message:**
 
 ```
-docs(art-js): Update knowledge references.
+knowledge(art-js): Consolidate Art JS and libs architecture references.
+
+- Deduplicate Art JS vs libs knowledge
+- Add architecture/ to libs/constructs
+- Add architecture/ to libs/serializer
+- Update guides.
+```
+
+##### Commit: `consolidate-repo-architecture`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+knowledge(art-js): Consolidate repository architecture.
+
+- Deduplicate Art JS vs libs knowledge
+- Add architecture/principles
+- Consolidate architecture/implementation
+- Remove architecture/overview and art-md-rountrip
+- Update guide
 ```
 
 ## Work

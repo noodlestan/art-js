@@ -1,8 +1,8 @@
-# Instructions: `update-knowledge-references`
+# Instructions: `consolidate-knowledge-references`
 
 **Plan:** `create-knowledge-resources`
 
-**Iteration Id:** `update-knowledge-references`
+**Iteration Id:** `consolidate-knowledge-references`
 
 ## Before you Start
 
@@ -16,10 +16,10 @@ These are your instructions.
 
 1. Summarise the current context, asking: are you reporting completion or a BLOCKER?
 2. Gather the evidence of changes made and outcomes achieved, or the blocker error details.
-3. Use the `render-template` skill with the `.agents/domains/plans/templates/instructions-report.tart` to render your report and write it next to this instruction file: `plan-create-knowledge-resources/instructions/update-knowledge-references__report.md`. No separate delegation record is created.
+3. Use the `render-template` skill with the `.agents/domains/plans/templates/instructions-report.tart` to render your report and write it next to this instruction file: `plan-create-knowledge-resources/instructions/consolidate-knowledge-references__report.md`. No separate delegation record is created.
 4. If your prompt included a `DIRECTIVE FEEDBACK:` include the feedback sections in the rendered report.
 5. Generate the response and send it back to the delegator.
-6. Keep the response terse per the Working Agreements: happy face + up to 3 bullet points (done `update-knowledge-references`, created `{artefacts}`, thumbs up). The full trail lives in the report file; never repeat it in chat.
+6. Keep the response terse per the Working Agreements: happy face + up to 3 bullet points (done `consolidate-knowledge-references`, created `{artefacts}`, thumbs up). The full trail lives in the report file; never repeat it in chat.
 
 ## Path Variables
 
@@ -35,7 +35,7 @@ The plan workflow (see the entry point guide → Planning Workflow → Working T
 
 1. **This instructions file is self-contained.** Everything you need is in this file plus its mandatory reading — never rely on session memory, chat context, or details relayed by the user.
 2. **Your report is mandatory.** The rendered report file carries the full trail: evidence, changes, verification results, blockers, feedback. Your chat response is only a pointer to it.
-3. **User interaction is minimal.** The user relays this instructions file to the delegator and expects a light confirmation: a happy face and up to 3 bullet points — done `update-knowledge-references`, created `{artefacts}`, thumbs up. If something goes horribly wrong, report the blocker instead of a summary.
+3. **User interaction is minimal.** The user relays this instructions file to the delegator and expects a light confirmation: a happy face and up to 3 bullet points — done `consolidate-knowledge-references`, created `{artefacts}`, thumbs up. If something goes horribly wrong, report the blocker instead of a summary.
 
 ## Goals
 
@@ -69,27 +69,74 @@ Confirm the markdown is well-formed and the guide links resolve.
 
 ## Changes
 
-- Step 1 / 2 — Update `_guide.md` knowledge references
-- Step 2 / 2 — Commit `update-knowledge-references`
+- Step 1 / 2 — Consolidate knowledge in parser, constructs, and serializer packages.
+- Step 2 / 2 — Consolidate repository architecture knowledge.
 
 ## Steps
 
-### Step `1 / 2` — Update `_guide.md` knowledge references
+### Step `1 / 2` — Consolidate knowledge in parser, constructs, and serializer packages
 
-In `$PROJECT/_guide.md`, update the `## Knowledge References` section so it lists the architecture documents created in this plan. Add references to the newly created documents (e.g. `architecture/components.md`, `architecture/overview.md` if created) alongside the existing entries (`architecture/index.md`, `libs/parser/architecture/index.md`).
+In each package create an `architecture/api.md` and `architecture/implementation.md` file.
 
-Ensure the guide's "## Repository Layout" and "## Projects" sections (updated in the prior plan) still correctly reflect the repository structure.
+Update `{package}architecture/index.md`
+
+- `libs/parser/_guide.md`
+- `libs/serializer/_guide.md`
+- `libs/constructs/_guide.md`
+
+Ensure all guide's "## Repository Layout" lists `architecture/`
+
+Update the `## Knowledge References` section so it lists:
+
+- `architecture/index.md` — package-level architecture.
+- `architecture/api.md` — parser api.
+- `architecture/implmentation.md` — parser implementation.
 
 ---
 
-#### Commit: `update-knowledge-references`
-
-**Policy:** AUTONOMOUS — Agent should commit autonomously, push, and proceed to the next step.
+#### Commit: `consolidate-lib-architecture`
 
 **Message:**
 
 ```
-docs(art-js): Update knowledge references.
+knowledge(art-js): Consolidate Art JS and libs architecture references.
+
+- Deduplicate Art JS vs libs knowledge
+- Add architecture/ to libs/constructs
+- Add architecture/ to libs/serializer
+- Update guides.
+
+```
+
+### Step 2 / 2 — Consolidate repository architecture knowledge.
+
+In `_guide.md`
+
+Ensure "## Repository Layout" lists `architecture/`
+
+Update the `## Knowledge References` section to list:
+
+In root guide
+
+- `architecture/index.md` — repository-level architecture.
+- `architecture/principles.md` — design principles.
+- `architecture/components.md` — major components and relationships.
+- `architecture/art-md-fixture-tests.md` — major components and relationships.
+
+---
+
+#### Commit: `consolidate-repo-architecture`
+
+**Message:**
+
+```
+knowledge(art-js): Consolidate repository architecture.
+
+- Deduplicate Art JS vs libs knowledge
+- Add architecture/principles
+- Consolidate architecture/implementation
+- Remove architecture/overview and art-md-rountrip
+- Update guide
 ```
 
 ---

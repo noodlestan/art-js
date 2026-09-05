@@ -14,10 +14,10 @@ Created the repo-level architecture components document and updated the architec
 
 #### Files changed
 
-| File | Change |
-| --- | --- |
+| File                         | Change                                                                                                                                                                                                                                                     |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `architecture/components.md` | Created — prose description of all Art JS ecosystem components (primitives, constructs, parser, serializer, validator, program, bundler) and CLI surface (bin, pipeline-tests, dev-server, watcher, language-server, tools), with a relationships diagram. |
-| `architecture/index.md` | Updated — added `components.md` to the Documents table alongside existing `overview.md`, `art-md-fixture-tests.md`, and `art-md-roundtrip.md`. |
+| `architecture/index.md`      | Updated — added `components.md` to the Documents table alongside existing `overview.md`, `art-md-fixture-tests.md`, and `art-md-roundtrip.md`.                                                                                                             |
 
 ## Blockers (if any)
 

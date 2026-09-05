@@ -58,9 +58,10 @@ Records are co-located with the resources they describe in `_records/` directori
 
 This repository maintains architecture references at:
 
-- `architecture/index.md` — repository-level architecture.
-- `libs/parser/architecture/index.md` — parser architecture index.
-- `libs/parser/architecture/parser.md` — parser design principles and construct API.
+- `architecture/index.md` — repository-level architecture index.
+- `architecture/principles.md` — design principles.
+- `architecture/components.md` — components and relationships.
+- `architecture/art-md-fixture-tests.md` — fixture test suite.
 
 ## Workflows
 

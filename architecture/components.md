@@ -1,86 +1,84 @@
 # Art JS Components
 
-## Overview
-
-The Art JS ecosystem is a collection of libraries and CLI tools that parse, validate, transform, and execute Art-MD — a markdown-based language for structuring content, modules, and programs. The components are organised into two layers: core libraries (`libs/`) that provide the foundational parsing and execution pipeline, and CLI tools (`cli/`) that expose the pipeline to users and developers.
+The Art JS ecosystem is a modular pipeline for parsing and serialising a markdown dialect (Art-MD). Components are organised into core libraries (`libs/`) and CLI tools (`cli/`).
 
 ## Core Libraries
 
 ### Primitives (`@art-js/primitives`)
 
-The foundation of the entire ecosystem. Primitives define the foundational types and utilities that every other library depends on — record types, construct interfaces, and shared helpers. This package has no internal dependencies; all other libs consume it. Think of it as the vocabulary of the language: if primitives change, everything above may need to adapt.
+Low-level shared types (`MdastNode`, `VisitContext`, `Point`) and utilities. No internal dependencies — all other libs consume it.
 
 ### Constructs (`@art-js/constructs`)
 
-Constructs provide the factory functions that create parser records from markdown nodes. Each construct (SectionBlock, FieldBlock, Tag, NaturalBlock, etc.) has a factory responsible for detecting whether an mdast node matches the construct's pattern and building the appropriate record. Constructs depend on primitives for type definitions and on `mdast-util-from-markdown` for node parsing. They are the bridge between raw markdown syntax and the structured record model.
+The contract layer of the ecosystem. Defines the factory interfaces that parser and serializer depend on, the data shapes that flow through the pipeline, and an open registry for concrete constructs. Ships both the contract types and the concrete implementations.
+
+- Contract types: `ConstructParser`, `ConstructToMdast`, `ConstructParserFactory`, `ConstructToMdastFactory`
+- Data shapes: `ArtDocument`, `Construct`, `BlockContent`, `InlineContent`
+- Open registry: `BlockConstructMap`, `InlineConstructMap` (augmented via declaration merging)
+- Concrete constructs: `FieldBlock`, `FieldInline`, `SectionBlock`, `Tag`, `NaturalBlock`, `NaturalExpression`
+
+**Read more:** [Constructs Architecture](../libs/constructs/architecture/index.md)
 
 ### Parser (`@art-js/parser`)
 
-The parser consumes markdown source and produces a structured AST in the form of art records (art.json). It orchestrates the layered architecture described in [art-md-roundtrip.md](art-md-roundtrip.md): pre-processors intercept and transform nodes before factory detection, factories create records from matched nodes, and handlers post-process records (for example, routing tags to their nearest section). The parser depends on primitives, constructs, `mdast-util-from-markdown`, and `unist-util-visit`. It is the entry point for the forward pipeline: markdown → AST.
+Transforms markdown into an `ArtDocument` via a generic dispatch loop. Construct-agnostic — knows only the contract types, never names a concrete construct. The [ecosystem overview](overview.md#the-parse-direction) describes how pre-processors, factories, and the default construct interact.
+
+- Entry point: `buildDocument(config, markdown)`
+- Config: `ParserConfig` with `defaultConstruct` and `constructs` list
+- Dispatch: pre-processors → factories → `NaturalBlock` fallback
+- Context: `VisitContext` stack for nested constructs
+
+**Read more:** [Parser Architecture](../libs/parser/architecture/index.md)
 
 ### Serializer (`@art-js/serializer`)
 
-The serializer performs the inverse operation: it takes an AST of art records and renders them back into markdown. Each construct type has a `toMdast` adapter that converts the record into mdast nodes, which are then serialized to markdown text via `mdast-util-to-markdown`. Together with the parser, the serializer completes the roundtrip pipeline. The serializer depends on primitives, constructs, and `mdast-util-to-markdown`.
+Transforms an `ArtDocument` back into markdown. Builds a registry from config factories, visits the construct tree bottom-up, and dispatches to `toMdast` adapters. Construct-agnostic — the [ecosystem overview](overview.md#the-serialise-direction) explains the composition decision.
+
+- Entry point: `artAstToMdast(config, document)`
+- Config: `SerializerConfig` with `constructs` list
+- Registry: `Map<string, ConstructToMdast>` keyed by construct name
+- Sibling placement: block constructs (`SectionBlock`, `FieldBlock`) emit children as siblings
+
+**Read more:** [Serializer Architecture](../libs/serializer/architecture/index.md)
 
 ### Validator (`@art-js/validator`)
 
-The validator checks parsed modules against structural and semantic rules. After the parser produces an AST, the validator ensures the module conforms to the language specification — required fields, valid construct nesting, naming conventions, and other constraints. It depends on primitives and constructs for type definitions and record shapes. The validator sits between parsing and execution: a module must pass validation before it can be run or bundled.
+Checks parsed modules against structural and semantic rules — required fields, valid construct nesting, naming conventions. Sits between parsing and execution.
 
 ### Program (`@art-js/program`)
 
-The program layer executes parsed and validated Art modules. It manages program state, resolves references between modules, and drives the execution model. Where the parser and serializer are concerned with syntax and representation, the program is concerned with semantics and behaviour. It depends on primitives and the validated record model.
+Executes parsed and validated Art modules. Manages program state, resolves cross-module references, drives the execution model.
 
 ### Bundler (`@art-js/bundler`)
 
-The bundler packages Art modules for distribution. It resolves module dependencies, applies bundling rules, and produces distributable artifacts. The bundler consumes the output of the parser and validator, then packages them into a format suitable for deployment or consumption by other tools. It depends on primitives and the parser's record model.
+Resolves module dependencies, applies bundling rules, produces distributable artifacts. Consumes parser and validator output.
 
 ## CLI Surface
 
 ### Bin (`@art-js/bin`)
 
-The primary CLI entry point. Bin exposes all core pipeline commands to the command line — parse, serialize, validate, bundle, and run. It is the user-facing interface that wires together the core libraries into a coherent toolchain.
+Primary CLI entry point. Exposes parse, serialize, validate, bundle, and run commands.
 
 ### Pipeline Tests (`@art-js/pipeline-tests`)
 
-Test scripts that exercise the parser and serializer against a shared fixture suite. The `test-parser` script runs the forward pipeline (source.md → art.json) and compares results against committed snapshots. The `test-serializer` script runs the return pipeline (art.json → parsed.md) and diffs against the original source. See [art-md-fixture-tests.md](art-md-fixture-tests.md) for details on fixture anatomy and usage.
+Fixture-based test suite for the parser and serializer roundtrip. See [art-md-fixture-tests.md](art-md-fixture-tests.md) for fixture anatomy.
 
 ### Dev Server (`@art-js/dev-server`)
 
-A local development server for testing Art modules interactively. It provides a live-reload environment where developers can see the results of parsing and rendering as they edit source files.
+Local development server with live-reload for interactive Art module testing. (Scaffolded.)
 
 ### Watcher (`@art-js/watcher`)
 
-File system watcher that monitors Art modules for changes and triggers rebuilds automatically. It powers the dev experience by keeping the pipeline output in sync with source edits without manual invocation.
+File system watcher that triggers rebuilds on source changes. Powers the dev experience. (Scaffolded.)
 
 ### Language Server (`@art-js/language-server`)
 
-An LSP server for Art and context files (work in progress). When complete, it will provide IDE features — go-to-definition, diagnostics, completions — for authors working with Art-MD content.
+LSP server for Art and context files (work in progress). Will provide go-to-definition, diagnostics, completions. (Scaffolded.)
 
 ### Tools (`@art-js/tools`)
 
-A collection of deterministic operations for agents working with Art and context files. These are utility commands that support the broader toolchain, such as scaffolding, transformation helpers, and other agent-oriented operations.
+Deterministic utility operations for agents working with Art and context files. (Scaffolded.)
 
 ## Spec (`@art-js/spec`)
 
-The official Art language specification, written in Art itself. It is a content package consumed by the parser, validator, and bundler to ensure they adhere to the language definition. The spec is both documentation and test data — a bootstrap that demonstrates the language can describe its own rules.
-
-## Relationships
-
-```
-primitives ← constructs ← parser → serializer
-                 ↑           ↓
-              validator ← program
-                 ↓
-              bundler
-
-bin ──┐
-dev-server ──┤
-watcher ─────┤──→ core libraries
-pipeline-tests ──┤
-language-server ─┤
-tools ───────────┘
-
-spec → parser, validator, bundler
-```
-
-The dependency flows downward: primitives at the base, constructs built on primitives, parser and serializer built on constructs, and validator/program/bundler built on the parsing layer. The CLI tools consume the libraries they need — bin and pipeline-tests depend on the full pipeline, while dev-server and watcher primarily orchestrate file I/O and rebuild triggers.
+The Art language specification, written in Art itself. Consumed by parser, validator, and bundler. Both documentation and test data.
