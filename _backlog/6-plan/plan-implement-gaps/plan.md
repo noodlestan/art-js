@@ -46,7 +46,7 @@ This section describes the context feeding (and being affected by) the plan, inc
 
 ### Sources
 
-- Milestone: `_backlog/3-now/milestone-md-art-roundtrip/milestone.md` — defines this plan as phase 8; Decisions (preserve whitespace gaps; JSON-affecting logic changes only after the verified migration).
+- Milestone: `_roadmap/4-now/milestone-consolidate/milestone.md` — defines this plan as phase 1 of the Consolidate milestone; Decisions (preserve whitespace gaps; JSON-affecting logic changes only after the verified migration).
 - Briefing: `_backlog/_architect.md` — approach (POC-first, schema-first in TS, mdast substrate) and milestone sequence.
 - Parking Lot: `_backlog/_parking-lot.md` — pending items relevant to roundtrip gaps.
 - Plan (archived): `_backlog/1-done/plan-poc-parse/plan.md` — POC current state, learnings, and feedback; the gap findings.

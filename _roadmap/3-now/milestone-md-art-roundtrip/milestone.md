@@ -2,11 +2,13 @@
 
 **ID:** `md-art-roundtrip`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 ## Summary
 
 Singularize the accidental `@art-js/artificials-*` plural package names (phase 0), migrate poc-parse into proper packages, migrate the testing fixtures, verify lossless roundtrip (parse `.art` → serialize back → zero diffs), refine whitespace handling (pure-whitespace gaps preserved), archive poc-parse, and publish v0.0.1. Each commit guarantees no source change breaks the roundtrip contract.
+
+Phases 0–7 are complete. Phases 8–11 (gap closure, refactoring, archive/publish, knowledge integration) were split out into the **Consolidate** milestone (`_roadmap/4-now/milestone-consolidate/milestone.md`), which carries the refactor, cleanup, documentation, and v0.0.2 publish scope forward.
 
 ## Source Tasks
 
@@ -15,22 +17,20 @@ Singularize the accidental `@art-js/artificials-*` plural package names (phase 0
 
 ## Phase Plans
 
-| Phase                             | Plan                                                         | Status  |
-| --------------------------------- | ------------------------------------------------------------ | ------- |
-| 0 — Rename packages               | `_backlog/1-done/plan-rename-packages/plan.md`               | `DONE`  |
-| 1 — Bootstrap packages            | `_backlog/1-done/plan-bootstrap-packages/plan.md`            | `DONE`  |
-| 2 — Migrate testing fixtures      | `_backlog/1-done/plan-migrate-testing-fixtures/plan.md`      | `DONE`  |
-| 3 — Migrate and verify            | `_backlog/1-done/plan-migrate-and-verify/plan.md`            | `DONE`  |
-| 4 — Implement constructs          | `_backlog/1-done/plan-implement-constructs/plan.md`          | `DONE`  |
-| 5 — Implement serializer          | `_backlog/1-done/plan-implement-serializer/plan.md`          | `DONE`  |
-| 6 — Migrate tests to pipeline     | `_backlog/1-done/plan-migrate-tests-pipeline/plan.md`        | `DONE`  |
-| 7 — Create knowledge resources    | `_backlog/3-now/plan-create-knowledge-resources/plan.md`     | `DONE`  |
-| 8 — Implement gaps                | `_backlog/6-plan/plan-implement-gaps/plan.md`                | `DRAFT` |
-| 9 — Refactoring and Test Coverage | `_backlog/6-plan/plan-refactoring-and-test-coverage/plan.md` | `DRAFT` |
-| 10 — Archive and publish          | `_backlog/6-plan/plan-archive-poc-and-publish/plan.md`       | `DRAFT` |
-| 11 — Integrate knowledge          | `_backlog/6-plan/plan-integrate-knowledge/plan.md`           | `DRAFT` |
+| Phase                          | Plan                                                     | Status |
+| ------------------------------ | -------------------------------------------------------- | ------ |
+| 0 — Rename packages            | `_backlog/1-done/plan-rename-packages/plan.md`           | `DONE` |
+| 1 — Bootstrap packages         | `_backlog/1-done/plan-bootstrap-packages/plan.md`        | `DONE` |
+| 2 — Migrate testing fixtures   | `_backlog/1-done/plan-migrate-testing-fixtures/plan.md`  | `DONE` |
+| 3 — Migrate and verify         | `_backlog/1-done/plan-migrate-and-verify/plan.md`        | `DONE` |
+| 4 — Implement constructs       | `_backlog/1-done/plan-implement-constructs/plan.md`      | `DONE` |
+| 5 — Implement serializer       | `_backlog/1-done/plan-implement-serializer/plan.md`      | `DONE` |
+| 6 — Migrate tests to pipeline  | `_backlog/1-done/plan-migrate-tests-pipeline/plan.md`    | `DONE` |
+| 7 — Create knowledge resources | `_backlog/3-now/plan-create-knowledge-resources/plan.md` | `DONE` |
 
-**Next step:** Phase 7 — execute `plan-create-knowledge-resources`: create knowledge resources for the parser, serializer, and constructs packages.
+Phases 8–11 were split into the **Consolidate** milestone (`_roadmap/4-now/milestone-consolidate/milestone.md`): gap closure, refactoring and test coverage, archive and publish, and knowledge integration.
+
+**Next step:** Milestone complete. Remaining work continues under the **Consolidate** milestone (`_roadmap/4-now/milestone-consolidate/milestone.md`).
 
 ## Commit Conventions
 
