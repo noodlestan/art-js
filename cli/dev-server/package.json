@@ -37,7 +37,7 @@
     "ci": "npm run lint && npm run build && npm run test"
   },
   "devDependencies": {
-    "@noodlestan/esbuild": "^0.0.12",
+    "@noodlestan/esbuild": "^0.0.13",
     "@types/node": "^25.9.5",
     "typescript": "^5.4.0",
     "vitest": "^1.4.0"

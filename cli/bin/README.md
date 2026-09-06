@@ -12,7 +12,7 @@ Make sure you read the [@artificials README](../../README.md) first.
 
 ### Build
 
-This CLI is packaged for use in Node.js environments. The entry point is built using `artificials-build` from `tools/`.
+This package is meant for use in Node.js environments. The entry point is built using `esbuild` pre-configured by [Workspace Tooling](https://github.com/noodlestan/workspace-tooling).
 
 ### Scripts
 
