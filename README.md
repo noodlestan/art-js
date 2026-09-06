@@ -19,16 +19,14 @@ Libraries for parsing and working with Art MD content, resources, modules, progr
 | `@art-js` | `cli/watcher/`     | `@art-js/watcher`    | Watches for changes, triggers rebuilds |
 | `@art-js` | `cli/poc-parse/`   | `@art-js/poc-parse`  | POC parser spike                       |
 
-## Scripts
+## Development
 
-- **$** `npm run build` — Bundle all packages for production.
-- **$** `npm run lint` — Lint all packages.
-- **$** `npm run ci` — Full CI pass (lint + build + test).
+### Scripts
 
-## Setup
-
-- **Serve a micro app** — each app under `artisans/apps/` is vanilla HTML/CSS/JS with a single `serve` script.
-- **Scaffold by cloning practices in neighbours** — when adding a new package of **app** type, its `package.json` is very different from the lib/cli packages.
+- **$** `npm run turbo build` — Build all packages.
+- **$** `npm run turbo test` — Run tests in all packages.
+- **$** `npm run turbo lint` — Lint all packages (Prettier + ESLint).
+- **$** `npm run ci` — Run all CI scripts in all packages.
 
 ## License
 

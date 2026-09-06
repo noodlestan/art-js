@@ -22,9 +22,9 @@ TBD
 
 ## Phases
 
-| Index | Name                      | Status  |
-| ----- | ------------------------- | ------- |
-| #1    | TBD       |  |
+| Index | Name | Status |
+| ----- | ---- | ------ |
+| #1    | TBD  |        |
 
 ### Phase: 1 — TBD
 
@@ -43,7 +43,6 @@ TBD
 The following items are not yet captured in a work item document:
 
 - None.
-
 
 ## Work
 
