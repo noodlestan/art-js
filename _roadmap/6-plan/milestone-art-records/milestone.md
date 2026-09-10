@@ -1,8 +1,8 @@
-# Milestone: Records
+# Milestone: Art Records
 
-**ID:** `records`
+**ID:** `art-records`
 
-**Status:** `DRAFT`
+**Status:** `PLANNING`
 
 **Template:** `.agents/domains/roadmaps/templates/milestone.tart`
 
@@ -24,12 +24,12 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 ## Phases
 
-| Index | Name                      | Status  |
-| ----- | ------------------------- | ------- |
-| #1    | Define record model       | `DRAFT` |
-| #2    | Extraction API            | `DRAFT` |
-| #3    | Write-back and hash guard | `DRAFT` |
-| #4    | Proxy field access        | `DRAFT` |
+| Index | Name                | Status  |
+| ----- | ------------------- | ------- |
+| #1    | Define record model | `DRAFT` |
+| #2    | Extraction API      | `DRAFT` |
+| #3    | Update Records      | `DRAFT` |
+| #4    | Proxy field access  | `DRAFT` |
 
 ### Phase: 1 — Define record model
 
@@ -53,19 +53,19 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 **Dependencies:**
 
-- Phase 1 — Define record model
+- None
 
-### Phase: 3 — Write-back and hash guard
+### Phase: 3 — Update Records
 
 **Goal:** Provide write-back with an optional content-hash guard.
 
-**Description:** Return a hash of the original file alongside the record so the write operation can check before attempting to write back into the file. The guard is opt-in (or opt-out); consider separate safe vs unsafe functions. Works with content strings, not the filesystem.
+**Description:** Return a hash of the original content alongside the record so the write operation can check before attempting to write back into the content. The guard is opt-in (or opt-out); consider separate safe vs unsafe functions. Works with content strings, not the filesystem.
 
 **Status:** `DRAFT`
 
 **Dependencies:**
 
-- Phase 1 — Define record model
+- None
 
 ### Phase: 4 — Proxy field access
 
@@ -77,33 +77,24 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 **Dependencies:**
 
-- Phase 1 — Define record model
+- None
 
 ## Items
 
 The following items are not yet captured in a work item document.
 
-### Plan: Records API
-
-**Status:** `DRAFT`
-
-**Purpose:** Implement the records extraction and write-back API.
-
-**Description:** Plan the records library: record model wrapping `SectionBlock`, extraction and presence-assertion API, write-back with positioning anchors and an optional content-hash guard, and optional `ProxyObject`-based transparent field access.
-
-**Changes:**
-
-- New records package or module (location TBD — likely `libs/records/`)
-
-**Dependencies:**
-
-- Constructs: `libs/constructs/` — `SectionBlock`, `FieldBlock`, `FieldInline`
+| Phase | Resource / Record                                                      | Status  |
+| ----- | ---------------------------------------------------------------------- | ------- |
+| 1     | Plan: Design API `_backlog/7-backlog/plan-design-lib-records/plan.md`  | `DRAFT` |
+| -     |                                                                        |         |
+| 2     | Plan: Create Lib Records `_backlog/7-backlog/plan-records-api/plan.md` | `DRAFT` |
+| -     |                                                                        |         |
 
 ## Work
 
 ### Next
 
-Define the record model and confirm the package location, then plan the implementation.
+-
 
 ### Blockers
 

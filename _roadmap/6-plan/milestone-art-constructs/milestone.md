@@ -1,6 +1,6 @@
-# Milestone: Constructs
+# Milestone: Art Constructs
 
-**ID:** `constructs`
+**ID:** `art-constructs`
 
 **Status:** `DRAFT`
 
@@ -27,12 +27,11 @@ The constructs package currently ships `Document`, `FieldBlock`, `FieldInline`, 
 
 | Index | Name                        | Status  |
 | ----- | --------------------------- | ------- |
-| #1    | Confirm construct scope     | `DRAFT` |
+| #1    | Refine Grammar              | `DRAFT` |
 | #2    | Implement block constructs  | `DRAFT` |
 | #3    | Implement inline constructs | `DRAFT` |
-| #4    | Register and verify         | `DRAFT` |
 
-### Phase: 1 — Confirm construct scope
+### Phase: 1 — Refine Grammar
 
 **Goal:** Confirm which constructs to implement and their shapes.
 
@@ -54,7 +53,7 @@ The constructs package currently ships `Document`, `FieldBlock`, `FieldInline`, 
 
 **Dependencies:**
 
-- Phase 1 — Confirm construct scope
+- Phase 1 — Refine Grammar
 
 ### Phase: 3 — Implement inline constructs
 
@@ -66,20 +65,7 @@ The constructs package currently ships `Document`, `FieldBlock`, `FieldInline`, 
 
 **Dependencies:**
 
-- Phase 1 — Confirm construct scope
-
-### Phase: 4 — Register and verify
-
-**Goal:** Register the new constructs and verify the roundtrip.
-
-**Description:** Register the new constructs in `BlockConstructMap` / `InlineConstructMap` and verify parser + serializer roundtrip against fixtures.
-
-**Status:** `DRAFT`
-
-**Dependencies:**
-
-- Phase 2 — Implement block constructs
-- Phase 3 — Implement inline constructs
+- Phase 1 — Refine Grammar
 
 ## Items
 

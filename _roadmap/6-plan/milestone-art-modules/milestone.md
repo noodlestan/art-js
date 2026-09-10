@@ -1,6 +1,6 @@
-# Milestone: Modules
+# Milestone: Art Modules
 
-**ID:** `modules`
+**ID:** `art-modules`
 
 **Status:** `DRAFT`
 
