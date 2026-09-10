@@ -1,12 +1,19 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-	resolve: {
-		conditions: ['development', 'browser'],
-	},
 	test: {
+		include: ['src/**/*.test.ts'],
+		passWithNoTests: true,
 		coverage: {
-			exclude: ['**/meta/*', '**/index.ts'],
+			provider: 'v8',
+			reporter: ['text', 'text-summary'],
+			exclude: ['src/index.ts'],
+			thresholds: {
+				lines: 90,
+				functions: 85,
+				branches: 65,
+				statements: 80,
+			},
 		},
 	},
 });

@@ -16,7 +16,7 @@
     "lint": "prettier . -c && eslint . && tsc --noEmit",
     "lint:fix": "prettier . -c --write && eslint . --fix",
     "build:clean": "rm -rf dist",
-    "test": "npx tsx scripts/test-fixtures.ts",
+    "test": "tsx scripts/test-fixtures.ts",
     "ci": "npm run lint && npm run test"
   },
   "dependencies": {
@@ -24,6 +24,6 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "npx": "^10.2.2"
+    "tsx": "4.8.1"
   }
 }

@@ -24,14 +24,13 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
+    "build:clean": "rm -rf dist",
     "lint": "prettier . -c && eslint . && tsc --noEmit",
     "lint:fix": "prettier . -c --write && eslint . --fix",
-    "build:clean": "rm -rf dist",
-    "test": "echo none yet",
-    "ci": "npm run lint && npm run build && npm run test"
+    "test": "vitest run",
+    "test:ci": "vitest run --coverage",
+    "test:watch": "vitest",
+    "ci": "npm run lint && npm run build && npm run test:ci"
   },
-  "devDependencies": {
-    "vite": "8.0.16",
-    "vite-plugin-solid": "2.11.12"
-  }
+  "devDependencies": {}
 }

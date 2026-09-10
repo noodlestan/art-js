@@ -12,14 +12,15 @@
   },
   "type": "module",
   "files": [
-    "dist",
+    "scripts",
     "LICENSE-MIT",
     "README.md"
   ],
   "scripts": {
-    "build": "echo no build configured",
+    "dev": "echo no dev configured",
     "lint": "prettier . -c && eslint . && tsc --noEmit",
     "lint:fix": "prettier . -c --write && eslint . --fix",
+    "build": "echo no build configured",
     "build:clean": "rm -rf dist",
     "test-parser": "npx tsx scripts/test-parser.ts",
     "test-serializer": "npx tsx scripts/test-serializer.ts",
@@ -32,6 +33,6 @@
     "@art-js/serializer": "*"
   },
   "devDependencies": {
-    "tsx": "^4.8.1"
+    "tsx": "4.8.1"
   }
 }

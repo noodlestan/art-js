@@ -2,15 +2,13 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
 import { defineConfig } from 'vite';
-import solidPlugin from 'vite-plugin-solid';
-import SolidSVG from 'vite-plugin-solid-svg';
 
 const NAME = JSON.parse(readFileSync('package.json', 'utf8')).name;
 
 export default defineConfig({
-	plugins: [solidPlugin(), SolidSVG()],
+	plugins: [],
 	resolve: {
-		alias: [{ find: '@', replacement: resolve(__dirname, 'src') }],
+		alias: [],
 	},
 	server: {
 		port: 3000,
@@ -26,6 +24,7 @@ export default defineConfig({
 			formats: ['es'],
 		},
 		rollupOptions: {
+			tsconfig: './tsconfig.vite.json',
 			external: ['solid-js'],
 		},
 	},
