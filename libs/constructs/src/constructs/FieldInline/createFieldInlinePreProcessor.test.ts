@@ -1,4 +1,4 @@
-import { createNestedContext } from '@art-js/primitives';
+import { createParserVisitContext } from '@art-js/primitives';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import { describe, expect, it } from 'vitest';
 
@@ -10,7 +10,7 @@ describe('createFieldInlinePreProcessor', () => {
 		const markdown = '# Hello World\n\n**Greeting:** Hello world.';
 		const tree = fromMarkdown(markdown);
 		const paragraph = tree.children[1] as never;
-		const context = createNestedContext('Document', undefined, markdown);
+		const context = createParserVisitContext({ construct: 'Document' }, undefined, markdown);
 
 		expect(impl.preProcess(paragraph, context)).toMatchObject({
 			construct: 'FieldInline',
@@ -34,7 +34,7 @@ describe('createFieldInlinePreProcessor', () => {
 		const markdown = '# Hello World\n\n**Remote:** `git@example.com`';
 		const tree = fromMarkdown(markdown);
 		const paragraph = tree.children[1] as never;
-		const context = createNestedContext('Document', undefined, markdown);
+		const context = createParserVisitContext({ construct: 'Document' }, undefined, markdown);
 
 		expect(impl.preProcess(paragraph, context)).toMatchObject({
 			construct: 'FieldInline',

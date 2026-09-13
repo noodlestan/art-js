@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { MdastNode, VisitContext } from '@art-js/primitives';
+import type { MdastNode, ParserVisitContext } from '@art-js/primitives';
 import type { Node } from 'mdast';
 
 import type { Construct } from '../registry';
 
 export interface ConstructCreator {
-	detect(node: MdastNode, context: VisitContext): boolean;
-	create(node: MdastNode, context: VisitContext): Construct | Construct[];
+	detect(node: MdastNode, context: ParserVisitContext): boolean;
+	create(node: MdastNode, context: ParserVisitContext): Construct | Construct[];
 }
 
 export interface ConstructPreProcessor {
-	preProcess(node: MdastNode, context: VisitContext): Construct | null;
+	preProcess(node: MdastNode, context: ParserVisitContext): Construct | null;
 }
 
 export interface ConstructHandler {
-	handle(record: Construct, node: MdastNode, context: VisitContext): VisitContext;
+	handle(record: Construct, node: MdastNode, context: ParserVisitContext): ParserVisitContext;
 }
 
 export interface ConstructParser {

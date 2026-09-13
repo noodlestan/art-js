@@ -1,11 +1,11 @@
-import { type VisitContext, getSectionMap } from '@art-js/primitives';
+import type { ParserVisitContext } from '@art-js/primitives';
 
-export function findTagable(context: VisitContext): unknown | undefined {
-	const sectionMap = getSectionMap();
-	let current: VisitContext | undefined = context;
+export function findTagable(context: ParserVisitContext): unknown | undefined {
+	let current: ParserVisitContext | undefined = context;
 	while (current) {
-		const section = sectionMap.get(current);
-		if (section) return section;
+		if (current.construct?.construct === 'SectionBlock') {
+			return current.construct;
+		}
 		current = current.parent();
 	}
 	return undefined;

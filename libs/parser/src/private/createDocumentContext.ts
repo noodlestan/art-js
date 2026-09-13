@@ -1,5 +1,5 @@
-import { type VisitContext, createNestedContext } from '@art-js/primitives';
+import { type ParserVisitContext, createParserVisitContext } from '@art-js/primitives';
 
-export function createDocumentContext(source: string): VisitContext {
-	return createNestedContext('Document', undefined, source);
+export function createDocumentContext(source: string): ParserVisitContext {
+	return createParserVisitContext({ construct: 'Document' }, undefined, source);
 }

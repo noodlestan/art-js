@@ -5,7 +5,7 @@ import {
 	type ConstructHandler,
 	type ConstructParser,
 } from '@art-js/constructs';
-import type { Point, VisitContext } from '@art-js/primitives';
+import type { ParserVisitContext, Point } from '@art-js/primitives';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import type { Node } from 'unist';
 import { SKIP, visit } from 'unist-util-visit';
@@ -25,7 +25,7 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 	const docContext = createDocumentContext(markdown);
 	const defaultConstruct = config.defaultConstruct();
 	const constructs = [defaultConstruct, ...config.constructs.map(create => create())];
-	let currentContext: VisitContext = docContext;
+	let currentContext: ParserVisitContext = docContext;
 	let lastEnd: Point | undefined;
 
 	function updateLastEnd(end: Point): void {

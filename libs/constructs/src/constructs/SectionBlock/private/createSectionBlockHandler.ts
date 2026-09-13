@@ -1,4 +1,4 @@
-import { createNestedContext, sectionDepth } from '@art-js/primitives';
+import { createParserVisitContext, sectionDepth } from '@art-js/primitives';
 import type { Heading } from 'mdast';
 
 import { findTagable } from '../../Tag/private/findTagable';
@@ -13,7 +13,7 @@ export function createSectionBlockHandler(): ConstructHandler {
 			let ctx = context;
 
 			const heading = node as Heading;
-			while (ctx.capturing() === 'SectionBlock') {
+			while (ctx.construct.construct === 'SectionBlock') {
 				const parentSection = findTagable(ctx) as SectionBlock;
 				if (parentSection && sectionDepth(parentSection) >= heading.depth) {
 					const p = ctx.parent();
@@ -27,7 +27,7 @@ export function createSectionBlockHandler(): ConstructHandler {
 			}
 
 			ctx.push(section);
-			const newCtx = createNestedContext('SectionBlock', ctx, undefined, section.children, section);
+			const newCtx = createParserVisitContext(section, ctx, undefined, section.children);
 			newCtx.lastEnd = ctx.lastEnd;
 			return newCtx;
 		},

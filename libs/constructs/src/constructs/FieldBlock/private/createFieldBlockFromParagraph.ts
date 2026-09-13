@@ -1,4 +1,4 @@
-import type { VisitContext } from '@art-js/primitives';
+import type { ParserVisitContext } from '@art-js/primitives';
 import type { Paragraph, Strong } from 'mdast';
 
 import { cleanPosition } from '../../../helpers/cleanPosition';
@@ -10,7 +10,7 @@ import type { FieldBlock } from './types';
 
 export function createFieldBlockFromParagraph(
 	paragraph: Paragraph,
-	context: VisitContext,
+	context: ParserVisitContext,
 ): FieldBlock {
 	const strong = paragraph.children[0] as Strong;
 	const inner = stripStrong(strong, context);

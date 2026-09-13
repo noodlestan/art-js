@@ -26,14 +26,17 @@ export type MdastNode = Node & {
 	value?: string;
 };
 
-export type BeforeRecord = (record: ConstructBase, context: VisitContext) => VisitContext;
+export type BeforeRecord = (
+	record: ConstructBase,
+	context: ParserVisitContext,
+) => ParserVisitContext;
 
-export interface VisitContext {
-	capturing(): string | undefined;
+export interface ParserVisitContext {
+	readonly construct: ConstructBase;
 	target(): ConstructBase[];
 	push(record: ConstructBase): void;
-	beforeRecord(record: ConstructBase): VisitContext;
-	parent(): VisitContext | undefined;
-	source: string;
+	beforeRecord(record: ConstructBase): ParserVisitContext;
+	parent(): ParserVisitContext | undefined;
+	markdown: string;
 	lastEnd: Point | undefined;
 }

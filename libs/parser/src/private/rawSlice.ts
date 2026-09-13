@@ -1,6 +1,6 @@
-import type { MdastNode, VisitContext } from '@art-js/primitives';
+import type { MdastNode, ParserVisitContext } from '@art-js/primitives';
 
-export function rawSlice(node: MdastNode, context: VisitContext): string {
+export function rawSlice(node: MdastNode, context: ParserVisitContext): string {
 	if (!node.position?.start || !node.position?.end) return '';
-	return context.source.slice(node.position.start.offset, node.position.end.offset);
+	return context.markdown.slice(node.position.start.offset, node.position.end.offset);
 }

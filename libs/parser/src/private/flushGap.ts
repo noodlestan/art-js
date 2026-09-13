@@ -1,11 +1,11 @@
 import type { BlockContent } from '@art-js/constructs';
-import type { Point, VisitContext } from '@art-js/primitives';
+import type { ParserVisitContext, Point } from '@art-js/primitives';
 
 export function flushGap(
 	start: Point,
 	lastEnd: Point | undefined,
 	source: string,
-	context: VisitContext,
+	context: ParserVisitContext,
 ): void {
 	if (lastEnd && start.offset > lastEnd.offset) {
 		const gap = source.slice(lastEnd.offset, start.offset);

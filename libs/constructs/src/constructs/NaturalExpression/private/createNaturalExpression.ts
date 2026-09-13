@@ -1,4 +1,4 @@
-import type { MdastNode, VisitContext } from '@art-js/primitives';
+import type { MdastNode, ParserVisitContext } from '@art-js/primitives';
 
 import { cleanPosition } from '../../../helpers/cleanPosition';
 
@@ -6,7 +6,7 @@ import type { NaturalExpression } from './types';
 
 export function createNaturalExpression(
 	node: MdastNode,
-	_context: VisitContext,
+	_context: ParserVisitContext,
 ): NaturalExpression {
 	const { children: mdastChildren, position, type, value, ...attributes } = node;
 

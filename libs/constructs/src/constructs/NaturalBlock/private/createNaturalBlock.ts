@@ -1,4 +1,4 @@
-import type { MdastNode, VisitContext } from '@art-js/primitives';
+import type { MdastNode, ParserVisitContext } from '@art-js/primitives';
 import type { Node } from 'mdast';
 import { phrasing } from 'mdast-util-phrasing';
 
@@ -8,7 +8,7 @@ import { createNaturalExpression } from '../../NaturalExpression/private/createN
 
 import type { NaturalBlock } from './types';
 
-export function createNaturalBlock(node: Node, context: VisitContext): NaturalBlock {
+export function createNaturalBlock(node: Node, context: ParserVisitContext): NaturalBlock {
 	const block: NaturalBlock = {
 		construct: 'NaturalBlock',
 		...node,
