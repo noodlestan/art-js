@@ -2,7 +2,7 @@
 
 **Id:** `refactoring-and-test-coverage`
 
-**Status:** `PREPARING`
+**Status:** `READY`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -64,23 +64,23 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                                                | Status      |
-| ----------------------------------------------------------------------------------------------------------------------- | ----------- |
-| Iteration: Merge Preprocessors and Factories `./plan-refactoring-and-test-coverage/instructions/merge-preprocessors.md` | `PREPARING` |
-| Iteration: Rename Create Nested Context `./plan-refactoring-and-test-coverage/instructions/rename-context.md`           | `PREPARING` |
-| Iteration: Scope Parser Constants `./plan-refactoring-and-test-coverage/instructions/scope-constants.md`                | `PREPARING` |
+| Iteration / Instructions                                                                                                | Status  |
+| ----------------------------------------------------------------------------------------------------------------------- | ------- |
+| Iteration: Merge Preprocessors and Factories `./plan-refactoring-and-test-coverage/instructions/merge-preprocessors.md` | `READY` |
+| Iteration: Rename Create Nested Context `./plan-refactoring-and-test-coverage/instructions/rename-context.md`           | `READY` |
+| Iteration: Scope Parser Constants `./plan-refactoring-and-test-coverage/instructions/scope-constants.md`                | `READY` |
 
 ### Iteration: Merge Preprocessors and Factories
 
 **Id:** `merge-preprocessors-and-factories`
 
-**Status:** `PREPARING`
+**Status:** `READY`
 
 **Purpose:** Evaluate and merge `tryPreProcessors` and `maybeHandleFactory` in parser builder.
 
 **Description:** In `libs/parser/src/builder.ts`, `tryPreProcessors` and `maybeHandleFactory` perform very similar evaluation steps. Evaluate combining or streamlining them through hook parameters.
 
-**Instructions:** `./plan-refactoring-and-test-coverage/instructions/merge-preprocessors.md`
+**Instructions:** `./plan-refactoring-and-test-coverage/instructions/merge-preprocessors-and-factories.md`
 
 **Changes:**
 
@@ -90,17 +90,37 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 None.
 
+#### Commits:
+
+| ID                                  | Repository / Checkout / Branch | Policy   | Hash  | Status     |
+| ----------------------------------- | ------------------------------ | -------- | ----- | ---------- |
+| `merge-preprocessors-and-factories` | $PROJECT / `main`              | `MANUAL` | (TBD) | `AUTHORED` |
+
+##### Commit: `merge-preprocessors-and-factories`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+refactor(art-js): Merge preprocessor and factory dispatch in parser builder
+
+- Unify `tryPreProcessors` and `maybeHandleFactory` into `tryConstructs`
+- Remove redundant `getFactory` helper if orphaned
+- Preserve evaluation order: pre-processors before factories
+```
+
 ### Iteration: Rename Create Nested Context
 
 **Id:** `rename-create-nested-context`
 
-**Status:** `PREPARING`
+**Status:** `READY`
 
 **Purpose:** Rename `createNestedContext()` to `createParserContext` and remove global dependencies.
 
 **Description:** Rename `createNestedContext()` across parser, constructs, and primitives packages to `createParserContext` and eliminate dependency on global state.
 
-**Instructions:** `./plan-refactoring-and-test-coverage/instructions/rename-context.md`
+**Instructions:** `./plan-refactoring-and-test-coverage/instructions/rename-create-nested-context.md`
 
 **Changes:**
 
@@ -110,11 +130,31 @@ None.
 
 None.
 
+#### Commits:
+
+| ID                             | Repository / Checkout / Branch | Policy       | Hash  | Status     |
+| ------------------------------ | ------------------------------ | ------------ | ----- | ---------- |
+| `rename-create-nested-context` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+
+##### Commit: `rename-create-nested-context`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+refactor(art-js): Rename createNestedContext to createParserContext
+
+- Rename function in primitives parser helpers
+- Update exports in primitives index files
+- Update all imports in parser, constructs, and tests
+```
+
 ### Iteration: Scope Parser Constants
 
 **Id:** `scope-parser-constants`
 
-**Status:** `PREPARING`
+**Status:** `READY`
 
 **Purpose:** Move unscoped parser constants and extract block type check helper.
 
@@ -131,11 +171,32 @@ None.
 
 None.
 
+#### Commits:
+
+| ID                       | Repository / Checkout / Branch | Policy       | Hash  | Status     |
+| ------------------------ | ------------------------------ | ------------ | ----- | ---------- |
+| `scope-parser-constants` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+
+##### Commit: `scope-parser-constants`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+refactor(art-js): Scope parser constants into mdast subdirectory
+
+- Move BLOCK_TYPES to `src/mdast/constants.ts`
+- Extract `isBlockType` into `src/mdast/isBlockType.ts`
+- Update builder import
+- Remove `src/constants.ts`
+```
+
 ## Work
 
 ### Next
 
-Delegate instruction `merge-preprocessors`.
+Delegate instruction `merge-preprocessors-and-factories` (MANUAL — stop at commit).
 
 ### Blockers
 

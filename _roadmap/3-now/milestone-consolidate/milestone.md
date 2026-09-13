@@ -27,75 +27,45 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 | Index | Name                              | Status      |
 | ----- | --------------------------------- | ----------- |
 | #1    | Integrate feedback and follow-ups | `READY`     |
-| #2    | Refactoring and Test Coverage     | `PREPARING` |
+| #2    | Refactoring and Test Coverage     | `READY`     |
 | #3    | Archive and publish               | `PREPARING` |
 | #4    | Integrate knowledge               | `PREPARING` |
 
-### Phase: 1 — Integrate feedback and follow-ups
+### Phase: 1 — Integrate feedback, Refactoring and Test Coverage
 
-**Goal:** Integrate feedback and follow-ups from completed plans, close the TagReference spec gap, and clean up noisy fixtures.
+**Goal:** Harden the migrated packages before archive and publish. Integrate feedback and follow-ups from completed plans, close the TagReference spec gap, and clean up noisy fixtures.
 
-**Description:** Scan completed plans for feedback and follow-ups, introduce TagReference spec, simplify tag definitions by removing projections prose, and remove noisy `_` fixture files.
+**Description:** Refactoring and test coverage across the migrated `@art-js/artificial-*` packages (parser, serializer, constructs, primitives), including the `tryPreProcessors`/`maybeHandleFactory` merge, `createNestedContext` rename/refactor, and unscoped constants cleanup. Scan completed plans for feedback and follow-ups, introduce TagReference spec, simplify tag definitions by removing projections prose, and remove noisy `_` fixture files.
 
-**Status:** `PREPARING`
+**Status:** `READY`
 
-**Dependencies:**
+**Dependencies:** None.
 
-- Plan: `_backlog/4-next/plan-integrate-feedback-and-follow-ups/plan.md`
+### Phase: 2 — Maintenance
 
-### Phase: 2 — Refactoring and Test Coverage
-
-**Goal:** Harden the migrated packages before archive and publish.
-
-**Description:** Refactoring and test coverage across the migrated `@art-js/artificial-*` packages (parser, serializer, constructs, primitives), including the `tryPreProcessors`/`maybeHandleFactory` merge, `createNestedContext` rename/refactor, and unscoped constants cleanup.
-
-**Status:** `PREPARING`
-
-**Dependencies:**
-
-- Plan: `_backlog/6-plan/plan-refactoring-and-test-coverage/plan.md`
-
-### Phase: 3 — Archive and publish
-
-**Goal:** Archive poc-parse and publish v0.0.2 of constructs, parser, and serializer.
-
-**Description:** Archive the `@art-js/poc-parse` package and publish v0.0.2 of the constructs, parser, and serializer packages (superseding the earlier v0.0.1 publish scope).
-
-**Status:** `PREPARING`
-
-**Dependencies:**
-
-- Plan: `_backlog/6-plan/plan-archive-poc-and-publish/plan.md`
-
-### Phase: 4 — Integrate knowledge
-
-**Goal:** Integrate milestone learnings back into briefings, guides, architecture docs, and records.
+**Goal:** Archive poc-parse and publish v0.0.2 of constructs, parser, and serializer and learnings back into briefings, guides, architecture docs, and records.
 
 **Description:** After publish, integrate the knowledge and learnings from milestone execution back into briefings, guides, architecture docs, and records, closing the consolidation.
 
 **Status:** `PREPARING`
 
-**Dependencies:**
-
-- Plan: `_backlog/6-plan/plan-integrate-knowledge/plan.md`
+**Dependencies:** None.
 
 ## Items
 
 | Phase | Resource / Record                                                                                        | Status      |
 | ----- | -------------------------------------------------------------------------------------------------------- | ----------- |
+| 1     | Plan: Refactoring and Test Coverage `_backlog/3-now/plan-refactoring-and-test-coverage/plan.md`          | `READY`     |
 | 1     | Plan: Integrate Feedback and Follow-Ups `_backlog/4-next/plan-integrate-feedback-and-follow-ups/plan.md` | `READY`     |
 | -     |                                                                                                          |             |
-| 2     | Plan: Refactoring and Test Coverage `_backlog/6-plan/plan-refactoring-and-test-coverage/plan.md`         | `PREPARING` |
-| -     |                                                                                                          |             |
-| 3     | Plan: Archive and Publish `_backlog/6-plan/plan-archive-poc-and-publish/plan.md`                         | `PREPARING` |
-| -     |                                                                                                          |             |
-| 4     | Plan: Integrate Knowledge `_backlog/6-plan/plan-integrate-knowledge/plan.md`                             | `PREPARING` |
+| 2     | Plan: Archive and Publish `_backlog/6-plan/plan-archive-poc-and-publish/plan.md`                         | `PREPARING` |
+| 2     | Plan: Integrate Knowledge `_backlog/6-plan/plan-integrate-knowledge/plan.md`                             | `PREPARING` |
 
 ## Work
 
 ### Next
 
-Plan Phase 1 — execute `plan-integrate-feedback-and-follow-ups`: integrate feedback and follow-ups, introduce TagReference spec, and clean up noisy fixtures.
+Plan Phase 2 — execute `plan-refactoring-and-test-coverage`: merge preprocessors/factories (MANUAL), rename context, and scope constants.
 
 ### Blockers
 
