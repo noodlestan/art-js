@@ -2,15 +2,15 @@
 
 **Id:** `integrate-feedback-and-follow-ups`
 
-**Status:** `PREPARING`
+**Status:** `READY`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
 **Skill:** `write-plan`
 
-**Purpose:** Integrate feedback and follow-ups from completed plans into knowledge and spec, introduce TagReference spec, and clean up noisy POC fixtures.
+**Purpose:** Introduce TagReference spec, clean up tag definitions, and remove noisy POC fixtures.
 
-**Description:** Scan completed plans for feedback and follow-ups, introduce TagReference spec, simplify tag definitions by removing projections prose, fix VocabularyDeclaration syntax, and remove noisy `_` fixture files from test suites.
+**Description:** Create TagReference spec, simplify tag spec by removing projections prose, fix VocabularyDeclaration syntax reference, and remove noisy `_` fixture files from test suites.
 
 ## Mandatory Reading
 
@@ -27,7 +27,7 @@
 
 ## Summary
 
-Consolidate actionable feedback and follow-ups from completed backlog plans, clean up legacy fixture files, and finalize tag and reference specifications.
+Create TagReference spec, clean up tag spec projections prose, fix VocabularyDeclaration reference, and remove legacy `_`-prefixed fixture files.
 
 ## Context
 
@@ -65,41 +65,18 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                                                   | Status      |
-| -------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| Iteration: Integrate Feedback and Follow-Ups `./plan-integrate-feedback-and-follow-ups/instructions/integrate-feedback.md` | `PREPARING` |
-| Iteration: Tag Reference Spec `./plan-integrate-feedback-and-follow-ups/instructions/tag-reference-spec.md`                | `PREPARING` |
-| Iteration: Fixture Cleanup `./plan-integrate-feedback-and-follow-ups/instructions/fixture-cleanup.md`                      | `PREPARING` |
+**Note:** The 2 commits below will be manually executed without instruction files.
 
-### Iteration: Integrate Feedback and Follow-Ups
-
-**Id:** `integrate-feedback`
-
-**Status:** `PREPARING`
-
-**Purpose:** Apply feedback from previous iterations.
-
-**Instructions:** `./plan-integrate-feedback-and-follow-ups/instructions/integrate-feedback.md`
-
-**Notes for planner:**
-
-Scan completed plans in `_backlog/1-done` for feedback and follow-ups, deduplicate, discard already implemented items, and convert remaining items to one of:
-
-- candidates for changes made with a commit in this iteration (tiny changes).
-- candidates for changes made with a separate iteration in this plan (small changes).
-- candidates for a new plan in this milestone phase (big changes).
-- entries backlog parking lot (items to address in an already existing follow up plan).
-- entries roadmap parking lot (future scope).
-
-**Dependencies:**
-
-None.
+| Iteration / Instructions                                                                                    | Status  |
+| ----------------------------------------------------------------------------------------------------------- | ------- |
+| Iteration: Tag Reference Spec `./plan-integrate-feedback-and-follow-ups/instructions/tag-reference-spec.md` | `READY` |
+| Iteration: Fixture Cleanup `./plan-integrate-feedback-and-follow-ups/instructions/fixture-cleanup.md`       | `READY` |
 
 ### Iteration: Tag Reference Spec
 
 **Id:** `tag-reference-spec`
 
-**Status:** `PREPARING`
+**Status:** `READY`
 
 **Purpose:** Introduce TagReference spec file, clean up tag spec by removing projection prose, and fix VocabularyDeclaration syntax reference.
 
@@ -116,11 +93,31 @@ None.
 
 None.
 
+#### Commits:
+
+| ID                   | Repository / Checkout / Branch | Policy   | Hash  | Status     |
+| -------------------- | ------------------------------ | -------- | ----- | ---------- |
+| `tag-reference-spec` | $PROJECT / `main`              | `MANUAL` | (TBD) | `AUTHORED` |
+
+##### Commit: `tag-reference-spec`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+spec(art-js): Add TagReference spec and clean up tag definitions
+
+- Create `spec/grammar/constructs/expressions/tag-reference.art`
+- Remove projections prose from `spec/grammar/constructs/expressions/tag.art`
+- Fix VocabularyDeclaration syntax reference
+```
+
 ### Iteration: Fixture Cleanup
 
 **Id:** `fixture-cleanup`
 
-**Status:** `PREPARING`
+**Status:** `READY`
 
 **Purpose:** Remove noisy POC-era `_`-prefixed fixture files from test suites.
 
@@ -136,11 +133,30 @@ None.
 
 None.
 
+#### Commits:
+
+| ID                | Repository / Checkout / Branch | Policy   | Hash  | Status     |
+| ----------------- | ------------------------------ | -------- | ----- | ---------- |
+| `fixture-cleanup` | $PROJECT / `main`              | `MANUAL` | (TBD) | `AUTHORED` |
+
+##### Commit: `fixture-cleanup`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+test(art-js): Remove noisy POC-era underscore-prefixed fixtures
+
+- Delete 13 `_`-prefixed fixture files from `libs/constructs/test/fixtures/`
+- Delete corresponding `.json` snapshots
+```
+
 ## Work
 
 ### Next
 
-Delegate instruction `integrate-feedback`.
+Execute the 2 MANUAL commits: `tag-reference-spec` then `fixture-cleanup`.
 
 ### Blockers
 

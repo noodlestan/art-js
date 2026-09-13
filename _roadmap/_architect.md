@@ -6,10 +6,7 @@ This file supports tracking transient architecture knowledge in the context of t
 
 Agents SHOULD scan these files for relevant clarifications when faced with ambiguity or omissions that may result from missing definitions.
 
-- `architecture/principles.md` — Design principles for the Art JS ecosyst.
-- `architecture/overview.md` — Md-Art-Md Roundtrip, Constructs, Parser, Serializer, Planne.
-- `architecture/components.md` — Components, relationships, and package lin.
-- `architecture/art-md-fixture-tests.md` — Fixture test suite for parser and serializ.
+- `architecture/index.md`
 
 ## Findings
 
@@ -31,4 +28,7 @@ Agents SHOULD scan these files for relevant clarifications when faced with ambig
 
 ## Follow Ups
 
-- None
+- Reactive core (chokidar → signals → memo recompute) — blocked on POC; signals + directivity need exercised grammar.
+- Template engine research (Nunjucks/Handlebars/Liquid vs `.tart` requirements) — parallelizable.
+- Precompiled rewrite (install-time compilation + per-project overrides, using render-cost evidence from the POC).
+- Standalone build of the compile command — `bin/compile`, backed by ADR.

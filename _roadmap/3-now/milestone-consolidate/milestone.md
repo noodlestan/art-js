@@ -24,12 +24,12 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 
 ## Phases
 
-| Index | Name                          | Status      |
-| ----- | ----------------------------- | ----------- |
-| #1    | Implement gaps                | `PREPARING` |
-| #2    | Refactoring and Test Coverage | `PREPARING` |
-| #3    | Archive and publish           | `PREPARING` |
-| #4    | Integrate knowledge           | `PREPARING` |
+| Index | Name                              | Status      |
+| ----- | --------------------------------- | ----------- |
+| #1    | Integrate feedback and follow-ups | `READY`     |
+| #2    | Refactoring and Test Coverage     | `PREPARING` |
+| #3    | Archive and publish               | `PREPARING` |
+| #4    | Integrate knowledge               | `PREPARING` |
 
 ### Phase: 1 — Integrate feedback and follow-ups
 
@@ -41,7 +41,7 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 
 **Dependencies:**
 
-- Plan: `_backlog/6-plan/plan-integrate-feedback-and-follow-ups/plan.md`
+- Plan: `_backlog/4-next/plan-integrate-feedback-and-follow-ups/plan.md`
 
 ### Phase: 2 — Refactoring and Test Coverage
 
@@ -83,7 +83,7 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 
 | Phase | Resource / Record                                                                                        | Status      |
 | ----- | -------------------------------------------------------------------------------------------------------- | ----------- |
-| 1     | Plan: Integrate Feedback and Follow-Ups `_backlog/6-plan/plan-integrate-feedback-and-follow-ups/plan.md` | `PREPARING` |
+| 1     | Plan: Integrate Feedback and Follow-Ups `_backlog/4-next/plan-integrate-feedback-and-follow-ups/plan.md` | `READY`     |
 | -     |                                                                                                          |             |
 | 2     | Plan: Refactoring and Test Coverage `_backlog/6-plan/plan-refactoring-and-test-coverage/plan.md`         | `PREPARING` |
 | -     |                                                                                                          |             |
