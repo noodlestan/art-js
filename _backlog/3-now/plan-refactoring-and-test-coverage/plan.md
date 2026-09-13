@@ -10,7 +10,7 @@
 
 **Purpose:** Refactor and test coverage across migrated `@art-js/artificial-*` packages, hardening the codebase before archive and publish.
 
-**Description:** Execute targeted refactoring across parser, serializer, and constructs packages: merge near-identical preprocessor and factory handlers, rename `createNestedContext` to `createParserContext`, and scope parser constants into `libs/parser/src/mdast/`.
+**Description:** Execute targeted refactoring across parser, serializer, and constructs packages: merge near-identical preprocessor and factory handlers, refactor `VisitContext` into `ParserVisitContext` with clarified semantics and eliminated global state, rename `.value` to `.children` in field constructs, and scope parser constants into `libs/parser/src/mdast/`.
 
 ## Mandatory Reading
 
@@ -66,15 +66,15 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 | Iteration / Instructions                                                                                                | Status  |
 | ----------------------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Merge Preprocessors and Factories `./plan-refactoring-and-test-coverage/instructions/merge-preprocessors.md` | `READY` |
-| Iteration: Rename Create Nested Context `./plan-refactoring-and-test-coverage/instructions/rename-context.md`           | `READY` |
+| Iteration: Merge Preprocessors and Factories `./plan-refactoring-and-test-coverage/instructions/merge-preprocessors.md` | `DONE`  |
+| Iteration: Refactor Visit Context `./plan-refactoring-and-test-coverage/instructions/refactor-visit-contextt.md`        | `READY` |
 | Iteration: Scope Parser Constants `./plan-refactoring-and-test-coverage/instructions/scope-constants.md`                | `READY` |
 
 ### Iteration: Merge Preprocessors and Factories
 
 **Id:** `merge-preprocessors-and-factories`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Evaluate and merge `tryPreProcessors` and `maybeHandleFactory` in parser builder.
 
@@ -92,9 +92,9 @@ None.
 
 #### Commits:
 
-| ID                                  | Repository / Checkout / Branch | Policy   | Hash  | Status     |
-| ----------------------------------- | ------------------------------ | -------- | ----- | ---------- |
-| `merge-preprocessors-and-factories` | $PROJECT / `main`              | `MANUAL` | (TBD) | `AUTHORED` |
+| ID                                  | Repository / Checkout / Branch | Policy   | Hash      | Status      |
+| ----------------------------------- | ------------------------------ | -------- | --------- | ----------- |
+| `merge-preprocessors-and-factories` | $PROJECT / `main`              | `MANUAL` | `b2159cf` | `COMMITTED` |
 
 ##### Commit: `merge-preprocessors-and-factories`
 
@@ -110,21 +110,28 @@ refactor(art-js): Merge preprocessor and factory dispatch in parser builder
 - Preserve evaluation order: pre-processors before factories
 ```
 
-### Iteration: Rename Create Nested Context
+### Iteration: Refactor Visit Context
 
-**Id:** `rename-create-nested-context`
+**Id:** `refactor-visit-context`
 
 **Status:** `READY`
 
-**Purpose:** Rename `createNestedContext()` to `createParserContext` and remove global dependencies.
+**Purpose:** Rename context type, factory, and methods to clarify semantics. Eliminate global state dependencies.
 
-**Description:** Rename `createNestedContext()` across parser, constructs, and primitives packages to `createParserContext` and eliminate dependency on global state.
+**Description:** Rename `VisitContext` to `ParserVisitContext` and `createNestedContext()` to `createParserVisitContext` across parser, constructs, and primitives packages. Rename `source` to `markdown`, replace `capturing()` with `readonly construct: ConstructBase`, eliminate `getSectionMap` global state, and update `findTagable` to traverse context parents. Change the factory signature to accept `construct: ConstructBase` instead of `structure: string`, requiring `builder.ts` and `createDocumentContext` to pass construct instances. Rename `.value` to `.children` in `FieldBlock` and `FieldInline` constructs.
 
-**Instructions:** `./plan-refactoring-and-test-coverage/instructions/rename-create-nested-context.md`
+**Instructions:** `./plan-refactoring-and-test-coverage/instructions/refactor-visit-context.md`
 
 **Changes:**
 
-- Rename `createNestedContext` to `createParserContext` across `@art-js/artificial-*` packages.
+- Rename `VisitContext` → `ParserVisitContext` in `libs/primitives/src/parser/types.ts` and all consumers.
+- Rename `createNestedContext` → `createParserVisitContext` and the factory file.
+- Rename `source` → `markdown` in the context type and all consumers.
+- Replace `capturing(): string | undefined` with `readonly construct: ConstructBase`.
+- Eliminate `getSectionMap` global state; update `findTagable` to traverse `parent()` chain evaluating `current.construct.construct === 'SectionBlock'`.
+- Change factory signature to accept `construct: ConstructBase` instead of `structure: string`; remove `section` parameter.
+- Refactor `builder.ts` to instantiate `ArtDocument` at the top and pass it to `createDocumentContext`.
+- Rename `.value` → `.children` in `FieldBlock` and `FieldInline` types, handlers, creators, serializers, and tests.
 
 **Dependencies:**
 
@@ -132,22 +139,58 @@ None.
 
 #### Commits:
 
-| ID                             | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------------------ | ------------------------------ | ------------ | ----- | ---------- |
-| `rename-create-nested-context` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                                   | Repository / Checkout / Branch | Policy       | Hash  | Status     |
+| ------------------------------------ | ------------------------------ | ------------ | ----- | ---------- |
+| `refactor-visit-context-rename`      | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| `refactor-constructs-align-children` | $PROJECT / `main`              | `MANUAL`     | (TBD) | `AUTHORED` |
+| `refactor-parser-visit-context`      | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
-##### Commit: `rename-create-nested-context`
+##### Commit: `refactor-visit-context-rename`
 
 **Repository:** Art JS
 
 **Message:**
 
 ```
-refactor(art-js): Rename createNestedContext to createParserContext
+refactor(art-js): Rename VisitContext to ParserVisitContext and eliminate global sectionMap
 
-- Rename function in primitives parser helpers
-- Update exports in primitives index files
-- Update all imports in parser, constructs, and tests
+- Rename VisitContext → ParserVisitContext in primitives types
+- Rename createNestedContext → createParserVisitContext in factory and file
+- Rename source → markdown in context type and consumers
+- Replace capturing() with readonly construct: ConstructBase
+- Eliminate getSectionMap export and global WeakMap
+- Update findTagable to traverse parent() chain instead of sectionMap
+- Update all imports across parser, constructs, and tests
+```
+
+##### Commit: `refactor-constructs-align-children`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+refactor(constructs): Rename .value to .children to align field constructs with others
+
+- Rename FieldBlock.value → children in type, handler, creator, and serializer
+- Rename FieldInline.value → children in type, pre-processor, and serializer
+- Update artAstToMdast to use .children for FieldBlock traversal
+- Update tests and regenerate fixtures
+```
+
+##### Commit: `refactor-parser-visit-context`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+refactor(parser): Change ParserVisitContext factory to accept ConstructBase
+
+- Change factory signature from structure: string to construct: ConstructBase
+- Remove section parameter; SectionBlock context carries construct via readonly property
+- Update builder.ts to create ArtDocument at top and pass to createDocumentContext
+- Update all callers to pass construct instance instead of string
 ```
 
 ### Iteration: Scope Parser Constants
@@ -196,7 +239,7 @@ refactor(art-js): Scope parser constants into mdast subdirectory
 
 ### Next
 
-Delegate instruction `merge-preprocessors-and-factories` (MANUAL — stop at commit).
+- Delegate Iteration: Refactor Visit Context
 
 ### Blockers
 
