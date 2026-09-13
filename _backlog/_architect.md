@@ -6,10 +6,7 @@ This file supports tracking transient architecture knowledge in the context of t
 
 Agents SHOULD scan these files for relevant clarifications when faced with ambiguity or omissions that may result from missing definitions.
 
-- `architecture/principles.md` — Design principles for the Art JS ecosyst.
-- `architecture/overview.md` — Md-Art-Md Roundtrip, Constructs, Parser, Serializer, Planne.
-- `architecture/components.md` — Components, relationships, and package lin.
-- `architecture/art-md-fixture-tests.md` — Fixture test suite for parser and serializ.
+- `architecture/index.md` — Design principles for the Art JS ecosystem.
 
 ## Context
 
