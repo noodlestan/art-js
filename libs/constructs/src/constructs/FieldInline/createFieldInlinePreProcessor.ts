@@ -40,13 +40,13 @@ export function createFieldInlinePreProcessor(): ConstructPreProcessor {
 			if (paragraphRaw.slice(strongRaw.length).trim().length === 0) return null;
 			const inner = stripStrong(strong, context);
 			const colonIndex = inner.indexOf(':');
-			const value = trimFieldEdges(
+			const children = trimFieldEdges(
 				paragraph.children.slice(1).map(child => createNaturalExpression(child, context)),
 			);
 			const field: FieldInline = {
 				construct: 'FieldInline',
 				name: inner.slice(0, colonIndex).trim(),
-				value,
+				children,
 				position: cleanPosition(paragraph.position),
 			};
 			return field as unknown as Construct;

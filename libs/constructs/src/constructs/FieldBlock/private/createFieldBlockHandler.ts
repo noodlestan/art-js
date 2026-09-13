@@ -26,7 +26,7 @@ export function createFieldBlockHandler(): ConstructHandler {
 				field,
 				context,
 				undefined,
-				field.value,
+				field.children,
 				closeFieldBlock,
 			);
 			newCtx.lastEnd = context.lastEnd;

@@ -32,20 +32,12 @@ export function artAstToMdast(config: SerializerConfig, document: ArtDocument): 
 		const mainNode = impl.toMdast(node as never, childNodes);
 		const mainNodes = mainNode.type === 'root' ? (mainNode as Root).children : [mainNode];
 
-		// For block constructs with nested value content (SectionBlock, FieldBlock),
+		// For block constructs with nested children content (SectionBlock, FieldBlock),
 		// return the main node followed by the children as siblings.
 		if (
 			'children' in node &&
 			Array.isArray(node.children) &&
 			node.children.length > 0 &&
-			node.construct === 'SectionBlock'
-		) {
-			return [...mainNodes, ...childNodes];
-		}
-		if (
-			'value' in node &&
-			Array.isArray(node.value) &&
-			node.value.length > 0 &&
 			(node.construct === 'SectionBlock' || node.construct === 'FieldBlock')
 		) {
 			return [...mainNodes, ...childNodes];

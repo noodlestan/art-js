@@ -33,8 +33,8 @@ export type BeforeRecord = (
 
 export interface ParserVisitContext {
 	readonly construct: ConstructBase;
-	target(): ConstructBase[];
 	push(record: ConstructBase): void;
+	target(): ConstructBase[];
 	beforeRecord(record: ConstructBase): ParserVisitContext;
 	parent(): ParserVisitContext | undefined;
 	markdown: string;

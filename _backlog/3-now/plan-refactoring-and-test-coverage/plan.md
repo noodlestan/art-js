@@ -114,7 +114,7 @@ refactor(art-js): Merge preprocessor and factory dispatch in parser builder
 
 **Id:** `refactor-visit-context`
 
-**Status:** `READY`
+**Status:** `IN_PROGRESS`
 
 **Purpose:** Rename context type, factory, and methods to clarify semantics. Eliminate global state dependencies.
 
@@ -139,11 +139,11 @@ None.
 
 #### Commits:
 
-| ID                                   | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------------------------ | ------------------------------ | ------------ | ----- | ---------- |
-| `refactor-visit-context-rename`      | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
-| `refactor-constructs-align-children` | $PROJECT / `main`              | `MANUAL`     | (TBD) | `AUTHORED` |
-| `refactor-parser-visit-context`      | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                                   | Repository / Checkout / Branch | Policy       | Hash  | Status      |
+| ------------------------------------ | ------------------------------ | ------------ | ----- | ----------- |
+| `refactor-visit-context-rename`      | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `COMMITTED` |
+| `refactor-constructs-align-children` | $PROJECT / `main`              | `MANUAL`     | (TBD) | `AUTHORED`  |
+| `refactor-parser-visit-context`      | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED`  |
 
 ##### Commit: `refactor-visit-context-rename`
 
@@ -239,7 +239,8 @@ refactor(art-js): Scope parser constants into mdast subdirectory
 
 ### Next
 
-- Delegate Iteration: Refactor Visit Context
+- Execute commit 2: `refactor-constructs-align-children` (MANUAL — user review required)
+- Then execute commit 3: `refactor-parser-visit-context` (AUTONOMOUS)
 
 ### Blockers
 

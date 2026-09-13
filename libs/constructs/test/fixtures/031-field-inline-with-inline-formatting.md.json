@@ -26,7 +26,19 @@
         {
           "construct": "FieldInline",
           "name": "Greeting",
-          "value": [
+          "position": {
+            "end": {
+              "column": 46,
+              "line": 3,
+              "offset": 60
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 15
+            }
+          },
+          "children": [
             {
               "construct": "NaturalExpression",
               "type": "text",
@@ -155,19 +167,7 @@
                 }
               }
             }
-          ],
-          "position": {
-            "end": {
-              "column": 46,
-              "line": 3,
-              "offset": 60
-            },
-            "start": {
-              "column": 1,
-              "line": 3,
-              "offset": 15
-            }
-          }
+          ]
         }
       ]
     }

@@ -4,7 +4,19 @@
     {
       "construct": "FieldBlock",
       "name": "Code Example",
-      "value": [
+      "position": {
+        "end": {
+          "column": 18,
+          "line": 1,
+          "offset": 17
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": [
         {
           "construct": "NaturalBlock",
           "type": "text",
@@ -29,19 +41,7 @@
             }
           }
         }
-      ],
-      "position": {
-        "end": {
-          "column": 18,
-          "line": 1,
-          "offset": 17
-        },
-        "start": {
-          "column": 1,
-          "line": 1,
-          "offset": 0
-        }
-      }
+      ]
     }
   ]
 }

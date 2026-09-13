@@ -36,7 +36,7 @@ describe('serialize', () => {
 						{
 							construct: 'FieldBlock',
 							name: 'Purpose',
-							value: [
+							children: [
 								{
 									construct: 'NaturalBlock',
 									type: 'text',

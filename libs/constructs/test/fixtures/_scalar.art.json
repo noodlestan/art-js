@@ -173,7 +173,19 @@
                 {
                   "construct": "FieldInline",
                   "name": "purpose",
-                  "value": [
+                  "position": {
+                    "end": {
+                      "column": 44,
+                      "line": 11,
+                      "offset": 181
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 11,
+                      "offset": 138
+                    }
+                  },
+                  "children": [
                     {
                       "construct": "NaturalExpression",
                       "type": "text",
@@ -192,19 +204,7 @@
                         }
                       }
                     }
-                  ],
-                  "position": {
-                    "end": {
-                      "column": 44,
-                      "line": 11,
-                      "offset": 181
-                    },
-                    "start": {
-                      "column": 1,
-                      "line": 11,
-                      "offset": 138
-                    }
-                  }
+                  ]
                 },
                 {
                   "construct": "NaturalBlock",
@@ -214,7 +214,19 @@
                 {
                   "construct": "FieldBlock",
                   "name": "Schema",
-                  "value": [
+                  "position": {
+                    "end": {
+                      "column": 12,
+                      "line": 13,
+                      "offset": 194
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 13,
+                      "offset": 183
+                    }
+                  },
+                  "children": [
                     {
                       "construct": "NaturalBlock",
                       "type": "text",
@@ -239,19 +251,7 @@
                         }
                       }
                     }
-                  ],
-                  "position": {
-                    "end": {
-                      "column": 12,
-                      "line": 13,
-                      "offset": 194
-                    },
-                    "start": {
-                      "column": 1,
-                      "line": 13,
-                      "offset": 183
-                    }
-                  }
+                  ]
                 },
                 {
                   "construct": "NaturalBlock",
@@ -541,7 +541,19 @@
                 {
                   "construct": "FieldInline",
                   "name": "Purpose",
-                  "value": [
+                  "position": {
+                    "end": {
+                      "column": 43,
+                      "line": 30,
+                      "offset": 390
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 30,
+                      "offset": 348
+                    }
+                  },
+                  "children": [
                     {
                       "construct": "NaturalExpression",
                       "type": "text",
@@ -560,19 +572,7 @@
                         }
                       }
                     }
-                  ],
-                  "position": {
-                    "end": {
-                      "column": 43,
-                      "line": 30,
-                      "offset": 390
-                    },
-                    "start": {
-                      "column": 1,
-                      "line": 30,
-                      "offset": 348
-                    }
-                  }
+                  ]
                 },
                 {
                   "construct": "NaturalBlock",
@@ -582,7 +582,19 @@
                 {
                   "construct": "FieldInline",
                   "name": "Description",
-                  "value": [
+                  "position": {
+                    "end": {
+                      "column": 76,
+                      "line": 32,
+                      "offset": 467
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 32,
+                      "offset": 392
+                    }
+                  },
+                  "children": [
                     {
                       "construct": "NaturalExpression",
                       "type": "text",
@@ -601,19 +613,7 @@
                         }
                       }
                     }
-                  ],
-                  "position": {
-                    "end": {
-                      "column": 76,
-                      "line": 32,
-                      "offset": 467
-                    },
-                    "start": {
-                      "column": 1,
-                      "line": 32,
-                      "offset": 392
-                    }
-                  }
+                  ]
                 },
                 {
                   "construct": "NaturalBlock",
@@ -623,7 +623,19 @@
                 {
                   "construct": "FieldBlock",
                   "name": "ValueType",
-                  "value": [
+                  "position": {
+                    "end": {
+                      "column": 15,
+                      "line": 34,
+                      "offset": 483
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 34,
+                      "offset": 469
+                    }
+                  },
+                  "children": [
                     {
                       "construct": "NaturalBlock",
                       "type": "text",
@@ -648,19 +660,7 @@
                         }
                       }
                     }
-                  ],
-                  "position": {
-                    "end": {
-                      "column": 15,
-                      "line": 34,
-                      "offset": 483
-                    },
-                    "start": {
-                      "column": 1,
-                      "line": 34,
-                      "offset": 469
-                    }
-                  }
+                  ]
                 },
                 {
                   "construct": "NaturalBlock",
@@ -670,7 +670,19 @@
                 {
                   "construct": "FieldBlock",
                   "name": "Value",
-                  "value": [
+                  "position": {
+                    "end": {
+                      "column": 11,
+                      "line": 42,
+                      "offset": 550
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 42,
+                      "offset": 540
+                    }
+                  },
+                  "children": [
                     {
                       "construct": "NaturalBlock",
                       "type": "text",
@@ -695,19 +707,7 @@
                         }
                       }
                     }
-                  ],
-                  "position": {
-                    "end": {
-                      "column": 11,
-                      "line": 42,
-                      "offset": 550
-                    },
-                    "start": {
-                      "column": 1,
-                      "line": 42,
-                      "offset": 540
-                    }
-                  }
+                  ]
                 },
                 {
                   "construct": "NaturalBlock",

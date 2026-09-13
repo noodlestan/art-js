@@ -26,7 +26,19 @@
         {
           "construct": "FieldBlock",
           "name": "Description",
-          "value": [
+          "position": {
+            "end": {
+              "column": 17,
+              "line": 3,
+              "offset": 31
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 15
+            }
+          },
+          "children": [
             {
               "construct": "NaturalBlock",
               "type": "text",
@@ -69,19 +81,7 @@
                 }
               ]
             }
-          ],
-          "position": {
-            "end": {
-              "column": 17,
-              "line": 3,
-              "offset": 31
-            },
-            "start": {
-              "column": 1,
-              "line": 3,
-              "offset": 15
-            }
-          }
+          ]
         },
         {
           "construct": "NaturalBlock",
@@ -91,7 +91,19 @@
         {
           "construct": "FieldBlock",
           "name": "Purpose",
-          "value": [
+          "position": {
+            "end": {
+              "column": 13,
+              "line": 7,
+              "offset": 65
+            },
+            "start": {
+              "column": 1,
+              "line": 7,
+              "offset": 53
+            }
+          },
+          "children": [
             {
               "construct": "NaturalBlock",
               "type": "text",
@@ -134,19 +146,7 @@
                 }
               ]
             }
-          ],
-          "position": {
-            "end": {
-              "column": 13,
-              "line": 7,
-              "offset": 65
-            },
-            "start": {
-              "column": 1,
-              "line": 7,
-              "offset": 53
-            }
-          }
+          ]
         }
       ]
     }

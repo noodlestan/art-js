@@ -26,7 +26,19 @@
         {
           "construct": "FieldBlock",
           "name": "Description",
-          "value": [
+          "position": {
+            "end": {
+              "column": 17,
+              "line": 3,
+              "offset": 31
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 15
+            }
+          },
+          "children": [
             {
               "construct": "NaturalBlock",
               "type": "text",
@@ -111,19 +123,7 @@
                 }
               ]
             }
-          ],
-          "position": {
-            "end": {
-              "column": 17,
-              "line": 3,
-              "offset": 31
-            },
-            "start": {
-              "column": 1,
-              "line": 3,
-              "offset": 15
-            }
-          }
+          ]
         },
         {
           "construct": "NaturalBlock",
@@ -133,7 +133,19 @@
         {
           "construct": "FieldInline",
           "name": "Status",
-          "value": [
+          "position": {
+            "end": {
+              "column": 19,
+              "line": 9,
+              "offset": 95
+            },
+            "start": {
+              "column": 1,
+              "line": 9,
+              "offset": 77
+            }
+          },
+          "children": [
             {
               "construct": "NaturalExpression",
               "type": "text",
@@ -152,19 +164,7 @@
                 }
               }
             }
-          ],
-          "position": {
-            "end": {
-              "column": 19,
-              "line": 9,
-              "offset": 95
-            },
-            "start": {
-              "column": 1,
-              "line": 9,
-              "offset": 77
-            }
-          }
+          ]
         }
       ]
     }

@@ -15,7 +15,7 @@ describe('createFieldInlinePreProcessor', () => {
 		expect(impl.preProcess(paragraph, context)).toMatchObject({
 			construct: 'FieldInline',
 			name: 'Greeting',
-			value: [
+			children: [
 				{
 					construct: 'NaturalExpression',
 					type: 'text',
@@ -29,7 +29,7 @@ describe('createFieldInlinePreProcessor', () => {
 		});
 	});
 
-	it('preserves inline child types in the field value', () => {
+	it('preserves inline child types in the field children', () => {
 		const impl = createFieldInlinePreProcessor();
 		const markdown = '# Hello World\n\n**Remote:** `git@example.com`';
 		const tree = fromMarkdown(markdown);
@@ -39,7 +39,7 @@ describe('createFieldInlinePreProcessor', () => {
 		expect(impl.preProcess(paragraph, context)).toMatchObject({
 			construct: 'FieldInline',
 			name: 'Remote',
-			value: [
+			children: [
 				{
 					construct: 'NaturalExpression',
 					type: 'inlineCode',

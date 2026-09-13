@@ -18,18 +18,18 @@ export function createFieldBlockFromParagraph(
 	const field: FieldBlock = {
 		construct: 'FieldBlock',
 		name: inner.slice(0, colonIndex).trim(),
-		value: [],
+		children: [],
 		position: cleanPosition(paragraph.position),
 	};
 	const remainder = inner.slice(colonIndex + 1);
 	if (remainder)
-		field.value.push({
+		field.children.push({
 			construct: 'NaturalBlock',
 			type: 'text',
 			value: remainder.trim(),
 			position: cleanPosition(strong.position),
 		} as NaturalBlock);
 	for (const child of paragraph.children.slice(1))
-		field.value.push(createNaturalBlock(child, context));
+		field.children.push(createNaturalBlock(child, context));
 	return field;
 }
