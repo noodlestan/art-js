@@ -63,11 +63,12 @@ ConstructParser
 ### Dispatch Order
 
 ```
-1. preProcessors run first (FieldInline, FieldBlock use this path)
-2. If no preprocessor claims the node, factories run (detect → create)
-3. If no factory matches, NaturalBlock fallback
-4. After record creation, beforeRecord() lets the active context close
-5. Handler runs if present (SectionBlock, FieldBlock use this path)
+1. Pre-processors and factories run in a single pass over constructs:
+   - For each construct, pre-processor is tried first
+   - If no match, factory detect → create runs (skipping the default construct)
+2. If no construct claims the node, NaturalBlock fallback
+3. After record creation, beforeRecord() lets the active context close
+4. Handler runs if present (SectionBlock, FieldBlock use this path)
 ```
 
 ### Example: FieldBlock

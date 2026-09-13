@@ -3,6 +3,7 @@ import {
 	type BlockContent,
 	type Construct,
 	type ConstructHandler,
+	type ConstructParser,
 } from '@art-js/constructs';
 import type { Point, VisitContext } from '@art-js/primitives';
 import { fromMarkdown } from 'mdast-util-from-markdown';
@@ -13,7 +14,6 @@ import type { ParserConfig } from './config/types';
 import { isBlockType } from './constants';
 import { createDocumentContext } from './private/createDocumentContext';
 import { flushGap } from './private/flushGap';
-import { getFactory } from './private/getFactory';
 
 interface HandleResult {
 	records: Construct[];
@@ -33,8 +33,10 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 		currentContext.lastEnd = lastEnd;
 	}
 
-	function tryPreProcessors(node: Node): HandleResult | null {
-		for (const construct of constructs) {
+	function tryConstructs(node: Node): HandleResult | null {
+		if (node.type === 'root') return null;
+		for (let i = 0; i < constructs.length; i++) {
+			const construct = constructs[i] as ConstructParser;
 			const preProcessor = construct.preProcessor;
 			const record = preProcessor?.preProcess(node, currentContext);
 			if (record) {
@@ -42,22 +44,16 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 				const handler = construct.handler ?? null;
 				return { records: [rec], handler };
 			}
+			const factory = construct.factory;
+			if (i > 0 && factory?.detect(node, currentContext)) {
+				const result = factory.create(node, currentContext);
+				const records = Array.isArray(result) ? result : [result];
+				const firstRecord = records[0] as Construct | undefined;
+				const handler = records.length > 0 && firstRecord ? (construct.handler ?? null) : null;
+				return { records, handler };
+			}
 		}
 		return null;
-	}
-
-	function maybeHandleFactory(node: Node): HandleResult | null {
-		if (node.type === 'root') return null;
-
-		const construct = getFactory(node, currentContext, constructs);
-		if (!construct?.factory) return null;
-
-		const result = construct.factory.create(node, currentContext);
-		const records = Array.isArray(result) ? result : [result];
-		const firstRecord = records[0] as Construct | undefined;
-		const handler = records.length > 0 && firstRecord ? (construct.handler ?? null) : null;
-
-		return { records, handler };
 	}
 
 	function handleNaturalBlock(node: Node): typeof SKIP | undefined {
@@ -91,16 +87,9 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 	function visitNode(node: Node): typeof SKIP | undefined {
 		if (node.type === 'root') return undefined;
 
-		const preResult = tryPreProcessors(node);
-		if (preResult) {
-			dispatch(node, preResult.records, preResult.handler);
-			return SKIP;
-		}
-
-		const factoryResult = maybeHandleFactory(node);
-		if (factoryResult) {
-			const { records, handler } = factoryResult;
-			dispatch(node, records, handler);
+		const result = tryConstructs(node);
+		if (result) {
+			dispatch(node, result.records, result.handler);
 			return SKIP;
 		}
 

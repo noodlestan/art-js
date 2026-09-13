@@ -14,18 +14,17 @@ This file documents how the parser visits to mdast tree and invokes the construc
 
 ## The Visit Loop
 
-Each mdast node passes through three paths, in order:
+Each mdast node passes through two paths, in order:
 
 ```ts
 function visitNode(node):
-  1. tryPreProcessors(node)  → if a record is returned, dispatch and SKIP
-  2. maybeHandleFactory(node) → if a factory matches, dispatch and SKIP
-  3. handleNaturalBlock(node) → fallback for unclaimed block types
+  1. tryConstructs(node)      → loops constructs: pre-processor first, then factory detect+create
+  2. handleNaturalBlock(node) → fallback for unclaimed block types
 ```
 
-**Pre-processors** run first across all constructs. The first to return a record wins. If none claim the node, the **factory** layer runs — `getFactory` asks each construct's `detect()` in order. If no factory matches and the node is a block type, the **default construct** (`NaturalBlock`) handles it.
+`tryConstructs` iterates constructs in a single pass. For each construct, the **pre-processor** is tried first; if it returns a record, the node is claimed. Otherwise, for constructs after the default one, **factory detection** runs — the first matching `detect()` wins and its `create()` builds the record. If no construct claims the node and it is a block type, the **default construct** (`NaturalBlock`) handles it.
 
-Each path returns `{ records, handler }` — the record(s) to append and an optional handler to invoke.
+`tryConstructs` returns `{ records, handler }` — the record(s) to append and an optional handler to invoke.
 
 ## Dispatch and Context
 
