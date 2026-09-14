@@ -1,5 +1,5 @@
-import type { ConstructBase, ContainerConstructBase } from '../../constructs.js';
-import type { OnBeforeConstruct, ParserVisitContext } from '../types.js';
+import type { ConstructBase, ContainerConstructBase } from '../../constructs';
+import type { OnBeforeConstruct, ParserVisitContext } from '../types';
 
 export function createParserVisitContext(
 	construct: ContainerConstructBase,

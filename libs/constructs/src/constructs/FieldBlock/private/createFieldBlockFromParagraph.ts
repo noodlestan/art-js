@@ -1,7 +1,7 @@
 import type { ParserVisitContext } from '@art-js/primitives';
+import { nodePosition } from '@art-js/primitives';
 import type { Paragraph, Strong } from 'mdast';
 
-import { cleanPosition } from '../../../helpers/cleanPosition';
 import { createNaturalBlock } from '../../NaturalBlock/private/createNaturalBlock';
 import type { NaturalBlock } from '../../NaturalBlock/private/types';
 
@@ -19,7 +19,7 @@ export function createFieldBlockFromParagraph(
 		construct: 'FieldBlock',
 		name: inner.slice(0, colonIndex).trim(),
 		children: [],
-		position: cleanPosition(paragraph.position),
+		position: nodePosition(paragraph),
 	};
 	const remainder = inner.slice(colonIndex + 1);
 	if (remainder)
@@ -27,7 +27,7 @@ export function createFieldBlockFromParagraph(
 			construct: 'NaturalBlock',
 			type: 'text',
 			value: remainder.trim(),
-			position: cleanPosition(strong.position),
+			position: nodePosition(strong),
 		} as NaturalBlock);
 	for (const child of paragraph.children.slice(1))
 		field.children.push(createNaturalBlock(child, context));

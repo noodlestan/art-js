@@ -1,2 +1,2 @@
-export type { OnBeforeConstruct, MdastNode, ParserVisitContext } from './types.js';
-export { createParserVisitContext, sectionDepth } from './helpers/index.js';
+export type { OnBeforeConstruct, MdastNode, ParserVisitContext } from './types';
+export * from './helpers/index';

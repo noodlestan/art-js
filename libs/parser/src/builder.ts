@@ -4,8 +4,9 @@ import {
 	type Construct,
 	type ConstructHandler,
 	type ConstructParser,
+	createDocument,
 } from '@art-js/constructs';
-import type { ParserVisitContext, Position } from '@art-js/primitives';
+import { type ParserVisitContext } from '@art-js/primitives';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import type { Node } from 'unist';
 import { SKIP, visit } from 'unist-util-visit';
@@ -17,30 +18,6 @@ import { createDocumentContext } from './private/createDocumentContext';
 interface HandleResult {
 	constructs: Construct[];
 	handler: ConstructHandler | null;
-}
-
-function nodePosition(node: Node): Position {
-	if (!node.position) {
-		throw new Error(`Expected source position for ${node.type}`);
-	}
-
-	const raw = node.position;
-
-	if (!raw?.start || !raw.end) {
-		throw new Error(`Expected source position for ${node.type}`);
-	}
-	return {
-		start: { line: raw.start.line, column: raw.start.column, offset: raw.start.offset ?? 0 },
-		end: { line: raw.end.line, column: raw.end.column, offset: raw.end.offset ?? 0 },
-	};
-}
-
-function createDocument(root: Node): ArtDocument {
-	return {
-		construct: 'Document',
-		position: nodePosition(root),
-		children: [],
-	};
 }
 
 export function buildDocument(config: ParserConfig, markdown: string): ArtDocument {

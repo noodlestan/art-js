@@ -1,8 +1,8 @@
 import type { MdastNode, ParserVisitContext } from '@art-js/primitives';
+import { nodePosition } from '@art-js/primitives';
 import type { Node } from 'mdast';
 import { phrasing } from 'mdast-util-phrasing';
 
-import { cleanPosition } from '../../../helpers/cleanPosition';
 import { rawSlice } from '../../../helpers/rawSlice';
 import { createNaturalExpression } from '../../NaturalExpression/private/createNaturalExpression';
 import type { NaturalExpression } from '../../NaturalExpression/private/types';
@@ -25,7 +25,7 @@ export function createNaturalBlock(node: Node, context: ParserVisitContext): Nat
 		construct: 'NaturalBlock',
 		...node,
 		value: rawSlice(node, context),
-		position: cleanPosition(node.position),
+		position: nodePosition(node),
 		children,
 	};
 	return block;

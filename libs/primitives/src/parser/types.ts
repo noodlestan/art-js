@@ -9,7 +9,7 @@ import type {
 	TableContent,
 } from 'mdast';
 
-import type { ConstructBase } from '../constructs.js';
+import type { ConstructBase } from '../constructs';
 
 type ChildNode =
 	| RootContent

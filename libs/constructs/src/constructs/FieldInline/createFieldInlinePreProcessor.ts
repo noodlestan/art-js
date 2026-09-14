@@ -1,6 +1,6 @@
+import { nodePosition } from '@art-js/primitives';
 import type { Paragraph } from 'mdast';
 
-import { cleanPosition } from '../../helpers/cleanPosition';
 import { rawSlice } from '../../helpers/rawSlice';
 import type { Construct } from '../../registry';
 import { isFieldStrong } from '../FieldBlock/private/isFieldStrong';
@@ -47,7 +47,7 @@ export function createFieldInlinePreProcessor(): ConstructPreProcessor {
 				construct: 'FieldInline',
 				name: inner.slice(0, colonIndex).trim(),
 				children,
-				position: cleanPosition(paragraph.position),
+				position: nodePosition(paragraph),
 			};
 			return field as unknown as Construct;
 		},

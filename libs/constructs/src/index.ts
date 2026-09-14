@@ -11,7 +11,7 @@ export type {
 	ConstructToMdast,
 	ConstructToMdastFactory,
 } from './constructs/types';
-export { cleanPosition, rawSlice } from './helpers';
+export { rawSlice } from './helpers';
 export { createFieldBlockParser } from './constructs/FieldBlock';
 export { createFieldBlockToMdast } from './constructs/FieldBlock';
 export { createFieldInlineToMdast } from './constructs/FieldInline';
@@ -23,4 +23,5 @@ export { createSectionBlockParser } from './constructs/SectionBlock';
 export { createSectionBlockToMdast } from './constructs/SectionBlock';
 export { createTagParser } from './constructs/Tag';
 export { createTagToMdast } from './constructs/Tag';
+export { createDocument } from './constructs/Document/createDocument';
 export { createDocumentToMdast } from './constructs/Document/createDocumentToMdast';

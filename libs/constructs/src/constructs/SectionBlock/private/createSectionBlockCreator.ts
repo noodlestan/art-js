@@ -1,6 +1,6 @@
+import { nodePosition } from '@art-js/primitives';
 import type { Heading } from 'mdast';
 
-import { cleanPosition } from '../../../helpers/cleanPosition';
 import { rawSlice } from '../../../helpers/rawSlice';
 import type { Tag } from '../../Tag/private/types';
 import type { ConstructCreator } from '../../types';
@@ -54,7 +54,7 @@ export function createSectionBlockCreator(): ConstructCreator {
 				name: kindMatch?.[2]?.trim() ?? textWithoutTags,
 				children: [],
 				depth: heading.depth,
-				position: cleanPosition(heading.position),
+				position: nodePosition(heading),
 			};
 			if (kindMatch?.[1]) section.kind = kindMatch[1];
 			if (tags.length) section.tags = tags;

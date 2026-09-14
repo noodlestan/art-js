@@ -1,3 +1,3 @@
-export type { Point, Position } from './point.js';
-export type { ConstructBase, ContainerConstructBase } from './constructs.js';
-export * from './parser/index.js';
+export type { Point, Position } from './point';
+export type { ConstructBase, ContainerConstructBase } from './constructs';
+export * from './parser/index';

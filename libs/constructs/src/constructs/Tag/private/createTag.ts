@@ -1,6 +1,5 @@
+import { nodePosition } from '@art-js/primitives';
 import type { Text } from 'mdast';
-
-import { cleanPosition } from '../../../helpers/cleanPosition';
 
 import { TAG_PATTERN } from './constants';
 import type { Tag } from './types';
@@ -31,7 +30,7 @@ export function createTag(node: Text): Tag[] {
 		endTags.unshift({
 			construct: 'Tag' as const,
 			name: match[1] ?? '',
-			position: cleanPosition(node.position),
+			position: nodePosition(node),
 		});
 		remaining = remaining.slice(0, matchIndex);
 	}

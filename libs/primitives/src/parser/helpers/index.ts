@@ -1,2 +1,3 @@
-export { createParserVisitContext } from './createParserVisitContext.js';
-export { sectionDepth } from './sectionDepth.js';
+export { createParserVisitContext } from './createParserVisitContext';
+export { nodePosition } from './nodePosition';
+export { sectionDepth } from './sectionDepth';
