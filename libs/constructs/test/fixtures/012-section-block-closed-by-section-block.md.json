@@ -19,11 +19,6 @@
       },
       "children": [
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "SectionBlock",
           "name": "Details",
           "depth": 2,
@@ -40,11 +35,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -85,11 +75,6 @@
             },
             {
               "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
-              "construct": "NaturalBlock",
               "type": "paragraph",
               "value": "Dolor sit amet.",
               "position": {
@@ -125,11 +110,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },

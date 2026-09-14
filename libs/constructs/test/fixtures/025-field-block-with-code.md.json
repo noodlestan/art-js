@@ -19,11 +19,6 @@
       "children": [
         {
           "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
-          "construct": "NaturalBlock",
           "type": "code",
           "lang": "typescript",
           "meta": null,

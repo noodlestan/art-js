@@ -20,11 +20,6 @@
       },
       "children": [
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "FieldInline",
           "name": "Purpose",
           "position": {
@@ -62,11 +57,6 @@
           ]
         },
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "SectionBlock",
           "kind": "Decision",
           "name": "Config as Source of Truth",
@@ -84,11 +74,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "FieldInline",
               "name": "Status",
@@ -127,11 +112,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldInline",
               "name": "Context",
               "position": {
@@ -167,11 +147,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "FieldInline",
@@ -304,11 +279,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "FieldInline",

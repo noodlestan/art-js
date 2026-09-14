@@ -41,11 +41,6 @@
     },
     {
       "construct": "NaturalBlock",
-      "type": "text",
-      "value": "\n\n"
-    },
-    {
-      "construct": "NaturalBlock",
       "type": "code",
       "lang": "meta",
       "meta": null,

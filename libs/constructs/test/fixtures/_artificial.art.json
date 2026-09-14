@@ -19,11 +19,6 @@
       },
       "children": [
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "SectionBlock",
           "kind": "Project",
           "name": "Artificial",
@@ -41,11 +36,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "FieldInline",
               "name": "Purpose",
@@ -82,11 +72,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "FieldInline",
@@ -126,11 +111,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldInline",
               "name": "Remote",
               "position": {
@@ -166,11 +146,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "FieldInline",
@@ -210,11 +185,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldInline",
               "name": "Path",
               "position": {
@@ -250,11 +220,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "FieldInline",
@@ -294,11 +259,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldInline",
               "name": "packageManager",
               "position": {
@@ -336,11 +296,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldBlock",
               "name": "Namespaces",
               "position": {
@@ -356,11 +311,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "list",
@@ -563,11 +513,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldBlock",
               "name": "Workspaces",
               "position": {
@@ -583,11 +528,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "list",
@@ -790,11 +730,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldBlock",
               "name": "Scaffolders",
               "position": {
@@ -810,11 +745,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "list",
@@ -1194,11 +1124,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldInline",
               "name": "PackageFile",
               "position": {
@@ -1236,11 +1161,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldBlock",
               "name": "Setup",
               "position": {
@@ -1256,11 +1176,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -1301,11 +1216,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "code",
                   "lang": "bash",
                   "meta": null,
@@ -1327,11 +1237,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldBlock",
               "name": "Verification",
               "position": {
@@ -1347,11 +1252,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -1392,11 +1292,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "code",
                   "lang": "bash",
                   "meta": null,
@@ -1418,11 +1313,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldBlock",
               "name": "Scripts",
               "position": {
@@ -1438,11 +1328,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "list",
@@ -1526,11 +1411,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "**License.Short**",
                   "position": {
@@ -1585,11 +1465,6 @@
                       ]
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -1691,11 +1566,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "Published under a [MIT license](https://noodlestan.mit-license.org/).",
                   "position": {
@@ -1794,11 +1664,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "**License.Long**",
                   "position": {
@@ -1856,11 +1721,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "MIT License https://noodlestan.mit-license.org/",
                   "position": {
@@ -1896,11 +1756,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -1942,11 +1797,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "Permission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:",
                   "position": {
@@ -1985,11 +1835,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "The above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.",
                   "position": {
@@ -2025,11 +1870,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",

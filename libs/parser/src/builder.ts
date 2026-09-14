@@ -5,7 +5,7 @@ import {
 	type ConstructHandler,
 	type ConstructParser,
 } from '@art-js/constructs';
-import type { ParserVisitContext, Point } from '@art-js/primitives';
+import type { ParserVisitContext } from '@art-js/primitives';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import type { Node } from 'unist';
 import { SKIP, visit } from 'unist-util-visit';
@@ -13,7 +13,6 @@ import { SKIP, visit } from 'unist-util-visit';
 import type { ParserConfig } from './config/types';
 import { isBlockType } from './constants';
 import { createDocumentContext } from './private/createDocumentContext';
-import { flushGap } from './private/flushGap';
 
 interface HandleResult {
 	records: Construct[];
@@ -43,11 +42,6 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 	const defaultConstruct = config.defaultConstruct();
 	const constructs = [defaultConstruct, ...config.constructs.map(create => create())];
 	let currentContext: ParserVisitContext = docContext;
-	let lastEnd: Point | undefined;
-
-	function updateLastEnd(end: Point): void {
-		lastEnd = { line: end.line, column: end.column, offset: end.offset };
-	}
 
 	function tryConstructs(node: Node): HandleResult | null {
 		if (node.type === 'root') {
@@ -88,13 +82,7 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 
 		const construct = defaultConstruct.factory.create(node, currentContext) as Construct;
 		currentContext = currentContext.onBeforeConstruct(construct);
-		if (construct.position) {
-			flushGap(construct.position.start, lastEnd, markdown, currentContext);
-		}
 		currentContext.captureChildConstruct(construct);
-		if (construct.position) {
-			updateLastEnd(construct.position.end);
-		}
 		return node.type === 'paragraph' ? undefined : SKIP;
 	}
 
@@ -102,18 +90,10 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 		for (const construct of constructs) {
 			currentContext = currentContext.onBeforeConstruct(construct);
 
-			if (construct.position) {
-				flushGap(construct.position.start, lastEnd, markdown, currentContext);
-			}
-
 			if (handler) {
 				currentContext = handler.handle(construct, node, currentContext);
 			} else {
 				currentContext.captureChildConstruct(construct as BlockContent);
-			}
-
-			if (construct.position) {
-				updateLastEnd(construct.position.end);
 			}
 		}
 	}
@@ -136,10 +116,7 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 		return SKIP;
 	}
 
-	// The mdast `fromMarkdown` result has version-specific types; cast to `any` for
-	// the visitor. This is a pragmatic choice during migration.
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	visit(tree as any, (n: Node) => visitNode(n));
+	visit(tree, (n: Node) => visitNode(n));
 
 	return document;
 }

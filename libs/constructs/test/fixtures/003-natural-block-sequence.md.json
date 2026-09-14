@@ -41,11 +41,6 @@
     },
     {
       "construct": "NaturalBlock",
-      "type": "text",
-      "value": "\n\n"
-    },
-    {
-      "construct": "NaturalBlock",
       "type": "paragraph",
       "value": "Hello World\nAgain",
       "position": {
@@ -81,11 +76,6 @@
           "children": []
         }
       ]
-    },
-    {
-      "construct": "NaturalBlock",
-      "type": "text",
-      "value": "\n\n"
     },
     {
       "construct": "NaturalBlock",

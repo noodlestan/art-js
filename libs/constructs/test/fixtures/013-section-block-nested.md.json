@@ -19,11 +19,6 @@
       },
       "children": [
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "SectionBlock",
           "name": "Details",
           "depth": 2,
@@ -40,11 +35,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -84,11 +74,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "SectionBlock",
               "name": "More Details",
               "depth": 3,
@@ -105,11 +90,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -147,11 +127,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             }
@@ -174,11 +149,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",

@@ -20,11 +20,6 @@
       "children": [
         {
           "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
-          "construct": "NaturalBlock",
           "type": "paragraph",
           "value": "The configuration system of the workspace CLI: the `.art-workspace.mts` manifest, its structure, authoring, loading mechanism, package exports, and type safety.",
           "position": {
@@ -100,11 +95,6 @@
           ]
         },
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "SectionBlock",
           "name": "Overview",
           "depth": 2,
@@ -121,11 +111,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -277,11 +262,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "NaturalBlock",
@@ -453,11 +433,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },
@@ -480,11 +455,6 @@
           "children": [
             {
               "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
-              "construct": "NaturalBlock",
               "type": "code",
               "lang": "typescript",
               "meta": null,
@@ -502,11 +472,6 @@
                 }
               },
               "children": []
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },
@@ -527,11 +492,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -648,11 +608,6 @@
             },
             {
               "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
-              "construct": "NaturalBlock",
               "type": "code",
               "lang": "typescript",
               "meta": null,
@@ -670,11 +625,6 @@
                 }
               },
               "children": []
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },
@@ -695,11 +645,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -737,11 +682,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "NaturalBlock",
@@ -1136,11 +1076,6 @@
             },
             {
               "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
-              "construct": "NaturalBlock",
               "type": "paragraph",
               "value": "The config's `import { defineConfig } from '@art-domains/workspace-cli/config'` is resolved from the consumer `node_modules` and inlined. The `/config` subpath has zero runtime deps beyond `esbuild` (ESM-friendly), so the CLI command surface (commander, simple-git) never enters the manifest bundle. `esbuild` is therefore a **runtime dependency** of `@art-domains/workspace-cli` (see `records/adr/cli.art` — \"Runtime Config Loading — esbuild Bundle-at-Runtime\").",
               "position": {
@@ -1499,11 +1434,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },
@@ -1524,11 +1454,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -1566,11 +1491,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "NaturalBlock",
@@ -1942,11 +1862,6 @@
             },
             {
               "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
-              "construct": "NaturalBlock",
               "type": "paragraph",
               "value": "The `exports` map (`./config` → `types` + `import`) keeps the authoring surface stable: renaming types or exports is a breaking change once consumers exist — the manifest is the first consumer.",
               "position": {
@@ -2134,11 +2049,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },
@@ -2159,11 +2069,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -2201,11 +2106,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "NaturalBlock",
@@ -2579,11 +2479,6 @@
             },
             {
               "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
-              "construct": "NaturalBlock",
               "type": "paragraph",
               "value": "Type declarations are emitted (`dist/index.d.ts`) and the `exports` map ensures imports resolve and type-check in the `.mts` manifest.",
               "position": {
@@ -2733,11 +2628,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },
@@ -2758,11 +2648,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -2914,11 +2799,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "NaturalBlock",
@@ -3118,11 +2998,6 @@
                   ]
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },
@@ -3143,11 +3018,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -3261,11 +3131,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },
@@ -3286,11 +3151,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -3366,11 +3226,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "NaturalBlock",

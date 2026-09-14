@@ -19,11 +19,6 @@
       },
       "children": [
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "FieldBlock",
           "name": "Description",
           "position": {
@@ -39,11 +34,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -84,11 +74,6 @@
             },
             {
               "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
-              "construct": "NaturalBlock",
               "type": "paragraph",
               "value": "Block description B.",
               "position": {
@@ -126,11 +111,6 @@
               ]
             }
           ]
-        },
-        {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
         },
         {
           "construct": "FieldInline",

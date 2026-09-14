@@ -20,11 +20,6 @@
       "children": [
         {
           "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
-          "construct": "NaturalBlock",
           "type": "paragraph",
           "value": "Details about the feature.",
           "position": {

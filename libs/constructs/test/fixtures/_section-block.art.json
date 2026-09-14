@@ -20,11 +20,6 @@
       "children": [
         {
           "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
-          "construct": "NaturalBlock",
           "type": "paragraph",
           "value": "::READ (Construct: Tag) FROM `../expressions/tag.art`.\n::READ (Construct: NaturalName) FROM `../expressions/natural-name.art`.\n::READ (Construct: NaturalBlock) FROM `./natural-block.art`.",
           "position": {
@@ -176,11 +171,6 @@
           ]
         },
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "SectionBlock",
           "kind": "Construct",
           "name": "SectionBlock",
@@ -198,11 +188,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "FieldInline",
               "name": "Category",
@@ -241,11 +226,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldInline",
               "name": "Purpose",
               "position": {
@@ -281,11 +261,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "FieldInline",
@@ -478,11 +453,6 @@
             },
             {
               "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
-              "construct": "NaturalBlock",
               "type": "html",
               "value": "<!-- refine content rules -->",
               "position": {
@@ -500,11 +470,6 @@
               "children": []
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldBlock",
               "name": "Schema",
               "position": {
@@ -520,11 +485,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "code",
@@ -548,11 +508,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldBlock",
               "name": "Syntax",
               "position": {
@@ -568,11 +523,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "code",
@@ -596,11 +546,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldBlock",
               "name": "Rules",
               "position": {
@@ -616,11 +561,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "list",
@@ -1000,11 +940,6 @@
               ]
             },
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "FieldBlock",
               "name": "Examples",
               "position": {
@@ -1020,11 +955,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -1065,11 +995,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "code",
                   "lang": "md",
                   "meta": null,
@@ -1087,11 +1012,6 @@
                     }
                   },
                   "children": []
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -1171,11 +1091,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "code",
                   "lang": "md",
                   "meta": null,
@@ -1193,11 +1108,6 @@
                     }
                   },
                   "children": []
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -1236,11 +1146,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",

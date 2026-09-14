@@ -19,11 +19,6 @@
       },
       "children": [
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "FieldBlock",
           "name": "Dependencies",
           "position": {
@@ -39,11 +34,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "list",
@@ -187,11 +177,6 @@
           ]
         },
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "FieldInline",
           "name": "Private",
           "position": {
@@ -227,11 +212,6 @@
               "children": []
             }
           ]
-        },
-        {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
         },
         {
           "construct": "NaturalBlock",

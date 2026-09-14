@@ -20,11 +20,6 @@
       },
       "children": [
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "SectionBlock",
           "name": "Why",
           "depth": 2,
@@ -41,11 +36,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -121,11 +111,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },
@@ -146,11 +131,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -492,11 +472,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },
@@ -518,11 +493,6 @@
           },
           "children": [
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "SectionBlock",
               "name": "Data (`src/data.json`)",
               "depth": 3,
@@ -539,11 +509,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "list",
@@ -2087,11 +2052,6 @@
                       ]
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -2112,11 +2072,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "list",
@@ -3841,11 +3796,6 @@
                       ]
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -3866,11 +3816,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "list",
@@ -4582,11 +4527,6 @@
                       ]
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -4607,11 +4547,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -4744,11 +4679,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -4769,11 +4699,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -4830,11 +4755,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -5490,11 +5410,6 @@
                       ]
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             }
@@ -5518,11 +5433,6 @@
           },
           "children": [
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "SectionBlock",
               "name": "Principles",
               "depth": 3,
@@ -5539,11 +5449,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "list",
@@ -5801,11 +5706,6 @@
                       ]
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -5826,11 +5726,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "list",
@@ -6719,11 +6614,6 @@
                       ]
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -6744,11 +6634,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -6786,11 +6671,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -7434,11 +7314,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "**Output view contract** — `shuffle(data)` returns one entry per slot:",
                   "position": {
@@ -7550,11 +7425,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -8022,11 +7892,6 @@
                       ]
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -8047,11 +7912,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "list",
@@ -9881,11 +9741,6 @@
                       ]
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -9906,11 +9761,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -10024,11 +9874,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -10635,11 +10480,6 @@
                   ]
                 },
                 {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
                   "construct": "SectionBlock",
                   "kind": "Layer",
                   "name": "Entry Point",
@@ -10657,11 +10497,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "list",
@@ -11221,11 +11056,6 @@
                           ]
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 },
@@ -11247,11 +11077,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "list",
@@ -11486,11 +11311,6 @@
                           ]
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 },
@@ -11512,11 +11332,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "list",
@@ -11770,11 +11585,6 @@
                           ]
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 },
@@ -11796,11 +11606,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "list",
@@ -12820,11 +12625,6 @@
                           ]
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 },
@@ -12846,11 +12646,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "list",
@@ -13142,11 +12937,6 @@
                           ]
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 },
@@ -13168,11 +12958,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "list",
@@ -13502,11 +13287,6 @@
                           ]
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 }
@@ -13529,11 +13309,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "list",
@@ -13981,11 +13756,6 @@
                       ]
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             }
@@ -14008,11 +13778,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "list",

@@ -20,11 +20,6 @@
       },
       "children": [
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "SectionBlock",
           "name": "Milestone One",
           "depth": 2,
@@ -41,11 +36,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -83,11 +73,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             },
             {
               "construct": "NaturalBlock",
@@ -129,11 +114,6 @@
             },
             {
               "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
-              "construct": "NaturalBlock",
               "type": "paragraph",
               "value": "A domain package provides the resources and supporting infrastructure required to use the domain in a project. Installation bootstraps the project with the domain's essential Art instructions, skills, agent modes, and domain resources such as templates and routines.",
               "position": {
@@ -172,11 +152,6 @@
             },
             {
               "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
-              "construct": "NaturalBlock",
               "type": "paragraph",
               "value": "The initial milestone therefore validates the core model rather than attempting to solve every possible Art compilation target: a domain can be packaged, installed, interpreted, and compiled into useful, use-case-specific agent instructions from a single source of truth.",
               "position": {
@@ -212,11 +187,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },
@@ -238,11 +208,6 @@
           },
           "children": [
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "SectionBlock",
               "name": "Domain Projections",
               "depth": 3,
@@ -259,11 +224,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -301,11 +261,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -404,11 +359,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "Tags attached to resource declarations provide the primary projection mechanism. Tags identify the projections for which a declaration is relevant and can determine whether a declaration is included, excluded, or transformed. Projection rules can therefore express both simple membership and consumer-specific representations of the same underlying resource.",
                   "position": {
@@ -447,11 +397,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "The initial projections are:",
                   "position": {
@@ -487,11 +432,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -905,11 +845,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "Projections are not separate sources of truth. They are deterministic views of the same domain sources, compiled according to the needs and permissions of their consumers.",
                   "position": {
@@ -945,11 +880,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -970,11 +900,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -1050,11 +975,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -1075,11 +995,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -1196,11 +1111,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "A declaration is a resource: a markdown heading of the form `# Kind: Name` declares a resource of that kind with that name. The declaration form is fixed by the language — closed syntax — while the meaning of each kind is defined by the domain's structures — open semantics.",
                   "position": {
@@ -1274,11 +1184,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -1469,11 +1374,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -1494,11 +1394,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -1653,11 +1548,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "Its responsibility is to transform Art sources into deterministic projections while remaining independent of the semantics of individual resource kinds. The parser understands the language's declaration syntax, but the meaning of a declaration belongs to the domain that defines its kind.",
                   "position": {
@@ -1696,11 +1586,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "The compilation pipeline is:",
                   "position": {
@@ -1736,11 +1621,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -2192,11 +2072,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "The parser is built on the unified ecosystem — micromark, the same foundation used by GFM and MDX. It is therefore kind-agnostic: it recognises the language-level declaration structure and captures resources generically without needing to understand what a particular kind means.",
                   "position": {
@@ -2232,11 +2107,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -2316,11 +2186,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "The compiler consequently separates language processing from domain semantics: the language defines how declarations are written, domains define what those declarations mean, and compilation determines which representations are produced for each consumer.",
                   "position": {
@@ -2356,11 +2221,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -2381,11 +2241,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -2423,11 +2278,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -2488,11 +2338,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "Given identical sources and identical configuration, compilation produces identical projections every time.",
                   "position": {
@@ -2528,11 +2373,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -2574,11 +2414,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "A change to an Art source or compilation configuration therefore produces a corresponding, visible change to its affected projections. The generated representation remains traceable to its source while allowing consumers to operate on a precompiled, purpose-specific view of the domain.",
                   "position": {
@@ -2617,11 +2452,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "The model separates three concerns:",
                   "position": {
@@ -2657,11 +2487,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -2975,11 +2800,6 @@
                       ]
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             }
@@ -3003,11 +2823,6 @@
           },
           "children": [
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "SectionBlock",
               "name": "Generate Agent Instructions",
               "depth": 3,
@@ -3024,11 +2839,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -3069,11 +2879,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "Each projection exposes the minimum context its consumer needs:",
                   "position": {
@@ -3109,11 +2914,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -3564,11 +3364,6 @@
                   ]
                 },
                 {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
                   "construct": "SectionBlock",
                   "name": "Planning Agent",
                   "depth": 4,
@@ -3585,11 +3380,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "paragraph",
@@ -3627,11 +3417,6 @@
                           "children": []
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 },
@@ -3652,11 +3437,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "paragraph",
@@ -3694,11 +3474,6 @@
                           "children": []
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 }
@@ -3721,11 +3496,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -3765,11 +3535,6 @@
                   ]
                 },
                 {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
                   "construct": "SectionBlock",
                   "name": "Scaffolders",
                   "depth": 4,
@@ -3786,11 +3551,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "paragraph",
@@ -3831,11 +3591,6 @@
                     },
                     {
                       "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
-                    {
-                      "construct": "NaturalBlock",
                       "type": "paragraph",
                       "value": "For example, a package or namespace can be described once in Art and used to generate its project structure, configuration, documentation, or other representations required by different consumers.",
                       "position": {
@@ -3871,11 +3626,6 @@
                           "children": []
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 },
@@ -3896,11 +3646,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "paragraph",
@@ -3941,11 +3686,6 @@
                     },
                     {
                       "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
-                    {
-                      "construct": "NaturalBlock",
                       "type": "paragraph",
                       "value": "The same source can produce human-oriented documentation, compact agent instructions, searchable indexes, or targeted domain references without maintaining separate versions of the underlying knowledge.",
                       "position": {
@@ -3981,11 +3721,6 @@
                           "children": []
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 },
@@ -4006,11 +3741,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "paragraph",
@@ -4051,11 +3781,6 @@
                     },
                     {
                       "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
-                    {
-                      "construct": "NaturalBlock",
                       "type": "paragraph",
                       "value": "This allows the same record to serve as machine-readable data for tooling and as contextual knowledge for agents, while projections determine which fields, relationships, descriptions, and instructions are exposed to each consumer.",
                       "position": {
@@ -4091,11 +3816,6 @@
                           "children": []
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 }
@@ -4120,11 +3840,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "list",

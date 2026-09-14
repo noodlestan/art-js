@@ -19,11 +19,6 @@
       },
       "children": [
         {
-          "construct": "NaturalBlock",
-          "type": "text",
-          "value": "\n\n"
-        },
-        {
           "construct": "SectionBlock",
           "name": "Uses",
           "depth": 2,
@@ -40,11 +35,6 @@
             }
           },
           "children": [
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
             {
               "construct": "NaturalBlock",
               "type": "paragraph",
@@ -120,11 +110,6 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
             }
           ]
         },
@@ -146,11 +131,6 @@
           },
           "children": [
             {
-              "construct": "NaturalBlock",
-              "type": "text",
-              "value": "\n\n"
-            },
-            {
               "construct": "SectionBlock",
               "kind": "Type",
               "name": "ScalarValue",
@@ -168,11 +148,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "FieldInline",
                   "name": "purpose",
@@ -211,11 +186,6 @@
                   ]
                 },
                 {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
                   "construct": "FieldBlock",
                   "name": "Schema",
                   "position": {
@@ -231,11 +201,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "code",
@@ -257,11 +222,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 }
               ]
             },
@@ -283,11 +243,6 @@
                 }
               },
               "children": [
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
                 {
                   "construct": "NaturalBlock",
                   "type": "paragraph",
@@ -385,11 +340,6 @@
                 },
                 {
                   "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
-                  "construct": "NaturalBlock",
                   "type": "paragraph",
                   "value": "**Name**: Scalar",
                   "position": {
@@ -463,11 +413,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "NaturalBlock",
@@ -546,11 +491,6 @@
                   ]
                 },
                 {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
                   "construct": "FieldInline",
                   "name": "Purpose",
                   "position": {
@@ -586,11 +526,6 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
                 },
                 {
                   "construct": "FieldInline",
@@ -630,11 +565,6 @@
                   ]
                 },
                 {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
                   "construct": "FieldBlock",
                   "name": "ValueType",
                   "position": {
@@ -650,11 +580,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "code",
@@ -678,11 +603,6 @@
                   ]
                 },
                 {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
                   "construct": "FieldBlock",
                   "name": "Value",
                   "position": {
@@ -698,11 +618,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "code",
@@ -726,11 +641,6 @@
                   ]
                 },
                 {
-                  "construct": "NaturalBlock",
-                  "type": "text",
-                  "value": "\n\n"
-                },
-                {
                   "construct": "SectionBlock",
                   "kind": "Art",
                   "name": "Inline",
@@ -748,11 +658,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "paragraph",
@@ -809,11 +714,6 @@
                           ]
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     },
                     {
                       "construct": "NaturalBlock",
@@ -936,11 +836,6 @@
                     },
                     {
                       "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
-                    {
-                      "construct": "NaturalBlock",
                       "type": "paragraph",
                       "value": "Example:",
                       "position": {
@@ -979,11 +874,6 @@
                     },
                     {
                       "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
-                    {
-                      "construct": "NaturalBlock",
                       "type": "code",
                       "lang": null,
                       "meta": null,
@@ -1001,11 +891,6 @@
                         }
                       },
                       "children": []
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 },
@@ -1027,11 +912,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "paragraph",
@@ -1088,11 +968,6 @@
                           ]
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     },
                     {
                       "construct": "NaturalBlock",
@@ -1367,11 +1242,6 @@
                     },
                     {
                       "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
-                    {
-                      "construct": "NaturalBlock",
                       "type": "paragraph",
                       "value": "Example:",
                       "position": {
@@ -1410,11 +1280,6 @@
                     },
                     {
                       "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
-                    {
-                      "construct": "NaturalBlock",
                       "type": "code",
                       "lang": "md",
                       "meta": null,
@@ -1432,11 +1297,6 @@
                         }
                       },
                       "children": []
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 },
@@ -1458,11 +1318,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "paragraph",
@@ -1519,11 +1374,6 @@
                           ]
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     },
                     {
                       "construct": "NaturalBlock",
@@ -1646,11 +1496,6 @@
                     },
                     {
                       "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
-                    {
-                      "construct": "NaturalBlock",
                       "type": "paragraph",
                       "value": "Example:",
                       "position": {
@@ -1689,11 +1534,6 @@
                     },
                     {
                       "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
-                    {
-                      "construct": "NaturalBlock",
                       "type": "code",
                       "lang": null,
                       "meta": null,
@@ -1711,11 +1551,6 @@
                         }
                       },
                       "children": []
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 },
@@ -1737,11 +1572,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "paragraph",
@@ -1798,11 +1628,6 @@
                           ]
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     },
                     {
                       "construct": "NaturalBlock",
@@ -2077,11 +1902,6 @@
                     },
                     {
                       "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
-                    {
-                      "construct": "NaturalBlock",
                       "type": "paragraph",
                       "value": "Example:",
                       "position": {
@@ -2120,11 +1940,6 @@
                     },
                     {
                       "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
-                    {
-                      "construct": "NaturalBlock",
                       "type": "code",
                       "lang": "md",
                       "meta": null,
@@ -2142,11 +1957,6 @@
                         }
                       },
                       "children": []
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     }
                   ]
                 },
@@ -2167,11 +1977,6 @@
                     }
                   },
                   "children": [
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
-                    },
                     {
                       "construct": "NaturalBlock",
                       "type": "paragraph",
@@ -2228,11 +2033,6 @@
                           ]
                         }
                       ]
-                    },
-                    {
-                      "construct": "NaturalBlock",
-                      "type": "text",
-                      "value": "\n\n"
                     },
                     {
                       "construct": "NaturalBlock",
