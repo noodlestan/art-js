@@ -10,7 +10,6 @@ import type {
 } from 'mdast';
 
 import type { ConstructBase } from '../constructs.js';
-import type { Point } from '../point.js';
 
 type ChildNode =
 	| RootContent
@@ -26,17 +25,15 @@ export type MdastNode = Node & {
 	value?: string;
 };
 
-export type BeforeRecord = (
+export type OnBeforeRecord = (
 	record: ConstructBase,
 	context: ParserVisitContext,
 ) => ParserVisitContext;
 
 export interface ParserVisitContext {
 	readonly construct: ConstructBase;
-	push(record: ConstructBase): void;
-	target(): ConstructBase[];
-	beforeRecord(record: ConstructBase): ParserVisitContext;
+	captureChildConstruct(child: ConstructBase): void;
+	onBeforeConstruct(construct: ConstructBase): ParserVisitContext;
 	parent(): ParserVisitContext | undefined;
-	markdown: string;
-	lastEnd: Point | undefined;
+	readonly markdown: string;
 }

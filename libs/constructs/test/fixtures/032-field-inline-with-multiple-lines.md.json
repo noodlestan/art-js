@@ -55,7 +55,8 @@
                   "line": 3,
                   "offset": 28
                 }
-              }
+              },
+              "children": []
             },
             {
               "construct": "NaturalExpression",
@@ -90,7 +91,8 @@
                       "line": 4,
                       "offset": 43
                     }
-                  }
+                  },
+                  "children": []
                 }
               ]
             },
@@ -110,7 +112,8 @@
                   "line": 4,
                   "offset": 47
                 }
-              }
+              },
+              "children": []
             },
             {
               "construct": "NaturalExpression",
@@ -145,7 +148,8 @@
                       "line": 4,
                       "offset": 54
                     }
-                  }
+                  },
+                  "children": []
                 }
               ]
             },
@@ -165,7 +169,8 @@
                   "line": 4,
                   "offset": 59
                 }
-              }
+              },
+              "children": []
             }
           ]
         }

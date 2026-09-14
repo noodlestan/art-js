@@ -77,7 +77,8 @@
                       "line": 5,
                       "offset": 33
                     }
-                  }
+                  },
+                  "children": []
                 }
               ]
             }
@@ -142,7 +143,8 @@
                       "line": 9,
                       "offset": 67
                     }
-                  }
+                  },
+                  "children": []
                 }
               ]
             }

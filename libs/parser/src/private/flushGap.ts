@@ -16,7 +16,7 @@ export function flushGap(
 				type: 'text',
 				value: gap,
 			} as BlockContent;
-			context.push(gapBlock);
+			context.captureChildConstruct(gapBlock);
 		}
 	}
 }

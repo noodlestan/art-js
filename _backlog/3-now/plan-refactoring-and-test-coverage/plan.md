@@ -132,6 +132,7 @@ refactor(art-js): Merge preprocessor and factory dispatch in parser builder
 - Change factory signature to accept `construct: ConstructBase` instead of `structure: string`; remove `section` parameter.
 - Refactor `builder.ts` to instantiate `ArtDocument` at the top and pass it to `createDocumentContext`.
 - Rename `.value` → `.children` in `FieldBlock` and `FieldInline` types, handlers, creators, serializers, and tests.
+- Deduplicate rawSlice() as a helper in primitives.
 
 **Dependencies:**
 
@@ -139,11 +140,12 @@ None.
 
 #### Commits:
 
-| ID                                   | Repository / Checkout / Branch | Policy       | Hash  | Status      |
-| ------------------------------------ | ------------------------------ | ------------ | ----- | ----------- |
-| `refactor-visit-context-rename`      | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `COMMITTED` |
-| `refactor-constructs-align-children` | $PROJECT / `main`              | `MANUAL`     | (TBD) | `AUTHORED`  |
-| `refactor-parser-visit-context`      | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED`  |
+| ID                                   | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| ------------------------------------ | ------------------------------ | ------------ | --------- | ----------- |
+| `refactor-visit-context-rename`      | $PROJECT / `main`              | `AUTONOMOUS` | `e9939af` | `COMMITTED` |
+| `refactor-constructs-align-children` | $PROJECT / `main`              | `MANUAL`     | `bb5f477` | `AUTHORED`  |
+| `refactor-parser-visit-context`      | $PROJECT / `main`              | `AUTONOMOUS` | (TBD)     | `AUTHORED`  |
+| `deduplicate-raw-slice`              | $PROJECT / `main`              | `AUTONOMOUS` | (TBD)     | `AUTHORED`  |
 
 ##### Commit: `refactor-visit-context-rename`
 
@@ -191,6 +193,16 @@ refactor(parser): Change ParserVisitContext factory to accept ConstructBase
 - Remove section parameter; SectionBlock context carries construct via readonly property
 - Update builder.ts to create ArtDocument at top and pass to createDocumentContext
 - Update all callers to pass construct instance instead of string
+```
+
+##### Commit: `deduplicate-raw-slice`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+refactor(ar-js): Deduplicate rawSlice() as a helper in primitives.
 ```
 
 ### Iteration: Scope Parser Constants

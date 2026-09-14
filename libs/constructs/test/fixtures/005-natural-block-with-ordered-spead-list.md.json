@@ -34,7 +34,8 @@
               "line": 1,
               "offset": 0
             }
-          }
+          },
+          "children": []
         }
       ]
     },
@@ -115,7 +116,8 @@
                       "line": 3,
                       "offset": 12
                     }
-                  }
+                  },
+                  "children": []
                 }
               ]
             }
@@ -173,7 +175,8 @@
                       "line": 5,
                       "offset": 28
                     }
-                  }
+                  },
+                  "children": []
                 }
               ]
             }
@@ -231,7 +234,8 @@
                       "line": 8,
                       "offset": 53
                     }
-                  }
+                  },
+                  "children": []
                 }
               ]
             }

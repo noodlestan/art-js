@@ -2,6 +2,9 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
 import type { ArtDocument } from '@art-js/constructs';
+import type { FieldBlock } from '@art-js/constructs/src/constructs/FieldBlock/private/types';
+import type { NaturalBlock } from '@art-js/constructs/src/constructs/NaturalBlock/private/types';
+import type { SectionBlock } from '@art-js/constructs/src/constructs/SectionBlock/private/types';
 import { parse } from '@art-js/parser';
 import { describe, expect, it } from 'vitest';
 
@@ -34,16 +37,17 @@ describe('serialize', () => {
 					depth: 1,
 					children: [
 						{
-							construct: 'FieldBlock',
+							construct: 'FieldBlock' as const,
 							name: 'Purpose',
 							children: [
 								{
-									construct: 'NaturalBlock',
+									construct: 'NaturalBlock' as const,
 									type: 'text',
 									value: ' Test purpose',
+									children: [],
 								},
 							],
-						},
+						} as FieldBlock,
 					],
 				},
 			],
@@ -61,6 +65,7 @@ describe('serialize', () => {
 					construct: 'NaturalBlock',
 					type: 'text',
 					value: ' Hello world',
+					children: [],
 				},
 			],
 		};
@@ -110,13 +115,13 @@ describe('serialize', () => {
 							construct: 'NaturalBlock',
 							type: 'text',
 							value: '\n\n',
-						},
+						} as NaturalBlock,
 						{
 							construct: 'SectionBlock',
 							name: 'Details',
 							depth: 2,
 							children: [],
-						},
+						} as SectionBlock,
 					],
 				},
 			],

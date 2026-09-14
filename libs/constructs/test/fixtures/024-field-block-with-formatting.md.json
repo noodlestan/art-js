@@ -55,7 +55,8 @@
                   "line": 3,
                   "offset": 18
                 }
-              }
+              },
+              "children": []
             },
             {
               "construct": "NaturalExpression",
@@ -90,7 +91,8 @@
                       "line": 3,
                       "offset": 29
                     }
-                  }
+                  },
+                  "children": []
                 }
               ]
             },
@@ -110,7 +112,8 @@
                   "line": 3,
                   "offset": 39
                 }
-              }
+              },
+              "children": []
             },
             {
               "construct": "NaturalExpression",
@@ -145,7 +148,8 @@
                       "line": 3,
                       "offset": 59
                     }
-                  }
+                  },
+                  "children": []
                 }
               ]
             },
@@ -165,7 +169,8 @@
                   "line": 3,
                   "offset": 65
                 }
-              }
+              },
+              "children": []
             },
             {
               "construct": "NaturalExpression",
@@ -183,7 +188,8 @@
                   "line": 3,
                   "offset": 70
                 }
-              }
+              },
+              "children": []
             },
             {
               "construct": "NaturalExpression",
@@ -201,7 +207,8 @@
                   "line": 3,
                   "offset": 76
                 }
-              }
+              },
+              "children": []
             }
           ]
         }

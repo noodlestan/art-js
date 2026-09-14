@@ -1,13 +1,12 @@
-import type { ConstructBase } from '@art-js/primitives';
+import type { ConstructBase, ContainerConstructBase } from '@art-js/primitives';
 
-import type { BlockContent } from '../../../registry';
 import type { Tag } from '../../Tag/private/types';
 
-export interface SectionBlock extends ConstructBase {
+export interface SectionBlock extends ContainerConstructBase {
 	construct: 'SectionBlock';
 	kind?: string;
 	name: string;
 	tags?: Tag[];
-	children: BlockContent[];
+	children: ConstructBase[];
 	depth?: number;
 }

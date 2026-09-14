@@ -10,19 +10,19 @@ export function createNaturalExpression(
 ): NaturalExpression {
 	const { children: mdastChildren, position, type, value, ...attributes } = node;
 
+	let children: NaturalExpression[] = [];
+	if (Array.isArray(mdastChildren)) {
+		children = mdastChildren.map((child: MdastNode) => createNaturalExpression(child, _context));
+	}
+
 	const expression: NaturalExpression = {
 		construct: 'NaturalExpression',
 		type,
 		attributes,
 		value,
 		position: cleanPosition(position),
+		children,
 	};
-
-	if (Array.isArray(mdastChildren)) {
-		expression.children = mdastChildren.map((child: MdastNode) =>
-			createNaturalExpression(child, _context),
-		);
-	}
 
 	return expression;
 }

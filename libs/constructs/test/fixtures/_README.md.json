@@ -56,7 +56,8 @@
                   "line": 3,
                   "offset": 19
                 }
-              }
+              },
+              "children": []
             }
           ]
         },
@@ -159,7 +160,8 @@
                               "line": 7,
                               "offset": 80
                             }
-                          }
+                          },
+                          "children": []
                         },
                         {
                           "construct": "NaturalExpression",
@@ -177,7 +179,8 @@
                               "line": 7,
                               "offset": 93
                             }
-                          }
+                          },
+                          "children": []
                         }
                       ]
                     }
@@ -235,7 +238,8 @@
                               "line": 8,
                               "offset": 185
                             }
-                          }
+                          },
+                          "children": []
                         },
                         {
                           "construct": "NaturalExpression",
@@ -253,7 +257,8 @@
                               "line": 8,
                               "offset": 203
                             }
-                          }
+                          },
+                          "children": []
                         }
                       ]
                     }
@@ -311,7 +316,8 @@
                               "line": 9,
                               "offset": 242
                             }
-                          }
+                          },
+                          "children": []
                         },
                         {
                           "construct": "NaturalExpression",
@@ -329,7 +335,8 @@
                               "line": 9,
                               "offset": 258
                             }
-                          }
+                          },
+                          "children": []
                         }
                       ]
                     }
@@ -387,7 +394,8 @@
                               "line": 10,
                               "offset": 310
                             }
-                          }
+                          },
+                          "children": []
                         },
                         {
                           "construct": "NaturalExpression",
@@ -405,7 +413,8 @@
                               "line": 10,
                               "offset": 322
                             }
-                          }
+                          },
+                          "children": []
                         }
                       ]
                     }
@@ -463,7 +472,8 @@
                               "line": 11,
                               "offset": 385
                             }
-                          }
+                          },
+                          "children": []
                         },
                         {
                           "construct": "NaturalExpression",
@@ -481,7 +491,8 @@
                               "line": 11,
                               "offset": 404
                             }
-                          }
+                          },
+                          "children": []
                         }
                       ]
                     }
@@ -590,7 +601,8 @@
                               "line": 15,
                               "offset": 450
                             }
-                          }
+                          },
+                          "children": []
                         },
                         {
                           "construct": "NaturalExpression",
@@ -608,7 +620,8 @@
                               "line": 15,
                               "offset": 462
                             }
-                          }
+                          },
+                          "children": []
                         }
                       ]
                     }
@@ -662,7 +675,8 @@
                   "line": 19,
                   "offset": 552
                 }
-              }
+              },
+              "children": []
             },
             {
               "construct": "NaturalBlock",
@@ -702,7 +716,8 @@
                       "line": 26,
                       "offset": 645
                     }
-                  }
+                  },
+                  "children": []
                 }
               ]
             }

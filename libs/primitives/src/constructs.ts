@@ -4,6 +4,10 @@ import type { Position } from './point';
 export interface ConstructBase {
 	/** Discriminator — the construct class (e.g. 'SectionBlock'). */
 	construct: string;
-	/** Source position, carried from the token stream. */
+	/** Source position, carried from the visited mdast nodes. */
 	position?: Position;
+}
+
+export interface ContainerConstructBase extends ConstructBase {
+	children: ConstructBase[];
 }

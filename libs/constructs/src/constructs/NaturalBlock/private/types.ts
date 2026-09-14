@@ -1,12 +1,9 @@
-import type { ConstructBase } from '@art-js/primitives';
+import type { ContainerConstructBase } from '@art-js/primitives';
 
-import type { BlockContent } from '../../../registry';
-import type { NaturalExpression } from '../../NaturalExpression/private/types';
-
-export interface NaturalBlock extends ConstructBase {
+export interface NaturalBlock extends ContainerConstructBase {
 	construct: 'NaturalBlock';
 	value: string;
-	children?: BlockContent[] | NaturalExpression[];
+	children: ContainerConstructBase[];
 	type?: string;
 	lang?: string | null;
 	meta?: string | null;

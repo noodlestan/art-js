@@ -34,7 +34,8 @@
               "line": 1,
               "offset": 0
             }
-          }
+          },
+          "children": []
         }
       ]
     },
@@ -115,7 +116,8 @@
                       "line": 3,
                       "offset": 22
                     }
-                  }
+                  },
+                  "children": []
                 },
                 {
                   "construct": "NaturalExpression",
@@ -153,7 +155,8 @@
                           "line": 3,
                           "offset": 29
                         }
-                      }
+                      },
+                      "children": []
                     }
                   ]
                 },
@@ -173,7 +176,8 @@
                       "line": 3,
                       "offset": 58
                     }
-                  }
+                  },
+                  "children": []
                 }
               ]
             }
@@ -231,7 +235,8 @@
                       "line": 4,
                       "offset": 67
                     }
-                  }
+                  },
+                  "children": []
                 },
                 {
                   "construct": "NaturalExpression",
@@ -269,7 +274,8 @@
                           "line": 4,
                           "offset": 77
                         }
-                      }
+                      },
+                      "children": []
                     }
                   ]
                 },
@@ -289,7 +295,8 @@
                       "line": 4,
                       "offset": 108
                     }
-                  }
+                  },
+                  "children": []
                 }
               ]
             }
@@ -347,7 +354,8 @@
                       "line": 6,
                       "offset": 127
                     }
-                  }
+                  },
+                  "children": []
                 },
                 {
                   "construct": "NaturalExpression",
@@ -385,7 +393,8 @@
                           "line": 6,
                           "offset": 136
                         }
-                      }
+                      },
+                      "children": []
                     }
                   ]
                 }

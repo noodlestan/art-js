@@ -1,31 +1,24 @@
-import type { ConstructBase } from '../../constructs.js';
-import type { BeforeRecord, ParserVisitContext } from '../types.js';
+import type { ConstructBase, ContainerConstructBase } from '../../constructs.js';
+import type { OnBeforeRecord, ParserVisitContext } from '../types.js';
 
 export function createParserVisitContext(
-	construct: ConstructBase,
+	construct: ContainerConstructBase,
 	parentContext: ParserVisitContext | undefined,
 	markdown?: string,
-	targetArray?: ConstructBase[],
-	boundary?: BeforeRecord,
+	onBeforeConstruct?: OnBeforeRecord,
 ): ParserVisitContext {
-	const children = targetArray ?? [];
-
 	const ctx: ParserVisitContext = {
 		construct,
-		target() {
-			return children;
+		captureChildConstruct(child: ConstructBase) {
+			construct.children.push(child);
 		},
-		push(record: ConstructBase) {
-			children.push(record);
-		},
-		beforeRecord(record: ConstructBase) {
-			return boundary ? boundary(record, ctx) : ctx;
+		onBeforeConstruct(construct: ConstructBase) {
+			return onBeforeConstruct ? onBeforeConstruct(construct, ctx) : ctx;
 		},
 		parent() {
 			return parentContext;
 		},
 		markdown: markdown ?? parentContext?.markdown ?? '',
-		lastEnd: parentContext?.lastEnd,
 	};
 
 	return ctx;

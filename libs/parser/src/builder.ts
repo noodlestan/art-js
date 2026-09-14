@@ -21,8 +21,25 @@ interface HandleResult {
 }
 
 export function buildDocument(config: ParserConfig, markdown: string): ArtDocument {
+	const document: ArtDocument = {
+		construct: 'Document',
+		children: [],
+		// position: {
+		// 	start: {
+		// 		line: 0,
+		// 		column: 0,
+		// 		offset: 0,
+		// 	},
+		// 	end: {
+		// 		line: 0,
+		// 		column: 0,
+		// 		offset: 0,
+		// 	},
+		// },
+	};
 	const tree = fromMarkdown(markdown);
-	const docContext = createDocumentContext(markdown);
+	// process.exit();
+	const docContext = createDocumentContext(document, markdown);
 	const defaultConstruct = config.defaultConstruct();
 	const constructs = [defaultConstruct, ...config.constructs.map(create => create())];
 	let currentContext: ParserVisitContext = docContext;
@@ -30,11 +47,13 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 
 	function updateLastEnd(end: Point): void {
 		lastEnd = { line: end.line, column: end.column, offset: end.offset };
-		currentContext.lastEnd = lastEnd;
 	}
 
 	function tryConstructs(node: Node): HandleResult | null {
-		if (node.type === 'root') return null;
+		if (node.type === 'root') {
+			return null;
+		}
+
 		for (let i = 0; i < constructs.length; i++) {
 			const construct = constructs[i] as ConstructParser;
 			const preProcessor = construct.preProcessor;
@@ -42,7 +61,10 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 			if (record) {
 				const rec = record as Construct;
 				const handler = construct.handler ?? null;
-				return { records: [rec], handler };
+				return {
+					records: [rec],
+					handler,
+				};
 			}
 			const factory = construct.factory;
 			if (i > 0 && factory?.detect(node, currentContext)) {
@@ -50,42 +72,56 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 				const records = Array.isArray(result) ? result : [result];
 				const firstRecord = records[0] as Construct | undefined;
 				const handler = records.length > 0 && firstRecord ? (construct.handler ?? null) : null;
-				return { records, handler };
+				return {
+					records,
+					handler,
+				};
 			}
 		}
 		return null;
 	}
 
 	function handleNaturalBlock(node: Node): typeof SKIP | undefined {
-		if (!defaultConstruct.factory) return SKIP;
-		const record = defaultConstruct.factory.create(node, currentContext) as Construct;
-		currentContext = currentContext.beforeRecord(record);
-		if (record.position) flushGap(record.position.start, lastEnd, markdown, currentContext);
-		currentContext.push(record);
-		if (record.position) {
-			updateLastEnd(record.position.end);
+		if (!defaultConstruct.factory) {
+			return SKIP;
+		}
+
+		const construct = defaultConstruct.factory.create(node, currentContext) as Construct;
+		currentContext = currentContext.onBeforeConstruct(construct);
+		if (construct.position) {
+			flushGap(construct.position.start, lastEnd, markdown, currentContext);
+		}
+		currentContext.captureChildConstruct(construct);
+		if (construct.position) {
+			updateLastEnd(construct.position.end);
 		}
 		return node.type === 'paragraph' ? undefined : SKIP;
 	}
 
-	function dispatch(node: Node, records: Construct[], handler: ConstructHandler | null): void {
-		for (const record of records) {
-			currentContext = currentContext.beforeRecord(record);
+	function dispatch(node: Node, constructs: Construct[], handler: ConstructHandler | null): void {
+		for (const construct of constructs) {
+			currentContext = currentContext.onBeforeConstruct(construct);
 
-			if (record.position) flushGap(record.position.start, lastEnd, markdown, currentContext);
-
-			if (handler) {
-				currentContext = handler.handle(record, node, currentContext);
-			} else {
-				currentContext.push(record as BlockContent);
+			if (construct.position) {
+				flushGap(construct.position.start, lastEnd, markdown, currentContext);
 			}
 
-			if (record.position) updateLastEnd(record.position.end);
+			if (handler) {
+				currentContext = handler.handle(construct, node, currentContext);
+			} else {
+				currentContext.captureChildConstruct(construct as BlockContent);
+			}
+
+			if (construct.position) {
+				updateLastEnd(construct.position.end);
+			}
 		}
 	}
 
 	function visitNode(node: Node): typeof SKIP | undefined {
-		if (node.type === 'root') return undefined;
+		if (node.type === 'root') {
+			return undefined;
+		}
 
 		const result = tryConstructs(node);
 		if (result) {
@@ -105,5 +141,5 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	visit(tree as any, (n: Node) => visitNode(n));
 
-	return { construct: 'Document', children: docContext.target() as BlockContent[] };
+	return document;
 }

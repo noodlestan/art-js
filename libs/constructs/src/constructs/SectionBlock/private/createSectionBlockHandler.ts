@@ -18,7 +18,6 @@ export function createSectionBlockHandler(): ConstructHandler {
 				if (parentSection && sectionDepth(parentSection) >= heading.depth) {
 					const p = ctx.parent();
 					if (p) {
-						p.lastEnd = ctx.lastEnd;
 						ctx = p;
 					}
 				} else {
@@ -26,10 +25,8 @@ export function createSectionBlockHandler(): ConstructHandler {
 				}
 			}
 
-			ctx.push(section);
-			const newCtx = createParserVisitContext(section, ctx, undefined, section.children);
-			newCtx.lastEnd = ctx.lastEnd;
-			return newCtx;
+			ctx.captureChildConstruct(section);
+			return createParserVisitContext(section, ctx, undefined);
 		},
 	};
 }
