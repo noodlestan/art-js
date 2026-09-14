@@ -12,7 +12,7 @@ import type { Node } from 'unist';
 import { SKIP, visit } from 'unist-util-visit';
 
 import type { ParserConfig } from './config/types';
-import { isBlockType } from './constants';
+import { isBlockType } from './mdast/isBlockType';
 import { createDocumentContext } from './private/createDocumentContext';
 
 interface HandleResult {

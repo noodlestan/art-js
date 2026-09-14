@@ -8,7 +8,3 @@ export const BLOCK_TYPES = new Set([
 	'html',
 	'definition',
 ]);
-
-export function isBlockType(type: string): boolean {
-	return BLOCK_TYPES.has(type);
-}

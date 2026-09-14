@@ -4,7 +4,7 @@ import { buildDocument } from './builder';
 import { createDefaultConfig } from './config/createDefaultConfig';
 
 // Local exports
-export { isBlockType } from './constants';
+export { isBlockType } from './mdast/isBlockType';
 export { createDefaultConfig } from './config';
 
 export function parse(markdown?: string): ArtDocument {
