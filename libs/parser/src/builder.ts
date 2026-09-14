@@ -5,7 +5,7 @@ import {
 	type ConstructHandler,
 	type ConstructParser,
 } from '@art-js/constructs';
-import type { ParserVisitContext } from '@art-js/primitives';
+import type { ParserVisitContext, Position } from '@art-js/primitives';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import type { Node } from 'unist';
 import { SKIP, visit } from 'unist-util-visit';
@@ -15,32 +15,41 @@ import { isBlockType } from './constants';
 import { createDocumentContext } from './private/createDocumentContext';
 
 interface HandleResult {
-	records: Construct[];
+	constructs: Construct[];
 	handler: ConstructHandler | null;
 }
 
-export function buildDocument(config: ParserConfig, markdown: string): ArtDocument {
-	const document: ArtDocument = {
-		construct: 'Document',
-		children: [],
-		// position: {
-		// 	start: {
-		// 		line: 0,
-		// 		column: 0,
-		// 		offset: 0,
-		// 	},
-		// 	end: {
-		// 		line: 0,
-		// 		column: 0,
-		// 		offset: 0,
-		// 	},
-		// },
+function nodePosition(node: Node): Position {
+	if (!node.position) {
+		throw new Error(`Expected source position for ${node.type}`);
+	}
+
+	const raw = node.position;
+
+	if (!raw?.start || !raw.end) {
+		throw new Error(`Expected source position for ${node.type}`);
+	}
+	return {
+		start: { line: raw.start.line, column: raw.start.column, offset: raw.start.offset ?? 0 },
+		end: { line: raw.end.line, column: raw.end.column, offset: raw.end.offset ?? 0 },
 	};
+}
+
+function createDocument(root: Node): ArtDocument {
+	return {
+		construct: 'Document',
+		position: nodePosition(root),
+		children: [],
+	};
+}
+
+export function buildDocument(config: ParserConfig, markdown: string): ArtDocument {
 	const tree = fromMarkdown(markdown);
+	const document = createDocument(tree);
 	// process.exit();
 	const docContext = createDocumentContext(document, markdown);
 	const defaultConstruct = config.defaultConstruct();
-	const constructs = [defaultConstruct, ...config.constructs.map(create => create())];
+	const constructParsers = [defaultConstruct, ...config.constructs.map(create => create())];
 	let currentContext: ParserVisitContext = docContext;
 
 	function tryConstructs(node: Node): HandleResult | null {
@@ -48,26 +57,26 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 			return null;
 		}
 
-		for (let i = 0; i < constructs.length; i++) {
-			const construct = constructs[i] as ConstructParser;
-			const preProcessor = construct.preProcessor;
-			const record = preProcessor?.preProcess(node, currentContext);
-			if (record) {
-				const rec = record as Construct;
-				const handler = construct.handler ?? null;
+		for (let i = 0; i < constructParsers.length; i++) {
+			const constructParser = constructParsers[i] as ConstructParser;
+
+			const preProcessor = constructParser.preProcessor;
+			const construct = preProcessor?.preProcess(node, currentContext);
+			if (construct) {
+				const handler = constructParser.handler ?? null;
 				return {
-					records: [rec],
+					constructs: [construct],
 					handler,
 				};
 			}
-			const factory = construct.factory;
+			const factory = constructParser.factory;
 			if (i > 0 && factory?.detect(node, currentContext)) {
 				const result = factory.create(node, currentContext);
-				const records = Array.isArray(result) ? result : [result];
-				const firstRecord = records[0] as Construct | undefined;
-				const handler = records.length > 0 && firstRecord ? (construct.handler ?? null) : null;
+				const constructs = Array.isArray(result) ? result : [result];
+				const first = constructs[0] as Construct | undefined;
+				const handler = constructs.length > 0 && first ? (constructParser.handler ?? null) : null;
 				return {
-					records,
+					constructs,
 					handler,
 				};
 			}
@@ -105,7 +114,7 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 
 		const result = tryConstructs(node);
 		if (result) {
-			dispatch(node, result.records, result.handler);
+			dispatch(node, result.constructs, result.handler);
 			return SKIP;
 		}
 

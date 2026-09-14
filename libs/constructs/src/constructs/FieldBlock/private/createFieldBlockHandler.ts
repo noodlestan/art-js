@@ -7,8 +7,11 @@ import type { FieldBlock } from './types';
 
 const FIELD_BLOCK_BOUNDARIES = new Set(['FieldBlock', 'FieldInline', 'SectionBlock']);
 
-function onBeforeConstruct(record: ConstructBase, context: ParserVisitContext): ParserVisitContext {
-	if (!FIELD_BLOCK_BOUNDARIES.has(record.construct)) {
+function onBeforeConstruct(
+	construct: ConstructBase,
+	context: ParserVisitContext,
+): ParserVisitContext {
+	if (!FIELD_BLOCK_BOUNDARIES.has(construct.construct)) {
 		return context;
 	}
 
@@ -22,8 +25,8 @@ function onBeforeConstruct(record: ConstructBase, context: ParserVisitContext): 
 
 export function createFieldBlockHandler(): ConstructHandler {
 	return {
-		handle(record, _node, context) {
-			const field = record as FieldBlock;
+		handle(construct, _node, context) {
+			const field = construct as FieldBlock;
 			context.captureChildConstruct(field);
 			return createParserVisitContext(field, context, undefined, onBeforeConstruct);
 		},

@@ -25,8 +25,8 @@ export type MdastNode = Node & {
 	value?: string;
 };
 
-export type OnBeforeRecord = (
-	record: ConstructBase,
+export type OnBeforeConstruct = (
+	construct: ConstructBase,
 	context: ParserVisitContext,
 ) => ParserVisitContext;
 

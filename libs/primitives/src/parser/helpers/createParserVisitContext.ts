@@ -1,11 +1,11 @@
 import type { ConstructBase, ContainerConstructBase } from '../../constructs.js';
-import type { OnBeforeRecord, ParserVisitContext } from '../types.js';
+import type { OnBeforeConstruct, ParserVisitContext } from '../types.js';
 
 export function createParserVisitContext(
 	construct: ContainerConstructBase,
 	parentContext: ParserVisitContext | undefined,
 	markdown?: string,
-	onBeforeConstruct?: OnBeforeRecord,
+	onBeforeConstruct?: OnBeforeConstruct,
 ): ParserVisitContext {
 	const ctx: ParserVisitContext = {
 		construct,

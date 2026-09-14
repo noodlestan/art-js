@@ -1,5 +1,17 @@
 {
   "construct": "Document",
+  "position": {
+    "end": {
+      "column": 1,
+      "line": 6,
+      "offset": 51
+    },
+    "start": {
+      "column": 1,
+      "line": 1,
+      "offset": 0
+    }
+  },
   "children": [
     {
       "construct": "FieldBlock",

@@ -15,7 +15,7 @@ export interface ConstructPreProcessor {
 }
 
 export interface ConstructHandler {
-	handle(record: Construct, node: MdastNode, context: ParserVisitContext): ParserVisitContext;
+	handle(construct: Construct, node: MdastNode, context: ParserVisitContext): ParserVisitContext;
 }
 
 export interface ConstructParser {

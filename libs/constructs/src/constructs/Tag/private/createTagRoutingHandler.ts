@@ -6,10 +6,10 @@ import type { Tag } from './types';
 
 export function createTagRoutingHandler(): ConstructHandler {
 	return {
-		handle(record, _node, context) {
+		handle(construct, _node, context) {
 			const section = findTagable(context) as SectionBlock;
 			if (section) {
-				(section.tags ??= []).push(record as Tag);
+				(section.tags ??= []).push(construct as Tag);
 			}
 			return context;
 		},

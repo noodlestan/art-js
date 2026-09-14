@@ -8,8 +8,8 @@ import type { SectionBlock } from './types';
 
 export function createSectionBlockHandler(): ConstructHandler {
 	return {
-		handle(record, node, context) {
-			const section = record as SectionBlock;
+		handle(construct, node, context) {
+			const section = construct as SectionBlock;
 			let ctx = context;
 
 			const heading = node as Heading;

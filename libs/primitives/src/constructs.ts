@@ -1,6 +1,6 @@
 import type { Position } from './point';
 
-/** Base interface implemented by every construct record. */
+/** Base interface implemented by every construct */
 export interface ConstructBase {
 	/** Discriminator — the construct class (e.g. 'SectionBlock'). */
 	construct: string;

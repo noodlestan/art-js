@@ -1,5 +1,17 @@
 {
   "construct": "Document",
+  "position": {
+    "end": {
+      "column": 1,
+      "line": 103,
+      "offset": 5008
+    },
+    "start": {
+      "column": 1,
+      "line": 1,
+      "offset": 0
+    }
+  },
   "children": [
     {
       "construct": "SectionBlock",
