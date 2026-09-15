@@ -2,7 +2,7 @@
 
 **Id:** `refactor-tag-extraction`
 
-**Status:** `PLANNING`
+**Status:** `WORKING`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -67,18 +67,18 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                                                  | Status     |
-| ------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| Iteration: Strip Tag Construct to Helpers `./plan-refactor-tag-extraction/instructions/strip-tag-construct-to-helpers.md` | `PLANNING` |
-| Iteration: Make FieldInline Taggable `./plan-refactor-tag-extraction/instructions/make-field-inline-taggable.md`          | `PLANNING` |
-| Iteration: Apply Taggable Pattern to NaturalBlock                                                                         | `DRAFT`    |
-| Iteration: Apply Taggable Pattern to SectionBlock                                                                         | `DRAFT`    |
+| Iteration / Instructions                                                                                                  | Status  |
+| ------------------------------------------------------------------------------------------------------------------------- | ------- |
+| Iteration: Strip Tag Construct to Helpers `./plan-refactor-tag-extraction/instructions/strip-tag-construct-to-helpers.md` | `DONE`  |
+| Iteration: Make FieldInline Taggable `./plan-refactor-tag-extraction/instructions/make-field-inline-taggable.md`          | `DONE`  |
+| Iteration: Apply Taggable Pattern to NaturalBlock                                                                         | `DRAFT` |
+| Iteration: Apply Taggable Pattern to SectionBlock                                                                         | `DRAFT` |
 
 ### Iteration: Strip Tag Construct to Helpers
 
 **Id:** `strip-tag-construct-to-helpers`
 
-**Status:** `PLANNING`
+**Status:** `DONE`
 
 **Purpose:** Remove the Tag parser construct and routing machinery, leaving only the extraction helper, types, and patterns, plus serialization helpers.
 
@@ -103,11 +103,11 @@ None.
 
 #### Commits:
 
-| ID                                     | Repository / Checkout / Branch | Policy     | Hash    | Status     |
-| -------------------------------------- | ------------------------------ | ---------- | ------- | ---------- |
-| `strip-tag-construct-to-helpers`       | $PROJECT / `main`              | `NOCOMMIT` | `(TBD)` | `AUTHORED` |
-| `remove-tag-from-default-configs`      | $PROJECT / `main`              | `NOCOMMIT` | `(TBD)` | `AUTHORED` |
-| `regenerate-052-snapshot-without-tags` | $PROJECT / `main`              | `NOCOMMIT` | `(TBD)` | `AUTHORED` |
+| ID                                     | Repository / Checkout / Branch | Policy     | Hash                  | Status      |
+| -------------------------------------- | ------------------------------ | ---------- | --------------------- | ----------- |
+| `strip-tag-construct-to-helpers`       | $PROJECT / `main`              | `NOCOMMIT` | merged with `80e8231` | `COMMITTED` |
+| `remove-tag-from-default-configs`      | $PROJECT / `main`              | `NOCOMMIT` | `80e8231`             | `COMMITTED` |
+| `regenerate-052-snapshot-without-tags` | $PROJECT / `main`              | `NOCOMMIT` | `d1cae57`             | `COMMITTED` |
 
 ##### Commit: `strip-tag-construct-to-helpers`
 
@@ -154,7 +154,7 @@ test(constructs): Regenerate 052 snapshot without tags
 
 **Id:** `make-field-inline-taggable`
 
-**Status:** `PLANNING`
+**Status:** `DONE`
 
 **Purpose:** Prove the taggable pattern on FieldInline: the taggable calls `extractTags` on its own text and serializes tags back via `tagsToMdast`.
 
@@ -177,10 +177,25 @@ test(constructs): Regenerate 052 snapshot without tags
 
 #### Commits:
 
-| ID                              | Repository / Checkout / Branch | Policy     | Hash    | Status     |
-| ------------------------------- | ------------------------------ | ---------- | ------- | ---------- |
-| `reshape-tag-extraction-helper` | $PROJECT / `main`              | `NOCOMMIT` | `(TBD)` | `AUTHORED` |
-| `make-field-inline-taggable`    | $PROJECT / `main`              | `NOCOMMIT` | `(TBD)` | `AUTHORED` |
+| ID                              | Repository / Checkout / Branch | Policy     | Hash      | Status      |
+| ------------------------------- | ------------------------------ | ---------- | --------- | ----------- |
+| `remove-obsolete-tag-test`      | $PROJECT / `main`              | `NOCOMMIT` | `2736288` | `COMMITTED` |
+| `reshape-tag-extraction-helper` | $PROJECT / `main`              | `NOCOMMIT` | `6cb5752` | `COMMITTED` |
+| `make-field-inline-taggable`    | $PROJECT / `main`              | `NOCOMMIT` | `be454c6` | `COMMITTED` |
+
+##### Commit: `remove-obsolete-tag-test`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+test(serializer): Remove obsolete Tag test and parser-responsibility tests
+
+- Remove standalone Tag serialization test (tags no longer standalone constructs)
+- Remove roundtrip fixture and smoke tests breaching parser test responsibility
+- Re-export construct types from registry via export type *
+```
 
 ##### Commit: `reshape-tag-extraction-helper`
 
@@ -189,10 +204,12 @@ test(constructs): Regenerate 052 snapshot without tags
 **Message:**
 
 ```
-refactor(constructs): Reshape tag extraction into extractTags helper
+refactor(constructs): Reshape tag extraction into extractTags helper.
 
-- Replace createTag(node) with extractTags(text) returning { tags, stripped }
-- Keep trailing-only extraction (no tags in the middle rule)
+- Rename createTag.ts to extractTags.ts with extractTags(text) returning { tags, stripped }.
+- Add createTag factory with TagFactoryData for tag construction.
+- Keep trailing-only extraction (no tags in the middle rule).
+-  Add extractTags unit tests (no tags, single, multiple, invalid, mixed, trailing whitespace)
 ```
 
 ##### Commit: `make-field-inline-taggable`
@@ -202,13 +219,14 @@ refactor(constructs): Reshape tag extraction into extractTags helper
 **Message:**
 
 ```
-feat(constructs): Make FieldInline taggable
+feat(constructs): Make FieldInline taggable.
 
-- Add tags?: Tag[] to FieldInline type
-- Consume extractTags on the last text child in createFieldInlinePreProcessor
-- Append tagsToMdast output in createFieldInlineToMdast
-- Add 060/061 fixtures and regenerate snapshots
-- Update createFieldInlinePreProcessor tests
+- Add tags?: Tag[] to FieldInline type.
+- Consume extractTags on the last text child in createFieldInlinePreProcessor.
+- Append tagsToMdast output in createFieldInlineToMdast.
+- Reduce tagsToMdast to a single text node with leading space.
+- Add 060/061/062 fixtures and regenerate snapshots.
+- Update createFieldInlinePreProcessor tests.
 ```
 
 ### Iteration: Apply Taggable Pattern to NaturalBlock
