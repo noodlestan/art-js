@@ -56,4 +56,29 @@ describe('createFieldInlinePreProcessor', () => {
 			],
 		});
 	});
+
+	it('extracts tags and strips it from the last text child', () => {
+		const impl = createFieldInlinePreProcessor();
+		const markdown = '# Hello World\n\n**Greeting:** Hello there (#friend)';
+		const tree = fromMarkdown(markdown);
+		const paragraph = tree.children[1] as never;
+		const context = createParserVisitContext(
+			{ construct: 'Document', children: [] },
+			undefined,
+			markdown,
+		);
+
+		expect(impl.preProcess(paragraph, context)).toMatchObject({
+			construct: 'FieldInline',
+			name: 'Greeting',
+			tags: [{ construct: 'Tag', name: 'friend' }],
+			children: [
+				{
+					construct: 'NaturalExpression',
+					type: 'text',
+					value: 'Hello there',
+				},
+			],
+		});
+	});
 });

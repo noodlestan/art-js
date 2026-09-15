@@ -1,0 +1,83 @@
+{
+  "construct": "Document",
+  "position": {
+    "end": {
+      "column": 1,
+      "line": 4,
+      "offset": 61
+    },
+    "start": {
+      "column": 1,
+      "line": 1,
+      "offset": 0
+    }
+  },
+  "children": [
+    {
+      "construct": "SectionBlock",
+      "name": "Hello World",
+      "depth": 1,
+      "position": {
+        "end": {
+          "column": 14,
+          "line": 1,
+          "offset": 13
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": [
+        {
+          "construct": "FieldInline",
+          "name": "Greeting",
+          "tags": [
+            {
+              "construct": "Tag",
+              "name": "friend"
+            },
+            {
+              "construct": "Tag",
+              "name": "family"
+            }
+          ],
+          "position": {
+            "end": {
+              "column": 46,
+              "line": 3,
+              "offset": 60
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 15
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalExpression",
+              "type": "text",
+              "attributes": {},
+              "value": "Hello there",
+              "position": {
+                "end": {
+                  "column": 46,
+                  "line": 3,
+                  "offset": 60
+                },
+                "start": {
+                  "column": 14,
+                  "line": 3,
+                  "offset": 28
+                }
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

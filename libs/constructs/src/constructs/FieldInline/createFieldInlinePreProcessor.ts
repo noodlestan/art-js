@@ -6,6 +6,7 @@ import type { Construct } from '../../registry';
 import { isFieldStrong } from '../FieldBlock/private/isFieldStrong';
 import { stripStrong } from '../FieldBlock/private/stripStrong';
 import { createNaturalExpression } from '../NaturalExpression/private/createNaturalExpression';
+import { extractTags } from '../Tag/private/extractTags';
 import type { ConstructPreProcessor } from '../types';
 
 import type { FieldInline } from './private/types';
@@ -49,6 +50,14 @@ export function createFieldInlinePreProcessor(): ConstructPreProcessor {
 				children,
 				position: nodePosition(paragraph),
 			};
+			const last = children[children.length - 1];
+			if (last?.type === 'text' && typeof last.value === 'string') {
+				const { tags, stripped } = extractTags(last.value);
+				if (tags.length) {
+					field.tags = tags;
+					last.value = stripped;
+				}
+			}
 			return field as unknown as Construct;
 		},
 	};
