@@ -240,83 +240,19 @@ Update all references to `.value` on `FieldBlock` and `FieldInline` instances:
 
 ### Commit: `refactor-parser-visit-context`
 
-**Policy:** `AUTONOMOUS`
+**Status:** `SUPERSEDED`
 
-**Message:**
+**Superseded by:**
 
-```
-refactor(parser): Change ParserVisitContext factory to accept ConstructBase
+- `simplify-parser-visit-context-api` (`f4b8e3f`)
+- `remove-gap-flushing` (`0d52bf9`)
 
-- Change factory signature from structure: string to construct: ConstructBase
-- Remove section parameter; SectionBlock context carries construct via readonly property
-- Update builder.ts to create ArtDocument at top and pass to createDocumentContext
-- Update all callers to pass construct instance instead of string
-```
-
-#### Changes
-
-- Change `createParserVisitContext` signature from `(structure: string, parentContext?, source?, targetArray?, boundary?)` to `(construct: ConstructBase, parentContext?, markdown?, targetArray?, boundary?)`.
-- Remove the `section` parameter entirely.
-- Update `$PARSER/src/builder.ts`:
-  - Create an `ArtDocument` construct instance at the top of `buildDocument`.
-  - Pass it to `createDocumentContext(document, markdown)` instead of `createDocumentContext(markdown)`.
-- Update `$PARSER/src/private/createDocumentContext.ts`:
-  - Change signature to accept the document construct instance.
-  - Call `createParserVisitContext(document, undefined, markdown)` instead of `createParserVisitContext('Document', undefined, source)`.
-- Update all other callers:
-  - `$CONSTRUCTS/src/constructs/FieldBlock/private/createFieldBlockHandler.ts`: pass a minimal `ConstructBase` with `construct: 'FieldBlock'` instead of `'FieldBlock'` string.
-  - `$CONSTRUCTS/src/constructs/SectionBlock/private/createSectionBlockHandler.ts`: pass the `section` construct instance instead of `'SectionBlock'` string and the `section` object separately.
-  - `$CONSTRUCTS/src/constructs/FieldInline/createFieldInlinePreProcessor.test.ts`: pass a `ConstructBase` instead of `'Document'` string.
-
-#### Steps
-
-##### Step 1 of 4 — Update factory signature
-
-1. In `$PRIMITIVES/src/parser/helpers/createParserVisitContext.ts`:
-   - Change first parameter from `structure: string` to `construct: ConstructBase`.
-   - Remove `section?: unknown` parameter.
-   - The `construct` parameter becomes the `readonly construct` property on the returned context.
-
-##### Step 2 of 4 — Update builder and document context
-
-1. In `$PARSER/src/builder.ts`:
-   - At the top of `buildDocument`, create the document construct:
-     ```typescript
-     const document: ArtDocument = { construct: 'Document', children: [] };
-     ```
-   - Change `createDocumentContext(markdown)` to `createDocumentContext(document, markdown)`.
-   - Update the return statement to use the pre-created `document`:
-     ```typescript
-     return { ...document, children: docContext.target() as BlockContent[] };
-     ```
-2. In `$PARSER/src/private/createDocumentContext.ts`:
-   - Change signature to `export function createDocumentContext(document: ArtDocument, markdown: string): ParserVisitContext`.
-   - Call `createParserVisitContext(document, undefined, markdown)`.
-
-##### Step 3 of 4 — Update all callers
-
-1. `$CONSTRUCTS/src/constructs/FieldBlock/private/createFieldBlockHandler.ts`:
-   - Change `createParserVisitContext('FieldBlock', context, undefined, field.children, undefined, closeFieldBlock)` to `createParserVisitContext(field, context, undefined, field.children, closeFieldBlock)`.
-2. `$CONSTRUCTS/src/constructs/SectionBlock/private/createSectionBlockHandler.ts`:
-   - Change `createParserVisitContext('SectionBlock', ctx, undefined, section.children, section)` to `createParserVisitContext(section, ctx, undefined, section.children)`.
-3. `$CONSTRUCTS/src/constructs/FieldInline/createFieldInlinePreProcessor.test.ts`:
-   - Change `createParserVisitContext('Document', undefined, markdown)` to `createParserVisitContext({ construct: 'Document', children: [] }, undefined, markdown)`.
-4. Any other callers: search for `createParserVisitContext(` and update.
-
-##### Step 4 of 4 — Verify
-
-1. Run tests:
-   ```bash
-   cd $PROJECT && npm run ci
-   ```
-2. Stage all changes.
-3. Commit autonomously with the commit message above.
-4. Push and report back.
+**Rationale:** During execution of commit 2, the scope expanded. The factory signature change (structure: string → construct: ConstructBase) was absorbed into a broader API simplification that introduced `ContainerConstructBase`, removed `targetArray`, and renamed methods. Gap flushing was subsequently removed as dead code. See plan record for full details.
 
 ## Final Verification
 
 **Instructions:**
 
-- Verify that `npm run ci` passes across all packages after all three commits.
+- Verify that `npm run ci` passes across all packages.
 - Verify that `grep -rn "createNestedContext\|VisitContext\|getSectionMap" $PROJECT/libs --include="*.ts"` returns no matches (outside of historical references in comments if any).
 - Report back according to the "How to Report Back to the Delegator" instructions.

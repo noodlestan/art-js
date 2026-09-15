@@ -2,7 +2,7 @@
 
 **Id:** `refactoring-and-test-coverage`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -64,11 +64,11 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                                                | Status  |
-| ----------------------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Merge Preprocessors and Factories `./plan-refactoring-and-test-coverage/instructions/merge-preprocessors.md` | `DONE`  |
-| Iteration: Refactor Visit Context `./plan-refactoring-and-test-coverage/instructions/refactor-visit-contextt.md`        | `READY` |
-| Iteration: Scope Parser Constants `./plan-refactoring-and-test-coverage/instructions/scope-constants.md`                | `READY` |
+| Iteration / Instructions                                                                                                | Status |
+| ----------------------------------------------------------------------------------------------------------------------- | ------ |
+| Iteration: Merge Preprocessors and Factories `./plan-refactoring-and-test-coverage/instructions/merge-preprocessors.md` | `DONE` |
+| Iteration: Refactor Visit Context `./plan-refactoring-and-test-coverage/instructions/refactor-visit-context.md`         | `DONE` |
+| Iteration: Scope Parser Constants `./plan-refactoring-and-test-coverage/instructions/scope-constants.md`                | `DONE` |
 
 ### Iteration: Merge Preprocessors and Factories
 
@@ -114,7 +114,7 @@ refactor(art-js): Merge preprocessor and factory dispatch in parser builder
 
 **Id:** `refactor-visit-context`
 
-**Status:** `IN_PROGRESS`
+**Status:** `DONE`
 
 **Purpose:** Rename context type, factory, and methods to clarify semantics. Eliminate global state dependencies.
 
@@ -132,7 +132,7 @@ refactor(art-js): Merge preprocessor and factory dispatch in parser builder
 - Change factory signature to accept `construct: ConstructBase` instead of `structure: string`; remove `section` parameter.
 - Refactor `builder.ts` to instantiate `ArtDocument` at the top and pass it to `createDocumentContext`.
 - Rename `.value` → `.children` in `FieldBlock` and `FieldInline` types, handlers, creators, serializers, and tests.
-- Deduplicate rawSlice() as a helper in primitives.
+- Deduplicate helpers: position copy, rawSlice, and consolidate construct factories.
 
 **Dependencies:**
 
@@ -143,9 +143,11 @@ None.
 | ID                                   | Repository / Checkout / Branch | Policy       | Hash      | Status      |
 | ------------------------------------ | ------------------------------ | ------------ | --------- | ----------- |
 | `refactor-visit-context-rename`      | $PROJECT / `main`              | `AUTONOMOUS` | `e9939af` | `COMMITTED` |
-| `refactor-constructs-align-children` | $PROJECT / `main`              | `MANUAL`     | `bb5f477` | `AUTHORED`  |
-| `refactor-parser-visit-context`      | $PROJECT / `main`              | `AUTONOMOUS` | (TBD)     | `AUTHORED`  |
-| `deduplicate-raw-slice`              | $PROJECT / `main`              | `AUTONOMOUS` | (TBD)     | `AUTHORED`  |
+| `refactor-constructs-align-children` | $PROJECT / `main`              | `MANUAL`     | `bb5f477` | `COMMITTED` |
+| `simplify-parser-visit-context-api`  | $PROJECT / `main`              | `AUTONOMOUS` | `f4b8e3f` | `COMMITTED` |
+| `remove-gap-flushing`                | $PROJECT / `main`              | `AUTONOMOUS` | `0d52bf9` | `COMMITTED` |
+| `init-document-with-position`        | $PROJECT / `main`              | `AUTONOMOUS` | `8f23183` | `COMMITTED` |
+| `deduplicate-helpers`                | $PROJECT / `main`              | `AUTONOMOUS` | `487cb9d` | `COMMITTED` |
 
 ##### Commit: `refactor-visit-context-rename`
 
@@ -180,36 +182,96 @@ refactor(constructs): Rename .value to .children to align field constructs with 
 - Update tests and regenerate fixtures
 ```
 
-##### Commit: `refactor-parser-visit-context`
+##### Commit: `simplify-parser-visit-context-api`
 
 **Repository:** Art JS
 
 **Message:**
 
 ```
-refactor(parser): Change ParserVisitContext factory to accept ConstructBase
+refactor(parser): Simplify ParserVisitContext API and introduce ContainerConstructBase
 
-- Change factory signature from structure: string to construct: ConstructBase
-- Remove section parameter; SectionBlock context carries construct via readonly property
-- Update builder.ts to create ArtDocument at top and pass to createDocumentContext
-- Update all callers to pass construct instance instead of string
+- Add ContainerConstructBase with mandatory children array.
+- Remove targetArray, target(), lastEnd, and mutable markdown from context API.
+- Rename push to captureChildConstruct and beforeRecord to onBeforeConstruct.
+- Add ContainerConstructBase with mandatory children; update all container constructs to extend it.
+- Update builder, handlers, and createDocumentContext to use simplified API.
+- Regenerate snapshots for mandatory children field.
 ```
 
-##### Commit: `deduplicate-raw-slice`
+**Changes:**
+
+- Introduce `ContainerConstructBase` interface extending `ConstructBase` with mandatory `children: ConstructBase[]`.
+- Update `createParserVisitContext` factory signature to accept `ContainerConstructBase` instead of `ConstructBase`, removing the `targetArray` parameter entirely.
+- Replace `ctx.push(record)` with `ctx.captureChildConstruct(child)`.
+- Replace `ctx.beforeRecord(record)` with `ctx.onBeforeConstruct(construct)`.
+- Remove `ctx.target()` method; the target array is now always `construct.children`.
+- Remove `ctx.lastEnd` from the context interface; position tracking moved to local variables in `builder.ts`.
+- Make `ctx.markdown` readonly.
+- Rename `BeforeRecord` type to `OnBeforeRecord`.
+- Update `NaturalBlock` and `NaturalExpression` types to extend `ContainerConstructBase` with mandatory `children`.
+- Update `ArtDocument`, `SectionBlock`, `FieldBlock`, and `FieldInline` to use `ContainerConstructBase`.
+- Update `createNaturalBlock` and `createNaturalExpression` to always populate `children`.
+- Update `builder.ts`, `createDocumentContext`, and all handlers to use the simplified API.
+- Regenerate all parser test snapshots to include mandatory `children` field on container constructs.
+
+##### Commit: `remove-gap-flushing`
 
 **Repository:** Art JS
 
 **Message:**
 
 ```
-refactor(ar-js): Deduplicate rawSlice() as a helper in primitives.
+refactor(parser): Remove gap flushing and position tracking from builder.
+
+- Delete flushGap module and remove all flushGap calls.
+- Remove lastEnd tracking and updateLastEnd helper.
+- Remove explicit any cast on mdast tree visit.
+- Regenerate snapshots for mandatory children field.
+```
+
+**Changes:**
+
+- Delete `libs/parser/src/private/flushGap.ts` module.
+- Remove all `flushGap` calls from `builder.ts` in both `handleNaturalBlock` and `dispatch`.
+- Remove `lastEnd` point tracking and `updateLastEnd` helper from `builder.ts`.
+- Remove `Point` import from `builder.ts`.
+- Remove explicit `any` cast on `visit(tree as any, ...)`; use `visit(tree, ...)` directly.
+
+##### Commit: `init-document-with-position`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+refactor(parser): Add createDocument with position from root (updated fixture snapshots); Rename all "record" to "construct".
+
+- Add createDocument with position from root.
+- Rename all instances of "record" (private vars and params only) to "construct".
+- Regenerate snapshots with document children field.
+```
+
+##### Commit: `deduplicate-helpers`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+refactor(parser): Deduplicate helpers and consolidate construct factories.
+
+- Deduplicate position copy: unify cleanPosition and nodePosition into nodePosition helper in primitives.
+- Move createDocument factory from builder.ts to constructs lib.
+- Deduplicate rawSlice: consolidate parser version into constructs helper and delete parser copy.
+- Rename record to construct in all handler signatures and local variables.
 ```
 
 ### Iteration: Scope Parser Constants
 
 **Id:** `scope-parser-constants`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Move unscoped parser constants and extract block type check helper.
 
@@ -228,9 +290,9 @@ None.
 
 #### Commits:
 
-| ID                       | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------------ | ------------------------------ | ------------ | ----- | ---------- |
-| `scope-parser-constants` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                       | Repository / Checkout / Branch | Policy       | Hash       | Status      |
+| ------------------------ | ------------------------------ | ------------ | ---------- | ----------- |
+| `scope-parser-constants` | $PROJECT / `main`              | `AUTONOMOUS` | `9c28e1ac` | `COMMITTED` |
 
 ##### Commit: `scope-parser-constants`
 
@@ -251,8 +313,7 @@ refactor(art-js): Scope parser constants into mdast subdirectory
 
 ### Next
 
-- Execute commit 2: `refactor-constructs-align-children` (MANUAL — user review required)
-- Then execute commit 3: `refactor-parser-visit-context` (AUTONOMOUS)
+- Execute `deduplicate-helpers` (AUTONOMOUS).
 
 ### Blockers
 

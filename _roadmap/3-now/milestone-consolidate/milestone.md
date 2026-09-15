@@ -26,10 +26,8 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 
 | Index | Name                              | Status      |
 | ----- | --------------------------------- | ----------- |
-| #1    | Integrate feedback and follow-ups | `READY`     |
-| #2    | Refactoring and Test Coverage     | `READY`     |
-| #3    | Archive and publish               | `PREPARING` |
-| #4    | Integrate knowledge               | `PREPARING` |
+| #1    | Integrate feedback and follow-ups | `WORKING`   |
+| #2    | Maintenance                       | `PREPARING` |
 
 ### Phase: 1 — Integrate feedback, Refactoring and Test Coverage
 
@@ -37,7 +35,7 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 
 **Description:** Refactoring and test coverage across the migrated `@art-js/artificial-*` packages (parser, serializer, constructs, primitives), including the `tryPreProcessors`/`maybeHandleFactory` merge, `createNestedContext` rename/refactor, and unscoped constants cleanup. Scan completed plans for feedback and follow-ups, introduce TagReference spec, simplify tag definitions by removing projections prose, and remove noisy `_` fixture files.
 
-**Status:** `READY`
+**Status:** `WORKING`
 
 **Dependencies:** None.
 
@@ -55,7 +53,7 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 
 | Phase | Resource / Record                                                                                        | Status      |
 | ----- | -------------------------------------------------------------------------------------------------------- | ----------- |
-| 1     | Plan: Refactoring and Test Coverage `_backlog/3-now/plan-refactoring-and-test-coverage/plan.md`          | `READY`     |
+| 1     | Plan: Refactoring and Test Coverage `_backlog/3-now/plan-refactoring-and-test-coverage/plan.md`          | `DONE`      |
 | 1     | Plan: Integrate Feedback and Follow-Ups `_backlog/4-next/plan-integrate-feedback-and-follow-ups/plan.md` | `READY`     |
 | -     |                                                                                                          |             |
 | 2     | Plan: Archive and Publish `_backlog/6-plan/plan-archive-poc-and-publish/plan.md`                         | `PREPARING` |
