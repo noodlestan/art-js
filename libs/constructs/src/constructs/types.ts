@@ -13,9 +13,15 @@ export interface ConstructIntegrator {
 	integrate(context: ParserVisitContext, node: MdastNode, construct: Construct): ParserVisitContext;
 }
 
+export interface ConstructFactory {
+	fromData(data: unknown): Construct;
+}
+
 export interface ConstructParser {
+	readonly name: string;
 	processor?: ConstructProcessor;
 	integrator?: ConstructIntegrator;
+	factory: ConstructFactory;
 }
 
 export type ConstructParserFactory = () => ConstructParser;
