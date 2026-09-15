@@ -1,6 +1,7 @@
-import type { Node } from 'mdast';
+import type { Content, Node } from 'mdast';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 
+import { tagsToMdast } from '../Tag/private/tagsToMdast';
 import type { ConstructToMdast } from '../types';
 
 import type { SectionBlock } from './private/types';
@@ -12,15 +13,13 @@ export function createSectionBlockToMdast(): ConstructToMdast {
 		toMdast(node, _children) {
 			const section = node as unknown as SectionBlock;
 			const depth = section.depth ?? 1;
-			const tagSyntax = section.tags?.length
-				? ' ' + section.tags.map(t => `(#${t.name})`).join(' ')
-				: '';
-			const parsed = fromMarkdown(`# ${section.name}${tagSyntax}`);
+			const parsed = fromMarkdown(`# ${section.name}`);
 			const heading = parsed.children.find(child => child.type === 'heading');
-			const children =
+			const tagNode = section.tags?.length ? tagsToMdast(section.tags) : null;
+			const children: Content[] =
 				heading && 'children' in heading
-					? (heading.children as typeof heading.children)
-					: [{ type: 'text' as const, value: section.name }];
+					? [...heading.children, ...(tagNode ? [tagNode] : [])]
+					: [{ type: 'text' as const, value: section.name }, ...(tagNode ? [tagNode] : [])];
 			return {
 				type: 'heading',
 				depth: depth as 1 | 2 | 3 | 4 | 5 | 6,

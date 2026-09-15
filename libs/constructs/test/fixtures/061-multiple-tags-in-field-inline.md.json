@@ -3,8 +3,8 @@
   "position": {
     "end": {
       "column": 1,
-      "line": 4,
-      "offset": 61
+      "line": 2,
+      "offset": 46
     },
     "start": {
       "column": 1,
@@ -14,14 +14,23 @@
   },
   "children": [
     {
-      "construct": "SectionBlock",
-      "name": "Hello World",
-      "depth": 1,
+      "construct": "FieldInline",
+      "name": "Greeting",
+      "tags": [
+        {
+          "construct": "Tag",
+          "name": "friend"
+        },
+        {
+          "construct": "Tag",
+          "name": "family"
+        }
+      ],
       "position": {
         "end": {
-          "column": 14,
+          "column": 46,
           "line": 1,
-          "offset": 13
+          "offset": 45
         },
         "start": {
           "column": 1,
@@ -31,51 +40,23 @@
       },
       "children": [
         {
-          "construct": "FieldInline",
-          "name": "Greeting",
-          "tags": [
-            {
-              "construct": "Tag",
-              "name": "friend"
-            },
-            {
-              "construct": "Tag",
-              "name": "family"
-            }
-          ],
+          "construct": "NaturalExpression",
+          "type": "text",
+          "attributes": {},
+          "value": "Hello there",
           "position": {
             "end": {
               "column": 46,
-              "line": 3,
-              "offset": 60
+              "line": 1,
+              "offset": 45
             },
             "start": {
-              "column": 1,
-              "line": 3,
-              "offset": 15
+              "column": 14,
+              "line": 1,
+              "offset": 13
             }
           },
-          "children": [
-            {
-              "construct": "NaturalExpression",
-              "type": "text",
-              "attributes": {},
-              "value": "Hello there",
-              "position": {
-                "end": {
-                  "column": 46,
-                  "line": 3,
-                  "offset": 60
-                },
-                "start": {
-                  "column": 14,
-                  "line": 3,
-                  "offset": 28
-                }
-              },
-              "children": []
-            }
-          ]
+          "children": []
         }
       ]
     }

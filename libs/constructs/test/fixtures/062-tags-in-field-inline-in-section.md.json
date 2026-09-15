@@ -4,7 +4,7 @@
     "end": {
       "column": 1,
       "line": 4,
-      "offset": 51
+      "offset": 61
     },
     "start": {
       "column": 1,
@@ -33,11 +33,21 @@
         {
           "construct": "FieldInline",
           "name": "Greeting",
+          "tags": [
+            {
+              "construct": "Tag",
+              "name": "friend"
+            },
+            {
+              "construct": "Tag",
+              "name": "family"
+            }
+          ],
           "position": {
             "end": {
-              "column": 36,
+              "column": 46,
               "line": 3,
-              "offset": 50
+              "offset": 60
             },
             "start": {
               "column": 1,
@@ -50,12 +60,12 @@
               "construct": "NaturalExpression",
               "type": "text",
               "attributes": {},
-              "value": "Hello (#friend) there",
+              "value": "Hello there",
               "position": {
                 "end": {
-                  "column": 36,
+                  "column": 46,
                   "line": 3,
-                  "offset": 50
+                  "offset": 60
                 },
                 "start": {
                   "column": 14,
