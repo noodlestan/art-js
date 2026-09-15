@@ -1,12 +1,15 @@
 import { vi } from 'vitest';
 
+import type { ArtDocument } from '../../../constructs/Document/types';
+import { makeDocument } from '../document/makeDocument';
+
 export const makeDocumentContext = (): {
-	construct: { construct: string; children: unknown[] };
+	construct: ArtDocument;
 	captureChildConstruct: ReturnType<typeof vi.fn>;
 	parent: () => undefined;
 	markdown: string;
 } => ({
-	construct: { construct: 'Document', children: [] },
+	construct: makeDocument(),
 	captureChildConstruct: vi.fn(),
 	parent: () => undefined,
 	markdown: '',

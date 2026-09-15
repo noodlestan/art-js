@@ -1,12 +1,15 @@
 import { describe, expect, it } from 'vitest';
 
+import { makeNaturalBlock } from '../../test/helpers/naturalBlock/makeNaturalBlock';
+import { makeTag } from '../../test/helpers/tag/makeTag';
+
 import { createNaturalBlockToMdast } from './createNaturalBlockToMdast';
 
 describe('createNaturalBlockToMdast', () => {
 	it('parses a text value into a root with paragraph', () => {
 		const impl = createNaturalBlockToMdast();
 		const result = impl.toMdast(
-			{ construct: 'NaturalBlock', type: 'text', value: ' Hello world' } as never,
+			makeNaturalBlock({ type: 'text', value: ' Hello world' }) as never,
 			[],
 		);
 		expect(result).toMatchObject({
@@ -18,13 +21,12 @@ describe('createNaturalBlockToMdast', () => {
 	it('parses a code block value', () => {
 		const impl = createNaturalBlockToMdast();
 		const result = impl.toMdast(
-			{
-				construct: 'NaturalBlock',
+			makeNaturalBlock({
 				type: 'code',
 				lang: null,
 				meta: null,
 				value: '```\nconst x = 1;\n```',
-			} as never,
+			}) as never,
 			[],
 		);
 		expect(result).toMatchObject({
@@ -35,10 +37,9 @@ describe('createNaturalBlockToMdast', () => {
 
 	it('includes children in a paragraph', () => {
 		const impl = createNaturalBlockToMdast();
-		const result = impl.toMdast(
-			{ construct: 'NaturalBlock', type: 'paragraph', value: 'Hello' } as never,
-			[{ type: 'text', value: 'child' } as never],
-		);
+		const result = impl.toMdast(makeNaturalBlock({ type: 'paragraph', value: 'Hello' }) as never, [
+			{ type: 'text', value: 'child' } as never,
+		]);
 		expect(result).toMatchObject({
 			type: 'root',
 			children: expect.arrayContaining([
@@ -53,12 +54,11 @@ describe('createNaturalBlockToMdast', () => {
 	it('includes tags in a paragraph when present', () => {
 		const impl = createNaturalBlockToMdast();
 		const result = impl.toMdast(
-			{
-				construct: 'NaturalBlock',
+			makeNaturalBlock({
 				type: 'paragraph',
 				value: 'Hello',
-				tags: [{ construct: 'Tag', name: 'test' }],
-			} as never,
+				tags: [makeTag()],
+			}) as never,
 			[{ type: 'text', value: 'child' } as never],
 		);
 		expect(result).toMatchObject({
@@ -75,12 +75,11 @@ describe('createNaturalBlockToMdast', () => {
 	it('does not include tags when paragraph has no children', () => {
 		const impl = createNaturalBlockToMdast();
 		const result = impl.toMdast(
-			{
-				construct: 'NaturalBlock',
+			makeNaturalBlock({
 				type: 'paragraph',
 				value: 'Hello',
-				tags: [{ construct: 'Tag', name: 'test' }],
-			} as never,
+				tags: [makeTag()],
+			}) as never,
 			[],
 		);
 		expect(result).toMatchObject({
@@ -97,12 +96,11 @@ describe('createNaturalBlockToMdast', () => {
 	it('does not include tags when paragraph tags are empty', () => {
 		const impl = createNaturalBlockToMdast();
 		const result = impl.toMdast(
-			{
-				construct: 'NaturalBlock',
+			makeNaturalBlock({
 				type: 'paragraph',
 				value: 'Hello',
 				tags: [],
-			} as never,
+			}) as never,
 			[{ type: 'text', value: 'child' } as never],
 		);
 		expect(result).toMatchObject({

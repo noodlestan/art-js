@@ -1,10 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
+import { makeDocument } from '../../../test/helpers/document/makeDocument';
+import { makeFieldBlock } from '../../../test/helpers/fieldBlock/makeFieldBlock';
+import { makeSectionBlock } from '../../../test/helpers/sectionBlock/makeSectionBlock';
+
 import { findTagable } from './findTagable';
 
 describe('findTagable', () => {
 	it('returns the section block when found in context chain', () => {
-		const section = { construct: 'SectionBlock', name: 'Test', children: [] };
+		const section = makeSectionBlock();
 		const context = {
 			construct: section,
 			parent: () => undefined,
@@ -15,7 +19,7 @@ describe('findTagable', () => {
 
 	it('returns undefined when no section block is found', () => {
 		const context = {
-			construct: { construct: 'Document', children: [] },
+			construct: makeDocument(),
 			parent: () => undefined,
 		} as never;
 		const result = findTagable(context);
@@ -23,13 +27,13 @@ describe('findTagable', () => {
 	});
 
 	it('walks up the parent chain', () => {
-		const section = { construct: 'SectionBlock', name: 'Test', children: [] };
+		const section = makeSectionBlock();
 		const parent = {
 			construct: section,
 			parent: () => undefined,
 		};
 		const context = {
-			construct: { construct: 'FieldBlock', name: 'Test', children: [] },
+			construct: makeFieldBlock(),
 			parent: () => parent,
 		} as never;
 		const result = findTagable(context);

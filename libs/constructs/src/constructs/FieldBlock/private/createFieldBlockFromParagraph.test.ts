@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { makeTag } from '../../../test/helpers/tag/makeTag';
+
 vi.mock('@art-js/primitives', async () => {
 	const { makeNodePositionMock } =
 		await import('../../../test/helpers/primitives/makeNodePositionMock');
@@ -42,9 +44,7 @@ describe('createFieldBlockFromParagraph', () => {
 			],
 		};
 		const context = { markdown: '' } as never;
-		const result = createFieldBlockFromParagraph(paragraph as never, context, [
-			{ construct: 'Tag', name: 'test' },
-		]);
+		const result = createFieldBlockFromParagraph(paragraph as never, context, [makeTag()]);
 		expect(result.tags).toHaveLength(1);
 	});
 });

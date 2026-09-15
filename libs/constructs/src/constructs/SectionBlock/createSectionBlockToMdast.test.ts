@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
+import { makeSectionBlock } from '../../test/helpers/sectionBlock/makeSectionBlock';
+import { makeTag } from '../../test/helpers/tag/makeTag';
+
 import { createSectionBlockToMdast } from './createSectionBlockToMdast';
 
 function stripPositions(node: unknown): unknown {
@@ -17,10 +20,7 @@ function stripPositions(node: unknown): unknown {
 describe('createSectionBlockToMdast', () => {
 	it('converts a SectionBlock to an mdast heading', () => {
 		const impl = createSectionBlockToMdast();
-		const result = impl.toMdast(
-			{ construct: 'SectionBlock', name: 'Module', depth: 1 } as never,
-			[],
-		);
+		const result = impl.toMdast(makeSectionBlock({ name: 'Module', depth: 1 }) as never, []);
 		expect(stripPositions(result)).toEqual({
 			type: 'heading',
 			depth: 1,
@@ -30,7 +30,7 @@ describe('createSectionBlockToMdast', () => {
 
 	it('defaults depth to 1 when not provided', () => {
 		const impl = createSectionBlockToMdast();
-		const result = impl.toMdast({ construct: 'SectionBlock', name: 'Section' } as never, []);
+		const result = impl.toMdast(makeSectionBlock({ name: 'Section' }) as never, []);
 		expect(stripPositions(result)).toEqual({
 			type: 'heading',
 			depth: 1,
@@ -41,7 +41,7 @@ describe('createSectionBlockToMdast', () => {
 	it('preserves inline formatting in heading names', () => {
 		const impl = createSectionBlockToMdast();
 		const result = impl.toMdast(
-			{ construct: 'SectionBlock', name: 'Hello _World_! How are **you**?', depth: 1 } as never,
+			makeSectionBlock({ name: 'Hello _World_! How are **you**?', depth: 1 }) as never,
 			[],
 		);
 		expect(stripPositions(result)).toEqual({
@@ -60,12 +60,7 @@ describe('createSectionBlockToMdast', () => {
 	it('includes tags in the heading text when present', () => {
 		const impl = createSectionBlockToMdast();
 		const result = impl.toMdast(
-			{
-				construct: 'SectionBlock',
-				name: 'Hello',
-				depth: 1,
-				tags: [{ construct: 'Tag', name: 'test' }],
-			} as never,
+			makeSectionBlock({ name: 'Hello', depth: 1, tags: [makeTag()] }) as never,
 			[],
 		);
 		expect(stripPositions(result)).toEqual({

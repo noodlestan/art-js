@@ -1,11 +1,15 @@
 import { describe, expect, it } from 'vitest';
 
+import { makeNaturalBlock } from '../../../test/helpers/naturalBlock/makeNaturalBlock';
+import { makeSectionBlock } from '../../../test/helpers/sectionBlock/makeSectionBlock';
+import { makeTag } from '../../../test/helpers/tag/makeTag';
+
 import { createSectionBlockFromData } from './createSectionBlockFromData';
 
 describe('createSectionBlockFromData', () => {
 	it('creates a SectionBlock from minimal data', () => {
 		const result = createSectionBlockFromData({ name: 'Test' });
-		expect(result).toEqual({ construct: 'SectionBlock', name: 'Test', children: [] });
+		expect(result).toEqual(makeSectionBlock());
 	});
 
 	it('includes optional properties when provided', () => {
@@ -13,8 +17,8 @@ describe('createSectionBlockFromData', () => {
 			name: 'Test',
 			kind: 'Module',
 			depth: 2,
-			children: [{ construct: 'NaturalBlock', value: 'hello', children: [] } as never],
-			tags: [{ construct: 'Tag', name: 'test' }],
+			children: [makeNaturalBlock() as never],
+			tags: [makeTag()],
 		});
 		expect(result.kind).toBe('Module');
 		expect(result.depth).toBe(2);

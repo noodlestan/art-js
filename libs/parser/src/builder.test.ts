@@ -1,25 +1,23 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { makeDocument } from './test/helpers/document/makeDocument';
+
 const { markdownTree } = vi.hoisted(() => ({
 	markdownTree: { type: 'root', children: [] as unknown[] },
 }));
 
-vi.mock('@art-js/constructs', () => ({
-	createDocument: vi.fn(() => ({ construct: 'Document', children: [] })),
-}));
+vi.mock('@art-js/constructs', async () => {
+	const { makeDocument: makeDocumentMock } = await import('./test/helpers/document/makeDocument');
+	return {
+		createDocument: vi.fn(() => makeDocumentMock()),
+	};
+});
 
-vi.mock('@art-js/primitives', () => ({
-	createParserVisitContext: vi.fn(() => {
-		const ctx = {
-			construct: { construct: 'Document', children: [] },
-			captureChildConstruct: vi.fn(),
-			onBeforeConstruct: vi.fn(() => ctx),
-			parent: vi.fn(() => undefined),
-			markdown: '',
-		};
-		return ctx;
-	}),
-}));
+vi.mock('@art-js/primitives', async () => {
+	const { makeParserVisitContextMock } =
+		await import('./test/helpers/primitives/makeParserVisitContextMock');
+	return makeParserVisitContextMock();
+});
 
 vi.mock('mdast-util-from-markdown', () => ({
 	fromMarkdown: vi.fn(() => markdownTree),
@@ -61,7 +59,7 @@ describe('buildDocument', () => {
 			constructs: [],
 		};
 		const result = buildDocument(config as never, 'Hello');
-		expect(result).toEqual({ construct: 'Document', children: [] });
+		expect(result).toEqual(makeDocument());
 	});
 
 	it('skips blocks when the default construct has no processor', async () => {
@@ -72,7 +70,7 @@ describe('buildDocument', () => {
 			constructs: [],
 		};
 		const result = buildDocument(config as never, '# Hello');
-		expect(result).toEqual({ construct: 'Document', children: [] });
+		expect(result).toEqual(makeDocument());
 	});
 
 	it('captures child constructs when a matched construct has no integrator', async () => {
@@ -90,7 +88,7 @@ describe('buildDocument', () => {
 			],
 		};
 		const result = buildDocument(config as never, '**Hello:** world');
-		expect(result).toEqual({ construct: 'Document', children: [] });
+		expect(result).toEqual(makeDocument());
 	});
 
 	it('returns SKIP after handling a non-paragraph block type', async () => {
@@ -101,6 +99,6 @@ describe('buildDocument', () => {
 			constructs: [],
 		};
 		const result = buildDocument(config as never, '- item');
-		expect(result).toEqual({ construct: 'Document', children: [] });
+		expect(result).toEqual(makeDocument());
 	});
 });

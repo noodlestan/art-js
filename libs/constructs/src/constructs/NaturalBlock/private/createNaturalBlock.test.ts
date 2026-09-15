@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { makeTag } from '../../../test/helpers/tag/makeTag';
 import { extractTags } from '../../Tag/private/extractTags';
 
 vi.mock('@art-js/primitives', async () => {
@@ -125,7 +126,7 @@ describe('createNaturalBlock', () => {
 
 	it('extracts tags when last text child has trailing tags', async () => {
 		vi.mocked(extractTags).mockReturnValue({
-			tags: [{ construct: 'Tag', name: 'test' }],
+			tags: [makeTag()],
 			stripped: 'hello',
 		});
 		const { createNaturalBlock } = await import('./createNaturalBlock');
