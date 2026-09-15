@@ -1,9 +1,9 @@
 import { createParserVisitContext, sectionDepth } from '@art-js/primitives';
 import type { Heading } from 'mdast';
 
-import { findTagable } from '../../Tag/private/findTagable';
 import type { ConstructHandler } from '../../types';
 
+import { findTagable } from './findTagable';
 import type { SectionBlock } from './types';
 
 export function createSectionBlockHandler(): ConstructHandler {

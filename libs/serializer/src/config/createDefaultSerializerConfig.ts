@@ -5,7 +5,6 @@ import {
 	createNaturalBlockToMdast,
 	createNaturalExpressionToMdast,
 	createSectionBlockToMdast,
-	createTagToMdast,
 } from '@art-js/constructs';
 
 import type { SerializerConfig } from './types';
@@ -19,7 +18,6 @@ export function createDefaultSerializerConfig(): SerializerConfig {
 			createFieldBlockToMdast,
 			createFieldInlineToMdast,
 			createSectionBlockToMdast,
-			createTagToMdast,
 		],
 	};
 }

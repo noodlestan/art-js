@@ -1,2 +1,2 @@
-export { createTagParser } from './createTagParser';
-export { createTagToMdast } from './createTagToMdast';
+export { tagToMdast } from './private/tagToMdast';
+export { tagsToMdast } from './private/tagsToMdast';

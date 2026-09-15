@@ -21,7 +21,5 @@ export { createNaturalBlockToMdast } from './constructs/NaturalBlock';
 export { createNaturalExpressionToMdast } from './constructs/NaturalExpression';
 export { createSectionBlockParser } from './constructs/SectionBlock';
 export { createSectionBlockToMdast } from './constructs/SectionBlock';
-export { createTagParser } from './constructs/Tag';
-export { createTagToMdast } from './constructs/Tag';
 export { createDocument } from './constructs/Document/createDocument';
 export { createDocumentToMdast } from './constructs/Document/createDocumentToMdast';
