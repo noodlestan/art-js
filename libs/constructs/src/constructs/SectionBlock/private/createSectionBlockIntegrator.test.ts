@@ -1,3 +1,4 @@
+import { createParserVisitContext } from '@art-js/primitives';
 import { describe, expect, it, vi } from 'vitest';
 
 import { makeDocumentContext } from '../../../test/helpers/context/makeDocumentContext';
@@ -47,12 +48,10 @@ describe('createSectionBlockIntegrator', () => {
 		const { createSectionBlockIntegrator } = await import('./createSectionBlockIntegrator');
 		const integrator = createSectionBlockIntegrator();
 		const parentContext = makeDocumentContext();
-		const context = {
-			construct: { construct: 'SectionBlock', depth: 2, children: [] },
-			parent: () => parentContext,
-			captureChildConstruct: vi.fn(),
-			markdown: '',
-		};
+		const context = createParserVisitContext(
+			{ construct: 'SectionBlock', depth: 2, children: [] } as never,
+			parentContext as never,
+		);
 		const section = { construct: 'SectionBlock', name: 'Test', children: [] };
 		const result = integrator.integrate(
 			context as never,
@@ -66,12 +65,10 @@ describe('createSectionBlockIntegrator', () => {
 	it('stops popping when parent section depth is less than heading depth', async () => {
 		const { createSectionBlockIntegrator } = await import('./createSectionBlockIntegrator');
 		const integrator = createSectionBlockIntegrator();
-		const context = {
-			construct: { construct: 'SectionBlock', depth: 1, children: [] },
-			parent: () => undefined,
-			captureChildConstruct: vi.fn(),
-			markdown: '',
-		};
+		const context = createParserVisitContext(
+			{ construct: 'SectionBlock', depth: 1, children: [] } as never,
+			undefined,
+		);
 		const section = { construct: 'SectionBlock', name: 'Test', children: [] };
 		const result = integrator.integrate(
 			context as never,

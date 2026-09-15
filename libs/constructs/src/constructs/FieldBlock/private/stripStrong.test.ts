@@ -1,31 +1,30 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { rawSlice } from '../../../helpers/rawSlice';
+
 import { stripStrong } from './stripStrong';
 
-vi.mock('../../../helpers/rawSlice', () => ({
-	rawSlice: vi.fn((_node, _context) => {
-		const markdown = (_context as { markdown: string }).markdown;
-		return markdown;
-	}),
-}));
+vi.mock('../../../helpers/rawSlice', async () => {
+	const { makeRawSliceMock } = await import('../../../test/helpers/rawSlice/makeRawSliceMock');
+	return makeRawSliceMock();
+});
 
 describe('stripStrong', () => {
 	it('strips ** wrappers', () => {
-		const result = stripStrong({ type: 'strong', children: [] }, {
-			markdown: '**hello**',
-		} as never);
+		vi.mocked(rawSlice).mockReturnValue('**hello**');
+		const result = stripStrong({ type: 'strong', children: [] }, { markdown: '' } as never);
 		expect(result).toBe('hello');
 	});
 
 	it('strips __ wrappers', () => {
-		const result = stripStrong({ type: 'strong', children: [] }, {
-			markdown: '__hello__',
-		} as never);
+		vi.mocked(rawSlice).mockReturnValue('__hello__');
+		const result = stripStrong({ type: 'strong', children: [] }, { markdown: '' } as never);
 		expect(result).toBe('hello');
 	});
 
 	it('returns raw when not wrapped', () => {
-		const result = stripStrong({ type: 'strong', children: [] }, { markdown: 'hello' } as never);
+		vi.mocked(rawSlice).mockReturnValue('hello');
+		const result = stripStrong({ type: 'strong', children: [] }, { markdown: '' } as never);
 		expect(result).toBe('hello');
 	});
 });
