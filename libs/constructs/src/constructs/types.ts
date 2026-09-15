@@ -14,13 +14,13 @@ export interface ConstructProcessor {
 	captureNode(context: ParserVisitContext, node: MdastNode): Construct | null;
 }
 
-export interface ConstructHandler {
-	handle(construct: Construct, node: MdastNode, context: ParserVisitContext): ParserVisitContext;
+export interface ConstructIntegrator {
+	integrate(context: ParserVisitContext, node: MdastNode, construct: Construct): ParserVisitContext;
 }
 
 export interface ConstructParser {
 	processor?: ConstructProcessor;
-	handler?: ConstructHandler;
+	integrator?: ConstructIntegrator;
 	factory?: ConstructCreator;
 }
 

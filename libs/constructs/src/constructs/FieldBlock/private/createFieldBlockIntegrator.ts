@@ -1,7 +1,7 @@
 import type { ConstructBase, ParserVisitContext } from '@art-js/primitives';
 import { createParserVisitContext } from '@art-js/primitives';
 
-import type { ConstructHandler } from '../../types';
+import type { ConstructIntegrator } from '../../types';
 
 import type { FieldBlock } from './types';
 
@@ -23,9 +23,9 @@ function onBeforeConstruct(
 	return parent;
 }
 
-export function createFieldBlockHandler(): ConstructHandler {
+export function createFieldBlockIntegrator(): ConstructIntegrator {
 	return {
-		handle(construct, _node, context) {
+		integrate(context, _node, construct) {
 			const field = construct as FieldBlock;
 			context.captureChildConstruct(field);
 			return createParserVisitContext(field, context, undefined, onBeforeConstruct);

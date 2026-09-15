@@ -2,7 +2,7 @@ import {
 	type ArtDocument,
 	type BlockContent,
 	type Construct,
-	type ConstructHandler,
+	type ConstructIntegrator,
 	type ConstructParser,
 	createDocument,
 } from '@art-js/constructs';
@@ -17,7 +17,7 @@ import { createDocumentContext } from './private/createDocumentContext';
 
 interface HandleResult {
 	constructs: Construct[];
-	handler: ConstructHandler | null;
+	integrator: ConstructIntegrator | null;
 }
 
 export function buildDocument(config: ParserConfig, markdown: string): ArtDocument {
@@ -40,10 +40,10 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 			const processor = constructParser.processor;
 			const construct = processor?.captureNode(currentContext, node);
 			if (construct) {
-				const handler = constructParser.handler ?? null;
+				const integrator = constructParser.integrator ?? null;
 				return {
 					constructs: [construct],
-					handler,
+					integrator,
 				};
 			}
 			const factory = constructParser.factory;
@@ -51,10 +51,11 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 				const result = factory.create(node, currentContext);
 				const constructs = Array.isArray(result) ? result : [result];
 				const first = constructs[0] as Construct | undefined;
-				const handler = constructs.length > 0 && first ? (constructParser.handler ?? null) : null;
+				const integrator =
+					constructs.length > 0 && first ? (constructParser.integrator ?? null) : null;
 				return {
 					constructs,
-					handler,
+					integrator,
 				};
 			}
 		}
@@ -72,12 +73,16 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 		return node.type === 'paragraph' ? undefined : SKIP;
 	}
 
-	function dispatch(node: Node, constructs: Construct[], handler: ConstructHandler | null): void {
+	function dispatch(
+		node: Node,
+		constructs: Construct[],
+		integrator: ConstructIntegrator | null,
+	): void {
 		for (const construct of constructs) {
 			currentContext = currentContext.onBeforeConstruct(construct);
 
-			if (handler) {
-				currentContext = handler.handle(construct, node, currentContext);
+			if (integrator) {
+				currentContext = integrator.integrate(currentContext, node, construct);
 			} else {
 				currentContext.captureChildConstruct(construct as BlockContent);
 			}
@@ -91,7 +96,7 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 
 		const result = tryConstructs(node);
 		if (result) {
-			dispatch(node, result.constructs, result.handler);
+			dispatch(node, result.constructs, result.integrator);
 			return SKIP;
 		}
 

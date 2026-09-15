@@ -1,9 +1,9 @@
 import type { ConstructParserFactory } from '../types';
 
-import { createFieldBlockHandler } from './private/createFieldBlockHandler';
+import { createFieldBlockIntegrator } from './private/createFieldBlockIntegrator';
 import { createFieldBlockProcessor } from './private/createFieldBlockProcessor';
 
 export const createFieldBlockParser: ConstructParserFactory = () => ({
 	processor: createFieldBlockProcessor(),
-	handler: createFieldBlockHandler(),
+	integrator: createFieldBlockIntegrator(),
 });

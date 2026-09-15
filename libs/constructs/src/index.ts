@@ -4,7 +4,7 @@ export type * from './registry';
 
 export type {
 	ConstructCreator,
-	ConstructHandler,
+	ConstructIntegrator,
 	ConstructParser,
 	ConstructParserFactory,
 	ConstructProcessor,

@@ -1,14 +1,14 @@
 import { createParserVisitContext, sectionDepth } from '@art-js/primitives';
 import type { Heading } from 'mdast';
 
-import type { ConstructHandler } from '../../types';
+import type { ConstructIntegrator } from '../../types';
 
 import { findTagable } from './findTagable';
 import type { SectionBlock } from './types';
 
-export function createSectionBlockHandler(): ConstructHandler {
+export function createSectionBlockIntegrator(): ConstructIntegrator {
 	return {
-		handle(construct, node, context) {
+		integrate(context, node, construct) {
 			const section = construct as SectionBlock;
 			let ctx = context;
 
