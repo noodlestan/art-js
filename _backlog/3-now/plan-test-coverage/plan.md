@@ -71,16 +71,16 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                                  | Status  |
-| --------------------------------------------------------------------------------------------------------- | ------- | --------- |
-| Iteration: Add Minimal Unit Tests `./plan-test-coverage/instructions/add-minimal-unit-tests.md`           | `DONE`  |
-| Iteration: Extract Test Helpers `./plan-test-coverage/instructions/extract-test-helpers.md`               | `DONE`  | `48cdf2e` |
-| Iteration: Deepen Test Coverage `./plan-test-coverage/instructions/deepen-test-coverage.md`               | `READY` |
-| Iteration: Align Test Patterns `./plan-test-coverage/instructions/align-test-patterns.md`                 | `DONE`  | `8b07ab3` |
-| Iteration: Consume Test Helpers `./plan-test-coverage/instructions/consume-test-helpers.md`               | `DONE`  | `35e4ed5` |
-| Iteration: Abstract Repeated Helpers `./plan-test-coverage/instructions/abstract-repeated-helpers.md`     | `READY` |
-| Iteration: Close Coverage Gaps `./plan-test-coverage/instructions/close-coverage-gaps.md`                 | `READY` |
-| Iteration: Elevate Coverage Thresholds `./plan-test-coverage/instructions/elevate-coverage-thresholds.md` | `READY` |
+| Iteration / Instructions                                                                                  | Status    |
+| --------------------------------------------------------------------------------------------------------- | --------- | --------- |
+| Iteration: Add Minimal Unit Tests `./plan-test-coverage/instructions/add-minimal-unit-tests.md`           | `DONE`    |
+| Iteration: Extract Test Helpers `./plan-test-coverage/instructions/extract-test-helpers.md`               | `DONE`    | `48cdf2e` |
+| Iteration: Deepen Test Coverage `./plan-test-coverage/instructions/deepen-test-coverage.md`               | `DONE`    | `a65a024` |
+| Iteration: Align Test Patterns `./plan-test-coverage/instructions/align-test-patterns.md`                 | `DONE`    | `8b07ab3` |
+| Iteration: Consume Test Helpers `./plan-test-coverage/instructions/consume-test-helpers.md`               | `DONE`    | `35e4ed5` |
+| Iteration: Abstract Repeated Helpers `./plan-test-coverage/instructions/abstract-repeated-helpers.md`     | `WORKING` |
+| Iteration: Close Coverage Gaps `./plan-test-coverage/instructions/close-coverage-gaps.md`                 | `DONE`    | `8fe0d26` |
+| Iteration: Elevate Coverage Thresholds `./plan-test-coverage/instructions/elevate-coverage-thresholds.md` | `READY`   |
 
 ### Iteration: Add Minimal Unit Tests
 
@@ -175,7 +175,7 @@ test: Extract shared test helpers per package
 
 **Id:** `deepen-test-coverage`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Add more test cases using the existing helpers, covering more branches and exception paths, and extract more helpers when a pattern is found.
 
@@ -296,7 +296,7 @@ test: Consume shared helpers to reduce test repetition
 
 **Id:** `abstract-repeated-helpers`
 
-**Status:** `READY`
+**Status:** `WORKING`
 
 **Purpose:** Abstract new helpers from remaining repetition and consume them across all similar unit tests.
 
@@ -337,7 +337,7 @@ test: Abstract repeated test setup into new helpers
 
 **Id:** `close-coverage-gaps`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Measure coverage against the targets and add tests to close the remaining gaps.
 
