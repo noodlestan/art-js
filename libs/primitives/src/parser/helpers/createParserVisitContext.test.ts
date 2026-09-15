@@ -1,0 +1,39 @@
+import { describe, expect, it, vi } from 'vitest';
+
+import { createParserVisitContext } from './createParserVisitContext';
+
+describe('createParserVisitContext', () => {
+	it('creates a context with the given construct', () => {
+		const construct = { construct: 'Document', children: [] };
+		const ctx = createParserVisitContext(construct, undefined, 'markdown');
+		expect(ctx.construct).toBe(construct);
+		expect(ctx.markdown).toBe('markdown');
+		expect(ctx.parent()).toBeUndefined();
+	});
+
+	it('captures child constructs', () => {
+		const construct = { construct: 'Document', children: [] };
+		const ctx = createParserVisitContext(construct, undefined);
+		ctx.captureChildConstruct({ construct: 'Child' });
+		expect(construct.children).toHaveLength(1);
+	});
+
+	it('calls onBeforeConstruct when provided', () => {
+		const construct = { construct: 'Document', children: [] };
+		const onBeforeConstruct = vi.fn((_construct, _ctx) => _ctx);
+		const ctx = createParserVisitContext(construct, undefined, undefined, onBeforeConstruct);
+		const child = { construct: 'Child' };
+		const result = ctx.onBeforeConstruct(child);
+		expect(onBeforeConstruct).toHaveBeenCalledWith(child, ctx);
+		expect(result).toBe(ctx);
+	});
+
+	it('falls back to parent context markdown when markdown is not provided', () => {
+		const parentConstruct = { construct: 'Document', children: [] };
+		const parentCtx = createParserVisitContext(parentConstruct, undefined, 'parent-md');
+		const childConstruct = { construct: 'Section', children: [] };
+		const childCtx = createParserVisitContext(childConstruct, parentCtx);
+		expect(childCtx.markdown).toBe('parent-md');
+		expect(childCtx.parent()).toBe(parentCtx);
+	});
+});
