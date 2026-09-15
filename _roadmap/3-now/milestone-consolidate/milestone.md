@@ -54,6 +54,7 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 | Phase | Resource / Record                                                                                        | Status      |
 | ----- | -------------------------------------------------------------------------------------------------------- | ----------- |
 | 1     | Plan: Refactoring and Test Coverage `_backlog/3-now/plan-refactoring-and-test-coverage/plan.md`          | `DONE`      |
+| 1     | Plan: Refactor Tag Extraction `_backlog/3-now/plan-refactor-tag-extraction/plan.md`                      | `READY`     |
 | 1     | Plan: Integrate Feedback and Follow-Ups `_backlog/4-next/plan-integrate-feedback-and-follow-ups/plan.md` | `READY`     |
 | -     |                                                                                                          |             |
 | 2     | Plan: Archive and Publish `_backlog/6-plan/plan-archive-poc-and-publish/plan.md`                         | `PREPARING` |

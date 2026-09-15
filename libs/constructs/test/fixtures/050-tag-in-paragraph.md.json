@@ -1,0 +1,55 @@
+{
+  "construct": "Document",
+  "position": {
+    "end": {
+      "column": 1,
+      "line": 2,
+      "offset": 36
+    },
+    "start": {
+      "column": 1,
+      "line": 1,
+      "offset": 0
+    }
+  },
+  "children": [
+    {
+      "construct": "NaturalBlock",
+      "type": "paragraph",
+      "value": "Details about the feature (#friend)",
+      "position": {
+        "end": {
+          "column": 36,
+          "line": 1,
+          "offset": 35
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": [
+        {
+          "construct": "NaturalExpression",
+          "type": "text",
+          "attributes": {},
+          "value": "Details about the feature (#friend)",
+          "position": {
+            "end": {
+              "column": 36,
+              "line": 1,
+              "offset": 35
+            },
+            "start": {
+              "column": 1,
+              "line": 1,
+              "offset": 0
+            }
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

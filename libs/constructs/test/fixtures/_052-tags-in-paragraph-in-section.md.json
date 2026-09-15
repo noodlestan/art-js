@@ -1,0 +1,108 @@
+{
+  "construct": "Document",
+  "position": {
+    "end": {
+      "column": 1,
+      "line": 4,
+      "offset": 57
+    },
+    "start": {
+      "column": 1,
+      "line": 1,
+      "offset": 0
+    }
+  },
+  "children": [
+    {
+      "construct": "SectionBlock",
+      "name": "Section",
+      "depth": 1,
+      "tags": [
+        {
+          "construct": "Tag",
+          "name": "friend",
+          "position": {
+            "end": {
+              "column": 46,
+              "line": 3,
+              "offset": 56
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 11
+            }
+          }
+        },
+        {
+          "construct": "Tag",
+          "name": "family",
+          "position": {
+            "end": {
+              "column": 46,
+              "line": 3,
+              "offset": 56
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 11
+            }
+          }
+        }
+      ],
+      "position": {
+        "end": {
+          "column": 10,
+          "line": 1,
+          "offset": 9
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": [
+        {
+          "construct": "NaturalBlock",
+          "type": "paragraph",
+          "value": "Details about the feature (#friend) (#family)",
+          "position": {
+            "end": {
+              "column": 46,
+              "line": 3,
+              "offset": 56
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 11
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalExpression",
+              "type": "text",
+              "attributes": {},
+              "value": "Details about the feature (#friend) (#family)",
+              "position": {
+                "end": {
+                  "column": 46,
+                  "line": 3,
+                  "offset": 56
+                },
+                "start": {
+                  "column": 1,
+                  "line": 3,
+                  "offset": 11
+                }
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
