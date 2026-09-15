@@ -73,7 +73,7 @@ Execution occurs in `$PROJECT` on branch `main`.
 | Iteration: Rename Serializer Types `./plan-refactor-constructs/instructions/rename-serializer-types.md`           | `DONE`  |
 | Iteration: Rename Processor Types `./plan-refactor-constructs/instructions/rename-processor-types.md`             | `DONE`  |
 | Iteration: Rename Integrator Types `./plan-refactor-constructs/instructions/rename-integrator-types.md`           | `DONE`  |
-| Iteration: Eliminate ConstructCreator `./plan-refactor-constructs/instructions/eliminate-construct-creator.md`    | `READY` |
+| Iteration: Eliminate ConstructCreator `./plan-refactor-constructs/instructions/eliminate-construct-creator.md`    | `DONE`  |
 | Iteration: Introduce ConstructFactory `./plan-refactor-constructs/instructions/introduce-construct-factory.md`    | `READY` |
 | Iteration: Add Tag and Document Parsers `./plan-refactor-constructs/instructions/add-tag-and-document-parsers.md` | `READY` |
 
@@ -225,13 +225,15 @@ refactor(constructs): Rename ConstructHandler to ConstructIntegrator
 
 **Id:** `eliminate-construct-creator`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Eliminate the `factory.detect + create` entry point by converting NaturalBlock and SectionBlock to the processor (`captureNode`) pattern, leaving a single parser entry point.
 
 **Description:** Convert NaturalBlock and SectionBlock from `ConstructCreator` to `ConstructProcessor`, extract `createSectionBlock` from the SectionBlock creator, remove the factory branch from the parser builder, and delete the `ConstructCreator` interface and creator files.
 
 **Instructions:** `./plan-refactor-constructs/instructions/eliminate-construct-creator.md`
+
+**Report:** `./plan-refactor-constructs/instructions/eliminate-construct-creator__report.md`
 
 **Changes:**
 
@@ -249,9 +251,9 @@ refactor(constructs): Rename ConstructHandler to ConstructIntegrator
 
 #### Commits:
 
-| ID                            | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ----------------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `eliminate-construct-creator` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                            | Repository / Checkout / Branch | Policy       | Hash    | Status      |
+| ----------------------------- | ------------------------------ | ------------ | ------- | ----------- |
+| `eliminate-construct-creator` | $PROJECT / `main`              | `AUTONOMOUS` | 7aa9ba6 | `COMMITTED` |
 
 ##### Commit: `eliminate-construct-creator`
 
