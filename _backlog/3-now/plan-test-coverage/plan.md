@@ -72,9 +72,9 @@ Execution occurs in `$PROJECT` on branch `main`.
 ## Items:
 
 | Iteration / Instructions                                                                                  | Status  |
-| --------------------------------------------------------------------------------------------------------- | ------- |
+| --------------------------------------------------------------------------------------------------------- | ------- | --------- |
 | Iteration: Add Minimal Unit Tests `./plan-test-coverage/instructions/add-minimal-unit-tests.md`           | `DONE`  |
-| Iteration: Extract Test Helpers `./plan-test-coverage/instructions/extract-test-helpers.md`               | `READY` |
+| Iteration: Extract Test Helpers `./plan-test-coverage/instructions/extract-test-helpers.md`               | `DONE`  | `48cdf2e` |
 | Iteration: Deepen Test Coverage `./plan-test-coverage/instructions/deepen-test-coverage.md`               | `READY` |
 | Iteration: Align Test Patterns `./plan-test-coverage/instructions/align-test-patterns.md`                 | `READY` |
 | Iteration: Consume Test Helpers `./plan-test-coverage/instructions/consume-test-helpers.md`               | `READY` |
@@ -133,7 +133,7 @@ test: Add minimal unit test coverage to parser, primitives, serializer, construc
 
 **Id:** `extract-test-helpers`
 
-**Status:** `READY`
+**Status:** `WORKING`
 
 **Purpose:** Abstract mocking and setup helpers into consistent, colocated helpers so tests stop wiring mocks locally.
 
