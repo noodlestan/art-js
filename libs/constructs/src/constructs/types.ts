@@ -26,9 +26,9 @@ export interface ConstructParser {
 
 export type ConstructParserFactory = () => ConstructParser;
 
-export interface ConstructToMdast {
-	construct: string;
+export interface ConstructSerializer {
+	readonly name: string;
 	toMdast(node: Construct, children: Node[]): Node;
 }
 
-export type ConstructToMdastFactory = () => ConstructToMdast;
+export type ConstructSerializerFactory = () => ConstructSerializer;

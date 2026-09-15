@@ -2,13 +2,13 @@ import type { Node } from 'mdast';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 
 import { tagsToMdast } from '../Tag/private/tagsToMdast';
-import type { ConstructToMdast } from '../types';
+import type { ConstructSerializer } from '../types';
 
 import type { NaturalBlock } from './private/types';
 
-export function createNaturalBlockToMdast(): ConstructToMdast {
+export function createNaturalBlockToMdast(): ConstructSerializer {
 	return {
-		construct: 'NaturalBlock',
+		name: 'NaturalBlock',
 		toMdast(node, children) {
 			const block = node as unknown as NaturalBlock;
 			const parsed = fromMarkdown(block.value);

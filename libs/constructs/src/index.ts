@@ -8,8 +8,8 @@ export type {
 	ConstructParser,
 	ConstructParserFactory,
 	ConstructPreProcessor,
-	ConstructToMdast,
-	ConstructToMdastFactory,
+	ConstructSerializer,
+	ConstructSerializerFactory,
 } from './constructs/types';
 export { rawSlice } from './helpers';
 export { createFieldBlockParser } from './constructs/FieldBlock';

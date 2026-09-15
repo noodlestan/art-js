@@ -2,13 +2,13 @@ import type { Content, Node } from 'mdast';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 
 import { tagsToMdast } from '../Tag/private/tagsToMdast';
-import type { ConstructToMdast } from '../types';
+import type { ConstructSerializer } from '../types';
 
 import type { SectionBlock } from './private/types';
 
-export function createSectionBlockToMdast(): ConstructToMdast {
+export function createSectionBlockToMdast(): ConstructSerializer {
 	return {
-		construct: 'SectionBlock',
+		name: 'SectionBlock',
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		toMdast(node, _children) {
 			const section = node as unknown as SectionBlock;

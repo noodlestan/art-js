@@ -1,13 +1,13 @@
 import type { Node } from 'mdast';
 
 import { tagsToMdast } from '../Tag/private/tagsToMdast';
-import type { ConstructToMdast } from '../types';
+import type { ConstructSerializer } from '../types';
 
 import type { FieldBlock } from './private/types';
 
-export function createFieldBlockToMdast(): ConstructToMdast {
+export function createFieldBlockToMdast(): ConstructSerializer {
 	return {
-		construct: 'FieldBlock',
+		name: 'FieldBlock',
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		toMdast(node, _children) {
 			const field = node as unknown as FieldBlock;

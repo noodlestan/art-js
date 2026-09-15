@@ -1,10 +1,10 @@
 import type { Node } from 'mdast';
 
-import type { ConstructToMdast } from '../types';
+import type { ConstructSerializer } from '../types';
 
-export function createDocumentToMdast(): ConstructToMdast {
+export function createDocumentToMdast(): ConstructSerializer {
 	return {
-		construct: 'Document',
+		name: 'Document',
 		toMdast(_node, children) {
 			return {
 				type: 'root',

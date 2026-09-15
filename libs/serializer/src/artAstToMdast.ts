@@ -1,13 +1,13 @@
-import type { ArtDocument, ConstructToMdast } from '@art-js/constructs';
+import type { ArtDocument, ConstructSerializer } from '@art-js/constructs';
 import type { Node, Root } from 'mdast';
 
 import type { SerializerConfig } from './config/types';
 
 export function artAstToMdast(config: SerializerConfig, document: ArtDocument): Node {
-	const registry = new Map<string, ConstructToMdast>();
+	const registry = new Map<string, ConstructSerializer>();
 	for (const factory of config.constructs) {
 		const impl = factory();
-		registry.set(impl.construct, impl);
+		registry.set(impl.name, impl);
 	}
 
 	function visit(node: { construct: string; children?: unknown[]; value?: unknown }): Node[] {

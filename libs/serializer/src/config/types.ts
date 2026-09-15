@@ -1,5 +1,5 @@
-import type { ConstructToMdastFactory } from '@art-js/constructs';
+import type { ConstructSerializerFactory } from '@art-js/constructs';
 
 export interface SerializerConfig {
-	constructs: ConstructToMdastFactory[];
+	constructs: ConstructSerializerFactory[];
 }
