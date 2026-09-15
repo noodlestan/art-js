@@ -74,7 +74,7 @@ Execution occurs in `$PROJECT` on branch `main`.
 | Iteration: Rename Processor Types `./plan-refactor-constructs/instructions/rename-processor-types.md`             | `DONE`  |
 | Iteration: Rename Integrator Types `./plan-refactor-constructs/instructions/rename-integrator-types.md`           | `DONE`  |
 | Iteration: Eliminate ConstructCreator `./plan-refactor-constructs/instructions/eliminate-construct-creator.md`    | `DONE`  |
-| Iteration: Introduce ConstructFactory `./plan-refactor-constructs/instructions/introduce-construct-factory.md`    | `READY` |
+| Iteration: Introduce ConstructFactory `./plan-refactor-constructs/instructions/introduce-construct-factory.md`    | `DONE`  |
 | Iteration: Add Tag and Document Parsers `./plan-refactor-constructs/instructions/add-tag-and-document-parsers.md` | `READY` |
 
 ### Iteration: Rename Serializer Types
@@ -274,13 +274,15 @@ refactor(constructs): Eliminate ConstructCreator in favor of processors
 
 **Id:** `introduce-construct-factory`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Introduce the "factory from data" entry point — `ConstructFactory.fromData` — exposed via `ConstructParser.factory`, and add `readonly name` to `ConstructParser`.
 
 **Description:** Add the `ConstructFactory` interface, change `ConstructParser.factory` to it, add `create{Name}FromData` factories to all constructs following the Tag example (`createTag` + `TagFactoryData`), expose them via the facades, and add `readonly name` to `ConstructParser` with names set in all facades.
 
 **Instructions:** `./plan-refactor-constructs/instructions/introduce-construct-factory.md`
+
+**Report:** `./plan-refactor-constructs/instructions/introduce-construct-factory__report.md`
 
 **Changes:**
 
@@ -304,9 +306,9 @@ refactor(constructs): Eliminate ConstructCreator in favor of processors
 
 #### Commits:
 
-| ID                            | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ----------------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `introduce-construct-factory` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                            | Repository / Checkout / Branch | Policy       | Hash    | Status      |
+| ----------------------------- | ------------------------------ | ------------ | ------- | ----------- |
+| `introduce-construct-factory` | $PROJECT / `main`              | `AUTONOMOUS` | 195e674 | `COMMITTED` |
 
 ##### Commit: `introduce-construct-factory`
 
