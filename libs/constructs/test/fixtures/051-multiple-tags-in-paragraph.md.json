@@ -4,7 +4,7 @@
     "end": {
       "column": 1,
       "line": 2,
-      "offset": 46
+      "offset": 35
     },
     "start": {
       "column": 1,
@@ -16,12 +16,22 @@
     {
       "construct": "NaturalBlock",
       "type": "paragraph",
-      "value": "Details about the feature (#friend) (#family)",
+      "tags": [
+        {
+          "construct": "Tag",
+          "name": "friend"
+        },
+        {
+          "construct": "Tag",
+          "name": "family"
+        }
+      ],
+      "value": "Hello everyone (#friend) (#family)",
       "position": {
         "end": {
-          "column": 46,
+          "column": 35,
           "line": 1,
-          "offset": 45
+          "offset": 34
         },
         "start": {
           "column": 1,
@@ -34,12 +44,12 @@
           "construct": "NaturalExpression",
           "type": "text",
           "attributes": {},
-          "value": "Details about the feature (#friend) (#family)",
+          "value": "Hello everyone",
           "position": {
             "end": {
-              "column": 46,
+              "column": 35,
               "line": 1,
-              "offset": 45
+              "offset": 34
             },
             "start": {
               "column": 1,

@@ -6,6 +6,7 @@ import { phrasing } from 'mdast-util-phrasing';
 import { rawSlice } from '../../../helpers/rawSlice';
 import { createNaturalExpression } from '../../NaturalExpression/private/createNaturalExpression';
 import type { NaturalExpression } from '../../NaturalExpression/private/types';
+import { extractTags } from '../../Tag/private/extractTags';
 
 import type { NaturalBlock } from './types';
 
@@ -28,5 +29,15 @@ export function createNaturalBlock(node: Node, context: ParserVisitContext): Nat
 		position: nodePosition(node),
 		children,
 	};
+	if (node.type === 'paragraph') {
+		const last = children[children.length - 1];
+		if (last?.type === 'text' && typeof last.value === 'string') {
+			const { tags, stripped } = extractTags(last.value);
+			if (tags.length) {
+				block.tags = tags;
+				last.value = stripped;
+			}
+		}
+	}
 	return block;
 }

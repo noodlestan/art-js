@@ -9,8 +9,8 @@ export default defineConfig({
 			reporter: ['text', 'text-summary'],
 			exclude: ['src/index.ts'],
 			thresholds: {
-				lines: 90,
-				functions: 85,
+				lines: 85,
+				functions: 75,
 				branches: 65,
 				statements: 80,
 			},

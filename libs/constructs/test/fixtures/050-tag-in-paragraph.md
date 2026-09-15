@@ -1,1 +1,1 @@
-Details about the feature (#friend)
+Hello everyone (#friend)
