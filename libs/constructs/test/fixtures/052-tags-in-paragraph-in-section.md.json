@@ -17,40 +17,6 @@
       "construct": "SectionBlock",
       "name": "Section",
       "depth": 1,
-      "tags": [
-        {
-          "construct": "Tag",
-          "name": "friend",
-          "position": {
-            "end": {
-              "column": 46,
-              "line": 3,
-              "offset": 56
-            },
-            "start": {
-              "column": 1,
-              "line": 3,
-              "offset": 11
-            }
-          }
-        },
-        {
-          "construct": "Tag",
-          "name": "family",
-          "position": {
-            "end": {
-              "column": 46,
-              "line": 3,
-              "offset": 56
-            },
-            "start": {
-              "column": 1,
-              "line": 3,
-              "offset": 11
-            }
-          }
-        }
-      ],
       "position": {
         "end": {
           "column": 10,
