@@ -46,4 +46,6 @@ export {
 export { createSectionBlockParser } from './constructs/SectionBlock';
 export { createSectionBlockToMdast } from './constructs/SectionBlock';
 export { createDocument } from './constructs/Document/createDocument';
+export { createDocumentParser } from './constructs/Document/createDocumentParser';
 export { createDocumentToMdast } from './constructs/Document/createDocumentToMdast';
+export { createTagParser } from './constructs/Tag/createTagParser';
