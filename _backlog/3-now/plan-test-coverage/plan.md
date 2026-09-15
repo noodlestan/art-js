@@ -2,7 +2,7 @@
 
 **Id:** `test-coverage`
 
-**Status:** `PLANNING`
+**Status:** `WORKING`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -73,7 +73,7 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 | Iteration / Instructions                                                                                  | Status  |
 | --------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Add Minimal Unit Tests `./plan-test-coverage/instructions/add-minimal-unit-tests.md`           | `READY` |
+| Iteration: Add Minimal Unit Tests `./plan-test-coverage/instructions/add-minimal-unit-tests.md`           | `DONE`  |
 | Iteration: Extract Test Helpers `./plan-test-coverage/instructions/extract-test-helpers.md`               | `READY` |
 | Iteration: Deepen Test Coverage `./plan-test-coverage/instructions/deepen-test-coverage.md`               | `READY` |
 | Iteration: Align Test Patterns `./plan-test-coverage/instructions/align-test-patterns.md`                 | `READY` |
@@ -86,13 +86,15 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 **Id:** `add-minimal-unit-tests`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Establish a minimal unit test baseline across all 4 packages — happy path plus the most obvious exception path where one exists — with all dependencies mocked in-file.
 
 **Description:** Add minimal unit tests for every module in `src/` (excluding `src/index.ts`) in parser, primitives, serializer, and constructs. Each test file mocks all dependencies in-file to isolate the module under test. Do not chase the coverage targets yet — measure and record the current coverage per package as the baseline.
 
 **Instructions:** `./plan-test-coverage/instructions/add-minimal-unit-tests.md`
+
+**Report:** `./plan-test-coverage/instructions/add-minimal-unit-tests__report.md`
 
 **Changes:**
 
@@ -109,9 +111,9 @@ None.
 
 #### Commits:
 
-| ID                       | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------------ | ------------------------------ | ------------ | ----- | ---------- |
-| `add-minimal-unit-tests` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                       | Repository / Checkout / Branch | Policy       | Hash    | Status      |
+| ------------------------ | ------------------------------ | ------------ | ------- | ----------- |
+| `add-minimal-unit-tests` | $PROJECT / `main`              | `AUTONOMOUS` | 8889992 | `COMMITTED` |
 
 ##### Commit: `add-minimal-unit-tests`
 
