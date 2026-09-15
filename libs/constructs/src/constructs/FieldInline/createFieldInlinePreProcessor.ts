@@ -38,7 +38,11 @@ export function createFieldInlinePreProcessor(): ConstructPreProcessor {
 			const strong = first as import('mdast').Strong;
 			const paragraphRaw = rawSlice(paragraph, context);
 			const strongRaw = rawSlice(strong, context);
-			if (paragraphRaw.slice(strongRaw.length).trim().length === 0) return null;
+			const afterStrong = paragraphRaw.slice(strongRaw.length);
+			if (afterStrong.trim().length === 0) return null;
+			// If content is only tags, let FieldBlock handle it
+			const { stripped } = extractTags(afterStrong);
+			if (stripped.trim().length === 0) return null;
 			const inner = stripStrong(strong, context);
 			const colonIndex = inner.indexOf(':');
 			const children = trimFieldEdges(

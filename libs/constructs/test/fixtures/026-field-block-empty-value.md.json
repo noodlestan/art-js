@@ -1,0 +1,71 @@
+{
+  "construct": "Document",
+  "position": {
+    "end": {
+      "column": 1,
+      "line": 4,
+      "offset": 51
+    },
+    "start": {
+      "column": 1,
+      "line": 1,
+      "offset": 0
+    }
+  },
+  "children": [
+    {
+      "construct": "FieldBlock",
+      "name": "Empty Field",
+      "position": {
+        "end": {
+          "column": 17,
+          "line": 1,
+          "offset": 16
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": []
+    },
+    {
+      "construct": "FieldInline",
+      "name": "Field With Value",
+      "position": {
+        "end": {
+          "column": 33,
+          "line": 3,
+          "offset": 50
+        },
+        "start": {
+          "column": 1,
+          "line": 3,
+          "offset": 18
+        }
+      },
+      "children": [
+        {
+          "construct": "NaturalExpression",
+          "type": "text",
+          "attributes": {},
+          "value": "Something.",
+          "position": {
+            "end": {
+              "column": 33,
+              "line": 3,
+              "offset": 50
+            },
+            "start": {
+              "column": 22,
+              "line": 3,
+              "offset": 39
+            }
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

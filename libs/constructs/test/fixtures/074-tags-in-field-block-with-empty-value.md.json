@@ -1,0 +1,77 @@
+{
+  "construct": "Document",
+  "position": {
+    "end": {
+      "column": 1,
+      "line": 4,
+      "offset": 62
+    },
+    "start": {
+      "column": 1,
+      "line": 1,
+      "offset": 0
+    }
+  },
+  "children": [
+    {
+      "construct": "FieldBlock",
+      "name": "Empty Field",
+      "tags": [
+        {
+          "construct": "Tag",
+          "name": "withtag"
+        }
+      ],
+      "position": {
+        "end": {
+          "column": 28,
+          "line": 1,
+          "offset": 27
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": []
+    },
+    {
+      "construct": "FieldInline",
+      "name": "Field With Value",
+      "position": {
+        "end": {
+          "column": 33,
+          "line": 3,
+          "offset": 61
+        },
+        "start": {
+          "column": 1,
+          "line": 3,
+          "offset": 29
+        }
+      },
+      "children": [
+        {
+          "construct": "NaturalExpression",
+          "type": "text",
+          "attributes": {},
+          "value": "Something.",
+          "position": {
+            "end": {
+              "column": 33,
+              "line": 3,
+              "offset": 61
+            },
+            "start": {
+              "column": 22,
+              "line": 3,
+              "offset": 50
+            }
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

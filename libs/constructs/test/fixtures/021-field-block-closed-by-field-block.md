@@ -1,5 +1,3 @@
-# Hello World
-
 **Description:**
 
 Block description.

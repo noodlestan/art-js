@@ -2,8 +2,7 @@ import type { ParserVisitContext } from '@art-js/primitives';
 import { nodePosition } from '@art-js/primitives';
 import type { Paragraph, Strong } from 'mdast';
 
-import { createNaturalBlock } from '../../NaturalBlock/private/createNaturalBlock';
-import type { NaturalBlock } from '../../NaturalBlock/private/types';
+import type { Tag } from '../../Tag/private/types';
 
 import { stripStrong } from './stripStrong';
 import type { FieldBlock } from './types';
@@ -11,6 +10,7 @@ import type { FieldBlock } from './types';
 export function createFieldBlockFromParagraph(
 	paragraph: Paragraph,
 	context: ParserVisitContext,
+	tags?: Tag[],
 ): FieldBlock {
 	const strong = paragraph.children[0] as Strong;
 	const inner = stripStrong(strong, context);
@@ -21,15 +21,6 @@ export function createFieldBlockFromParagraph(
 		children: [],
 		position: nodePosition(paragraph),
 	};
-	const remainder = inner.slice(colonIndex + 1);
-	if (remainder)
-		field.children.push({
-			construct: 'NaturalBlock',
-			type: 'text',
-			value: remainder.trim(),
-			position: nodePosition(strong),
-		} as NaturalBlock);
-	for (const child of paragraph.children.slice(1))
-		field.children.push(createNaturalBlock(child, context));
+	if (tags?.length) field.tags = tags;
 	return field;
 }

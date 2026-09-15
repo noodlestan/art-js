@@ -1,11 +1,12 @@
 import type { Paragraph } from 'mdast';
 
+import { rawSlice } from '../../../helpers/rawSlice';
 import type { Construct } from '../../../registry';
+import { extractTags } from '../../Tag/private/extractTags';
 import type { ConstructPreProcessor } from '../../types';
 
 import { createFieldBlockFromParagraph } from './createFieldBlockFromParagraph';
 import { isFieldStrong } from './isFieldStrong';
-import { stripStrong } from './stripStrong';
 export function createFieldBlockPreProcessor(): ConstructPreProcessor {
 	return {
 		preProcess(node, context) {
@@ -14,11 +15,12 @@ export function createFieldBlockPreProcessor(): ConstructPreProcessor {
 			const first = paragraph.children[0];
 			if (first === undefined || !isFieldStrong(first, context)) return null;
 			const strong = first as import('mdast').Strong;
-			const inner = stripStrong(strong, context);
-			const colonIndex = inner.indexOf(':');
-			const remainder = inner.slice(colonIndex + 1);
-			if (remainder.trim().length > 0) return null;
-			return createFieldBlockFromParagraph(node as Paragraph, context) as Construct;
+			const paragraphRaw = rawSlice(paragraph, context);
+			const strongRaw = rawSlice(strong, context);
+			const afterStrong = paragraphRaw.slice(strongRaw.length);
+			const { tags, stripped } = extractTags(afterStrong);
+			if (stripped.trim().length > 0) return null;
+			return createFieldBlockFromParagraph(node as Paragraph, context, tags) as Construct;
 		},
 	};
 }

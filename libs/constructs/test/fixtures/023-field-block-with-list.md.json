@@ -3,8 +3,8 @@
   "position": {
     "end": {
       "column": 1,
-      "line": 14,
-      "offset": 168
+      "line": 5,
+      "offset": 97
     },
     "start": {
       "column": 1,
@@ -14,14 +14,13 @@
   },
   "children": [
     {
-      "construct": "SectionBlock",
-      "name": "Hellow World",
-      "depth": 1,
+      "construct": "FieldBlock",
+      "name": "Dependencies",
       "position": {
         "end": {
-          "column": 15,
+          "column": 18,
           "line": 1,
-          "offset": 14
+          "offset": 17
         },
         "start": {
           "column": 1,
@@ -31,219 +30,144 @@
       },
       "children": [
         {
-          "construct": "FieldBlock",
-          "name": "Dependencies",
+          "construct": "NaturalBlock",
+          "type": "list",
+          "ordered": false,
+          "spread": false,
+          "start": null,
+          "value": "- Package Dependency Set: Build Tools\n- Package Dependency Set: Project Tools",
           "position": {
             "end": {
-              "column": 18,
-              "line": 3,
-              "offset": 33
+              "column": 40,
+              "line": 4,
+              "offset": 96
             },
             "start": {
               "column": 1,
               "line": 3,
-              "offset": 16
+              "offset": 19
             }
           },
           "children": [
             {
               "construct": "NaturalBlock",
-              "type": "list",
-              "ordered": false,
+              "type": "listItem",
+              "checked": null,
               "spread": false,
-              "start": null,
-              "value": "- Package Dependency Set: Build Tools\n- Package Dependency Set: Project Tools",
+              "value": "- Package Dependency Set: Build Tools",
               "position": {
                 "end": {
-                  "column": 40,
-                  "line": 6,
-                  "offset": 112
+                  "column": 38,
+                  "line": 3,
+                  "offset": 56
                 },
                 "start": {
                   "column": 1,
-                  "line": 5,
-                  "offset": 35
+                  "line": 3,
+                  "offset": 19
                 }
               },
               "children": [
                 {
                   "construct": "NaturalBlock",
-                  "type": "listItem",
-                  "checked": null,
-                  "spread": false,
-                  "value": "- Package Dependency Set: Build Tools",
+                  "type": "paragraph",
+                  "value": "Package Dependency Set: Build Tools",
                   "position": {
                     "end": {
                       "column": 38,
-                      "line": 5,
-                      "offset": 72
+                      "line": 3,
+                      "offset": 56
                     },
                     "start": {
-                      "column": 1,
-                      "line": 5,
-                      "offset": 35
+                      "column": 3,
+                      "line": 3,
+                      "offset": 21
                     }
                   },
                   "children": [
                     {
-                      "construct": "NaturalBlock",
-                      "type": "paragraph",
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
                       "value": "Package Dependency Set: Build Tools",
                       "position": {
                         "end": {
                           "column": 38,
-                          "line": 5,
-                          "offset": 72
+                          "line": 3,
+                          "offset": 56
                         },
                         "start": {
                           "column": 3,
-                          "line": 5,
-                          "offset": 37
+                          "line": 3,
+                          "offset": 21
                         }
                       },
-                      "children": [
-                        {
-                          "construct": "NaturalExpression",
-                          "type": "text",
-                          "attributes": {},
-                          "value": "Package Dependency Set: Build Tools",
-                          "position": {
-                            "end": {
-                              "column": 38,
-                              "line": 5,
-                              "offset": 72
-                            },
-                            "start": {
-                              "column": 3,
-                              "line": 5,
-                              "offset": 37
-                            }
-                          },
-                          "children": []
-                        }
-                      ]
+                      "children": []
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "construct": "NaturalBlock",
+              "type": "listItem",
+              "checked": null,
+              "spread": false,
+              "value": "- Package Dependency Set: Project Tools",
+              "position": {
+                "end": {
+                  "column": 40,
+                  "line": 4,
+                  "offset": 96
                 },
+                "start": {
+                  "column": 1,
+                  "line": 4,
+                  "offset": 57
+                }
+              },
+              "children": [
                 {
                   "construct": "NaturalBlock",
-                  "type": "listItem",
-                  "checked": null,
-                  "spread": false,
-                  "value": "- Package Dependency Set: Project Tools",
+                  "type": "paragraph",
+                  "value": "Package Dependency Set: Project Tools",
                   "position": {
                     "end": {
                       "column": 40,
-                      "line": 6,
-                      "offset": 112
+                      "line": 4,
+                      "offset": 96
                     },
                     "start": {
-                      "column": 1,
-                      "line": 6,
-                      "offset": 73
+                      "column": 3,
+                      "line": 4,
+                      "offset": 59
                     }
                   },
                   "children": [
                     {
-                      "construct": "NaturalBlock",
-                      "type": "paragraph",
+                      "construct": "NaturalExpression",
+                      "type": "text",
+                      "attributes": {},
                       "value": "Package Dependency Set: Project Tools",
                       "position": {
                         "end": {
                           "column": 40,
-                          "line": 6,
-                          "offset": 112
+                          "line": 4,
+                          "offset": 96
                         },
                         "start": {
                           "column": 3,
-                          "line": 6,
-                          "offset": 75
+                          "line": 4,
+                          "offset": 59
                         }
                       },
-                      "children": [
-                        {
-                          "construct": "NaturalExpression",
-                          "type": "text",
-                          "attributes": {},
-                          "value": "Package Dependency Set: Project Tools",
-                          "position": {
-                            "end": {
-                              "column": 40,
-                              "line": 6,
-                              "offset": 112
-                            },
-                            "start": {
-                              "column": 3,
-                              "line": 6,
-                              "offset": 75
-                            }
-                          },
-                          "children": []
-                        }
-                      ]
+                      "children": []
                     }
                   ]
                 }
               ]
             }
           ]
-        },
-        {
-          "construct": "FieldInline",
-          "name": "Private",
-          "position": {
-            "end": {
-              "column": 18,
-              "line": 8,
-              "offset": 131
-            },
-            "start": {
-              "column": 1,
-              "line": 8,
-              "offset": 114
-            }
-          },
-          "children": [
-            {
-              "construct": "NaturalExpression",
-              "type": "text",
-              "attributes": {},
-              "value": "true",
-              "position": {
-                "end": {
-                  "column": 18,
-                  "line": 8,
-                  "offset": 131
-                },
-                "start": {
-                  "column": 13,
-                  "line": 8,
-                  "offset": 126
-                }
-              },
-              "children": []
-            }
-          ]
-        },
-        {
-          "construct": "NaturalBlock",
-          "type": "code",
-          "lang": null,
-          "meta": null,
-          "value": "```\nnpm run build\nnpm run test\n```",
-          "position": {
-            "end": {
-              "column": 4,
-              "line": 13,
-              "offset": 167
-            },
-            "start": {
-              "column": 1,
-              "line": 10,
-              "offset": 133
-            }
-          },
-          "children": []
         }
       ]
     }

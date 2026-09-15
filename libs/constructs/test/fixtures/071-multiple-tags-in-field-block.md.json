@@ -4,7 +4,7 @@
     "end": {
       "column": 1,
       "line": 4,
-      "offset": 35
+      "offset": 49
     },
     "start": {
       "column": 1,
@@ -16,11 +16,21 @@
     {
       "construct": "FieldBlock",
       "name": "Description",
+      "tags": [
+        {
+          "construct": "Tag",
+          "name": "foo"
+        },
+        {
+          "construct": "Tag",
+          "name": "bar"
+        }
+      ],
       "position": {
         "end": {
-          "column": 17,
+          "column": 31,
           "line": 1,
-          "offset": 16
+          "offset": 30
         },
         "start": {
           "column": 1,
@@ -37,12 +47,12 @@
             "end": {
               "column": 17,
               "line": 3,
-              "offset": 34
+              "offset": 48
             },
             "start": {
               "column": 1,
               "line": 3,
-              "offset": 18
+              "offset": 32
             }
           },
           "children": [
@@ -55,12 +65,12 @@
                 "end": {
                   "column": 17,
                   "line": 3,
-                  "offset": 34
+                  "offset": 48
                 },
                 "start": {
                   "column": 1,
                   "line": 3,
-                  "offset": 18
+                  "offset": 32
                 }
               },
               "children": []

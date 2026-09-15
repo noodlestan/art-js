@@ -1,0 +1,98 @@
+{
+  "construct": "Document",
+  "position": {
+    "end": {
+      "column": 1,
+      "line": 6,
+      "offset": 57
+    },
+    "start": {
+      "column": 1,
+      "line": 1,
+      "offset": 0
+    }
+  },
+  "children": [
+    {
+      "construct": "SectionBlock",
+      "name": "Hello World",
+      "depth": 1,
+      "position": {
+        "end": {
+          "column": 14,
+          "line": 1,
+          "offset": 13
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        }
+      },
+      "children": [
+        {
+          "construct": "FieldBlock",
+          "name": "Description",
+          "tags": [
+            {
+              "construct": "Tag",
+              "name": "foo"
+            }
+          ],
+          "position": {
+            "end": {
+              "column": 24,
+              "line": 3,
+              "offset": 38
+            },
+            "start": {
+              "column": 1,
+              "line": 3,
+              "offset": 15
+            }
+          },
+          "children": [
+            {
+              "construct": "NaturalBlock",
+              "type": "paragraph",
+              "value": "Next line value.",
+              "position": {
+                "end": {
+                  "column": 17,
+                  "line": 5,
+                  "offset": 56
+                },
+                "start": {
+                  "column": 1,
+                  "line": 5,
+                  "offset": 40
+                }
+              },
+              "children": [
+                {
+                  "construct": "NaturalExpression",
+                  "type": "text",
+                  "attributes": {},
+                  "value": "Next line value.",
+                  "position": {
+                    "end": {
+                      "column": 17,
+                      "line": 5,
+                      "offset": 56
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 5,
+                      "offset": 40
+                    }
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
