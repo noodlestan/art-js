@@ -72,7 +72,7 @@ Execution occurs in `$PROJECT` on branch `main`.
 | ----------------------------------------------------------------------------------------------------------------- | ------- |
 | Iteration: Rename Serializer Types `./plan-refactor-constructs/instructions/rename-serializer-types.md`           | `DONE`  |
 | Iteration: Rename Processor Types `./plan-refactor-constructs/instructions/rename-processor-types.md`             | `DONE`  |
-| Iteration: Rename Integrator Types `./plan-refactor-constructs/instructions/rename-integrator-types.md`           | `READY` |
+| Iteration: Rename Integrator Types `./plan-refactor-constructs/instructions/rename-integrator-types.md`           | `DONE`  |
 | Iteration: Eliminate ConstructCreator `./plan-refactor-constructs/instructions/eliminate-construct-creator.md`    | `READY` |
 | Iteration: Introduce ConstructFactory `./plan-refactor-constructs/instructions/introduce-construct-factory.md`    | `READY` |
 | Iteration: Add Tag and Document Parsers `./plan-refactor-constructs/instructions/add-tag-and-document-parsers.md` | `READY` |
@@ -177,13 +177,15 @@ refactor(constructs): Rename ConstructPreProcessor to ConstructProcessor
 
 **Id:** `rename-integrator-types`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Rename the context-integration entry point so the parser entry point is uniformly `integrator.integrate(context, node, construct)`.
 
 **Description:** Rename `ConstructHandler` to `ConstructIntegrator` and its `handle` method to `integrate`, changing the parameter order to `(context, node, construct)`. Rename the SectionBlock and FieldBlock handler files and update the parser builder dispatch.
 
 **Instructions:** `./plan-refactor-constructs/instructions/rename-integrator-types.md`
+
+**Report:** `./plan-refactor-constructs/instructions/rename-integrator-types__report.md`
 
 **Changes:**
 
@@ -200,9 +202,9 @@ None.
 
 #### Commits:
 
-| ID                        | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `rename-integrator-types` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                        | Repository / Checkout / Branch | Policy       | Hash    | Status      |
+| ------------------------- | ------------------------------ | ------------ | ------- | ----------- |
+| `rename-integrator-types` | $PROJECT / `main`              | `AUTONOMOUS` | e9d906d | `COMMITTED` |
 
 ##### Commit: `rename-integrator-types`
 
