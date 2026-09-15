@@ -26,3 +26,5 @@ export type BlockContent = BlockConstructMap[keyof BlockConstructMap];
 export type InlineContent = InlineConstructMap[keyof InlineConstructMap];
 
 export type Construct = ConstructMap[keyof ConstructMap];
+
+export type { FieldBlock, FieldInline, NaturalBlock, NaturalExpression, SectionBlock, Tag };

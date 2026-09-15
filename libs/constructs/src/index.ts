@@ -1,6 +1,6 @@
 export type { ArtDocument } from './constructs/Document/types';
 
-export type { BlockContent, Construct, InlineContent } from './registry';
+export type * from './registry';
 
 export type {
 	ConstructCreator,
