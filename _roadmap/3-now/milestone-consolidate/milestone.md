@@ -56,7 +56,7 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 | 1     | Plan: Refactoring and ~Test Coverage~ `_backlog/1-done/plan-refactoring-and-test-coverage/plan.md`       | `DONE`      |
 | 1     | Plan: Refactor Tag Extraction `_backlog/1-done/plan-refactor-tag-extraction/plan.md`                     | `DONE`      |
 | 1     | Plan: Refactor Constructs `_backlog/1-done/plan-refactor-constructs/plan.md`                             | `DONE`      |
-| 1     | Plan: Test Coverage `_backlog/4-next/plan-test-coverage/plan.md`                                         | `READY`     |
+| 1     | Plan: Test Coverage `_backlog/1-done/plan-test-coverage/plan.md`                                         | `DONE`      |
 | 1     | Plan: Integrate Feedback and Follow-Ups `_backlog/4-next/plan-integrate-feedback-and-follow-ups/plan.md` | `READY`     |
 | -     |                                                                                                          |             |
 | 2     | Plan: Archive and Publish `_backlog/6-plan/plan-archive-poc-and-publish/plan.md`                         | `PREPARING` |
@@ -66,7 +66,7 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 
 ### Next
 
-Execute `plan-refactor-constructs` (6 iterations `READY`, awaiting delegation) and `plan-integrate-feedback-and-follow-ups` (`READY`).
+Execute `plan-integrate-feedback-and-follow-ups` (`READY`).
 
 ### Blockers
 
