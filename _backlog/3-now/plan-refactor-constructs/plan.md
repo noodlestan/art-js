@@ -103,9 +103,9 @@ None.
 
 #### Commits:
 
-| ID                        | Repository / Checkout / Branch | Policy     | Hash  | Status     |
-| ------------------------- | ------------------------------ | ---------- | ----- | ---------- |
-| `rename-serializer-types` | $PROJECT / `main`              | `NOCOMMIT` | (TBD) | `AUTHORED` |
+| ID                        | Repository / Checkout / Branch | Policy       | Hash  | Status     |
+| ------------------------- | ------------------------------ | ------------ | ----- | ---------- |
+| `rename-serializer-types` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `rename-serializer-types`
 
@@ -150,9 +150,9 @@ None.
 
 #### Commits:
 
-| ID                       | Repository / Checkout / Branch | Policy     | Hash  | Status     |
-| ------------------------ | ------------------------------ | ---------- | ----- | ---------- |
-| `rename-processor-types` | $PROJECT / `main`              | `NOCOMMIT` | (TBD) | `AUTHORED` |
+| ID                       | Repository / Checkout / Branch | Policy       | Hash  | Status     |
+| ------------------------ | ------------------------------ | ------------ | ----- | ---------- |
+| `rename-processor-types` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `rename-processor-types`
 
@@ -196,9 +196,9 @@ None.
 
 #### Commits:
 
-| ID                        | Repository / Checkout / Branch | Policy     | Hash  | Status     |
-| ------------------------- | ------------------------------ | ---------- | ----- | ---------- |
-| `rename-integrator-types` | $PROJECT / `main`              | `NOCOMMIT` | (TBD) | `AUTHORED` |
+| ID                        | Repository / Checkout / Branch | Policy       | Hash  | Status     |
+| ------------------------- | ------------------------------ | ------------ | ----- | ---------- |
+| `rename-integrator-types` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `rename-integrator-types`
 
@@ -243,9 +243,9 @@ refactor(constructs): Rename ConstructHandler to ConstructIntegrator
 
 #### Commits:
 
-| ID                            | Repository / Checkout / Branch | Policy     | Hash  | Status     |
-| ----------------------------- | ------------------------------ | ---------- | ----- | ---------- |
-| `eliminate-construct-creator` | $PROJECT / `main`              | `NOCOMMIT` | (TBD) | `AUTHORED` |
+| ID                            | Repository / Checkout / Branch | Policy       | Hash  | Status     |
+| ----------------------------- | ------------------------------ | ------------ | ----- | ---------- |
+| `eliminate-construct-creator` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `eliminate-construct-creator`
 
@@ -296,9 +296,9 @@ refactor(constructs): Eliminate ConstructCreator in favor of processors
 
 #### Commits:
 
-| ID                            | Repository / Checkout / Branch | Policy     | Hash  | Status     |
-| ----------------------------- | ------------------------------ | ---------- | ----- | ---------- |
-| `introduce-construct-factory` | $PROJECT / `main`              | `NOCOMMIT` | (TBD) | `AUTHORED` |
+| ID                            | Repository / Checkout / Branch | Policy       | Hash  | Status     |
+| ----------------------------- | ------------------------------ | ------------ | ----- | ---------- |
+| `introduce-construct-factory` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `introduce-construct-factory`
 
@@ -339,9 +339,9 @@ feat(constructs): Introduce ConstructFactory fromData entry point
 
 #### Commits:
 
-| ID                             | Repository / Checkout / Branch | Policy     | Hash  | Status     |
-| ------------------------------ | ------------------------------ | ---------- | ----- | ---------- |
-| `add-tag-and-document-parsers` | $PROJECT / `main`              | `NOCOMMIT` | (TBD) | `AUTHORED` |
+| ID                             | Repository / Checkout / Branch | Policy       | Hash  | Status     |
+| ------------------------------ | ------------------------------ | ------------ | ----- | ---------- |
+| `add-tag-and-document-parsers` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `add-tag-and-document-parsers`
 

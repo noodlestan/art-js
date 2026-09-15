@@ -350,7 +350,7 @@ Follow the Tag example — `export interface {Name}FactoryData` declared just ab
 
 ### Step 5 of 6 — Commit `introduce-construct-factory`
 
-**Policy:** `NOCOMMIT` — Agent MUST stage the changes, present status and the commit message, and MUST NOT execute the commit. When working in autonomous mode it must stop and MUST REPORT A BLOCKER.
+**Policy:**`AUTONOMOUS` — Agent should commit autonomously, push, and proceed to the next step.
 
 **Message:**
 
