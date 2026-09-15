@@ -18,4 +18,24 @@ describe('createFieldBlockIntegrator', () => {
 		const result = integrator.integrate(context, {} as never, field as never);
 		expect(result).toBeDefined();
 	});
+
+	it('onBeforeConstruct returns the same context for non-boundary constructs', async () => {
+		const { createFieldBlockIntegrator } = await import('./createFieldBlockIntegrator');
+		const integrator = createFieldBlockIntegrator();
+		const context = makeDocumentContext() as never;
+		const naturalBlock = { construct: 'NaturalBlock', value: 'hello', children: [] };
+		const result = integrator.integrate(context, {} as never, naturalBlock as never);
+		const after = result.onBeforeConstruct(naturalBlock as never);
+		expect(after).toBe(result);
+	});
+
+	it('onBeforeConstruct returns the parent context for boundary constructs', async () => {
+		const { createFieldBlockIntegrator } = await import('./createFieldBlockIntegrator');
+		const integrator = createFieldBlockIntegrator();
+		const parentContext = makeDocumentContext() as never;
+		const sectionBlock = { construct: 'SectionBlock', name: 'Test', children: [] };
+		const result = integrator.integrate(parentContext, {} as never, sectionBlock as never);
+		const after = result.onBeforeConstruct(sectionBlock as never);
+		expect(after).toBe(parentContext);
+	});
 });

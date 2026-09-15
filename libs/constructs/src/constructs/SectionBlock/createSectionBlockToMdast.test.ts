@@ -56,4 +56,25 @@ describe('createSectionBlockToMdast', () => {
 			],
 		});
 	});
+
+	it('includes tags in the heading text when present', () => {
+		const impl = createSectionBlockToMdast();
+		const result = impl.toMdast(
+			{
+				construct: 'SectionBlock',
+				name: 'Hello',
+				depth: 1,
+				tags: [{ construct: 'Tag', name: 'test' }],
+			} as never,
+			[],
+		);
+		expect(stripPositions(result)).toEqual({
+			type: 'heading',
+			depth: 1,
+			children: [
+				{ type: 'text', value: 'Hello' },
+				{ type: 'text', value: ' (#test)' },
+			],
+		});
+	});
 });

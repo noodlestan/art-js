@@ -51,4 +51,18 @@ describe('extractTags', () => {
 			stripped: 'Hello there   ',
 		});
 	});
+
+	it('returns empty tags when text is only a tag with no preceding text', () => {
+		expect(extractTags('(#tag)')).toEqual({
+			tags: [],
+			stripped: '(#tag)',
+		});
+	});
+
+	it('returns empty tags for empty string', () => {
+		expect(extractTags('')).toEqual({
+			tags: [],
+			stripped: '',
+		});
+	});
 });

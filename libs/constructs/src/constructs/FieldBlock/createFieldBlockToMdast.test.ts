@@ -13,4 +13,23 @@ describe('createFieldBlockToMdast', () => {
 			children: [{ type: 'strong', children: [{ type: 'text', value: 'Purpose:' }] }],
 		});
 	});
+
+	it('includes tags when present', () => {
+		const impl = createFieldBlockToMdast();
+		const result = impl.toMdast(
+			{
+				construct: 'FieldBlock',
+				name: 'Purpose',
+				tags: [{ construct: 'Tag', name: 'test' }],
+			} as never,
+			[],
+		);
+		expect(result).toEqual({
+			type: 'paragraph',
+			children: [
+				{ type: 'strong', children: [{ type: 'text', value: 'Purpose:' }] },
+				{ type: 'text', value: ' (#test)' },
+			],
+		});
+	});
 });

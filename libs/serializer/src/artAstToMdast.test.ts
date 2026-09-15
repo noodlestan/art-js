@@ -24,4 +24,18 @@ describe('artAstToMdast', () => {
 		const document = { construct: 'Document', children: [{ construct: 'Unknown' }] };
 		expect(() => artAstToMdast(config, document as never)).toThrow('Unknown construct: Unknown');
 	});
+
+	it('handles constructs with value array', () => {
+		const config = {
+			constructs: [
+				() => ({
+					name: 'Custom',
+					toMdast: () => ({ type: 'paragraph', children: [] }),
+				}),
+			],
+		};
+		const document = { construct: 'Document', children: [{ construct: 'Custom', value: [] }] };
+		const result = artAstToMdast(config, document as never);
+		expect(result).toEqual({ type: 'root', children: [{ type: 'paragraph', children: [] }] });
+	});
 });

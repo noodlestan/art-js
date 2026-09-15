@@ -27,4 +27,17 @@ describe('nodePosition', () => {
 			'Expected source position for text',
 		);
 	});
+
+	it('defaults to 0 when offset is missing', () => {
+		const node = {
+			type: 'text',
+			position: {
+				start: { line: 1, column: 1 },
+				end: { line: 1, column: 6 },
+			},
+		};
+		const result = nodePosition(node);
+		expect(result.start.offset).toBe(0);
+		expect(result.end.offset).toBe(0);
+	});
 });

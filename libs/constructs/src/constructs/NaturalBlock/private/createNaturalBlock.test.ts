@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { extractTags } from '../../Tag/private/extractTags';
+
 vi.mock('@art-js/primitives', async () => {
 	const { makeNodePositionMock } =
 		await import('../../../test/helpers/primitives/makeNodePositionMock');
@@ -35,5 +37,55 @@ describe('createNaturalBlock', () => {
 		const result = createNaturalBlock(node as never, context);
 		expect(result.construct).toBe('NaturalBlock');
 		expect(result.value).toBe('hello');
+	});
+
+	it('creates a NaturalBlock without children for nodes that have no children', async () => {
+		const { createNaturalBlock } = await import('./createNaturalBlock');
+		const node = { type: 'thematicBreak' };
+		const context = { markdown: '' } as never;
+		const result = createNaturalBlock(node as never, context);
+		expect(result.construct).toBe('NaturalBlock');
+		expect(result.children).toEqual([]);
+	});
+
+	it('treats heading children as phrasing content', async () => {
+		const { createNaturalBlock } = await import('./createNaturalBlock');
+		const node = {
+			type: 'heading',
+			depth: 1,
+			children: [{ type: 'text', value: 'Title' }],
+		};
+		const context = { markdown: '' } as never;
+		const result = createNaturalBlock(node as never, context);
+		expect(result.construct).toBe('NaturalBlock');
+		expect(result.children).toHaveLength(1);
+		expect(result.children[0]).toMatchObject({ construct: 'NaturalExpression' });
+	});
+
+	it('does not extract tags when last child is not text', async () => {
+		vi.mocked(extractTags).mockReturnValue({ tags: [], stripped: 'hello' });
+		const { createNaturalBlock } = await import('./createNaturalBlock');
+		const node = {
+			type: 'paragraph',
+			children: [{ type: 'strong', children: [] }],
+		};
+		const context = { markdown: '' } as never;
+		const result = createNaturalBlock(node as never, context);
+		expect(result.tags).toBeUndefined();
+	});
+
+	it('extracts tags when last text child has trailing tags', async () => {
+		vi.mocked(extractTags).mockReturnValue({
+			tags: [{ construct: 'Tag', name: 'test' }],
+			stripped: 'hello',
+		});
+		const { createNaturalBlock } = await import('./createNaturalBlock');
+		const node = {
+			type: 'paragraph',
+			children: [{ type: 'text', value: 'hello (#test)' }],
+		};
+		const context = { markdown: '' } as never;
+		const result = createNaturalBlock(node as never, context);
+		expect(result.tags).toHaveLength(1);
 	});
 });

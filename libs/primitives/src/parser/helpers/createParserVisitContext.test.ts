@@ -36,4 +36,10 @@ describe('createParserVisitContext', () => {
 		expect(childCtx.markdown).toBe('parent-md');
 		expect(childCtx.parent()).toBe(parentCtx);
 	});
+
+	it('defaults to empty string when markdown and parent context are not provided', () => {
+		const construct = { construct: 'Document', children: [] };
+		const ctx = createParserVisitContext(construct, undefined);
+		expect(ctx.markdown).toBe('');
+	});
 });
