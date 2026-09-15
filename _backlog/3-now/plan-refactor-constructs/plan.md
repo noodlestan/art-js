@@ -2,7 +2,7 @@
 
 **Id:** `refactor-constructs`
 
-**Status:** `PLANNING`
+**Status:** `WORKING`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -70,7 +70,7 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 | Iteration / Instructions                                                                                          | Status  |
 | ----------------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Rename Serializer Types `./plan-refactor-constructs/instructions/rename-serializer-types.md`           | `READY` |
+| Iteration: Rename Serializer Types `./plan-refactor-constructs/instructions/rename-serializer-types.md`           | `DONE`  |
 | Iteration: Rename Processor Types `./plan-refactor-constructs/instructions/rename-processor-types.md`             | `READY` |
 | Iteration: Rename Integrator Types `./plan-refactor-constructs/instructions/rename-integrator-types.md`           | `READY` |
 | Iteration: Eliminate ConstructCreator `./plan-refactor-constructs/instructions/eliminate-construct-creator.md`    | `READY` |
@@ -81,13 +81,15 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 **Id:** `rename-serializer-types`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Rename the serializer types and their discriminator so serializers are identified by `name` like every other construct API surface.
 
 **Description:** Rename `ConstructToMdast` to `ConstructSerializer` and `ConstructToMdastFactory` to `ConstructSerializerFactory`, and rename the `construct` discriminator to `readonly name` across all serializer factories, the serializer config, and the serializer registry.
 
 **Instructions:** `./plan-refactor-constructs/instructions/rename-serializer-types.md`
+
+**Report:** `./plan-refactor-constructs/instructions/rename-serializer-types__report.md`
 
 **Changes:**
 
@@ -103,9 +105,9 @@ None.
 
 #### Commits:
 
-| ID                        | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `rename-serializer-types` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                        | Repository / Checkout / Branch | Policy       | Hash    | Status      |
+| ------------------------- | ------------------------------ | ------------ | ------- | ----------- |
+| `rename-serializer-types` | $PROJECT / `main`              | `AUTONOMOUS` | ec37653 | `COMMITTED` |
 
 ##### Commit: `rename-serializer-types`
 
