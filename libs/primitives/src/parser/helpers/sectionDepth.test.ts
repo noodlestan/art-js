@@ -4,10 +4,12 @@ import { sectionDepth } from './sectionDepth';
 
 describe('sectionDepth', () => {
 	it('returns the depth when provided', () => {
-		expect(sectionDepth({ depth: 3 })).toBe(3);
+		const result = sectionDepth({ depth: 3 });
+		expect(result).toBe(3);
 	});
 
 	it('defaults to 1 when depth is missing', () => {
-		expect(sectionDepth({})).toBe(1);
+		const result = sectionDepth({});
+		expect(result).toBe(1);
 	});
 });

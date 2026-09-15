@@ -12,13 +12,15 @@ describe('rawSlice', () => {
 			},
 		};
 		const context = { markdown: 'Hello world' } as never;
-		expect(rawSlice(node, context)).toBe('Hello');
+		const result = rawSlice(node, context);
+		expect(result).toBe('Hello');
 	});
 
 	it('returns empty string when node lacks position', () => {
 		const node = { type: 'text' };
 		const context = { markdown: 'Hello world' } as never;
-		expect(rawSlice(node, context)).toBe('');
+		const result = rawSlice(node, context);
+		expect(result).toBe('');
 	});
 
 	it('returns empty string when node lacks position end', () => {
@@ -29,6 +31,7 @@ describe('rawSlice', () => {
 			},
 		} as never;
 		const context = { markdown: 'Hello world' } as never;
-		expect(rawSlice(node, context)).toBe('');
+		const result = rawSlice(node, context);
+		expect(result).toBe('');
 	});
 });

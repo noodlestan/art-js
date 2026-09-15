@@ -9,7 +9,8 @@ describe('findTagable', () => {
 			construct: section,
 			parent: () => undefined,
 		} as never;
-		expect(findTagable(context)).toBe(section);
+		const result = findTagable(context);
+		expect(result).toBe(section);
 	});
 
 	it('returns undefined when no section block is found', () => {
@@ -17,7 +18,8 @@ describe('findTagable', () => {
 			construct: { construct: 'Document', children: [] },
 			parent: () => undefined,
 		} as never;
-		expect(findTagable(context)).toBeUndefined();
+		const result = findTagable(context);
+		expect(result).toBeUndefined();
 	});
 
 	it('walks up the parent chain', () => {
@@ -30,6 +32,7 @@ describe('findTagable', () => {
 			construct: { construct: 'FieldBlock', name: 'Test', children: [] },
 			parent: () => parent,
 		} as never;
-		expect(findTagable(context)).toBe(section);
+		const result = findTagable(context);
+		expect(result).toBe(section);
 	});
 });

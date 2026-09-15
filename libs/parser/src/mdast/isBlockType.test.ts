@@ -4,11 +4,14 @@ import { isBlockType } from './isBlockType';
 
 describe('isBlockType', () => {
 	it('returns true for known block types', () => {
-		expect(isBlockType('paragraph')).toBe(true);
-		expect(isBlockType('code')).toBe(true);
+		const resultParagraph = isBlockType('paragraph');
+		const resultCode = isBlockType('code');
+		expect(resultParagraph).toBe(true);
+		expect(resultCode).toBe(true);
 	});
 
 	it('returns false for unknown block types', () => {
-		expect(isBlockType('unknown')).toBe(false);
+		const result = isBlockType('unknown');
+		expect(result).toBe(false);
 	});
 });

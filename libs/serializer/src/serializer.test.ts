@@ -97,7 +97,8 @@ describe('serialize', () => {
 				},
 			],
 		};
+		const result = serialize(doc);
 
-		expect(serialize(doc)).toBe('# Hello World\n\n## Details\n');
+		expect(result).toBe('# Hello World\n\n## Details\n');
 	});
 });

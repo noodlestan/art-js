@@ -6,7 +6,7 @@ import { createFieldInlineProcessor } from './createFieldInlineProcessor';
 
 describe('createFieldInlineProcessor', () => {
 	it('captures inline field values from paragraph siblings after the label', () => {
-		const impl = createFieldInlineProcessor();
+		const processor = createFieldInlineProcessor();
 		const markdown = '# Hello World\n\n**Greeting:** Hello world.';
 		const tree = fromMarkdown(markdown);
 		const paragraph = tree.children[1] as never;
@@ -15,8 +15,9 @@ describe('createFieldInlineProcessor', () => {
 			undefined,
 			markdown,
 		);
+		const result = processor.captureNode(context, paragraph);
 
-		expect(impl.captureNode(context, paragraph)).toMatchObject({
+		expect(result).toMatchObject({
 			construct: 'FieldInline',
 			name: 'Greeting',
 			children: [
@@ -34,7 +35,7 @@ describe('createFieldInlineProcessor', () => {
 	});
 
 	it('preserves inline child types in the field children', () => {
-		const impl = createFieldInlineProcessor();
+		const processor = createFieldInlineProcessor();
 		const markdown = '# Hello World\n\n**Remote:** `git@example.com`';
 		const tree = fromMarkdown(markdown);
 		const paragraph = tree.children[1] as never;
@@ -43,8 +44,9 @@ describe('createFieldInlineProcessor', () => {
 			undefined,
 			markdown,
 		);
+		const result = processor.captureNode(context, paragraph);
 
-		expect(impl.captureNode(context, paragraph)).toMatchObject({
+		expect(result).toMatchObject({
 			construct: 'FieldInline',
 			name: 'Remote',
 			children: [
@@ -58,7 +60,7 @@ describe('createFieldInlineProcessor', () => {
 	});
 
 	it('extracts tags and strips it from the last text child', () => {
-		const impl = createFieldInlineProcessor();
+		const processor = createFieldInlineProcessor();
 		const markdown = '# Hello World\n\n**Greeting:** Hello there (#friend)';
 		const tree = fromMarkdown(markdown);
 		const paragraph = tree.children[1] as never;
@@ -67,8 +69,9 @@ describe('createFieldInlineProcessor', () => {
 			undefined,
 			markdown,
 		);
+		const result = processor.captureNode(context, paragraph);
 
-		expect(impl.captureNode(context, paragraph)).toMatchObject({
+		expect(result).toMatchObject({
 			construct: 'FieldInline',
 			name: 'Greeting',
 			tags: [{ construct: 'Tag', name: 'friend' }],
