@@ -2,7 +2,7 @@
 
 **Id:** `refactor-tag-extraction`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -67,12 +67,13 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                                                  | Status  |
-| ------------------------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Strip Tag Construct to Helpers `./plan-refactor-tag-extraction/instructions/strip-tag-construct-to-helpers.md` | `DONE`  |
-| Iteration: Make FieldInline Taggable `./plan-refactor-tag-extraction/instructions/make-field-inline-taggable.md`          | `DONE`  |
-| Iteration: Apply Taggable Pattern to NaturalBlock                                                                         | `DRAFT` |
-| Iteration: Apply Taggable Pattern to SectionBlock                                                                         | `DRAFT` |
+| Iteration / Instructions                                                                                                  | Status |
+| ------------------------------------------------------------------------------------------------------------------------- | ------ |
+| Iteration: Strip Tag Construct to Helpers `./plan-refactor-tag-extraction/instructions/strip-tag-construct-to-helpers.md` | `DONE` |
+| Iteration: Make FieldInline Taggable `./plan-refactor-tag-extraction/instructions/make-field-inline-taggable.md`          | `DONE` |
+| Iteration: Apply Taggable Pattern to NaturalBlock                                                                         | `DONE` |
+| Iteration: Apply Taggable Pattern to SectionBlock                                                                         | `DONE` |
+| Iteration: Apply Taggable Pattern to FieldBlock                                                                           | `DONE` |
 
 ### Iteration: Strip Tag Construct to Helpers
 
@@ -233,7 +234,7 @@ feat(constructs): Make FieldInline taggable.
 
 **Id:** `apply-taggable-pattern-to-natural-block`
 
-**Status:** `DRAFT`
+**Status:** `DONE`
 
 **Purpose:** Apply the taggable pattern to NaturalBlock.
 
@@ -241,20 +242,42 @@ feat(constructs): Make FieldInline taggable.
 
 **Changes:**
 
-- Streamline NaturalBlock creation paths.
-- Consume `extractTags` on the paragraph text; attach `tags` to the NaturalBlock.
-- Keep the snippet text unchanged (tags stay in the text; `tags[]` is a derived index).
+- Add `tags?: Tag[]` to NaturalBlock type.
+- Extract tags in `createNaturalBlock` from the last text child, preserving formatting as children.
+- Serialize tags via `tagsToMdast` in `createNaturalBlockToMdast`.
+- Align fixtures (050/051/052) for single, plural, nested, and invalid tagged content.
 
 **Dependencies:**
 
 - Iteration: Strip Tag Construct to Helpers.
 - Iteration: Make FieldInline Taggable.
 
+#### Commits:
+
+| ID                       | Repository / Checkout / Branch | Policy   | Hash      | Status      |
+| ------------------------ | ------------------------------ | -------- | --------- | ----------- |
+| `taggable-natural-block` | $PROJECT / `main`              | `MANUAL` | `09cfd99` | `COMMITTED` |
+
+##### Commit: `taggable-natural-block`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+build(constructs): Make NaturalBlock taggable.
+
+- Add tags?: Tag[] to NaturalBlock type.
+- Extract tags createNaturalBlock, preserving formatting as children.
+- Serialize tags via tagsToMdast output in createNaturalBlockToMdast.
+- Align fixtures for all tagged content to test single, plural, nested, and invalid.
+```
+
 ### Iteration: Apply Taggable Pattern to SectionBlock
 
 **Id:** `apply-taggable-pattern-to-section-block`
 
-**Status:** `DRAFT`
+**Status:** `DONE`
 
 **Purpose:** Apply the taggable pattern to SectionBlock.
 
@@ -264,18 +287,84 @@ feat(constructs): Make FieldInline taggable.
 
 - Remove `extractEndTags` from `createSectionBlockCreator.ts`; consume `extractTags` for name stripping and tags.
 - Replace inline `tagSyntax` in `createSectionBlockToMdast.ts` with `tagsToMdast`.
-- Regenerate affected snapshots (040/042/043 tags gain position).
+- Align fixtures (040/041/042/043) for single, plural, nested, and invalid tagged content.
 
 **Dependencies:**
 
 - Iteration: Strip Tag Construct to Helpers.
 - Iteration: Make FieldInline Taggable.
 
+#### Commits:
+
+| ID                                        | Repository / Checkout / Branch | Policy     | Hash      | Status      |
+| ----------------------------------------- | ------------------------------ | ---------- | --------- | ----------- |
+| `apply-taggable-pattern-to-section-block` | $PROJECT / `main`              | `NOCOMMIT` | `bd08974` | `COMMITTED` |
+
+##### Commit: `apply-taggable-pattern-to-section-block`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+refactor(constructs): Apply taggable pattern to SectionBlock
+
+- Replace extractEndTags with shared extractTags in createSectionBlockCreator
+- Replace inline tagSyntax with tagsToMdast in createSectionBlockToMdast
+- Align taggable fixtures.
+```
+
+### Iteration: Apply Taggable Pattern to FieldBlock
+
+**Id:** `apply-taggable-pattern-to-field-block`
+
+**Status:** `DONE`
+
+**Purpose:** Apply the taggable pattern to FieldBlock.
+
+**Description:** FieldBlock tags work the same as SectionBlock tags. A tag present in the field name paragraph must not prevent field block detection; the tags are captured and applied to the field block. The field block is still detected when the content after `**FieldName:**` is only tags.
+
+**Changes:**
+
+- Add `tags?: Tag[]` to FieldBlock type.
+- Detect field block when the content after the field name is only tags (consume `extractTags` in `createFieldBlockPreProcessor`).
+- Let FieldBlock win over FieldInline when the content after the field name is only tags (return null in `createFieldInlinePreProcessor`).
+- Capture tags in `createFieldBlockFromParagraph` and apply them to the field block.
+- Serialize tags via `tagsToMdast` in `createFieldBlockToMdast`.
+- Add FieldBlock fixtures (070/071/072) for single, plural, and nested tagged content. A valid-and-invalid case is not relevant: `FIELD_TEXT_PATTERN` rejects a field name containing a tag-like sequence, so detection does not go through.
+
+**Dependencies:**
+
+- Iteration: Apply Taggable Pattern to NaturalBlock.
+
+#### Commits:
+
+| ID                                      | Repository / Checkout / Branch | Policy     | Hash      | Status      |
+| --------------------------------------- | ------------------------------ | ---------- | --------- | ----------- |
+| `apply-taggable-pattern-to-field-block` | $PROJECT / `main`              | `NOCOMMIT` | `7d5ce8b` | `COMMITTED` |
+
+##### Commit: `apply-taggable-pattern-to-field-block`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+feat(constructs): Apply taggable pattern to FieldBlock
+
+- Add tags?: Tag[] to FieldBlock type.
+- Detect FieldBlock when content after field name is only tags.
+- Return null in FieldInline preProcessor when content is only tags.
+- Serialize tags via tagsToMdast in createFieldBlockToMdast.
+- Add tags in FieldBlock fixtures (07x).
+- Add fixtures to FieldBlock and FieldInline for completeness.
+```
+
 ## Work
 
 ### Next
 
-Delegate iteration `strip-tag-construct-to-helpers` (NOCOMMIT).
+All iterations done. Plan complete.
 
 ### Blockers
 
