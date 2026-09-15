@@ -71,7 +71,7 @@ Execution occurs in `$PROJECT` on branch `main`.
 | Iteration / Instructions                                                                                          | Status  |
 | ----------------------------------------------------------------------------------------------------------------- | ------- |
 | Iteration: Rename Serializer Types `./plan-refactor-constructs/instructions/rename-serializer-types.md`           | `DONE`  |
-| Iteration: Rename Processor Types `./plan-refactor-constructs/instructions/rename-processor-types.md`             | `READY` |
+| Iteration: Rename Processor Types `./plan-refactor-constructs/instructions/rename-processor-types.md`             | `DONE`  |
 | Iteration: Rename Integrator Types `./plan-refactor-constructs/instructions/rename-integrator-types.md`           | `READY` |
 | Iteration: Eliminate ConstructCreator `./plan-refactor-constructs/instructions/eliminate-construct-creator.md`    | `READY` |
 | Iteration: Introduce ConstructFactory `./plan-refactor-constructs/instructions/introduce-construct-factory.md`    | `READY` |
@@ -128,13 +128,15 @@ refactor(constructs): Rename ConstructToMdast to ConstructSerializer
 
 **Id:** `rename-processor-types`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Rename the detection/creation entry point so the parser entry point is uniformly `processor.captureNode(context, node)`.
 
 **Description:** Rename `ConstructPreProcessor` to `ConstructProcessor` and its `preProcess` method to `captureNode`, changing the parameter order to `(context, node)`. Rename the FieldBlock and FieldInline pre-processor files and update the parser builder dispatch.
 
 **Instructions:** `./plan-refactor-constructs/instructions/rename-processor-types.md`
+
+**Report:** `./plan-refactor-constructs/instructions/rename-processor-types__report.md`
 
 **Changes:**
 
@@ -152,9 +154,9 @@ None.
 
 #### Commits:
 
-| ID                       | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------------ | ------------------------------ | ------------ | ----- | ---------- |
-| `rename-processor-types` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                       | Repository / Checkout / Branch | Policy       | Hash    | Status      |
+| ------------------------ | ------------------------------ | ------------ | ------- | ----------- |
+| `rename-processor-types` | $PROJECT / `main`              | `AUTONOMOUS` | 786dfec | `COMMITTED` |
 
 ##### Commit: `rename-processor-types`
 
