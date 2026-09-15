@@ -1,31 +1,25 @@
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('@art-js/primitives', () => ({
-	createParserVisitContext: vi.fn((construct, parentContext) => ({
-		construct,
-		parent: () => parentContext,
-		captureChildConstruct: vi.fn(),
-		onBeforeConstruct: vi.fn(() => ({})),
-		markdown: '',
-	})),
-	sectionDepth: vi.fn(section => section.depth ?? 1),
-}));
+import { makeDocumentContext } from '../../../test/helpers/context/makeDocumentContext';
 
-vi.mock('./findTagable', () => ({
-	findTagable: vi.fn(ctx => ctx.construct),
-}));
+vi.mock('@art-js/primitives', async () => {
+	const { makeParserVisitContextMock } =
+		await import('../../../test/helpers/primitives/makeParserVisitContextMock');
+	return makeParserVisitContextMock({ includeSectionDepth: true });
+});
+
+vi.mock('./findTagable', async () => {
+	const { makeFindTagableMock } =
+		await import('../../../test/helpers/findTagable/makeFindTagableMock');
+	return makeFindTagableMock();
+});
 
 describe('createSectionBlockIntegrator', () => {
 	it('returns an integrator that captures the construct and returns a new context', async () => {
 		const { createSectionBlockIntegrator } = await import('./createSectionBlockIntegrator');
 		const integrator = createSectionBlockIntegrator();
 		expect(integrator.integrate).toBeInstanceOf(Function);
-		const context = {
-			construct: { construct: 'Document', children: [] },
-			captureChildConstruct: vi.fn(),
-			parent: () => undefined,
-			markdown: '',
-		} as never;
+		const context = makeDocumentContext() as never;
 		const section = { construct: 'SectionBlock', name: 'Test', children: [] };
 		const result = integrator.integrate(
 			context,

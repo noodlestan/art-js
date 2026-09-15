@@ -1,19 +1,21 @@
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('@art-js/primitives', () => ({
-	nodePosition: vi.fn(() => ({
-		start: { line: 1, column: 1, offset: 0 },
-		end: { line: 1, column: 1, offset: 0 },
-	})),
-}));
+vi.mock('@art-js/primitives', async () => {
+	const { makeNodePositionMock } =
+		await import('../../../test/helpers/primitives/makeNodePositionMock');
+	return makeNodePositionMock();
+});
 
-vi.mock('../../../helpers/rawSlice', () => ({
-	rawSlice: vi.fn(() => '# Hello World'),
-}));
+vi.mock('../../../helpers/rawSlice', async () => {
+	const { makeRawSliceMock } = await import('../../../test/helpers/rawSlice/makeRawSliceMock');
+	return makeRawSliceMock('# Hello World');
+});
 
-vi.mock('../../Tag/private/extractTags', () => ({
-	extractTags: vi.fn(() => ({ tags: [], stripped: 'Hello World' })),
-}));
+vi.mock('../../Tag/private/extractTags', async () => {
+	const { makeExtractTagsMock } =
+		await import('../../../test/helpers/extractTags/makeExtractTagsMock');
+	return makeExtractTagsMock([], 'Hello World');
+});
 
 describe('createSectionBlockProcessor', () => {
 	it('returns a processor that captures a heading node', async () => {

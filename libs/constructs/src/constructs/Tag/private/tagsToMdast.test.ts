@@ -1,8 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('./tagToMdast', () => ({
-	tagToMdast: vi.fn(tag => ({ type: 'text', value: `(#${tag.name})` })),
-}));
+vi.mock('./tagToMdast', async () => {
+	const { makeTagToMdastMock } =
+		await import('../../../test/helpers/tagToMdast/makeTagToMdastMock');
+	return makeTagToMdastMock();
+});
 
 describe('tagsToMdast', () => {
 	it('joins tag values into a text node', async () => {

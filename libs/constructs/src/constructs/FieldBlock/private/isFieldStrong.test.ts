@@ -2,9 +2,11 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { isFieldStrong } from './isFieldStrong';
 
-vi.mock('./stripStrong', () => ({
-	stripStrong: vi.fn(() => 'Purpose:'),
-}));
+vi.mock('./stripStrong', async () => {
+	const { makeStripStrongMock } =
+		await import('../../../test/helpers/stripStrong/makeStripStrongMock');
+	return makeStripStrongMock('Purpose:');
+});
 
 describe('isFieldStrong', () => {
 	it('returns true for a strong node matching field pattern', () => {

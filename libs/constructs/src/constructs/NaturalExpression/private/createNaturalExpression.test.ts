@@ -1,11 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('@art-js/primitives/src/parser/helpers', () => ({
-	nodePosition: vi.fn(() => ({
-		start: { line: 1, column: 1, offset: 0 },
-		end: { line: 1, column: 1, offset: 0 },
-	})),
-}));
+vi.mock('@art-js/primitives/src/parser/helpers', async () => {
+	const { makeNodePositionMock } =
+		await import('../../../test/helpers/primitives/makeNodePositionMock');
+	return makeNodePositionMock();
+});
 
 describe('createNaturalExpression', () => {
 	it('creates a NaturalExpression from a node', async () => {

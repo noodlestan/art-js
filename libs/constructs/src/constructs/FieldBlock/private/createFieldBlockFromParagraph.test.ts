@@ -1,15 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('@art-js/primitives', () => ({
-	nodePosition: vi.fn(() => ({
-		start: { line: 1, column: 1, offset: 0 },
-		end: { line: 1, column: 1, offset: 0 },
-	})),
-}));
+vi.mock('@art-js/primitives', async () => {
+	const { makeNodePositionMock } =
+		await import('../../../test/helpers/primitives/makeNodePositionMock');
+	return makeNodePositionMock();
+});
 
-vi.mock('./stripStrong', () => ({
-	stripStrong: vi.fn(() => 'Purpose:'),
-}));
+vi.mock('./stripStrong', async () => {
+	const { makeStripStrongMock } =
+		await import('../../../test/helpers/stripStrong/makeStripStrongMock');
+	return makeStripStrongMock('Purpose:');
+});
 
 describe('createFieldBlockFromParagraph', () => {
 	it('creates a FieldBlock from a paragraph', async () => {

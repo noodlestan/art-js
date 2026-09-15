@@ -1,11 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('@art-js/primitives', () => ({
-	nodePosition: vi.fn(() => ({
-		start: { line: 1, column: 1, offset: 0 },
-		end: { line: 1, column: 1, offset: 0 },
-	})),
-}));
+vi.mock('@art-js/primitives', async () => {
+	const { makeNodePositionMock } =
+		await import('../../test/helpers/primitives/makeNodePositionMock');
+	return makeNodePositionMock();
+});
 
 describe('createDocument', () => {
 	it('creates an ArtDocument from a root node', async () => {
