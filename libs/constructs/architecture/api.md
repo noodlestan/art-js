@@ -4,7 +4,7 @@ The `@art-js/constructs` package defines the **contract** that binds the parser 
 
 ## Construct Parser API
 
-The parser depends on three interfaces, each representing a stage in the parse pipeline:
+The parser depends on two interfaces, each representing a stage in the parse pipeline:
 
 ### `ConstructProcessor`
 
@@ -14,18 +14,7 @@ interface ConstructProcessor {
 }
 ```
 
-Runs **before** the factory layer. A processor can claim an entire mdast node immediately and return a Construct record. Used by constructs that need to intercept a node before generic detection (e.g. `FieldInline` detecting **Name:** patterns in paragraphs). Returns `null` to pass through to the factory layer.
-
-### `ConstructCreator`
-
-```ts
-interface ConstructCreator {
-  detect(node: MdastNode, context: VisitContext): boolean;
-  create(node: MdastNode, context: VisitContext): Construct | Construct[];
-}
-```
-
-The factory interface. `detect()` answers "can I handle this node?" — if true, `create()` builds the `Construct` record. Multiple factories are consulted in order; the first match wins. If none match, the parser falls back to its default construct.
+Claims an entire mdast node immediately and returns a Construct record. Used by constructs that detect and capture in one pass (e.g. `FieldInline` detecting **Name:** patterns in paragraphs, or `SectionBlock` matching heading nodes). Returns `null` to pass through to the next construct.
 
 ### `ConstructHandler`
 
@@ -43,11 +32,10 @@ Runs **after** a record is created. A handler can mutate the active `VisitContex
 interface ConstructParser {
   processor?: ConstructProcessor;
   handler?: ConstructHandler;
-  factory?: ConstructCreator;
 }
 ```
 
-A construct may implement any combination of the three hooks. A leaf construct like `FieldInline` uses only `processor` (detects and captures in one pass). A nesting construct like `SectionBlock` uses `factory` (detect + create) and `handler` (push nested context).
+A construct may implement any combination of the two hooks. A leaf construct like `FieldInline` uses only `processor` (detects and captures in one pass). A nesting construct like `SectionBlock` uses `processor` (detect + create) and `handler` (push nested context).
 
 ### `ConstructParserFactory`
 

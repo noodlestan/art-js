@@ -6,7 +6,7 @@ This file documents the implementation patterns used by existing constructs.
 
 ## How the Parser API Is Implemented
 
-Each construct implements a subset of the three parser hooks (`processor`, `factory`, `handler`). The examples below cover every combination currently in use.
+Each construct implements a subset of the two parser hooks (`processor`, `handler`). The examples below cover every combination currently in use.
 
 ### Pattern 1: Processor Only — Leaf Inline Construct
 
@@ -97,41 +97,47 @@ function closeFieldBlock(record, context) {
 
 **Key point:** The boundary function (`closeFieldBlock`) is called by the parser's `beforeRecord()` hook. When a new record arrives whose `construct` is in the boundary set, the nested context closes and the parser returns to the parent context.
 
-### Pattern 3: Factory + Handler — Block Construct with Detection
+### Pattern 3: Processor + Handler — Block Construct with Detection
 
 **Used by:** `SectionBlock`
 
-A construct that uses `factory` (detect + create) and `handler` does not pre-process. Instead, the parser's factory layer asks `detect()` for each node, and the first match wins.
+A construct that uses `processor` (detect + create) and `handler` detects a node, creates a record, and then pushes a nested context to capture subsequent content.
 
 ```ts
 // createSectionBlockParser.ts
 export const createSectionBlockParser: ConstructParserFactory = () => ({
+  processor: createSectionBlockProcessor(),
   handler: createSectionBlockHandler(),
-  factory: createSectionBlockCreator(),
 });
 ```
 
-The creator detects heading nodes and extracts the section name, depth, optional kind, and trailing tags:
+The processor detects heading nodes and extracts the section name, depth, optional kind, and trailing tags:
 
 ```ts
-// createSectionBlockCreator.ts
-detect: node => node.type === 'heading',
-
-create: (node, context) => {
-  const heading = node as Heading;
-  const text = rawSlice(heading, context).replace(/^[ \t]*#+[ \t]*/, '').trim();
-  // Extract trailing (#tag) patterns from the heading text
-  const { tags, stripped } = extractEndTags(text);
-  // Extract optional [Kind] prefix
-  const kindMatch = stripped.match(KIND_PATTERN);
-  return {
+// createSectionBlockProcessor.ts
+export function createSectionBlock(node: Heading, context: ParserVisitContext): SectionBlock {
+  const text = rawSlice(node, context)
+    .replace(/^[ \t]*#+[ \t]*/, '')
+    .trim();
+  const { tags, stripped: textWithoutTags } = extractTags(text);
+  const kindMatch = textWithoutTags.match(KIND_PATTERN);
+  const section: SectionBlock = {
     construct: 'SectionBlock',
-    name: kindMatch?.[2]?.trim() ?? stripped,
+    name: kindMatch?.[2]?.trim() ?? textWithoutTags,
     children: [],
-    depth: heading.depth,
-    position: cleanPosition(heading.position),
-    ...(kindMatch?.[1] && { kind: kindMatch[1] }),
-    ...(tags.length && { tags }),
+    depth: node.depth,
+    position: nodePosition(node),
+  };
+  if (kindMatch?.[1]) section.kind = kindMatch[1];
+  if (tags.length) section.tags = tags;
+  return section;
+}
+
+export function createSectionBlockProcessor(): ConstructProcessor {
+  return {
+    captureNode(context, node) {
+      return node.type === 'heading' ? createSectionBlock(node as Heading, context) : null;
+    },
   };
 }
 ```
@@ -163,44 +169,6 @@ handle(record, node, context) {
 ```
 
 **Key point:** The handler walks up the context stack to find the correct nesting level. This is how markdown heading hierarchy is preserved — `## Sub` nests under `# Title`, but a new `# Title` closes all previous sections.
-
-### Pattern 4: Factory + Handler — Inline Construct with Routing
-
-**Used by:** `Tag`
-
-A construct that uses `factory` for detection and `handler` for side-effect routing rather than context nesting.
-
-```ts
-// createTagParser.ts
-export const createTagParser: ConstructParserFactory = () => ({
-  handler: createTagRoutingHandler(),
-  factory: createTagCreator(),
-});
-```
-
-The creator detects text nodes containing `#tag` patterns:
-
-```ts
-// createTagCreator.ts
-detect: node => node.type === 'text' && TAG_PATTERN.test((node as Text).value),
-
-create: (node) => createTag(node as Text),
-```
-
-The handler does not push a nested context. Instead, it finds the nearest taggable ancestor (a SectionBlock) and appends the tag to its `tags` array:
-
-```ts
-// createTagRoutingHandler.ts
-handle(record, _node, context) {
-  const section = findTagable(context) as SectionBlock;
-  if (section) {
-    (section.tags ??= []).push(record as Tag);
-  }
-  return context;  // return the same context — no nesting
-}
-```
-
-**Key point:** Not all handlers push nested contexts. The `Tag` handler demonstrates a "routing" pattern — the construct is created as a record, but its purpose is to mutate a parent construct rather than own subsequent content.
 
 ## How the Serializer API Is Implemented
 

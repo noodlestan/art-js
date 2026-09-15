@@ -36,6 +36,7 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 
 		for (let i = 0; i < constructParsers.length; i++) {
 			const constructParser = constructParsers[i] as ConstructParser;
+			if (i === 0) continue; // default construct handled in handleNaturalBlock
 
 			const processor = constructParser.processor;
 			const construct = processor?.captureNode(currentContext, node);
@@ -46,28 +47,16 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 					integrator,
 				};
 			}
-			const factory = constructParser.factory;
-			if (i > 0 && factory?.detect(node, currentContext)) {
-				const result = factory.create(node, currentContext);
-				const constructs = Array.isArray(result) ? result : [result];
-				const first = constructs[0] as Construct | undefined;
-				const integrator =
-					constructs.length > 0 && first ? (constructParser.integrator ?? null) : null;
-				return {
-					constructs,
-					integrator,
-				};
-			}
 		}
 		return null;
 	}
 
 	function handleNaturalBlock(node: Node): typeof SKIP | undefined {
-		if (!defaultConstruct.factory) {
+		if (!defaultConstruct.processor) {
 			return SKIP;
 		}
 
-		const construct = defaultConstruct.factory.create(node, currentContext) as Construct;
+		const construct = defaultConstruct.processor.captureNode(currentContext, node) as Construct;
 		currentContext = currentContext.onBeforeConstruct(construct);
 		currentContext.captureChildConstruct(construct);
 		return node.type === 'paragraph' ? undefined : SKIP;

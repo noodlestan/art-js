@@ -50,22 +50,20 @@ Natural conversion recurses through all mdast children and retains generic attri
 
 ## Construct Parser API
 
-Each construct registers a `ConstructParser` with up to three hooks:
+Each construct registers a `ConstructParser` with up to two hooks:
 
 ```
 ConstructParser
   captureNode?(context, node) → record | null     ← claims full node immediately
-  detect?(node, context)     → boolean            ← "can I handle this node?"
-  create?(node, context)     → record             ← build the AST record
   handle?(record, node, ctx) → VisitContext        ← post-creation mutation / nesting
 ```
 
 ### Dispatch Order
 
 ```
-1. Processors and factories run in a single pass over constructs:
-   - For each construct, processor is tried first
-   - If no match, factory detect → create runs (skipping the default construct)
+1. Processors run over constructs in order:
+   - For each construct, processor.captureNode is tried
+   - The default construct is skipped in this loop and handled separately
 2. If no construct claims the node, NaturalBlock fallback
 3. After record creation, beforeRecord() lets the active context close
 4. Handler runs if present (SectionBlock, FieldBlock use this path)
@@ -74,11 +72,9 @@ ConstructParser
 ### Example: FieldBlock
 
 ```
-captureNode → detects "**Name:**" paragraph, returns FieldInline (same-line content)
-              or returns null (content on next line → factory path)
-
-detect      → matches paragraph starting with **Name:** where content continues on next line
-create      → returns { construct: "FieldBlock", name, value: [] }
+captureNode → detects "**Name:**" paragraph where content continues on next line
+              returns { construct: "FieldBlock", name, value: [] }
+              or returns null (content on same line → FieldInline territory)
 handle      → pushes nested VisitContext; subsequent NaturalBlocks append to field.value
               closes when next FieldBlock / FieldInline / SectionBlock arrives via beforeRecord()
 ```
@@ -94,8 +90,8 @@ captureNode → detects "**Name:**" paragraph where content follows on the SAME 
 ### Example: SectionBlock
 
 ```
-detect      → matches heading nodes (# Name)
-create      → returns { construct: "SectionBlock", name, depth }
+captureNode → matches heading nodes (# Name)
+              returns { construct: "SectionBlock", name, depth }
 handle      → pushes nested VisitContext for child content
               heading depth drives nesting (depth 2 nests under depth 1)
 ```
@@ -120,15 +116,14 @@ NaturalExpression.toMdast → reconstructs mdast node from type, attributes, val
 
 ## Key Files
 
-| File                                                                                   | Role                                       |
-| -------------------------------------------------------------------------------------- | ------------------------------------------ |
-| `$PACKAGE_PARSER/src/builder.ts`                                                       | Parser dispatch order and context handling |
-| `$PACKAGE_PARSER/src/config/createDefaultConfig.ts`                                    | Enabled constructs and their order         |
-| `$PACKAGE_CONSTRUCTS/src/constructs/FieldInline/createFieldInlineProcessor.ts`         | Inline field detection and capture         |
-| `$PACKAGE_CONSTRUCTS/src/constructs/FieldInline/createFieldInlineToMdast.ts`           | Inline field rendering                     |
-| `$PACKAGE_CONSTRUCTS/src/constructs/FieldBlock/private/createFieldBlockProcessor.ts`   | Block field detection                      |
-| `$PACKAGE_CONSTRUCTS/src/constructs/FieldBlock/private/createFieldBlockHandler.ts`     | Block field nesting/context                |
-| `$PACKAGE_CONSTRUCTS/src/constructs/FieldBlock/private/createFieldBlockCreator.ts`     | Block field factory                        |
-| `$PACKAGE_CONSTRUCTS/src/constructs/SectionBlock/createSectionBlockParser.ts`          | Section factory and handler wiring         |
-| `$PACKAGE_CONSTRUCTS/src/constructs/SectionBlock/private/createSectionBlockCreator.ts` | Section AST creation                       |
-| `$PACKAGE_CONSTRUCTS/src/constructs/SectionBlock/private/createSectionBlockHandler.ts` | Section nesting behavior                   |
+| File                                                                                      | Role                                       |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------ |
+| `$PACKAGE_PARSER/src/builder.ts`                                                          | Parser dispatch order and context handling |
+| `$PACKAGE_PARSER/src/config/createDefaultConfig.ts`                                       | Enabled constructs and their order         |
+| `$PACKAGE_CONSTRUCTS/src/constructs/FieldInline/createFieldInlineProcessor.ts`            | Inline field detection and capture         |
+| `$PACKAGE_CONSTRUCTS/src/constructs/FieldInline/createFieldInlineToMdast.ts`              | Inline field rendering                     |
+| `$PACKAGE_CONSTRUCTS/src/constructs/FieldBlock/private/createFieldBlockProcessor.ts`      | Block field detection                      |
+| `$PACKAGE_CONSTRUCTS/src/constructs/FieldBlock/private/createFieldBlockIntegrator.ts`     | Block field nesting/context                |
+| `$PACKAGE_CONSTRUCTS/src/constructs/SectionBlock/createSectionBlockParser.ts`             | Section processor and handler wiring       |
+| `$PACKAGE_CONSTRUCTS/src/constructs/SectionBlock/private/createSectionBlockProcessor.ts`  | Section AST creation                       |
+| `$PACKAGE_CONSTRUCTS/src/constructs/SectionBlock/private/createSectionBlockIntegrator.ts` | Section nesting behavior                   |

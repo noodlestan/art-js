@@ -1,7 +1,7 @@
 import type { ConstructParserFactory } from '../types';
 
-import { createNaturalBlockCreator } from './private/createNaturalBlockCreator';
+import { createNaturalBlockProcessor } from './private/createNaturalBlockProcessor';
 
 export const createNaturalBlockParser: ConstructParserFactory = () => ({
-	factory: createNaturalBlockCreator(),
+	processor: createNaturalBlockProcessor(),
 });

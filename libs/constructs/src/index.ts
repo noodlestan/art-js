@@ -3,7 +3,6 @@ export type { ArtDocument } from './constructs/Document/types';
 export type * from './registry';
 
 export type {
-	ConstructCreator,
 	ConstructIntegrator,
 	ConstructParser,
 	ConstructParserFactory,
