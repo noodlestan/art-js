@@ -2,7 +2,7 @@
 
 **Id:** `refactor-constructs`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -68,14 +68,14 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                                          | Status  |
-| ----------------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Rename Serializer Types `./plan-refactor-constructs/instructions/rename-serializer-types.md`           | `DONE`  |
-| Iteration: Rename Processor Types `./plan-refactor-constructs/instructions/rename-processor-types.md`             | `DONE`  |
-| Iteration: Rename Integrator Types `./plan-refactor-constructs/instructions/rename-integrator-types.md`           | `DONE`  |
-| Iteration: Eliminate ConstructCreator `./plan-refactor-constructs/instructions/eliminate-construct-creator.md`    | `DONE`  |
-| Iteration: Introduce ConstructFactory `./plan-refactor-constructs/instructions/introduce-construct-factory.md`    | `DONE`  |
-| Iteration: Add Tag and Document Parsers `./plan-refactor-constructs/instructions/add-tag-and-document-parsers.md` | `READY` |
+| Iteration / Instructions                                                                                          | Status |
+| ----------------------------------------------------------------------------------------------------------------- | ------ |
+| Iteration: Rename Serializer Types `./plan-refactor-constructs/instructions/rename-serializer-types.md`           | `DONE` |
+| Iteration: Rename Processor Types `./plan-refactor-constructs/instructions/rename-processor-types.md`             | `DONE` |
+| Iteration: Rename Integrator Types `./plan-refactor-constructs/instructions/rename-integrator-types.md`           | `DONE` |
+| Iteration: Eliminate ConstructCreator `./plan-refactor-constructs/instructions/eliminate-construct-creator.md`    | `DONE` |
+| Iteration: Introduce ConstructFactory `./plan-refactor-constructs/instructions/introduce-construct-factory.md`    | `DONE` |
+| Iteration: Add Tag and Document Parsers `./plan-refactor-constructs/instructions/add-tag-and-document-parsers.md` | `DONE` |
 
 ### Iteration: Rename Serializer Types
 
@@ -329,13 +329,15 @@ feat(constructs): Introduce ConstructFactory fromData entry point
 
 **Id:** `add-tag-and-document-parsers`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Give Tag and Document their own `ConstructParser`s so every construct exposes the factory entry point uniformly.
 
 **Description:** Add `createTagParser` and `createDocumentParser` exposing the `fromData` factories, and update the constructs index exports. These parsers are NOT registered in the parser default config — Tag is extracted by taggables and Document is the parse root.
 
 **Instructions:** `./plan-refactor-constructs/instructions/add-tag-and-document-parsers.md`
+
+**Report:** `./plan-refactor-constructs/instructions/add-tag-and-document-parsers__report.md`
 
 **Changes:**
 
@@ -349,9 +351,9 @@ feat(constructs): Introduce ConstructFactory fromData entry point
 
 #### Commits:
 
-| ID                             | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------------------ | ------------------------------ | ------------ | ----- | ---------- |
-| `add-tag-and-document-parsers` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                             | Repository / Checkout / Branch | Policy       | Hash    | Status      |
+| ------------------------------ | ------------------------------ | ------------ | ------- | ----------- |
+| `add-tag-and-document-parsers` | $PROJECT / `main`              | `AUTONOMOUS` | c04969b | `COMMITTED` |
 
 ##### Commit: `add-tag-and-document-parsers`
 
