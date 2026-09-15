@@ -7,7 +7,7 @@ import { isFieldStrong } from '../FieldBlock/private/isFieldStrong';
 import { stripStrong } from '../FieldBlock/private/stripStrong';
 import { createNaturalExpression } from '../NaturalExpression/private/createNaturalExpression';
 import { extractTags } from '../Tag/private/extractTags';
-import type { ConstructPreProcessor } from '../types';
+import type { ConstructProcessor } from '../types';
 
 import type { FieldInline } from './private/types';
 
@@ -28,9 +28,9 @@ function trimFieldEdges(value: ReturnType<typeof createNaturalExpression>[]): ty
 	);
 }
 
-export function createFieldInlinePreProcessor(): ConstructPreProcessor {
+export function createFieldInlineProcessor(): ConstructProcessor {
 	return {
-		preProcess(node, context) {
+		captureNode(context, node) {
 			if (node.type !== 'paragraph') return null;
 			const paragraph = node as Paragraph;
 			const first = paragraph.children[0];

@@ -37,8 +37,8 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 		for (let i = 0; i < constructParsers.length; i++) {
 			const constructParser = constructParsers[i] as ConstructParser;
 
-			const preProcessor = constructParser.preProcessor;
-			const construct = preProcessor?.preProcess(node, currentContext);
+			const processor = constructParser.processor;
+			const construct = processor?.captureNode(currentContext, node);
 			if (construct) {
 				const handler = constructParser.handler ?? null;
 				return {

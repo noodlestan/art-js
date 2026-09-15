@@ -2,11 +2,11 @@ import { createParserVisitContext } from '@art-js/primitives';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import { describe, expect, it } from 'vitest';
 
-import { createFieldInlinePreProcessor } from './createFieldInlinePreProcessor';
+import { createFieldInlineProcessor } from './createFieldInlineProcessor';
 
-describe('createFieldInlinePreProcessor', () => {
+describe('createFieldInlineProcessor', () => {
 	it('captures inline field values from paragraph siblings after the label', () => {
-		const impl = createFieldInlinePreProcessor();
+		const impl = createFieldInlineProcessor();
 		const markdown = '# Hello World\n\n**Greeting:** Hello world.';
 		const tree = fromMarkdown(markdown);
 		const paragraph = tree.children[1] as never;
@@ -16,7 +16,7 @@ describe('createFieldInlinePreProcessor', () => {
 			markdown,
 		);
 
-		expect(impl.preProcess(paragraph, context)).toMatchObject({
+		expect(impl.captureNode(context, paragraph)).toMatchObject({
 			construct: 'FieldInline',
 			name: 'Greeting',
 			children: [
@@ -34,7 +34,7 @@ describe('createFieldInlinePreProcessor', () => {
 	});
 
 	it('preserves inline child types in the field children', () => {
-		const impl = createFieldInlinePreProcessor();
+		const impl = createFieldInlineProcessor();
 		const markdown = '# Hello World\n\n**Remote:** `git@example.com`';
 		const tree = fromMarkdown(markdown);
 		const paragraph = tree.children[1] as never;
@@ -44,7 +44,7 @@ describe('createFieldInlinePreProcessor', () => {
 			markdown,
 		);
 
-		expect(impl.preProcess(paragraph, context)).toMatchObject({
+		expect(impl.captureNode(context, paragraph)).toMatchObject({
 			construct: 'FieldInline',
 			name: 'Remote',
 			children: [
@@ -58,7 +58,7 @@ describe('createFieldInlinePreProcessor', () => {
 	});
 
 	it('extracts tags and strips it from the last text child', () => {
-		const impl = createFieldInlinePreProcessor();
+		const impl = createFieldInlineProcessor();
 		const markdown = '# Hello World\n\n**Greeting:** Hello there (#friend)';
 		const tree = fromMarkdown(markdown);
 		const paragraph = tree.children[1] as never;
@@ -68,7 +68,7 @@ describe('createFieldInlinePreProcessor', () => {
 			markdown,
 		);
 
-		expect(impl.preProcess(paragraph, context)).toMatchObject({
+		expect(impl.captureNode(context, paragraph)).toMatchObject({
 			construct: 'FieldInline',
 			name: 'Greeting',
 			tags: [{ construct: 'Tag', name: 'friend' }],

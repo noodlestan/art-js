@@ -6,15 +6,15 @@ The `@art-js/constructs` package defines the **contract** that binds the parser 
 
 The parser depends on three interfaces, each representing a stage in the parse pipeline:
 
-### `ConstructPreProcessor`
+### `ConstructProcessor`
 
 ```ts
-interface ConstructPreProcessor {
-  preProcess(node: MdastNode, context: VisitContext): Construct | null;
+interface ConstructProcessor {
+  captureNode(context: VisitContext, node: MdastNode): Construct | null;
 }
 ```
 
-Runs **before** the factory layer. A pre-processor can claim an entire mdast node immediately and return a Construct record. Used by constructs that need to intercept a node before generic detection (e.g. `FieldInline` detecting **Name:** patterns in paragraphs). Returns `null` to pass through to the factory layer.
+Runs **before** the factory layer. A processor can claim an entire mdast node immediately and return a Construct record. Used by constructs that need to intercept a node before generic detection (e.g. `FieldInline` detecting **Name:** patterns in paragraphs). Returns `null` to pass through to the factory layer.
 
 ### `ConstructCreator`
 
@@ -41,13 +41,13 @@ Runs **after** a record is created. A handler can mutate the active `VisitContex
 
 ```ts
 interface ConstructParser {
-  preProcessor?: ConstructPreProcessor;
+  processor?: ConstructProcessor;
   handler?: ConstructHandler;
   factory?: ConstructCreator;
 }
 ```
 
-A construct may implement any combination of the three hooks. A leaf construct like `FieldInline` uses only `preProcessor` (detects and captures in one pass). A nesting construct like `SectionBlock` uses `factory` (detect + create) and `handler` (push nested context).
+A construct may implement any combination of the three hooks. A leaf construct like `FieldInline` uses only `processor` (detects and captures in one pass). A nesting construct like `SectionBlock` uses `factory` (detect + create) and `handler` (push nested context).
 
 ### `ConstructParserFactory`
 

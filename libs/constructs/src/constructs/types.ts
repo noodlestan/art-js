@@ -10,8 +10,8 @@ export interface ConstructCreator {
 	create(node: MdastNode, context: ParserVisitContext): Construct | Construct[];
 }
 
-export interface ConstructPreProcessor {
-	preProcess(node: MdastNode, context: ParserVisitContext): Construct | null;
+export interface ConstructProcessor {
+	captureNode(context: ParserVisitContext, node: MdastNode): Construct | null;
 }
 
 export interface ConstructHandler {
@@ -19,7 +19,7 @@ export interface ConstructHandler {
 }
 
 export interface ConstructParser {
-	preProcessor?: ConstructPreProcessor;
+	processor?: ConstructProcessor;
 	handler?: ConstructHandler;
 	factory?: ConstructCreator;
 }

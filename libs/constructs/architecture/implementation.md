@@ -6,26 +6,26 @@ This file documents the implementation patterns used by existing constructs.
 
 ## How the Parser API Is Implemented
 
-Each construct implements a subset of the three parser hooks (`preProcessor`, `factory`, `handler`). The examples below cover every combination currently in use.
+Each construct implements a subset of the three parser hooks (`processor`, `factory`, `handler`). The examples below cover every combination currently in use.
 
-### Pattern 1: PreProcessor Only — Leaf Inline Construct
+### Pattern 1: Processor Only — Leaf Inline Construct
 
 **Used by:** `FieldInline`
 
-A pre-processor-only construct claims a node in a single pass and returns the finished record. No factory or handler is needed because the construct is a leaf — it does not own subsequent content.
+A processor-only construct claims a node in a single pass and returns the finished record. No factory or handler is needed because the construct is a leaf — it does not own subsequent content.
 
 ```ts
 // createFieldInlineParser.ts
 export const createFieldInlineParser: ConstructParserFactory = () => ({
-  preProcessor: createFieldInlinePreProcessor(),
+  processor: createFieldInlineProcessor(),
 });
 ```
 
-The pre-processor detects a paragraph starting with `**Name:**` where content follows on the same line:
+The processor detects a paragraph starting with `**Name:**` where content follows on the same line:
 
 ```ts
-// createFieldInlinePreProcessor.ts
-preProcess(node, context) {
+// createFieldInlineProcessor.ts
+captureNode(context, node) {
   if (node.type !== 'paragraph') return null;
   // Check first child is a strong node (the **Name:** part)
   if (!isFieldStrong(first, context)) return null;
@@ -36,27 +36,27 @@ preProcess(node, context) {
 }
 ```
 
-**Key point:** Returning `null` from `preProcess` passes the node to the factory layer. This is how `FieldInline` and `FieldBlock` coexist on the same detection pattern — `FieldInline`'s pre-processor returns `null` when the content is on the next line, letting `FieldBlock` claim it via its own pre-processor.
+**Key point:** Returning `null` from `captureNode` passes the node to the factory layer. This is how `FieldInline` and `FieldBlock` coexist on the same detection pattern — `FieldInline`'s processor returns `null` when the content is on the next line, letting `FieldBlock` claim it via its own processor.
 
-### Pattern 2: PreProcessor + Handler — Block Construct with Nested Content
+### Pattern 2: Processor + Handler — Block Construct with Nested Content
 
 **Used by:** `FieldBlock`
 
-A construct that uses both `preProcessor` and `handler` detects a node, creates a record, and then pushes a nested context to capture subsequent content.
+A construct that uses both `processor` and `handler` detects a node, creates a record, and then pushes a nested context to capture subsequent content.
 
 ```ts
 // createFieldBlockParser.ts
 export const createFieldBlockParser: ConstructParserFactory = () => ({
-  preProcessor: createFieldBlockPreProcessor(),
+  processor: createFieldBlockProcessor(),
   handler: createFieldBlockHandler(),
 });
 ```
 
-The pre-processor detects `**Name:**` where the remainder of the line is empty (content follows on next lines):
+The processor detects `**Name:**` where the remainder of the line is empty (content follows on next lines):
 
 ```ts
-// createFieldBlockPreProcessor.ts
-preProcess(node, context) {
+// createFieldBlockProcessor.ts
+captureNode(context, node) {
   if (node.type !== 'paragraph') return null;
   if (!isFieldStrong(first, context)) return null;
   // If remainder after "**Name:**" is NOT empty, this is FieldInline territory

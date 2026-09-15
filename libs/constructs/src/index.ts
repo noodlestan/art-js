@@ -7,7 +7,7 @@ export type {
 	ConstructHandler,
 	ConstructParser,
 	ConstructParserFactory,
-	ConstructPreProcessor,
+	ConstructProcessor,
 	ConstructSerializer,
 	ConstructSerializerFactory,
 } from './constructs/types';

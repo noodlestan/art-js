@@ -3,13 +3,13 @@ import type { Paragraph } from 'mdast';
 import { rawSlice } from '../../../helpers/rawSlice';
 import type { Construct } from '../../../registry';
 import { extractTags } from '../../Tag/private/extractTags';
-import type { ConstructPreProcessor } from '../../types';
+import type { ConstructProcessor } from '../../types';
 
 import { createFieldBlockFromParagraph } from './createFieldBlockFromParagraph';
 import { isFieldStrong } from './isFieldStrong';
-export function createFieldBlockPreProcessor(): ConstructPreProcessor {
+export function createFieldBlockProcessor(): ConstructProcessor {
 	return {
-		preProcess(node, context) {
+		captureNode(context, node) {
 			if (node.type !== 'paragraph') return null;
 			const paragraph = node as Paragraph;
 			const first = paragraph.children[0];
