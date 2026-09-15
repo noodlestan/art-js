@@ -28,6 +28,13 @@ describe('createParserVisitContext', () => {
 		expect(result).toBe(ctx);
 	});
 
+	it('returns the same context when onBeforeConstruct is not provided', () => {
+		const construct = { construct: 'Document', children: [] };
+		const ctx = createParserVisitContext(construct, undefined);
+		const result = ctx.onBeforeConstruct({ construct: 'Child' });
+		expect(result).toBe(ctx);
+	});
+
 	it('falls back to parent context markdown when markdown is not provided', () => {
 		const parentConstruct = { construct: 'Document', children: [] };
 		const parentCtx = createParserVisitContext(parentConstruct, undefined, 'parent-md');

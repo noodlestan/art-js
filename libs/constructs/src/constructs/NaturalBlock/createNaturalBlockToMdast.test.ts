@@ -93,4 +93,26 @@ describe('createNaturalBlockToMdast', () => {
 			]),
 		});
 	});
+
+	it('does not include tags when paragraph tags are empty', () => {
+		const impl = createNaturalBlockToMdast();
+		const result = impl.toMdast(
+			{
+				construct: 'NaturalBlock',
+				type: 'paragraph',
+				value: 'Hello',
+				tags: [],
+			} as never,
+			[{ type: 'text', value: 'child' } as never],
+		);
+		expect(result).toMatchObject({
+			type: 'root',
+			children: expect.arrayContaining([
+				expect.objectContaining({
+					type: 'paragraph',
+					children: expect.arrayContaining([expect.objectContaining({ value: 'child' })]),
+				}),
+			]),
+		});
+	});
 });

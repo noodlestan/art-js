@@ -28,6 +28,14 @@ vi.mock('./isFieldStrong', async () => {
 });
 
 describe('createFieldBlockProcessor', () => {
+	it('returns a FieldBlock when the mocked isFieldStrong returns true by default', async () => {
+		const { createFieldBlockProcessor } = await import('./createFieldBlockProcessor');
+		const processor = createFieldBlockProcessor();
+		const paragraph = { type: 'paragraph', children: [{ type: 'strong', children: [] }] };
+		const result = processor.captureNode({ markdown: '' } as never, paragraph as never);
+		expect(result).toMatchObject({ construct: 'FieldBlock', name: 'Test' });
+	});
+
 	it('returns a processor', async () => {
 		const { createFieldBlockProcessor } = await import('./createFieldBlockProcessor');
 		const processor = createFieldBlockProcessor();

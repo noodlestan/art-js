@@ -36,6 +36,16 @@ describe('parse', () => {
 		});
 	});
 
+	it('parses a field inline value into a FieldInline', () => {
+		const result = parse('**Greeting:** Hello world');
+		expect(result.construct).toBe('Document');
+		expect(result.children).toHaveLength(1);
+		expect(result.children[0]).toMatchObject({
+			construct: 'FieldInline',
+			name: 'Greeting',
+		});
+	});
+
 	it('parses a field block into a FieldBlock', () => {
 		const result = parse('**Purpose:**');
 		expect(result.construct).toBe('Document');

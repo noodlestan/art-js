@@ -78,4 +78,18 @@ describe('createSectionBlockIntegrator', () => {
 		expect(result).toBeDefined();
 		expect(context.captureChildConstruct).toHaveBeenCalledWith(section);
 	});
+
+	it('returns the same context when the new context has no onBeforeConstruct hook', async () => {
+		const { createSectionBlockIntegrator } = await import('./createSectionBlockIntegrator');
+		const integrator = createSectionBlockIntegrator();
+		const context = makeDocumentContext() as never;
+		const section = { construct: 'SectionBlock', name: 'Test', children: [] };
+		const result = integrator.integrate(
+			context,
+			{ type: 'heading', depth: 1 } as never,
+			section as never,
+		);
+		const after = result.onBeforeConstruct({ construct: 'NaturalBlock', children: [] } as never);
+		expect(after).toBe(result);
+	});
 });

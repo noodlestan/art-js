@@ -38,4 +38,9 @@ describe('createFieldBlockIntegrator', () => {
 		const after = result.onBeforeConstruct(sectionBlock as never);
 		expect(after).toBe(parentContext);
 	});
+
+	it('document context parent returns undefined', () => {
+		const context = makeDocumentContext();
+		expect(context.parent()).toBeUndefined();
+	});
 });

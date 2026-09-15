@@ -5,6 +5,55 @@ import { describe, expect, it } from 'vitest';
 import { createFieldInlineProcessor } from './createFieldInlineProcessor';
 
 describe('createFieldInlineProcessor', () => {
+	it('returns null for non-paragraph nodes', () => {
+		const processor = createFieldInlineProcessor();
+		const context = createParserVisitContext(
+			{ construct: 'Document', children: [] },
+			undefined,
+			'',
+		);
+		const result = processor.captureNode(context, { type: 'heading', children: [] } as never);
+		expect(result).toBeNull();
+	});
+
+	it('returns null for paragraphs with no children', () => {
+		const processor = createFieldInlineProcessor();
+		const context = createParserVisitContext(
+			{ construct: 'Document', children: [] },
+			undefined,
+			'',
+		);
+		const result = processor.captureNode(context, { type: 'paragraph', children: [] } as never);
+		expect(result).toBeNull();
+	});
+
+	it('returns null when the first child is not a field strong', () => {
+		const processor = createFieldInlineProcessor();
+		const tree = fromMarkdown('Hello world');
+		const paragraph = tree.children[0] as never;
+		const context = createParserVisitContext(
+			{ construct: 'Document', children: [] },
+			undefined,
+			'Hello world',
+		);
+		const result = processor.captureNode(context, paragraph);
+		expect(result).toBeNull();
+	});
+
+	it('returns null when nothing but whitespace follows the strong', () => {
+		const processor = createFieldInlineProcessor();
+		const markdown = '**Name:**   ';
+		const tree = fromMarkdown(markdown);
+		const paragraph = tree.children[0] as never;
+		const context = createParserVisitContext(
+			{ construct: 'Document', children: [] },
+			undefined,
+			markdown,
+		);
+		const result = processor.captureNode(context, paragraph);
+		expect(result).toBeNull();
+	});
+
 	it('captures inline field values from paragraph siblings after the label', () => {
 		const processor = createFieldInlineProcessor();
 		const markdown = '# Hello World\n\n**Greeting:** Hello world.';
