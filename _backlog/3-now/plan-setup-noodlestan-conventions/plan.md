@@ -2,7 +2,7 @@
 
 **Id:** `setup-noodlestan-conventions`
 
-**Status:** `READY`
+**Status:** `WORKING`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -65,16 +65,16 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                                         | Status  |
-| ---------------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Install Convention Packages `./instructions/install-conventions.md` | `READY` |
+| Iteration / Instructions                                                       | Status  |
+| ------------------------------------------------------------------------------ | ------- |
+| Iteration: Install Convention Packages `./instructions/install-conventions.md` | `DONE`  |
 | Iteration: Configure Guides `./instructions/configure-guides.md`               | `READY` |
 
 ### Iteration: Install Convention Packages
 
 **Id:** `install-conventions`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Install `@noodlestan/conventions-typescript` as a dev dependency in Art JS.
 
@@ -93,9 +93,9 @@ None.
 
 #### Commits:
 
-| ID                    | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| --------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `install-conventions` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                    | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| --------------------- | ------------------------------ | ------------ | --------- | ----------- |
+| `install-conventions` | $PROJECT / `main`              | `AUTONOMOUS` | `aeb8a32` | `COMMITTED` |
 
 ##### Commit: `install-conventions`
 

@@ -37,7 +37,7 @@ Audit convention setup at the project root and adoption in each Art JS package, 
 | Kind      | Path                                                                      | Role                                                               |
 | --------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------ |
 | Milestone | `$PROJECT/_roadmap/3-now/milestone-consolidate/milestone.md`              | Defines this plan as part of phase 2 of the Consolidate milestone. |
-| Plan      | `$PROJECT/_backlog/3-now/plan-setup-noodlestan-conventions/plan.md`      | Installs convention packages and configures guides (prerequisite). |
+| Plan      | `$PROJECT/_backlog/3-now/plan-setup-noodlestan-conventions/plan.md`       | Installs convention packages and configures guides (prerequisite). |
 | Plan      | `$CONVENTIONS/_backlog/6-plan/plan-pilot-project-adoption-art-js/plan.md` | Upstream pilot project adoption plan for Art JS.                   |
 
 ### Required Skills

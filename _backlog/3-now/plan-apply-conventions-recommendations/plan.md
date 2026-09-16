@@ -37,7 +37,7 @@ Apply convention fixes recommended by the per-package adoption audits, one commi
 | Kind      | Path                                                                      | Role                                                               |
 | --------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------ |
 | Milestone | `$PROJECT/_roadmap/3-now/milestone-consolidate/milestone.md`              | Defines this plan as part of phase 2 of the Consolidate milestone. |
-| Plan      | `$PROJECT/_backlog/3-now/plan-audit-conventions-adoption/plan.md`        | Produces the per-package adoption reports (prerequisite).          |
+| Plan      | `$PROJECT/_backlog/3-now/plan-audit-conventions-adoption/plan.md`         | Produces the per-package adoption reports (prerequisite).          |
 | Plan      | `$CONVENTIONS/_backlog/6-plan/plan-pilot-project-adoption-art-js/plan.md` | Upstream pilot project adoption plan for Art JS.                   |
 
 ### Required Skills
@@ -77,8 +77,8 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                                                                              | Status  |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| Iteration / Instructions                                                                                       | Status  |
+| -------------------------------------------------------------------------------------------------------------- | ------- |
 | Iteration: Apply Conventions Audit Recommendations `./instructions/apply-conventions-audit-recommendations.md` | `READY` |
 | Iteration: Consolidate Process Insights `./instructions/consolidate-process-insights.md`                       | `READY` |
 

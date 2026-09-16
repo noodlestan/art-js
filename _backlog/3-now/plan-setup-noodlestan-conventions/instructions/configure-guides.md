@@ -45,7 +45,7 @@ Configure Art JS `_guide.md` to reference installed Noodlestan conventions.
 ## Mandatory Reading
 
 - ::READ `$PROJECT/_guide.md` (Knowledge) — Project guide to update.
-- ::READ `$PROJECT/node_modules/@noodlestan/conventions-typescript/art/index.md` (Knowledge) — Installed conventions index.
+- ::READ `$PROJECT/node_modules/@noodlestan/conventions-typescript/art/typescript.md` (Knowledge) — Installed conventions index.
 
 ## Changes
 
@@ -69,7 +69,7 @@ Read the convention indexes listed below and follow them when planning and execu
 
 The following conventions apply to all packages in this repository:
 
-::READ `./node_modules/@noodlestan/conventions-typescript/art/index.md` — TypeScript conventions.
+::READ `./node_modules/@noodlestan/conventions-typescript/art/typescript.md` — TypeScript conventions.
 
 In case of ambiguity or conflict applying conventions, follow links from the convention indexes to extended convention files and read the "Avoid" and "Prefer" examples.
 ```

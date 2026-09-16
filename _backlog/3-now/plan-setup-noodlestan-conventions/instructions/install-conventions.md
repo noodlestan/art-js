@@ -93,5 +93,5 @@ configs(art-js): Install @noodlestan/conventions-typescript
 ## Final Verification
 
 - Verify that commits have been executed and pushed (or not pushed) according to the commit's policy.
-- Verify that `$PROJECT/node_modules/@noodlestan/conventions-typescript/art/index.md` exists and is readable.
+- Verify that `$PROJECT/node_modules/@noodlestan/conventions-typescript/art/typescript.md` exists and is readable.
 - Report according to the "How to Report Back to the Delegator" instructions.
