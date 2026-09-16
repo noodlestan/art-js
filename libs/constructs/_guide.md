@@ -35,6 +35,12 @@ This package maintains an architecture reference at `architecture/index.md`:
 - `architecture/api.md` — constructs API: contract types, data shapes, open registry.
 - `architecture/implementation.md` — constructs implementation: parser and serializer hook patterns with examples.
 
+## Conventions
+
+This package follows strict conventions.
+
+::READ `../../_guide.md` for repository-wide conventions.
+
 ## Operating Instructions
 
 ### Operating Instructions: Setting Up

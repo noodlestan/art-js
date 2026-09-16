@@ -37,6 +37,12 @@ This package maintains an architecture reference at `architecture/index.md`:
 - `architecture/api.md` — parser API: config shape, entry points, contract references.
 - `architecture/implementation.md` — parser implementation: visit loop, context stack, dispatch.
 
+## Conventions
+
+This package follows strict conventions.
+
+::READ `../../_guide.md` for repository-wide conventions.
+
 ## Operating Instructions
 
 ### Operating Instructions: Setting Up

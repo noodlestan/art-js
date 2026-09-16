@@ -37,6 +37,12 @@ This package maintains an architecture reference at `architecture/index.md`:
 - `architecture/api.md` — serializer API: config shape, entry points, contract references.
 - `architecture/implementation.md` — serializer implementation: registry build, visit, sibling placement.
 
+## Conventions
+
+This package follows strict conventions.
+
+::READ `../../_guide.md` for repository-wide conventions.
+
 ## Operating Instructions
 
 ### Operating Instructions: Setting Up
