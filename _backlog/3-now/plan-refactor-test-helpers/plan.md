@@ -2,7 +2,7 @@
 
 **Id:** `refactor-test-helpers`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -72,9 +72,10 @@ Execution occurs in `$PROJECT` on branch `building`.
 | --------------------------------------------------------------------------------------------------------------------- | ------- | --------- |
 | Iteration: Rename and Reclassify Helpers `./plan-refactor-test-helpers/instructions/rename-and-reclassify-helpers.md` | `DONE`  | `b9a179d` |
 | Iteration: Deduplicate Primitive Helpers `./plan-refactor-test-helpers/instructions/deduplicate-primitive-helpers.md` | `DONE`  | `8bf443f` |
-| Iteration: Simplify Async Imports `./plan-refactor-test-helpers/instructions/simplify-async-imports.md`               | `READY` |
-| Iteration: Format Test Scenarios `./plan-refactor-test-helpers/instructions/format-test-scenarios.md`                 | `READY` |
-| Iteration: Write Test Conventions `./plan-refactor-test-helpers/instructions/write-test-conventions.md`               | `READY` |
+| Iteration: Simplify Async Imports `./plan-refactor-test-helpers/instructions/simplify-async-imports.md`               | `DONE`  | TBD       |
+| Iteration: Format Test Scenarios `./plan-refactor-test-helpers/instructions/format-test-scenarios.md`                 | `DONE`  | `99a08da` |
+| Iteration: Write Test Conventions `./plan-refactor-test-helpers/instructions/write-test-conventions.md`               | `DONE`  | `a6daaff` |
+| Iteration: Eliminate Async Imports in Unit Tests                                                                      | `READY` |
 
 ### Iteration: Rename and Reclassify Helpers
 
@@ -383,6 +384,58 @@ conventions(art-js): Add unit test conventions
 - Document test description and formatting conventions
 ```
 
+### Iteration: Eliminate Async Imports in Unit Tests
+
+**Id:** `eliminate-async-imports-in-unit-tests`
+
+**Status:** `READY`
+
+**Purpose:** Eliminate all remaining async imports inside `vi.mock()` factories by hoisting mock helper imports above Vitest's hoist boundary, and clean up module exports.
+
+**Description:** The previous `simplify-async-imports` iteration left 5 test files with `async` factories because those files import from the mocked module path. This iteration removes ALL async imports by hoisting the mock helper imports above `vi.mock()` using `// eslint-disable-next-line import/order` comments, then referencing the already-imported helpers in synchronous factories. This eliminates the `ReferenceError` without retaining `await import()` noise.
+
+Additionally, trim package exports to public APIs only and extract functions directly declared in module index files into their own directories.
+
+**Changes:**
+
+- Convert all remaining `vi.mock()` async factories to synchronous factories.
+- Hoist mock helper imports above `vi.mock()` with `// eslint-disable-next-line import/order`.
+- Delete tests whose units were extracted or no longer exported.
+- Extract `createDocument` from `libs/constructs/src/constructs/Document/` to `libs/constructs/src/document/`.
+- Extract `buildDocument` from `libs/parser/src/builder.ts` to `libs/parser/src/buildDocument/`.
+- Extract `artAstToMdast` from `libs/serializer/src/artAstToMdast.ts` to `libs/serializer/src/artAstToMdast/`.
+- Extract `createArtConstructs` from `libs/primitives/src/constructs.ts`.
+- Trim `index.ts` exports in constructs, parser, primitives, serializer to public APIs only.
+- Update all internal imports to use the new paths.
+- Update `.eslintrc.cjs` and `package.json` files as needed.
+
+**Dependencies:**
+
+- Iteration: Simplify Async Imports.
+- Iteration: Format Test Scenarios.
+
+#### Commits:
+
+| ID                                      | Repository / Checkout / Branch | Policy   | Hash | Status     |
+| --------------------------------------- | ------------------------------ | -------- | ---- | ---------- |
+| `eliminate-async-imports-in-unit-tests` | $PROJECT / `building`          | `MANUAL` | TBD  | `AUTHORED` |
+
+##### Commit: `eliminate-async-imports-in-unit-tests`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+test(art-js): Eliminate all async imports from unit tests; Cleanup exports.
+
+- Hoist mock helper imports above vi.mock() with eslint-disable
+- Convert all async vi.mock() factories to synchronous
+- Extract index-level functions to dedicated directories
+- Trim package exports to public APIs only
+- Update cross-package imports to new paths
+```
+
 ## Work
 
 ### Next
@@ -419,8 +472,30 @@ None.
 - Mocks for `@art-js/constructs` functions live under `constructs/{ConstructName}/`.
 - Test descriptions start with `WHEN`, `FOR`, or `GIVEN` in all caps.
 - Empty lines separate setup, invocation, and assertion blocks.
+- Avoid async imports unless abslutely needed - use manually hoisted imports with eslint disable comment as needed
+
+**Avoid:**
+
+```ts
+import { rawSlice } from '../../../helpers/rawSlice';
+
+vi.mock('../../../helpers/rawSlice', async () => {
+  const { rawSliceMock } = await import('../../../test/helpers/constructs/rawSliceMock');
+  return rawSliceMock();
+});
+```
+
+**Prefer:**
+
+```ts
+import { describe, expect, it, vi } from 'vitest';
+
+// eslint-disable-next-line import/order
+import { rawSliceMock } from '../../../test/helpers/constructs/rawSliceMock';
+
+import { rawSlice } from '../../../helpers/rawSlice';
+```
 
 ### Follow Ups
 
-- Apply conventions to future test helper additions.
-- Review `@noodlestan/conventions` periodically for drift.
+- Extract decisions into the future `@noodlestan/conventions-unit-tests`.
