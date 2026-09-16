@@ -228,7 +228,7 @@ test(art-js): Simplify imports in unit tests
 
 **Id:** `format-test-scenarios`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Standardise test descriptions and layout across all unit tests.
 
@@ -247,9 +247,9 @@ test(art-js): Simplify imports in unit tests
 
 #### Commits:
 
-| ID                      | Repository / Checkout / Branch | Policy       | Hash | Status     |
-| ----------------------- | ------------------------------ | ------------ | ---- | ---------- |
-| `format-test-scenarios` | $PROJECT / `building`          | `AUTONOMOUS` | TBD  | `AUTHORED` |
+| ID                      | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| ----------------------- | ------------------------------ | ------------ | --------- | ----------- |
+| `format-test-scenarios` | $PROJECT / `building`          | `AUTONOMOUS` | `99a08da` | `COMMITTED` |
 
 ##### Commit: `format-test-scenarios`
 
