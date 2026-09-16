@@ -1,22 +1,22 @@
+import { makeDocumentMock } from '@art-js/primitives/src/test/helpers/document/makeDocumentMock';
 import { describe, expect, it, vi } from 'vitest';
-
-import { makeDocument } from './test/helpers/document/makeDocument';
 
 const { markdownTree } = vi.hoisted(() => ({
 	markdownTree: { type: 'root', children: [] as unknown[] },
 }));
 
 vi.mock('@art-js/constructs', async () => {
-	const { makeDocument: makeDocumentMock } = await import('./test/helpers/document/makeDocument');
+	const { makeDocumentMock } =
+		await import('@art-js/primitives/src/test/helpers/document/makeDocumentMock');
 	return {
 		createDocument: vi.fn(() => makeDocumentMock()),
 	};
 });
 
 vi.mock('@art-js/primitives', async () => {
-	const { makeParserVisitContextMock } =
-		await import('./test/helpers/primitives/makeParserVisitContextMock');
-	return makeParserVisitContextMock();
+	const { parserVisitContextMock } =
+		await import('@art-js/primitives/src/test/helpers/primitives/parserVisitContextMock');
+	return parserVisitContextMock();
 });
 
 vi.mock('mdast-util-from-markdown', () => ({
@@ -59,7 +59,7 @@ describe('buildDocument', () => {
 			constructs: [],
 		};
 		const result = buildDocument(config as never, 'Hello');
-		expect(result).toEqual(makeDocument());
+		expect(result).toEqual(makeDocumentMock());
 	});
 
 	it('skips blocks when the default construct has no processor', async () => {
@@ -70,7 +70,7 @@ describe('buildDocument', () => {
 			constructs: [],
 		};
 		const result = buildDocument(config as never, '# Hello');
-		expect(result).toEqual(makeDocument());
+		expect(result).toEqual(makeDocumentMock());
 	});
 
 	it('captures child constructs when a matched construct has no integrator', async () => {
@@ -88,7 +88,7 @@ describe('buildDocument', () => {
 			],
 		};
 		const result = buildDocument(config as never, '**Hello:** world');
-		expect(result).toEqual(makeDocument());
+		expect(result).toEqual(makeDocumentMock());
 	});
 
 	it('returns SKIP after handling a non-paragraph block type', async () => {
@@ -99,6 +99,6 @@ describe('buildDocument', () => {
 			constructs: [],
 		};
 		const result = buildDocument(config as never, '- item');
-		expect(result).toEqual(makeDocument());
+		expect(result).toEqual(makeDocumentMock());
 	});
 });

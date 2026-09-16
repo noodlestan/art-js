@@ -1,6 +1,6 @@
+import { makeDocumentMock } from '@art-js/primitives/src/test/helpers/document/makeDocumentMock';
 import { describe, expect, it } from 'vitest';
 
-import { makeDocumentMock } from '../../../test/helpers/constructs/Document/makeDocumentMock';
 import { makeFieldBlockMock } from '../../../test/helpers/constructs/FieldBlock/makeFieldBlockMock';
 import { makeSectionBlockMock } from '../../../test/helpers/constructs/SectionBlock/makeSectionBlockMock';
 

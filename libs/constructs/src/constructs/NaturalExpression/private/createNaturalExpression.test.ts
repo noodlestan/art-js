@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('@art-js/primitives/src/parser/helpers', async () => {
-	const { nodePositionMock } = await import('../../../test/helpers/primitives/nodePositionMock');
+	const { nodePositionMock } =
+		await import('@art-js/primitives/src/test/helpers/primitives/nodePositionMock');
 	return nodePositionMock();
 });
 

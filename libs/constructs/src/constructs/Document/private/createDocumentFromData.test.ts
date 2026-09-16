@@ -1,6 +1,5 @@
+import { makeDocumentMock } from '@art-js/primitives/src/test/helpers/document/makeDocumentMock';
 import { describe, expect, it } from 'vitest';
-
-import { makeDocumentMock } from '../../../test/helpers/constructs/Document/makeDocumentMock';
 
 import { createDocumentFromData } from './createDocumentFromData';
 

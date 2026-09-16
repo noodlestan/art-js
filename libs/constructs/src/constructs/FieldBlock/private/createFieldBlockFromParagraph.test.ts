@@ -3,7 +3,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 
 vi.mock('@art-js/primitives', async () => {
-	const { nodePositionMock } = await import('../../../test/helpers/primitives/nodePositionMock');
+	const { nodePositionMock } =
+		await import('@art-js/primitives/src/test/helpers/primitives/nodePositionMock');
 	return nodePositionMock();
 });
 

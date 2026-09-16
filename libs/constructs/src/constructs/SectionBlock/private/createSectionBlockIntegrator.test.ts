@@ -6,7 +6,7 @@ import { makeSectionBlockMock } from '../../../test/helpers/constructs/SectionBl
 
 vi.mock('@art-js/primitives', async () => {
 	const { parserVisitContextMock } =
-		await import('../../../test/helpers/primitives/parserVisitContextMock');
+		await import('@art-js/primitives/src/test/helpers/primitives/parserVisitContextMock');
 	return parserVisitContextMock({ includeSectionDepth: true });
 });
 

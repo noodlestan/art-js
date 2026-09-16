@@ -4,7 +4,8 @@ import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 import { extractTags } from '../../Tag/private/extractTags';
 
 vi.mock('@art-js/primitives', async () => {
-	const { nodePositionMock } = await import('../../../test/helpers/primitives/nodePositionMock');
+	const { nodePositionMock } =
+		await import('@art-js/primitives/src/test/helpers/primitives/nodePositionMock');
 	return nodePositionMock();
 });
 
