@@ -269,7 +269,7 @@ conventions(art-js): Format and reword unit tests
 
 **Id:** `write-test-conventions`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Capture all test helper and unit test conventions in `@noodlestan/conventions`.
 
@@ -366,9 +366,9 @@ conventions(art-js): Format and reword unit tests
 
 #### Commits:
 
-| ID                       | Repository / Checkout / Branch | Policy       | Hash | Status     |
-| ------------------------ | ------------------------------ | ------------ | ---- | ---------- |
-| `write-test-conventions` | $PROJECT / `building`          | `AUTONOMOUS` | TBD  | `AUTHORED` |
+| ID                       | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| ------------------------ | ------------------------------ | ------------ | --------- | ----------- |
+| `write-test-conventions` | $PROJECT / `building`          | `AUTONOMOUS` | `a6daaff` | `COMMITTED` |
 
 ##### Commit: `write-test-conventions`
 
