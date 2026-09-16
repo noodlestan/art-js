@@ -1,22 +1,20 @@
+import { nodePositionMock } from '@art-js/primitives/src/test/helpers/primitives/nodePositionMock';
 import { describe, expect, it, vi } from 'vitest';
 
+import { createNaturalExpressionMock } from '../../../test/helpers/constructs/NaturalExpression/createNaturalExpressionMock';
 import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
+import { rawSliceMock } from '../../../test/helpers/constructs/rawSliceMock';
 import { extractTags } from '../../Tag/private/extractTags';
 
-vi.mock('@art-js/primitives', async () => {
-	const { nodePositionMock } =
-		await import('@art-js/primitives/src/test/helpers/primitives/nodePositionMock');
+vi.mock('@art-js/primitives', () => {
 	return nodePositionMock();
 });
 
-vi.mock('../../../helpers/rawSlice', async () => {
-	const { rawSliceMock } = await import('../../../test/helpers/constructs/rawSliceMock');
+vi.mock('../../../helpers/rawSlice', () => {
 	return rawSliceMock('hello');
 });
 
-vi.mock('../../NaturalExpression/private/createNaturalExpression', async () => {
-	const { createNaturalExpressionMock } =
-		await import('../../../test/helpers/constructs/NaturalExpression/createNaturalExpressionMock');
+vi.mock('../../NaturalExpression/private/createNaturalExpression', () => {
 	return createNaturalExpressionMock();
 });
 

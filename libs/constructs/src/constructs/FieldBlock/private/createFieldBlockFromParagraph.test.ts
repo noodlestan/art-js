@@ -1,16 +1,14 @@
+import { nodePositionMock } from '@art-js/primitives/src/test/helpers/primitives/nodePositionMock';
 import { describe, expect, it, vi } from 'vitest';
 
+import { stripStrongMock } from '../../../test/helpers/constructs/FieldBlock/stripStrongMock';
 import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 
-vi.mock('@art-js/primitives', async () => {
-	const { nodePositionMock } =
-		await import('@art-js/primitives/src/test/helpers/primitives/nodePositionMock');
+vi.mock('@art-js/primitives', () => {
 	return nodePositionMock();
 });
 
-vi.mock('./stripStrong', async () => {
-	const { stripStrongMock } =
-		await import('../../../test/helpers/constructs/FieldBlock/stripStrongMock');
+vi.mock('./stripStrong', () => {
 	return stripStrongMock('Purpose:');
 });
 

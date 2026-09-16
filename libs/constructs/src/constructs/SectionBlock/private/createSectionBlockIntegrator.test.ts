@@ -2,6 +2,7 @@ import { createParserVisitContext } from '@art-js/primitives';
 import { describe, expect, it, vi } from 'vitest';
 
 import { documentContextMock } from '../../../test/helpers/constructs/Document/documentContextMock';
+import { findTagableMock } from '../../../test/helpers/constructs/SectionBlock/findTagableMock';
 import { makeSectionBlockMock } from '../../../test/helpers/constructs/SectionBlock/makeSectionBlockMock';
 
 vi.mock('@art-js/primitives', async () => {
@@ -10,9 +11,7 @@ vi.mock('@art-js/primitives', async () => {
 	return parserVisitContextMock({ includeSectionDepth: true });
 });
 
-vi.mock('./findTagable', async () => {
-	const { findTagableMock } =
-		await import('../../../test/helpers/constructs/SectionBlock/findTagableMock');
+vi.mock('./findTagable', () => {
 	return findTagableMock();
 });
 

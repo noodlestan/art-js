@@ -1,3 +1,4 @@
+import { parserVisitContextMock } from '@art-js/primitives/src/test/helpers/primitives/parserVisitContextMock';
 import { describe, expect, it, vi } from 'vitest';
 
 import { documentContextMock } from '../../../test/helpers/constructs/Document/documentContextMock';
@@ -5,9 +6,7 @@ import { makeFieldBlockMock } from '../../../test/helpers/constructs/FieldBlock/
 import { makeNaturalBlockMock } from '../../../test/helpers/constructs/NaturalBlock/makeNaturalBlockMock';
 import { makeSectionBlockMock } from '../../../test/helpers/constructs/SectionBlock/makeSectionBlockMock';
 
-vi.mock('@art-js/primitives', async () => {
-	const { parserVisitContextMock } =
-		await import('@art-js/primitives/src/test/helpers/primitives/parserVisitContextMock');
+vi.mock('@art-js/primitives', () => {
 	return parserVisitContextMock();
 });
 

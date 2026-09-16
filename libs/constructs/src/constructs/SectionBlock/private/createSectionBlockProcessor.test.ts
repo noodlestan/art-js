@@ -1,11 +1,10 @@
+import { nodePositionMock } from '@art-js/primitives/src/test/helpers/primitives/nodePositionMock';
 import { describe, expect, it, vi } from 'vitest';
 
 import { rawSlice } from '../../../helpers/rawSlice';
 import { extractTags } from '../../Tag/private/extractTags';
 
-vi.mock('@art-js/primitives', async () => {
-	const { nodePositionMock } =
-		await import('@art-js/primitives/src/test/helpers/primitives/nodePositionMock');
+vi.mock('@art-js/primitives', () => {
 	return nodePositionMock();
 });
 

@@ -1,21 +1,18 @@
 import { makeDocumentMock } from '@art-js/primitives/src/test/helpers/document/makeDocumentMock';
+import { parserVisitContextMock } from '@art-js/primitives/src/test/helpers/primitives/parserVisitContextMock';
 import { describe, expect, it, vi } from 'vitest';
 
 const { markdownTree } = vi.hoisted(() => ({
 	markdownTree: { type: 'root', children: [] as unknown[] },
 }));
 
-vi.mock('@art-js/constructs', async () => {
-	const { makeDocumentMock } =
-		await import('@art-js/primitives/src/test/helpers/document/makeDocumentMock');
+vi.mock('@art-js/constructs', () => {
 	return {
 		createDocument: vi.fn(() => makeDocumentMock()),
 	};
 });
 
-vi.mock('@art-js/primitives', async () => {
-	const { parserVisitContextMock } =
-		await import('@art-js/primitives/src/test/helpers/primitives/parserVisitContextMock');
+vi.mock('@art-js/primitives', () => {
 	return parserVisitContextMock();
 });
 

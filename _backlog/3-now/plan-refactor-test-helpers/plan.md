@@ -184,7 +184,7 @@ test(art-js): Deduplicate primitive test helpers
 
 **Id:** `simplify-async-imports`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Evaluate whether async imports in `vi.mock()` blocks are necessary and simplify to static imports where possible.
 
@@ -207,9 +207,9 @@ Pick a representative sample file (e.g., one that mocks a primitives helper), te
 
 #### Commits:
 
-| ID                       | Repository / Checkout / Branch | Policy   | Hash | Status     |
-| ------------------------ | ------------------------------ | -------- | ---- | ---------- |
-| `simplify-async-imports` | $PROJECT / `building`          | `MANUAL` | TBD  | `AUTHORED` |
+| ID                       | Repository / Checkout / Branch | Policy   | Hash | Status      |
+| ------------------------ | ------------------------------ | -------- | ---- | ----------- |
+| `simplify-async-imports` | $PROJECT / `building`          | `MANUAL` | TBD  | `COMMITTED` |
 
 ##### Commit: `simplify-async-imports`
 

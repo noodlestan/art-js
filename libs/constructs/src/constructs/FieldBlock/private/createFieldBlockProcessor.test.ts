@@ -1,11 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { createFieldBlockFromParagraphMock } from '../../../test/helpers/constructs/FieldBlock/createFieldBlockFromParagraphMock';
+import { rawSliceMock } from '../../../test/helpers/constructs/rawSliceMock';
 import { extractTags } from '../../Tag/private/extractTags';
 
 import { isFieldStrong } from './isFieldStrong';
 
-vi.mock('../../../helpers/rawSlice', async () => {
-	const { rawSliceMock } = await import('../../../test/helpers/constructs/rawSliceMock');
+vi.mock('../../../helpers/rawSlice', () => {
 	return rawSliceMock('');
 });
 
@@ -14,9 +15,7 @@ vi.mock('../../Tag/private/extractTags', async () => {
 	return extractTagsMock([], '');
 });
 
-vi.mock('./createFieldBlockFromParagraph', async () => {
-	const { createFieldBlockFromParagraphMock } =
-		await import('../../../test/helpers/constructs/FieldBlock/createFieldBlockFromParagraphMock');
+vi.mock('./createFieldBlockFromParagraph', () => {
 	return createFieldBlockFromParagraphMock();
 });
 
