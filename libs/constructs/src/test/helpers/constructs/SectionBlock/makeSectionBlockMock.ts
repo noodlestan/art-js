@@ -1,7 +1,11 @@
-import type { SectionBlock } from '../../../constructs/SectionBlock/private/types';
-import type { Tag } from '../../../constructs/Tag/private/types';
+/**
+ * @provides SectionBlock test fixture
+ */
 
-export const makeSectionBlock = (options?: {
+import type { SectionBlock } from '../../../../constructs/SectionBlock/private/types';
+import type { Tag } from '../../../../constructs/Tag/private/types';
+
+export const makeSectionBlockMock = (options?: {
 	name?: string;
 	depth?: number;
 	kind?: string;

@@ -1,23 +1,23 @@
 import { describe, expect, it } from 'vitest';
 
 import type { BlockContent, Construct, InlineContent } from './registry';
-import { makeNaturalBlock } from './test/helpers/naturalBlock/makeNaturalBlock';
-import { makeSectionBlock } from './test/helpers/sectionBlock/makeSectionBlock';
-import { makeTag } from './test/helpers/tag/makeTag';
+import { makeNaturalBlockMock } from './test/helpers/constructs/NaturalBlock/makeNaturalBlockMock';
+import { makeSectionBlockMock } from './test/helpers/constructs/SectionBlock/makeSectionBlockMock';
+import { makeTagMock } from './test/helpers/constructs/Tag/makeTagMock';
 
 describe('registry types', () => {
 	it('accepts BlockContent union members', () => {
-		const block: BlockContent = makeSectionBlock();
+		const block: BlockContent = makeSectionBlockMock();
 		expect(block.construct).toBe('SectionBlock');
 	});
 
 	it('accepts InlineContent union members', () => {
-		const inline: InlineContent = makeTag();
+		const inline: InlineContent = makeTagMock();
 		expect(inline.construct).toBe('Tag');
 	});
 
 	it('accepts Construct union members', () => {
-		const construct: Construct = makeNaturalBlock();
+		const construct: Construct = makeNaturalBlockMock();
 		expect(construct.construct).toBe('NaturalBlock');
 	});
 });

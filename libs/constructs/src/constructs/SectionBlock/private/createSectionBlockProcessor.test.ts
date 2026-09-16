@@ -4,20 +4,18 @@ import { rawSlice } from '../../../helpers/rawSlice';
 import { extractTags } from '../../Tag/private/extractTags';
 
 vi.mock('@art-js/primitives', async () => {
-	const { makeNodePositionMock } =
-		await import('../../../test/helpers/primitives/makeNodePositionMock');
-	return makeNodePositionMock();
+	const { nodePositionMock } = await import('../../../test/helpers/primitives/nodePositionMock');
+	return nodePositionMock();
 });
 
 vi.mock('../../../helpers/rawSlice', async () => {
-	const { makeRawSliceMock } = await import('../../../test/helpers/rawSlice/makeRawSliceMock');
-	return makeRawSliceMock('# Hello World');
+	const { rawSliceMock } = await import('../../../test/helpers/constructs/rawSliceMock');
+	return rawSliceMock('# Hello World');
 });
 
 vi.mock('../../Tag/private/extractTags', async () => {
-	const { makeExtractTagsMock } =
-		await import('../../../test/helpers/extractTags/makeExtractTagsMock');
-	return makeExtractTagsMock([], 'Hello World');
+	const { extractTagsMock } = await import('../../../test/helpers/constructs/Tag/extractTagsMock');
+	return extractTagsMock([], 'Hello World');
 });
 
 describe('createSectionBlockProcessor', () => {

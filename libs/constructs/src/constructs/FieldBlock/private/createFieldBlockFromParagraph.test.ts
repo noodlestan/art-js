@@ -1,17 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { makeTag } from '../../../test/helpers/tag/makeTag';
+import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 
 vi.mock('@art-js/primitives', async () => {
-	const { makeNodePositionMock } =
-		await import('../../../test/helpers/primitives/makeNodePositionMock');
-	return makeNodePositionMock();
+	const { nodePositionMock } = await import('../../../test/helpers/primitives/nodePositionMock');
+	return nodePositionMock();
 });
 
 vi.mock('./stripStrong', async () => {
-	const { makeStripStrongMock } =
-		await import('../../../test/helpers/stripStrong/makeStripStrongMock');
-	return makeStripStrongMock('Purpose:');
+	const { stripStrongMock } =
+		await import('../../../test/helpers/constructs/FieldBlock/stripStrongMock');
+	return stripStrongMock('Purpose:');
 });
 
 describe('createFieldBlockFromParagraph', () => {
@@ -44,7 +43,7 @@ describe('createFieldBlockFromParagraph', () => {
 			],
 		};
 		const context = { markdown: '' } as never;
-		const result = createFieldBlockFromParagraph(paragraph as never, context, [makeTag()]);
+		const result = createFieldBlockFromParagraph(paragraph as never, context, [makeTagMock()]);
 		expect(result.tags).toHaveLength(1);
 	});
 });

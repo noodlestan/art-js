@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
-import { makeDocument } from '../../../test/helpers/document/makeDocument';
-import { makeFieldBlock } from '../../../test/helpers/fieldBlock/makeFieldBlock';
-import { makeSectionBlock } from '../../../test/helpers/sectionBlock/makeSectionBlock';
+import { makeDocumentMock } from '../../../test/helpers/constructs/Document/makeDocumentMock';
+import { makeFieldBlockMock } from '../../../test/helpers/constructs/FieldBlock/makeFieldBlockMock';
+import { makeSectionBlockMock } from '../../../test/helpers/constructs/SectionBlock/makeSectionBlockMock';
 
 import { findTagable } from './findTagable';
 
 describe('findTagable', () => {
 	it('returns the section block when found in context chain', () => {
-		const section = makeSectionBlock();
+		const section = makeSectionBlockMock();
 		const context = {
 			construct: section,
 			parent: () => undefined,
@@ -19,7 +19,7 @@ describe('findTagable', () => {
 
 	it('returns undefined when no section block is found', () => {
 		const context = {
-			construct: makeDocument(),
+			construct: makeDocumentMock(),
 			parent: () => undefined,
 		} as never;
 		const result = findTagable(context);
@@ -27,13 +27,13 @@ describe('findTagable', () => {
 	});
 
 	it('walks up the parent chain', () => {
-		const section = makeSectionBlock();
+		const section = makeSectionBlockMock();
 		const parent = {
 			construct: section,
 			parent: () => undefined,
 		};
 		const context = {
-			construct: makeFieldBlock(),
+			construct: makeFieldBlockMock(),
 			parent: () => parent,
 		} as never;
 		const result = findTagable(context);

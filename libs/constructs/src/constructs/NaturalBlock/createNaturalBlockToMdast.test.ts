@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { makeNaturalBlock } from '../../test/helpers/naturalBlock/makeNaturalBlock';
-import { makeTag } from '../../test/helpers/tag/makeTag';
+import { makeNaturalBlockMock } from '../../test/helpers/constructs/NaturalBlock/makeNaturalBlockMock';
+import { makeTagMock } from '../../test/helpers/constructs/Tag/makeTagMock';
 
 import { createNaturalBlockToMdast } from './createNaturalBlockToMdast';
 
@@ -9,7 +9,7 @@ describe('createNaturalBlockToMdast', () => {
 	it('parses a text value into a root with paragraph', () => {
 		const impl = createNaturalBlockToMdast();
 		const result = impl.toMdast(
-			makeNaturalBlock({ type: 'text', value: ' Hello world' }) as never,
+			makeNaturalBlockMock({ type: 'text', value: ' Hello world' }) as never,
 			[],
 		);
 		expect(result).toMatchObject({
@@ -21,7 +21,7 @@ describe('createNaturalBlockToMdast', () => {
 	it('parses a code block value', () => {
 		const impl = createNaturalBlockToMdast();
 		const result = impl.toMdast(
-			makeNaturalBlock({
+			makeNaturalBlockMock({
 				type: 'code',
 				lang: null,
 				meta: null,
@@ -37,9 +37,10 @@ describe('createNaturalBlockToMdast', () => {
 
 	it('includes children in a paragraph', () => {
 		const impl = createNaturalBlockToMdast();
-		const result = impl.toMdast(makeNaturalBlock({ type: 'paragraph', value: 'Hello' }) as never, [
-			{ type: 'text', value: 'child' } as never,
-		]);
+		const result = impl.toMdast(
+			makeNaturalBlockMock({ type: 'paragraph', value: 'Hello' }) as never,
+			[{ type: 'text', value: 'child' } as never],
+		);
 		expect(result).toMatchObject({
 			type: 'root',
 			children: expect.arrayContaining([
@@ -54,10 +55,10 @@ describe('createNaturalBlockToMdast', () => {
 	it('includes tags in a paragraph when present', () => {
 		const impl = createNaturalBlockToMdast();
 		const result = impl.toMdast(
-			makeNaturalBlock({
+			makeNaturalBlockMock({
 				type: 'paragraph',
 				value: 'Hello',
-				tags: [makeTag()],
+				tags: [makeTagMock()],
 			}) as never,
 			[{ type: 'text', value: 'child' } as never],
 		);
@@ -75,10 +76,10 @@ describe('createNaturalBlockToMdast', () => {
 	it('does not include tags when paragraph has no children', () => {
 		const impl = createNaturalBlockToMdast();
 		const result = impl.toMdast(
-			makeNaturalBlock({
+			makeNaturalBlockMock({
 				type: 'paragraph',
 				value: 'Hello',
-				tags: [makeTag()],
+				tags: [makeTagMock()],
 			}) as never,
 			[],
 		);
@@ -96,7 +97,7 @@ describe('createNaturalBlockToMdast', () => {
 	it('does not include tags when paragraph tags are empty', () => {
 		const impl = createNaturalBlockToMdast();
 		const result = impl.toMdast(
-			makeNaturalBlock({
+			makeNaturalBlockMock({
 				type: 'paragraph',
 				value: 'Hello',
 				tags: [],

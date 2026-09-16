@@ -1,9 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('@art-js/primitives/src/parser/helpers', async () => {
-	const { makeNodePositionMock } =
-		await import('../../../test/helpers/primitives/makeNodePositionMock');
-	return makeNodePositionMock();
+	const { nodePositionMock } = await import('../../../test/helpers/primitives/nodePositionMock');
+	return nodePositionMock();
 });
 
 describe('createNaturalExpression', () => {

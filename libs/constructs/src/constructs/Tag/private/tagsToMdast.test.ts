@@ -1,9 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('./tagToMdast', async () => {
-	const { makeTagToMdastMock } =
-		await import('../../../test/helpers/tagToMdast/makeTagToMdastMock');
-	return makeTagToMdastMock();
+	const { tagToMdastMock } = await import('../../../test/helpers/constructs/Tag/tagToMdastMock');
+	return tagToMdastMock();
 });
 
 describe('tagsToMdast', () => {

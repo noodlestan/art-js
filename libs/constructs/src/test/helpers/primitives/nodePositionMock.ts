@@ -1,6 +1,10 @@
+/**
+ * @mocks nodePosition() from `@art-js/primitives`
+ */
+
 import { vi } from 'vitest';
 
-export const makeNodePositionMock = (): {
+export const nodePositionMock = (): {
 	nodePosition: ReturnType<typeof vi.fn>;
 } => ({
 	nodePosition: vi.fn(() => ({

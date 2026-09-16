@@ -2,21 +2,21 @@ import { createParserVisitContext } from '@art-js/primitives';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import { describe, expect, it } from 'vitest';
 
-import { makeDocument } from '../../test/helpers/document/makeDocument';
+import { makeDocumentMock } from '../../test/helpers/constructs/Document/makeDocumentMock';
 
 import { createFieldInlineProcessor } from './createFieldInlineProcessor';
 
 describe('createFieldInlineProcessor', () => {
 	it('returns null for non-paragraph nodes', () => {
 		const processor = createFieldInlineProcessor();
-		const context = createParserVisitContext(makeDocument(), undefined, '');
+		const context = createParserVisitContext(makeDocumentMock(), undefined, '');
 		const result = processor.captureNode(context, { type: 'heading', children: [] } as never);
 		expect(result).toBeNull();
 	});
 
 	it('returns null for paragraphs with no children', () => {
 		const processor = createFieldInlineProcessor();
-		const context = createParserVisitContext(makeDocument(), undefined, '');
+		const context = createParserVisitContext(makeDocumentMock(), undefined, '');
 		const result = processor.captureNode(context, { type: 'paragraph', children: [] } as never);
 		expect(result).toBeNull();
 	});
@@ -25,7 +25,7 @@ describe('createFieldInlineProcessor', () => {
 		const processor = createFieldInlineProcessor();
 		const tree = fromMarkdown('Hello world');
 		const paragraph = tree.children[0] as never;
-		const context = createParserVisitContext(makeDocument(), undefined, 'Hello world');
+		const context = createParserVisitContext(makeDocumentMock(), undefined, 'Hello world');
 		const result = processor.captureNode(context, paragraph);
 		expect(result).toBeNull();
 	});
@@ -35,7 +35,7 @@ describe('createFieldInlineProcessor', () => {
 		const markdown = '**Name:**   ';
 		const tree = fromMarkdown(markdown);
 		const paragraph = tree.children[0] as never;
-		const context = createParserVisitContext(makeDocument(), undefined, markdown);
+		const context = createParserVisitContext(makeDocumentMock(), undefined, markdown);
 		const result = processor.captureNode(context, paragraph);
 		expect(result).toBeNull();
 	});
@@ -45,7 +45,7 @@ describe('createFieldInlineProcessor', () => {
 		const markdown = '# Hello World\n\n**Greeting:** Hello world.';
 		const tree = fromMarkdown(markdown);
 		const paragraph = tree.children[1] as never;
-		const context = createParserVisitContext(makeDocument(), undefined, markdown);
+		const context = createParserVisitContext(makeDocumentMock(), undefined, markdown);
 		const result = processor.captureNode(context, paragraph);
 
 		expect(result).toMatchObject({
@@ -70,7 +70,7 @@ describe('createFieldInlineProcessor', () => {
 		const markdown = '# Hello World\n\n**Remote:** `git@example.com`';
 		const tree = fromMarkdown(markdown);
 		const paragraph = tree.children[1] as never;
-		const context = createParserVisitContext(makeDocument(), undefined, markdown);
+		const context = createParserVisitContext(makeDocumentMock(), undefined, markdown);
 		const result = processor.captureNode(context, paragraph);
 
 		expect(result).toMatchObject({
@@ -91,7 +91,7 @@ describe('createFieldInlineProcessor', () => {
 		const markdown = '# Hello World\n\n**Greeting:** Hello there (#friend)';
 		const tree = fromMarkdown(markdown);
 		const paragraph = tree.children[1] as never;
-		const context = createParserVisitContext(makeDocument(), undefined, markdown);
+		const context = createParserVisitContext(makeDocumentMock(), undefined, markdown);
 		const result = processor.captureNode(context, paragraph);
 
 		expect(result).toMatchObject({

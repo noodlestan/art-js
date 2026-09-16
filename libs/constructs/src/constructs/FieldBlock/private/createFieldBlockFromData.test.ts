@@ -1,22 +1,22 @@
 import { describe, expect, it } from 'vitest';
 
-import { makeFieldBlock } from '../../../test/helpers/fieldBlock/makeFieldBlock';
-import { makeNaturalBlock } from '../../../test/helpers/naturalBlock/makeNaturalBlock';
-import { makeTag } from '../../../test/helpers/tag/makeTag';
+import { makeFieldBlockMock } from '../../../test/helpers/constructs/FieldBlock/makeFieldBlockMock';
+import { makeNaturalBlockMock } from '../../../test/helpers/constructs/NaturalBlock/makeNaturalBlockMock';
+import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 
 import { createFieldBlockFromData } from './createFieldBlockFromData';
 
 describe('createFieldBlockFromData', () => {
 	it('creates a FieldBlock from minimal data', () => {
 		const result = createFieldBlockFromData({ name: 'Test' });
-		expect(result).toEqual(makeFieldBlock());
+		expect(result).toEqual(makeFieldBlockMock());
 	});
 
 	it('includes children and tags when provided', () => {
 		const result = createFieldBlockFromData({
 			name: 'Test',
-			children: [makeNaturalBlock()],
-			tags: [makeTag()],
+			children: [makeNaturalBlockMock()],
+			tags: [makeTagMock()],
 		});
 		expect(result.children).toHaveLength(1);
 		expect(result.tags).toHaveLength(1);

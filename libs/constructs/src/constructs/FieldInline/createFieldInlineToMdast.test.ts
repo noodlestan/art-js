@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
-import { makeFieldInline } from '../../test/helpers/fieldInline/makeFieldInline';
-import { makeTag } from '../../test/helpers/tag/makeTag';
+import { makeFieldInlineMock } from '../../test/helpers/constructs/FieldInline/makeFieldInlineMock';
+import { makeTagMock } from '../../test/helpers/constructs/Tag/makeTagMock';
 
 import { createFieldInlineToMdast } from './createFieldInlineToMdast';
 
 describe('createFieldInlineToMdast', () => {
 	it('converts a FieldInline to a paragraph with strong label', () => {
 		const impl = createFieldInlineToMdast();
-		const result = impl.toMdast(makeFieldInline({ name: 'Purpose' }) as never, []);
+		const result = impl.toMdast(makeFieldInlineMock({ name: 'Purpose' }) as never, []);
 		expect(result).toEqual({
 			type: 'paragraph',
 			children: [
@@ -21,7 +21,7 @@ describe('createFieldInlineToMdast', () => {
 	it('appends tags when present', () => {
 		const impl = createFieldInlineToMdast();
 		const result = impl.toMdast(
-			makeFieldInline({ name: 'Purpose', tags: [makeTag()] }) as never,
+			makeFieldInlineMock({ name: 'Purpose', tags: [makeTagMock()] }) as never,
 			[],
 		);
 		expect(result).toEqual({

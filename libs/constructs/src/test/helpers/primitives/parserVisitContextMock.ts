@@ -1,6 +1,10 @@
+/**
+ * @mocks createParserVisitContext() from `@art-js/primitives`
+ */
+
 import { vi } from 'vitest';
 
-export const makeParserVisitContextMock = (options?: {
+export const parserVisitContextMock = (options?: {
 	includeSectionDepth?: boolean;
 }): {
 	createParserVisitContext: ReturnType<typeof vi.fn>;

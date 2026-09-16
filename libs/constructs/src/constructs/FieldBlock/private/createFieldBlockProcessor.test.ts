@@ -5,26 +5,25 @@ import { extractTags } from '../../Tag/private/extractTags';
 import { isFieldStrong } from './isFieldStrong';
 
 vi.mock('../../../helpers/rawSlice', async () => {
-	const { makeRawSliceMock } = await import('../../../test/helpers/rawSlice/makeRawSliceMock');
-	return makeRawSliceMock('');
+	const { rawSliceMock } = await import('../../../test/helpers/constructs/rawSliceMock');
+	return rawSliceMock('');
 });
 
 vi.mock('../../Tag/private/extractTags', async () => {
-	const { makeExtractTagsMock } =
-		await import('../../../test/helpers/extractTags/makeExtractTagsMock');
-	return makeExtractTagsMock([], '');
+	const { extractTagsMock } = await import('../../../test/helpers/constructs/Tag/extractTagsMock');
+	return extractTagsMock([], '');
 });
 
 vi.mock('./createFieldBlockFromParagraph', async () => {
-	const { makeCreateFieldBlockFromParagraphMock } =
-		await import('../../../test/helpers/createFieldBlockFromParagraph/makeCreateFieldBlockFromParagraphMock');
-	return makeCreateFieldBlockFromParagraphMock();
+	const { createFieldBlockFromParagraphMock } =
+		await import('../../../test/helpers/constructs/FieldBlock/createFieldBlockFromParagraphMock');
+	return createFieldBlockFromParagraphMock();
 });
 
 vi.mock('./isFieldStrong', async () => {
-	const { makeIsFieldStrongMock } =
-		await import('../../../test/helpers/isFieldStrong/makeIsFieldStrongMock');
-	return makeIsFieldStrongMock();
+	const { isFieldStrongMock } =
+		await import('../../../test/helpers/constructs/FieldBlock/isFieldStrongMock');
+	return isFieldStrongMock();
 });
 
 describe('createFieldBlockProcessor', () => {

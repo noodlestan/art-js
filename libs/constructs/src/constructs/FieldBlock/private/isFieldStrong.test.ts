@@ -3,9 +3,9 @@ import { describe, expect, it, vi } from 'vitest';
 import { isFieldStrong } from './isFieldStrong';
 
 vi.mock('./stripStrong', async () => {
-	const { makeStripStrongMock } =
-		await import('../../../test/helpers/stripStrong/makeStripStrongMock');
-	return makeStripStrongMock('Purpose:');
+	const { stripStrongMock } =
+		await import('../../../test/helpers/constructs/FieldBlock/stripStrongMock');
+	return stripStrongMock('Purpose:');
 });
 
 describe('isFieldStrong', () => {

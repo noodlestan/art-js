@@ -1,6 +1,10 @@
-import type { NaturalExpression } from '../../../constructs/NaturalExpression/private/types';
+/**
+ * @provides NaturalExpression test fixture
+ */
 
-export const makeNaturalExpression = (options?: {
+import type { NaturalExpression } from '../../../../constructs/NaturalExpression/private/types';
+
+export const makeNaturalExpressionMock = (options?: {
 	type?: string;
 	value?: string;
 	attributes?: Record<string, unknown>;

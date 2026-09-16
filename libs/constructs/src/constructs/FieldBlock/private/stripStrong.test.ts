@@ -5,8 +5,8 @@ import { rawSlice } from '../../../helpers/rawSlice';
 import { stripStrong } from './stripStrong';
 
 vi.mock('../../../helpers/rawSlice', async () => {
-	const { makeRawSliceMock } = await import('../../../test/helpers/rawSlice/makeRawSliceMock');
-	return makeRawSliceMock();
+	const { rawSliceMock } = await import('../../../test/helpers/constructs/rawSliceMock');
+	return rawSliceMock();
 });
 
 describe('stripStrong', () => {

@@ -1,7 +1,11 @@
-import type { FieldInline } from '../../../constructs/FieldInline/private/types';
-import type { Tag } from '../../../constructs/Tag/private/types';
+/**
+ * @provides FieldInline test fixture
+ */
 
-export const makeFieldInline = (options?: {
+import type { FieldInline } from '../../../../constructs/FieldInline/private/types';
+import type { Tag } from '../../../../constructs/Tag/private/types';
+
+export const makeFieldInlineMock = (options?: {
 	name?: string;
 	children?: FieldInline['children'];
 	tags?: Tag[];

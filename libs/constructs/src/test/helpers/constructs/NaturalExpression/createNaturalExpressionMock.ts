@@ -1,6 +1,10 @@
+/**
+ * @mocks createNaturalExpression() from `@art-js/constructs`
+ */
+
 import { vi } from 'vitest';
 
-export const makeCreateNaturalExpressionMock = (): {
+export const createNaturalExpressionMock = (): {
 	createNaturalExpression: ReturnType<typeof vi.fn>;
 } => ({
 	createNaturalExpression: vi.fn(child => ({

@@ -1,29 +1,27 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { makeTag } from '../../../test/helpers/tag/makeTag';
+import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 import { extractTags } from '../../Tag/private/extractTags';
 
 vi.mock('@art-js/primitives', async () => {
-	const { makeNodePositionMock } =
-		await import('../../../test/helpers/primitives/makeNodePositionMock');
-	return makeNodePositionMock();
+	const { nodePositionMock } = await import('../../../test/helpers/primitives/nodePositionMock');
+	return nodePositionMock();
 });
 
 vi.mock('../../../helpers/rawSlice', async () => {
-	const { makeRawSliceMock } = await import('../../../test/helpers/rawSlice/makeRawSliceMock');
-	return makeRawSliceMock('hello');
+	const { rawSliceMock } = await import('../../../test/helpers/constructs/rawSliceMock');
+	return rawSliceMock('hello');
 });
 
 vi.mock('../../NaturalExpression/private/createNaturalExpression', async () => {
-	const { makeCreateNaturalExpressionMock } =
-		await import('../../../test/helpers/createNaturalExpression/makeCreateNaturalExpressionMock');
-	return makeCreateNaturalExpressionMock();
+	const { createNaturalExpressionMock } =
+		await import('../../../test/helpers/constructs/NaturalExpression/createNaturalExpressionMock');
+	return createNaturalExpressionMock();
 });
 
 vi.mock('../../Tag/private/extractTags', async () => {
-	const { makeExtractTagsMock } =
-		await import('../../../test/helpers/extractTags/makeExtractTagsMock');
-	return makeExtractTagsMock([], 'hello');
+	const { extractTagsMock } = await import('../../../test/helpers/constructs/Tag/extractTagsMock');
+	return extractTagsMock([], 'hello');
 });
 
 describe('createNaturalBlock', () => {
@@ -126,7 +124,7 @@ describe('createNaturalBlock', () => {
 
 	it('extracts tags when last text child has trailing tags', async () => {
 		vi.mocked(extractTags).mockReturnValue({
-			tags: [makeTag()],
+			tags: [makeTagMock()],
 			stripped: 'hello',
 		});
 		const { createNaturalBlock } = await import('./createNaturalBlock');

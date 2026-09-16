@@ -1,6 +1,10 @@
+/**
+ * @mocks createFieldBlockFromParagraph() from `@art-js/constructs`
+ */
+
 import { vi } from 'vitest';
 
-export const makeCreateFieldBlockFromParagraphMock = (
+export const createFieldBlockFromParagraphMock = (
 	name: string = 'Test',
 ): {
 	createFieldBlockFromParagraph: ReturnType<typeof vi.fn>;
