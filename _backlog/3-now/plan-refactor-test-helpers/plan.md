@@ -71,7 +71,7 @@ Execution occurs in `$PROJECT` on branch `building`.
 | Iteration / Instructions                                                                                              | Status  |
 | --------------------------------------------------------------------------------------------------------------------- | ------- | --------- |
 | Iteration: Rename and Reclassify Helpers `./plan-refactor-test-helpers/instructions/rename-and-reclassify-helpers.md` | `DONE`  | `b9a179d` |
-| Iteration: Deduplicate Primitive Helpers `./plan-refactor-test-helpers/instructions/deduplicate-primitive-helpers.md` | `READY` |
+| Iteration: Deduplicate Primitive Helpers `./plan-refactor-test-helpers/instructions/deduplicate-primitive-helpers.md` | `DONE`  | `8bf443f` |
 | Iteration: Simplify Async Imports `./plan-refactor-test-helpers/instructions/simplify-async-imports.md`               | `READY` |
 | Iteration: Format Test Scenarios `./plan-refactor-test-helpers/instructions/format-test-scenarios.md`                 | `READY` |
 | Iteration: Write Test Conventions `./plan-refactor-test-helpers/instructions/write-test-conventions.md`               | `READY` |
@@ -141,7 +141,7 @@ test(art-js): Rename and reclassify test helpers.
 
 **Id:** `deduplicate-primitive-helpers`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Move primitives mocks into the primitives package and deduplicate `makeDocumentMock` across all three packages.
 
@@ -161,9 +161,9 @@ test(art-js): Rename and reclassify test helpers.
 
 #### Commits:
 
-| ID                              | Repository / Checkout / Branch | Policy       | Hash | Status     |
-| ------------------------------- | ------------------------------ | ------------ | ---- | ---------- |
-| `deduplicate-primitive-helpers` | $PROJECT / `building`          | `AUTONOMOUS` | TBD  | `AUTHORED` |
+| ID                              | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| ------------------------------- | ------------------------------ | ------------ | --------- | ----------- |
+| `deduplicate-primitive-helpers` | $PROJECT / `building`          | `AUTONOMOUS` | `8bf443f` | `COMMITTED` |
 
 ##### Commit: `deduplicate-primitive-helpers`
 
