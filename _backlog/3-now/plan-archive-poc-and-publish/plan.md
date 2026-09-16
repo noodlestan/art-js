@@ -94,7 +94,7 @@ None.
 
 | ID                  | Repository / Checkout / Branch | Policy       | Hash  | Status     |
 | ------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `archive-poc-parse` | $PROJECT / `building`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| `archive-poc-parse` | $PROJECT / `building`          | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `archive-poc-parse`
 
@@ -133,7 +133,7 @@ chore(art-js): Archive poc-parse package
 
 | ID               | Repository / Checkout / Branch | Policy       | Hash  | Status     |
 | ---------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `publish-v0.0.2` | $PROJECT / `building`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| `publish-v0.0.2` | $PROJECT / `building`          | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `publish-v0.0.2`
 

@@ -82,3 +82,9 @@ Deterministic utility operations for agents working with Art and context files. 
 ## Spec (`@art-js/spec`)
 
 The Art language specification, written in Art itself. Consumed by parser, validator, and bundler. Both documentation and test data.
+
+## Archived
+
+### `@art-js/poc-parse`
+
+This package was used to prototype different options for the parser. The POC parser logic has been superseded by the `@art-js/parser`, `@art-js/constructs`, and `@art-js/serializer` packages. Last version of the POC can be found on [Github noodlestan/art-js](https://github.com/noodlestan/art-js/tree/e2940760f1b3fe8811b49d8dd724b82d1e668514/cli/poc-parse).

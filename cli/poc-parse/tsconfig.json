@@ -1,9 +1,0 @@
-{
-  "extends": "@noodlestan/tsconfig/cli/tsconfig.json",
-  "compilerOptions": {
-    "noPropertyAccessFromIndexSignature": false,
-    "noUncheckedIndexedAccess": false
-  },
-  "include": ["src/", "scripts/", "**/*.config.ts"],
-  "exclude": ["**/node_modules/", "**/dist/", "**/coverage/"]
-}
