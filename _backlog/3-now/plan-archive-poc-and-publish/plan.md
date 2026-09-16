@@ -2,7 +2,7 @@
 
 **Id:** `archive-poc-and-publish`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -74,7 +74,7 @@ Execution occurs in `$PROJECT` on branch `building`.
 
 **Id:** `archive-poc-parse`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Remove `cli/poc-parse/` from the monorepo.
 
@@ -92,9 +92,9 @@ None.
 
 #### Commits:
 
-| ID                  | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `archive-poc-parse` | $PROJECT / `building`          | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                  | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| ------------------- | ------------------------------ | ------------ | --------- | ----------- |
+| `archive-poc-parse` | $PROJECT / `building`          | `AUTONOMOUS` | `172d83a` | `COMMITTED` |
 
 ##### Commit: `archive-poc-parse`
 
@@ -112,7 +112,7 @@ chore(art-js): Archive poc-parse package
 
 **Id:** `publish-v0.0.2`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Bump version to `0.0.2` for primitives, constructs, parser, and serializer packages.
 
@@ -131,9 +131,9 @@ chore(art-js): Archive poc-parse package
 
 #### Commits:
 
-| ID               | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ---------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `publish-v0.0.2` | $PROJECT / `building`          | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID               | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| ---------------- | ------------------------------ | ------------ | --------- | ----------- |
+| `publish-v0.0.2` | $PROJECT / `building`          | `AUTONOMOUS` | `21635c9` | `COMMITTED` |
 
 ##### Commit: `publish-v0.0.2`
 
