@@ -1,0 +1,41 @@
+# Module
+
+## Uses
+
+::READ (Construct: Identifier) FROM `./identifier.art`.
+
+## Construct: TagReference
+
+**Category:** Expressions
+
+**Purpose:** Reference a tag value in prose or instructions without triggering tag attachment behaviour.
+
+**Description:** TagReferences are backtick-enclosed references to tag values used in instructions, prose, and filter operations. Unlike Tag constructs, they do not attach to SectionBlock headings and are not subject to projection rules. They are detected in prose content via regex — not inside fenced code blocks or inline code.
+
+**Syntax:**
+
+```art
+<TagReference> =
+    `#<Identifier>`
+```
+
+**Rules:**
+
+- A TagReference MUST be enclosed in backticks.
+- A TagReference MUST NOT include parentheses.
+- A TagReference name MUST be kebab case.
+- A TagReference is for reference only and does not attach to any construct.
+
+**Examples:**
+
+Example of referencing a tag in a filter operation:
+
+```md
+1. With each `%construct` tagged with `#generator`, ...
+```
+
+Example of referencing a tag in instructions:
+
+```md
+Apply the convention to all items tagged `#wip`.
+```
