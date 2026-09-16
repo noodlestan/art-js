@@ -71,7 +71,7 @@ Read the convention indexes listed below and follow them when planning and execu
 
 The following conventions apply to all packages in this repository:
 
-::READ `./node_modules/@noodlestan/conventions-typescript/art/typescript.md` — TypeScript conventions.
+::READ `./node_modules/@noodlestan/conventions-typescript/art/index.md` — TypeScript conventions.
 
 In case of ambiguity or conflict applying conventions, follow links from the convention indexes to extended convention files and read the "Avoid" and "Prefer" examples.
 
