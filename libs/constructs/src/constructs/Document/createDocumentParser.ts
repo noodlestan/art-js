@@ -1,11 +1,11 @@
-import type { Construct } from '../../registry';
 import type { ConstructParserFactory } from '../types';
 
 import { type DocumentFactoryData, createDocumentFromData } from './private/createDocumentFromData';
+import type { ArtDocument } from './types';
 
-export const createDocumentParser: ConstructParserFactory = () => ({
+export const createDocumentParser: ConstructParserFactory<ArtDocument> = () => ({
 	name: 'Document',
 	factory: {
-		fromData: data => createDocumentFromData(data as DocumentFactoryData) as unknown as Construct,
+		fromData: data => createDocumentFromData(data as DocumentFactoryData),
 	},
 });

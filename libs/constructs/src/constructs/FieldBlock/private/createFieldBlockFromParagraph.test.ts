@@ -4,6 +4,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { stripStrongMock } from '../../../test/helpers/constructs/FieldBlock/stripStrongMock';
 import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 
+import { createFieldBlockFromParagraph } from './createFieldBlockFromParagraph';
+
 vi.mock('@art-js/primitives', () => {
 	return nodePositionMock();
 });
@@ -14,7 +16,6 @@ vi.mock('./stripStrong', () => {
 
 describe('createFieldBlockFromParagraph', () => {
 	it('WHEN creating a FieldBlock from a paragraph', async () => {
-		const { createFieldBlockFromParagraph } = await import('./createFieldBlockFromParagraph');
 		const paragraph = {
 			type: 'paragraph',
 			children: [
@@ -33,7 +34,6 @@ describe('createFieldBlockFromParagraph', () => {
 	});
 
 	it('WHEN provided includes tags', async () => {
-		const { createFieldBlockFromParagraph } = await import('./createFieldBlockFromParagraph');
 		const paragraph = {
 			type: 'paragraph',
 			children: [

@@ -1,3 +1,2 @@
-export type { Point, Position } from './point';
-export type { ConstructBase, ContainerConstructBase } from './constructs';
+export type * from './types';
 export * from './parser/index';

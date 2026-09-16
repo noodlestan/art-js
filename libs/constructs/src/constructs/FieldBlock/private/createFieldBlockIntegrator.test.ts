@@ -6,13 +6,14 @@ import { makeFieldBlockMock } from '../../../test/helpers/constructs/FieldBlock/
 import { makeNaturalBlockMock } from '../../../test/helpers/constructs/NaturalBlock/makeNaturalBlockMock';
 import { makeSectionBlockMock } from '../../../test/helpers/constructs/SectionBlock/makeSectionBlockMock';
 
+import { createFieldBlockIntegrator } from './createFieldBlockIntegrator';
+
 vi.mock('@art-js/primitives', () => {
 	return parserVisitContextMock();
 });
 
 describe('createFieldBlockIntegrator', () => {
 	it('WHEN called returns an integrator that captures the construct and returns a new context', async () => {
-		const { createFieldBlockIntegrator } = await import('./createFieldBlockIntegrator');
 		const integrator = createFieldBlockIntegrator();
 
 		expect(integrator.integrate).toBeInstanceOf(Function);
@@ -23,7 +24,6 @@ describe('createFieldBlockIntegrator', () => {
 	});
 
 	it('FOR non-boundary constructs onBeforeConstruct returns the same context', async () => {
-		const { createFieldBlockIntegrator } = await import('./createFieldBlockIntegrator');
 		const integrator = createFieldBlockIntegrator();
 		const context = documentContextMock() as never;
 		const naturalBlock = makeNaturalBlockMock();
@@ -35,7 +35,6 @@ describe('createFieldBlockIntegrator', () => {
 	});
 
 	it('FOR boundary constructs onBeforeConstruct returns the parent context', async () => {
-		const { createFieldBlockIntegrator } = await import('./createFieldBlockIntegrator');
 		const integrator = createFieldBlockIntegrator();
 		const parentContext = documentContextMock() as never;
 		const sectionBlock = makeSectionBlockMock();

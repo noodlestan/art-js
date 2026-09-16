@@ -1,13 +1,14 @@
 import { nodePositionMock } from '@art-js/primitives/src/test/helpers/primitives/nodePositionMock';
 import { describe, expect, it, vi } from 'vitest';
 
+import { createNaturalExpression } from './createNaturalExpression';
+
 vi.mock('@art-js/primitives/src/parser/helpers', () => {
 	return nodePositionMock();
 });
 
 describe('createNaturalExpression', () => {
 	it('WHEN creating a NaturalExpression from a node', async () => {
-		const { createNaturalExpression } = await import('./createNaturalExpression');
 		const node = {
 			type: 'text',
 			value: 'hello',
@@ -23,7 +24,6 @@ describe('createNaturalExpression', () => {
 	});
 
 	it('WHEN recursively creating children from node children', async () => {
-		const { createNaturalExpression } = await import('./createNaturalExpression');
 		const node = {
 			type: 'paragraph',
 			position: { start: { offset: 0 }, end: { offset: 5 } },

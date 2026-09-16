@@ -2,9 +2,12 @@ import { nodePositionMock } from '@art-js/primitives/src/test/helpers/primitives
 import { describe, expect, it, vi } from 'vitest';
 
 import { createNaturalExpressionMock } from '../../../test/helpers/constructs/NaturalExpression/createNaturalExpressionMock';
+import { extractTagsMock } from '../../../test/helpers/constructs/Tag/extractTagsMock';
 import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 import { rawSliceMock } from '../../../test/helpers/constructs/rawSliceMock';
 import { extractTags } from '../../Tag/private/extractTags';
+
+import { createNaturalBlock } from './createNaturalBlock';
 
 vi.mock('@art-js/primitives', () => {
 	return nodePositionMock();
@@ -19,13 +22,11 @@ vi.mock('../../NaturalExpression/private/createNaturalExpression', () => {
 });
 
 vi.mock('../../Tag/private/extractTags', async () => {
-	const { extractTagsMock } = await import('../../../test/helpers/constructs/Tag/extractTagsMock');
 	return extractTagsMock([], 'hello');
 });
 
 describe('createNaturalBlock', () => {
 	it('WHEN creating a NaturalBlock from a node', async () => {
-		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
 			type: 'paragraph',
 			position: { start: { offset: 0 }, end: { offset: 5 } },
@@ -40,7 +41,6 @@ describe('createNaturalBlock', () => {
 	});
 
 	it('FOR nodes that have no children creates a NaturalBlock without children', async () => {
-		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = { type: 'thematicBreak' };
 		const context = { markdown: '' } as never;
 
@@ -51,7 +51,6 @@ describe('createNaturalBlock', () => {
 	});
 
 	it('WHEN treating heading children as phrasing content', async () => {
-		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
 			type: 'heading',
 			depth: 1,
@@ -67,7 +66,6 @@ describe('createNaturalBlock', () => {
 	});
 
 	it('WHEN treating table-cell children as phrasing content', async () => {
-		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
 			type: 'tableCell',
 			children: [{ type: 'text', value: 'Cell' }],
@@ -82,7 +80,6 @@ describe('createNaturalBlock', () => {
 	});
 
 	it('FOR phrasing children of block nodes creates natural expressions', async () => {
-		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
 			type: 'list',
 			children: [{ type: 'text', value: 'item' }],
@@ -97,7 +94,6 @@ describe('createNaturalBlock', () => {
 	});
 
 	it('WHEN recursing into non-phrasing children of block nodes', async () => {
-		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
 			type: 'list',
 			children: [{ type: 'code', value: 'const x = 1;' }],
@@ -112,7 +108,6 @@ describe('createNaturalBlock', () => {
 	});
 
 	it('FOR an empty paragraph creates an empty NaturalBlock', async () => {
-		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = { type: 'paragraph', children: [] };
 		const context = { markdown: '' } as never;
 
@@ -125,7 +120,6 @@ describe('createNaturalBlock', () => {
 
 	it('WHEN last child is not text does not extract tags', async () => {
 		vi.mocked(extractTags).mockReturnValue({ tags: [], stripped: 'hello' });
-		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
 			type: 'paragraph',
 			children: [{ type: 'strong', children: [] }],
@@ -142,7 +136,6 @@ describe('createNaturalBlock', () => {
 			tags: [makeTagMock()],
 			stripped: 'hello',
 		});
-		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
 			type: 'paragraph',
 			children: [{ type: 'text', value: 'hello (#test)' }],

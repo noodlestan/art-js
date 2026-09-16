@@ -1,7 +1,7 @@
 import type { Paragraph } from 'mdast';
 
 import { rawSlice } from '../../../helpers/rawSlice';
-import type { Construct } from '../../../registry';
+import type { Construct } from '../../../types';
 import { extractTags } from '../../Tag/private/extractTags';
 import type { ConstructProcessor } from '../../types';
 

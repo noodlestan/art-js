@@ -1,7 +1,7 @@
 import type { ArtDocument, ConstructSerializer } from '@art-js/constructs';
 import type { Node, Root } from 'mdast';
 
-import type { SerializerConfig } from './config/types';
+import type { SerializerConfig } from '../config/types';
 
 export function artAstToMdast(config: SerializerConfig, document: ArtDocument): Node {
 	const registry = new Map<string, ConstructSerializer>();

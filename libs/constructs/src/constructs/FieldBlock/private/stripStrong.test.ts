@@ -1,11 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
 
+// eslint-disable-next-line import/order
+import { rawSliceMock } from '../../../test/helpers/constructs/rawSliceMock';
+// eslint-disable-next-line import/order
 import { rawSlice } from '../../../helpers/rawSlice';
 
 import { stripStrong } from './stripStrong';
 
-vi.mock('../../../helpers/rawSlice', async () => {
-	const { rawSliceMock } = await import('../../../test/helpers/constructs/rawSliceMock');
+vi.mock('../../../helpers/rawSlice', () => {
 	return rawSliceMock();
 });
 

@@ -1,6 +1,6 @@
 import type { ContainerConstructBase } from '@art-js/primitives';
 
-import type { BlockContent } from '../../../registry';
+import type { BlockContent } from '../../../types';
 import type { Tag } from '../../Tag/private/types';
 
 export interface FieldBlock extends ContainerConstructBase {

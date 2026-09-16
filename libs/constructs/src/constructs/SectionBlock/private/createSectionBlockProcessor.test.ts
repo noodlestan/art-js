@@ -1,26 +1,29 @@
 import { nodePositionMock } from '@art-js/primitives/src/test/helpers/primitives/nodePositionMock';
 import { describe, expect, it, vi } from 'vitest';
 
+// eslint-disable-next-line import/order
+import { rawSliceMock } from '../../../test/helpers/constructs/rawSliceMock';
+
 import { rawSlice } from '../../../helpers/rawSlice';
+import { extractTagsMock } from '../../../test/helpers/constructs/Tag/extractTagsMock';
 import { extractTags } from '../../Tag/private/extractTags';
+
+import { createSectionBlock, createSectionBlockProcessor } from './createSectionBlockProcessor';
 
 vi.mock('@art-js/primitives', () => {
 	return nodePositionMock();
 });
 
 vi.mock('../../../helpers/rawSlice', async () => {
-	const { rawSliceMock } = await import('../../../test/helpers/constructs/rawSliceMock');
 	return rawSliceMock('# Hello World');
 });
 
 vi.mock('../../Tag/private/extractTags', async () => {
-	const { extractTagsMock } = await import('../../../test/helpers/constructs/Tag/extractTagsMock');
 	return extractTagsMock([], 'Hello World');
 });
 
 describe('createSectionBlockProcessor', () => {
 	it('WHEN called returns a processor that captures a heading node', async () => {
-		const { createSectionBlockProcessor } = await import('./createSectionBlockProcessor');
 		const processor = createSectionBlockProcessor();
 		const heading = {
 			type: 'heading',
@@ -35,7 +38,6 @@ describe('createSectionBlockProcessor', () => {
 	});
 
 	it('FOR non-heading nodes returns null', async () => {
-		const { createSectionBlockProcessor } = await import('./createSectionBlockProcessor');
 		const processor = createSectionBlockProcessor();
 		const paragraph = { type: 'paragraph', children: [] };
 		const context = { markdown: '' } as never;
@@ -48,7 +50,6 @@ describe('createSectionBlockProcessor', () => {
 
 describe('createSectionBlock', () => {
 	it('WHEN creating a SectionBlock from a heading', async () => {
-		const { createSectionBlock } = await import('./createSectionBlockProcessor');
 		const heading = {
 			type: 'heading',
 			depth: 2,
@@ -65,7 +66,6 @@ describe('createSectionBlock', () => {
 	it('WHEN extracting kind from heading text', async () => {
 		vi.mocked(rawSlice).mockReturnValue('# Module: Hello');
 		vi.mocked(extractTags).mockReturnValue({ tags: [], stripped: 'Module: Hello' });
-		const { createSectionBlock } = await import('./createSectionBlockProcessor');
 		const heading = {
 			type: 'heading',
 			depth: 1,
@@ -85,7 +85,6 @@ describe('createSectionBlock', () => {
 			tags: [{ construct: 'Tag', name: 'tag' }],
 			stripped: 'Hello',
 		});
-		const { createSectionBlock } = await import('./createSectionBlockProcessor');
 		const heading = {
 			type: 'heading',
 			depth: 1,

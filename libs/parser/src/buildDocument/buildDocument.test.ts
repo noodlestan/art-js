@@ -2,13 +2,15 @@ import { makeDocumentMock } from '@art-js/primitives/src/test/helpers/document/m
 import { parserVisitContextMock } from '@art-js/primitives/src/test/helpers/primitives/parserVisitContextMock';
 import { describe, expect, it, vi } from 'vitest';
 
+import { buildDocument } from './buildDocument';
+
 const { markdownTree } = vi.hoisted(() => ({
 	markdownTree: { type: 'root', children: [] as unknown[] },
 }));
 
 vi.mock('@art-js/constructs', () => {
 	return {
-		createDocument: vi.fn(() => makeDocumentMock()),
+		createArtDocument: vi.fn(() => makeDocumentMock()),
 	};
 });
 
@@ -50,7 +52,6 @@ describe('buildDocument', () => {
 				children: [{ type: 'text', value: 'Hello' }],
 			},
 		];
-		const { buildDocument } = await import('./builder');
 		const config = {
 			defaultConstruct: naturalBlockParser(),
 			constructs: [],
@@ -63,7 +64,6 @@ describe('buildDocument', () => {
 
 	it('WHEN the default construct has no processor skips blocks', async () => {
 		markdownTree.children = [{ type: 'list', children: [] }];
-		const { buildDocument } = await import('./builder');
 		const config = {
 			defaultConstruct: () => ({ name: 'NaturalBlock', factory: { fromData: () => ({}) } }),
 			constructs: [],
@@ -76,7 +76,6 @@ describe('buildDocument', () => {
 
 	it('WHEN a matched construct has no integrator captures child constructs', async () => {
 		markdownTree.children = [{ type: 'paragraph', children: [] }];
-		const { buildDocument } = await import('./builder');
 		const construct = { construct: 'FieldInline', name: 'Hello', children: [] };
 		const config = {
 			defaultConstruct: naturalBlockParser(() => null),
@@ -96,7 +95,6 @@ describe('buildDocument', () => {
 
 	it('WHEN called returns SKIP after handling a non-paragraph block type', async () => {
 		markdownTree.children = [{ type: 'list', children: [{ type: 'text', value: 'item' }] }];
-		const { buildDocument } = await import('./builder');
 		const config = {
 			defaultConstruct: naturalBlockParser(() => ({ construct: 'NaturalBlock' })),
 			constructs: [],

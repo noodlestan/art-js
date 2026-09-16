@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/order
+import { parserVisitContextMock } from '@art-js/primitives/src/test/helpers/primitives/parserVisitContextMock';
+// eslint-disable-next-line import/order
 import { createParserVisitContext } from '@art-js/primitives';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -5,9 +8,9 @@ import { documentContextMock } from '../../../test/helpers/constructs/Document/d
 import { findTagableMock } from '../../../test/helpers/constructs/SectionBlock/findTagableMock';
 import { makeSectionBlockMock } from '../../../test/helpers/constructs/SectionBlock/makeSectionBlockMock';
 
+import { createSectionBlockIntegrator } from './createSectionBlockIntegrator';
+
 vi.mock('@art-js/primitives', async () => {
-	const { parserVisitContextMock } =
-		await import('@art-js/primitives/src/test/helpers/primitives/parserVisitContextMock');
 	return parserVisitContextMock({ includeSectionDepth: true });
 });
 
@@ -17,7 +20,6 @@ vi.mock('./findTagable', () => {
 
 describe('createSectionBlockIntegrator', () => {
 	it('WHEN called returns an integrator that captures the construct and returns a new context', async () => {
-		const { createSectionBlockIntegrator } = await import('./createSectionBlockIntegrator');
 		const integrator = createSectionBlockIntegrator();
 
 		expect(integrator.integrate).toBeInstanceOf(Function);
@@ -32,7 +34,6 @@ describe('createSectionBlockIntegrator', () => {
 	});
 
 	it('WHEN current context is not a SectionBlock breaks immediately', async () => {
-		const { createSectionBlockIntegrator } = await import('./createSectionBlockIntegrator');
 		const integrator = createSectionBlockIntegrator();
 		const context = documentContextMock();
 		const section = makeSectionBlockMock();
@@ -47,7 +48,6 @@ describe('createSectionBlockIntegrator', () => {
 	});
 
 	it('WHEN parent section depth is greater than or equal to heading depth pops to parent', async () => {
-		const { createSectionBlockIntegrator } = await import('./createSectionBlockIntegrator');
 		const integrator = createSectionBlockIntegrator();
 		const parentContext = documentContextMock();
 		const context = createParserVisitContext(
@@ -66,7 +66,6 @@ describe('createSectionBlockIntegrator', () => {
 	});
 
 	it('WHEN parent section depth is less than heading depth stops popping', async () => {
-		const { createSectionBlockIntegrator } = await import('./createSectionBlockIntegrator');
 		const integrator = createSectionBlockIntegrator();
 		const context = createParserVisitContext(
 			makeSectionBlockMock({ depth: 1 }) as never,
@@ -84,7 +83,6 @@ describe('createSectionBlockIntegrator', () => {
 	});
 
 	it('WHEN the new context has no onBeforeConstruct hook returns the same context', async () => {
-		const { createSectionBlockIntegrator } = await import('./createSectionBlockIntegrator');
 		const integrator = createSectionBlockIntegrator();
 		const context = documentContextMock() as never;
 		const section = makeSectionBlockMock();

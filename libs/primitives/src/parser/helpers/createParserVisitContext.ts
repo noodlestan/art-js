@@ -1,4 +1,4 @@
-import type { ConstructBase, ContainerConstructBase } from '../../constructs';
+import type { ConstructBase, ContainerConstructBase } from '../../types';
 import type { OnBeforeConstruct, ParserVisitContext } from '../types';
 
 export function createParserVisitContext(

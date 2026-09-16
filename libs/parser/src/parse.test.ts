@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { parse } from './index';
+import { parse } from './parse';
 
 describe('parse', () => {
 	it('WHEN called with no arguments returns a Document', () => {

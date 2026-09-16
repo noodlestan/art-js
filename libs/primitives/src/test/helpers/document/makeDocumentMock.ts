@@ -1,4 +1,4 @@
-import type { ConstructBase } from '../../../constructs';
+import type { ConstructBase } from '../../../types';
 
 export const makeDocumentMock = <T extends ConstructBase = never>(options?: {
 	children?: T[];

@@ -2,7 +2,7 @@ import { nodePosition } from '@art-js/primitives';
 import type { Paragraph } from 'mdast';
 
 import { rawSlice } from '../../helpers/rawSlice';
-import type { Construct } from '../../registry';
+import type { Construct } from '../../types';
 import { isFieldStrong } from '../FieldBlock/private/isFieldStrong';
 import { stripStrong } from '../FieldBlock/private/stripStrong';
 import { createNaturalExpression } from '../NaturalExpression/private/createNaturalExpression';

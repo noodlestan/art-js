@@ -1,4 +1,4 @@
-import type { BlockContent } from '../../../registry';
+import type { BlockContent } from '../../../types';
 import type { ArtDocument } from '../types';
 
 export interface DocumentFactoryData {

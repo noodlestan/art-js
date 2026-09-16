@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { createDefaultSerializerConfig } from './createDefaultSerializerConfig';
+
 vi.mock('@art-js/constructs', () => ({
 	createDocumentToMdast: vi.fn(() => ({ name: 'Document' })),
 	createFieldBlockToMdast: vi.fn(() => ({ name: 'FieldBlock' })),
@@ -11,7 +13,6 @@ vi.mock('@art-js/constructs', () => ({
 
 describe('createDefaultSerializerConfig', () => {
 	it('returns a serializer config with constructs array', async () => {
-		const { createDefaultSerializerConfig } = await import('./createDefaultSerializerConfig');
 		const config = createDefaultSerializerConfig();
 		expect(config.constructs).toHaveLength(6);
 	});

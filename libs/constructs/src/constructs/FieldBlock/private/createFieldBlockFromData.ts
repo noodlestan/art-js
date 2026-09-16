@@ -1,4 +1,4 @@
-import type { BlockContent } from '../../../registry';
+import type { BlockContent } from '../../../types';
 import type { Tag } from '../../Tag/private/types';
 
 import type { FieldBlock } from './types';

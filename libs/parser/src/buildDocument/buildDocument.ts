@@ -4,16 +4,16 @@ import {
 	type Construct,
 	type ConstructIntegrator,
 	type ConstructParser,
-	createDocument,
+	createArtDocument,
 } from '@art-js/constructs';
 import { type ParserVisitContext } from '@art-js/primitives';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import type { Node } from 'unist';
 import { SKIP, visit } from 'unist-util-visit';
 
-import type { ParserConfig } from './config/types';
-import { isBlockType } from './mdast/isBlockType';
-import { createDocumentContext } from './private/createDocumentContext';
+import type { ParserConfig } from '../config/types';
+import { isBlockType } from '../mdast/isBlockType';
+import { createDocumentContext } from '../private/createDocumentContext';
 
 interface HandleResult {
 	constructs: Construct[];
@@ -22,7 +22,7 @@ interface HandleResult {
 
 export function buildDocument(config: ParserConfig, markdown: string): ArtDocument {
 	const tree = fromMarkdown(markdown);
-	const document = createDocument(tree);
+	const document = createArtDocument(tree);
 	// process.exit();
 	const docContext = createDocumentContext(document, markdown);
 	const defaultConstruct = config.defaultConstruct();

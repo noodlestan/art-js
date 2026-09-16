@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { createDefaultConfig } from './createDefaultConfig';
+
 vi.mock('@art-js/constructs', () => ({
 	createFieldBlockParser: vi.fn(() => ({ name: 'FieldBlock' })),
 	createFieldInlineParser: vi.fn(() => ({ name: 'FieldInline' })),
@@ -9,8 +11,6 @@ vi.mock('@art-js/constructs', () => ({
 
 describe('createDefaultConfig', () => {
 	it('WHEN called returns a parser config with default construct and constructs array', async () => {
-		const { createDefaultConfig } = await import('./createDefaultConfig');
-
 		const config = createDefaultConfig();
 
 		expect(typeof config.defaultConstruct).toBe('function');

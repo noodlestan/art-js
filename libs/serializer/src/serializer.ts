@@ -2,7 +2,7 @@ import type { ArtDocument } from '@art-js/constructs';
 import type { Root } from 'mdast';
 import { toMarkdown } from 'mdast-util-to-markdown';
 
-import { artAstToMdast } from './artAstToMdast';
+import { artAstToMdast } from './artAstToMdast/artAstToMdast';
 import { createDefaultSerializerConfig } from './config/createDefaultSerializerConfig';
 
 export function serialize(document: ArtDocument): string {
