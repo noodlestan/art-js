@@ -2,7 +2,7 @@
 
 **Id:** `archive-poc-and-publish`
 
-**Status:** `PREPARING`
+**Status:** `READY`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -64,22 +64,22 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                  | Status      |
-| ----------------------------------------------------------------------------------------- | ----------- |
-| Iteration: Archive POC Parse `./plan-archive-poc-and-publish/instructions/archive-poc.md` | `PREPARING` |
-| Iteration: Publish v0.0.2 `./plan-archive-poc-and-publish/instructions/publish-v0.0.2.md` | `PREPARING` |
+| Iteration / Instructions                                                                        | Status  |
+| ----------------------------------------------------------------------------------------------- | ------- |
+| Iteration: Archive POC Parse `./plan-archive-poc-and-publish/instructions/archive-poc-parse.md` | `READY` |
+| Iteration: Publish v0.0.2 `./plan-archive-poc-and-publish/instructions/publish-v0.0.2.md`       | `READY` |
 
 ### Iteration: Archive POC Parse
 
 **Id:** `archive-poc-parse`
 
-**Status:** `PREPARING`
+**Status:** `READY`
 
 **Purpose:** Mark poc-parse as private and document its archival.
 
 **Description:** Set `private: true` in `cli/poc-parse/package.json` and add an archival README notice.
 
-**Instructions:** `./plan-archive-poc-and-publish/instructions/archive-poc.md`
+**Instructions:** `./plan-archive-poc-and-publish/instructions/archive-poc-parse.md`
 
 **Changes:**
 
@@ -90,11 +90,29 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 None.
 
+#### Commits:
+
+| ID                  | Repository / Checkout / Branch | Policy       | Hash  | Status     |
+| ------------------- | ------------------------------ | ------------ | ----- | ---------- |
+| `archive-poc-parse` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+
+##### Commit: `archive-poc-parse`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+chore(art-js): Archive poc-parse package
+
+- Add archival notice to `cli/poc-parse/README.md`
+```
+
 ### Iteration: Publish v0.0.2
 
 **Id:** `publish-v0.0.2`
 
-**Status:** `PREPARING`
+**Status:** `READY`
 
 **Purpose:** Bump version to `0.0.2` and publish constructs, parser, and serializer packages.
 
@@ -110,6 +128,26 @@ None.
 **Dependencies:**
 
 - Iteration: Archive POC Parse
+
+#### Commits:
+
+| ID               | Repository / Checkout / Branch | Policy       | Hash  | Status     |
+| ---------------- | ------------------------------ | ------------ | ----- | ---------- |
+| `publish-v0.0.2` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+
+##### Commit: `publish-v0.0.2`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+release(art-js): Publish v0.0.2 of constructs, parser, and serializer
+
+- Bump version to 0.0.2 in `libs/constructs/package.json`
+- Bump version to 0.0.2 in `libs/parser/package.json`
+- Bump version to 0.0.2 in `libs/serializer/package.json`
+```
 
 ## Work
 

@@ -60,7 +60,7 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 | 1     | Plan: Refactor Test Helpers `_backlog/3-now/plan-refactor-test-helpers/plan.md`                         | `DONE`      |
 | 1     | Plan: Integrate Feedback and Follow-Ups `_backlog/3-now/plan-integrate-feedback-and-follow-ups/plan.md` | `READY`     |
 | -     |                                                                                                         |             |
-| 2     | Plan: Archive and Publish `_backlog/6-plan/plan-archive-poc-and-publish/plan.md`                        | `PLANNING`  |
+| 2     | Plan: Archive and Publish `_backlog/4-next/plan-archive-poc-and-publish/plan.md`                        | `READY`     |
 | 2     | Plan: Apply Noodlestan Conventions `_backlog/6-plan/plan-apply-noodlestan-conventions/plan.md`          | `PLANNING`  |
 | 2     | Plan: Integrate Knowledge `_backlog/6-plan/plan-integrate-knowledge/plan.md`                            | `PREPARING` |
 
