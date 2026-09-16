@@ -1,16 +1,16 @@
-# Plan: Apply Noodlestan Conventions
+# Plan: Setup Noodlestan Conventions
 
-**Id:** `apply-noodlestan-conventions`
+**Id:** `setup-noodlestan-conventions`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
 **Skill:** `write-plan`
 
-**Purpose:** Install Noodlestan convention packages and apply them to the Art JS project.
+**Purpose:** Install Noodlestan convention packages and configure the Art JS project guide to reference them.
 
-**Description:** Add `@noodlestan/conventions-typescript` as a dev dependency, configure `_guide.md` to reference installed conventions, and apply convention rules across the codebase.
+**Description:** Add `@noodlestan/conventions-typescript` as a dev dependency and configure `_guide.md` to reference installed conventions. Setup only — auditing and applying convention rules is handled in downstream plans.
 
 ## Mandatory Reading
 
@@ -28,7 +28,7 @@
 
 ## Summary
 
-Install Noodlestan convention packages in Art JS and configure project guides to reference them, establishing the pattern for convention adoption.
+Install Noodlestan convention packages in Art JS and configure the project guide to reference them, establishing the setup pattern for convention adoption.
 
 ## Context
 
@@ -41,7 +41,6 @@ Install Noodlestan convention packages in Art JS and configure project guides to
 
 ### Knowledge
 
-- ::READ `$CONVENTIONS/packages/typescript/art/index.md` (Knowledge) — TypeScript conventions index.
 - ::READ `$PROJECT/_guide.md` (Knowledge) — Project guide to update.
 - ::READ `$PROJECT/package.json` (Knowledge) — Root package configuration.
 
@@ -66,22 +65,22 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                                         | Status     |
-| ---------------------------------------------------------------------------------------------------------------- | ---------- |
-| Iteration: Install Convention Packages `./plan-apply-noodlestan-conventions/instructions/install-conventions.md` | `PLANNING` |
-| Iteration: Configure Guides `./plan-apply-noodlestan-conventions/instructions/configure-guides.md`               | `PLANNING` |
+| Iteration / Instructions                                                                                         | Status  |
+| ---------------------------------------------------------------------------------------------------------------- | ------- |
+| Iteration: Install Convention Packages `./instructions/install-conventions.md` | `READY` |
+| Iteration: Configure Guides `./instructions/configure-guides.md`               | `READY` |
 
 ### Iteration: Install Convention Packages
 
 **Id:** `install-conventions`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Install `@noodlestan/conventions-typescript` as a dev dependency in Art JS.
 
 **Description:** Add the `@noodlestan/conventions-typescript` package to the root `package.json` devDependencies, run `npm install` to verify installation, and ensure the package is available at `./node_modules/@noodlestan/conventions-typescript/`.
 
-**Instructions:** `./plan-apply-noodlestan-conventions/instructions/install-conventions.md`
+**Instructions:** `./instructions/install-conventions.md`
 
 **Changes:**
 
@@ -108,20 +107,19 @@ None.
 configs(art-js): Install @noodlestan/conventions-typescript
 
 - Add `@noodlestan/conventions-typescript` to devDependencies
-- Verify package installation
 ```
 
 ### Iteration: Configure Guides
 
 **Id:** `configure-guides`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Configure Art JS `_guide.md` to reference installed Noodlestan conventions.
 
 **Description:** Update `$PROJECT/_guide.md` to include a conventions reference section that points to the installed `@noodlestan/conventions-typescript` index, explaining how agents should read and apply convention rules.
 
-**Instructions:** `./plan-apply-noodlestan-conventions/instructions/configure-guides.md`
+**Instructions:** `./instructions/configure-guides.md`
 
 **Changes:**
 

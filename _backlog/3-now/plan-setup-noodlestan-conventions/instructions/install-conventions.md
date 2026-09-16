@@ -1,6 +1,6 @@
 # Instructions: `install-conventions`
 
-**Plan:** `apply-noodlestan-conventions`
+**Plan:** `setup-noodlestan-conventions`
 
 **Iteration Id:** `install-conventions`
 
@@ -18,7 +18,7 @@ This section describes how to report back to the delegator after completing the 
 
 1. Summarise the current context, asking: are you reporting completion or a BLOCKER?
 2. Gather the evidence of changes made and outcomes achieved, or the blocker error details.
-3. Use the `render-template` skill with the `.agents/domains/plans/templates/instructions-report.tart` to render your report and write it next to this instruction file: `plan-apply-noodlestan-conventions/instructions/install-conventions__report.md`. No separate delegation record is created.
+3. Use the `render-template` skill with the `.agents/domains/plans/templates/instructions-report.tart` to render your report and write it next to this instruction file: `plan-setup-noodlestan-conventions/instructions/install-conventions__report.md`. No separate delegation record is created.
 4. If your prompt included a `DIRECTIVE FEEDBACK:` include the feedback sections in the rendered report.
 5. Generate the response and send it back to the delegator.
 6. Keep the response terse per the Working Agreements: happy face + up to 3 bullet points (done `install-conventions`, created `{artefacts}`, thumbs up). The full trail lives in the report file; never repeat it in chat.
@@ -88,7 +88,6 @@ If installation fails, REPORT A BLOCKER.
 configs(art-js): Install @noodlestan/conventions-typescript
 
 - Add `@noodlestan/conventions-typescript` to devDependencies
-- Verify package installation
 ```
 
 ## Final Verification
