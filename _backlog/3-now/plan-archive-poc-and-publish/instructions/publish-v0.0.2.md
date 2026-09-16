@@ -29,6 +29,7 @@ This section describes how to report back to the delegator after completing the 
 | ------------- | -------------------------- | ------------------------------------- |
 | `$WORKSPACE`  | Current working directory  | Workspace root directory              |
 | `$PROJECT`    | Provided with prompt       | Where work execution is taking place. |
+| `$PRIMITIVES` | `$PROJECT/libs/primitives` | Primitives package directory          |
 | `$CONSTRUCTS` | `$PROJECT/libs/constructs` | Constructs package directory          |
 | `$PARSER`     | `$PROJECT/libs/parser`     | Parser package directory              |
 | `$SERIALIZER` | `$PROJECT/libs/serializer` | Serializer package directory          |
@@ -43,10 +44,11 @@ The plan workflow (see the entry point guide → Planning Workflow → Working T
 
 ## Goals
 
-Bump version to `0.0.2` for constructs, parser, and serializer packages, then publish to npm.
+Bump version to `0.0.2` for primitives, constructs, parser, and serializer packages. User will publish manually to npm after review.
 
 ## Mandatory Reading
 
+- ::READ `$PRIMITIVES/package.json` (Knowledge) — Primitives package configuration.
 - ::READ `$CONSTRUCTS/package.json` (Knowledge) — Constructs package configuration.
 - ::READ `$PARSER/package.json` (Knowledge) — Parser package configuration.
 - ::READ `$SERIALIZER/package.json` (Knowledge) — Serializer package configuration.
@@ -54,7 +56,7 @@ Bump version to `0.0.2` for constructs, parser, and serializer packages, then pu
 ## Changes
 
 - Step 1 / 3 — Bump package versions
-- Step 2 / 3 — Publish packages
+- Step 2 / 3 — Create CHANGELOG.md in primitives, constructs, parser, and serializer packages.
 - Step 3 / 3 — Commit `publish-v0.0.2`
 
 ## Steps
@@ -63,6 +65,7 @@ Bump version to `0.0.2` for constructs, parser, and serializer packages, then pu
 
 Update the `version` field in the following `package.json` files from `0.0.1` to `0.0.2`:
 
+- `$PRIMITIVES/package.json`
 - `$CONSTRUCTS/package.json`
 - `$PARSER/package.json`
 - `$SERIALIZER/package.json`
@@ -72,19 +75,25 @@ Verify that each file has:
 - `"version": "0.0.2"`
 - `"publishConfig": { "access": "public" }`
 
-### Step `2 / 3` — Publish packages
+### Step `2 / 3` — Create CHANGELOG.md in primitives, constructs, parser, and serializer packages.
 
-From each package directory, run `npm publish`:
+In each package directory create a CHANGELOG adapted to the package API. (constructs package will list all constructs)
 
-```bash
-cd $CONSTRUCTS && npm publish
-cd $PARSER && npm publish
-cd $SERIALIZER && npm publish
+Example for `parser`
+
+```md
+# CHANGELOG
+
+## 0.0.2
+
+### Added
+
+- Stable API for `parse()`
+
+### Tested
+
+- Add comprehensive unit testing.
 ```
-
-If publishing fails due to authentication, REPORT A BLOCKER.
-
-If a package is already published at `0.0.2`, skip it and note it in the report.
 
 ### Step `3 / 3` — Commit `publish-v0.0.2`
 
@@ -95,16 +104,12 @@ If a package is already published at `0.0.2`, skip it and note it in the report.
 **Message:**
 
 ```
-release(art-js): Publish v0.0.2 of constructs, parser, and serializer
-
-- Bump version to 0.0.2 in `libs/constructs/package.json`
-- Bump version to 0.0.2 in `libs/parser/package.json`
-- Bump version to 0.0.2 in `libs/serializer/package.json`
+release(art-js): Prepare v0.0.2 of primitives, constructs, parser, and serializer
 ```
 
 ## Final Verification
 
 - Verify that commits have been executed and pushed (or not pushed) according to the commit's policy.
-- Verify that all three `package.json` files show version `0.0.2`.
-- Verify that packages are available on the npm registry at `@art-js/constructs@0.0.2`, `@art-js/parser@0.0.2`, and `@art-js/serializer@0.0.2`.
+- Verify that all four `package.json` files show version `0.0.2`.
+- Verify that CHANGELOG.md exists in primitives, constructs, parser, and serializer packages.
 - Report according to the "How to Report Back to the Delegator" instructions.

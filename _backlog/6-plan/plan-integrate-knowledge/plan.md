@@ -2,7 +2,7 @@
 
 **Id:** `integrate-knowledge`
 
-**Status:** `PREPARING`
+**Status:** `PLANNING`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -62,15 +62,15 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                          | Status      |
-| ------------------------------------------------------------------------------------------------- | ----------- |
-| Iteration: Integrate Knowledge and Records `./plan-integrate-knowledge/instructions/integrate.md` | `PREPARING` |
+| Iteration / Instructions                                                                          | Status     |
+| ------------------------------------------------------------------------------------------------- | ---------- |
+| Iteration: Integrate Knowledge and Records `./plan-integrate-knowledge/instructions/integrate.md` | `PLANNING` |
 
 ### Iteration: Integrate Knowledge and Records
 
 **Id:** `integrate-knowledge-and-records`
 
-**Status:** `PREPARING`
+**Status:** `PLANNING`
 
 **Purpose:** Update architecture references, ecosystem overview, and project/repository records.
 

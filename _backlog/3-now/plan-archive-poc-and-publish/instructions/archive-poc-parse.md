@@ -41,7 +41,7 @@ The plan workflow (see the entry point guide → Planning Workflow → Working T
 
 ## Goals
 
-Mark the `@art-js/poc-parse` package as archived by adding an archival notice to its README.
+Remove `cli/poc-parse/` and leave a small note at the bottom of `architecture/components.md` with a last known commit hash.
 
 ## Mandatory Reading
 
@@ -49,19 +49,22 @@ Mark the `@art-js/poc-parse` package as archived by adding an archival notice to
 
 ## Changes
 
-- Step 1 / 2 — Add archival notice to README
+- Step 1 / 2 — Remove `cli/poc-parse/` and add archival notice to `architecture/components.md`
 - Step 2 / 2 — Commit `archive-poc-parse`
 
 ## Steps
 
-### Step `1 / 2` — Add archival notice to README
+### Step `1 / 2` — Remove `cli/poc-parse/` and add archival notice to Architecture/Components
 
-Edit `$POC/README.md` to add an archival notice at the top of the file, after the H1 heading.
-
-Add the following block immediately after the `# Artificials Poc Parse` heading:
+1. Delete the entire `$POC/` directory (`rm -rf $POC`).
+2. Edit `$PROJECT/architecture/components.md` to add an archival notice at the bottom of the file.
 
 ```md
-> **ARCHIVED** — This package is no longer maintained. The POC parser logic has been superseded by the `@art-js/parser`, `@art-js/constructs`, and `@art-js/serializer` packages.
+## Archived
+
+### `@art-js/poc-parse`
+
+This package was used to prototype different options for the parser. The POC parser logic has been superseded by the `@art-js/parser`, `@art-js/constructs`, and `@art-js/serializer` packages. Last version of the POC can be found on [Github noodlestan/art-js](https://github.com/noodlestan/art-js/tree/e2940760f1b3fe8811b49d8dd724b82d1e668514/cli/poc-parse).
 ```
 
 ### Step `2 / 2` — Commit `archive-poc-parse`
@@ -75,11 +78,12 @@ Add the following block immediately after the `# Artificials Poc Parse` heading:
 ```
 chore(art-js): Archive poc-parse package
 
-- Add archival notice to `cli/poc-parse/README.md`
+- Add archival notice to `architecture/components.md`
 ```
 
 ## Final Verification
 
 - Verify that commits have been executed and pushed (or not pushed) according to the commit's policy.
-- Verify that `$POC/README.md` contains the archival notice.
+- Verify that `cli/poc-parse/` has been removed from the monorepo.
+- Verify that `architecture/components.md` contains the archival notice.
 - Report according to the "How to Report Back to the Delegator" instructions.

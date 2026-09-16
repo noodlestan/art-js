@@ -8,9 +8,9 @@
 
 **Skill:** `write-plan`
 
-**Purpose:** Archive poc-parse package and publish v0.0.2 of constructs, parser, and serializer packages.
+**Purpose:** Remove the poc-parse package and prepare v0.0.2 of primitives, constructs, parser, and serializer packages for manual publish.
 
-**Description:** Mark `@art-js/poc-parse` as private with an archived README, ensure correct publish configuration, bump version to `0.0.2` for constructs, parser, and serializer, and publish to npm.
+**Description:** Delete `cli/poc-parse/` and all breaking references to it, ensure correct publish configuration, bump version to `0.0.2` for primitives, constructs, parser, and serializer, and prepare the packages for manual publish to npm.
 
 ## Mandatory Reading
 
@@ -45,11 +45,12 @@ Archive the POC parse package and publish version `0.0.2` of the core Art JS lib
 
 ### Out of Scope
 
-- Publishing primitives (already published in v0.0.1).
+- Executing `npm publish` (performed manually by the user after review).
 
 ### Packages
 
 - Package: Artificial POC Parse — `cli/poc-parse/`
+- Package: Artificial Primitives — `libs/primitives/`
 - Package: Artificial Constructs — `libs/constructs/`
 - Package: Artificial Parser — `libs/parser/`
 - Package: Artificial Serializer — `libs/serializer/`
@@ -60,7 +61,7 @@ None.
 
 ## Execution Context
 
-Execution occurs in `$PROJECT` on branch `main`.
+Execution occurs in `$PROJECT` on branch `building`.
 
 ## Items:
 
@@ -75,16 +76,15 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 **Status:** `READY`
 
-**Purpose:** Mark poc-parse as private and document its archival.
+**Purpose:** Remove `cli/poc-parse/` from the monorepo.
 
-**Description:** Set `private: true` in `cli/poc-parse/package.json` and add an archival README notice.
+**Description:** Delete `cli/poc-parse/` and all breaking references to it.
 
 **Instructions:** `./plan-archive-poc-and-publish/instructions/archive-poc-parse.md`
 
 **Changes:**
 
-- Update `cli/poc-parse/package.json` (`private: true`).
-- Add archival README in `cli/poc-parse/`.
+- Remove `cli/poc-parse/` and leave a small note at the bottom of `architecture/components.md` with a last known commit hash.
 
 **Dependencies:**
 
@@ -94,7 +94,7 @@ None.
 
 | ID                  | Repository / Checkout / Branch | Policy       | Hash  | Status     |
 | ------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `archive-poc-parse` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| `archive-poc-parse` | $PROJECT / `building`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `archive-poc-parse`
 
@@ -105,7 +105,7 @@ None.
 ```
 chore(art-js): Archive poc-parse package
 
-- Add archival notice to `cli/poc-parse/README.md`
+- Add archival notice to `architecture/components.md`
 ```
 
 ### Iteration: Publish v0.0.2
@@ -114,16 +114,16 @@ chore(art-js): Archive poc-parse package
 
 **Status:** `READY`
 
-**Purpose:** Bump version to `0.0.2` and publish constructs, parser, and serializer packages.
+**Purpose:** Bump version to `0.0.2` for primitives, constructs, parser, and serializer packages.
 
-**Description:** Ensure correct publishConfig, bump package versions to `0.0.2`, run `npm publish`, and verify installability.
+**Description:** Ensure correct publishConfig, add CHANGELOG, bump package versions to `0.0.2`.
 
 **Instructions:** `./plan-archive-poc-and-publish/instructions/publish-v0.0.2.md`
 
 **Changes:**
 
-- Bump version to `0.0.2` in constructs, parser, and serializer `package.json`.
-- Execute `npm publish`.
+- Bump version to `0.0.2` in primitives, constructs, parser, and serializer `package.json`.
+- Create CHANGELOG.md in primitives, constructs, parser, and serializer packages.
 
 **Dependencies:**
 
@@ -133,7 +133,7 @@ chore(art-js): Archive poc-parse package
 
 | ID               | Repository / Checkout / Branch | Policy       | Hash  | Status     |
 | ---------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `publish-v0.0.2` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| `publish-v0.0.2` | $PROJECT / `building`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
 
 ##### Commit: `publish-v0.0.2`
 
@@ -142,18 +142,14 @@ chore(art-js): Archive poc-parse package
 **Message:**
 
 ```
-release(art-js): Publish v0.0.2 of constructs, parser, and serializer
-
-- Bump version to 0.0.2 in `libs/constructs/package.json`
-- Bump version to 0.0.2 in `libs/parser/package.json`
-- Bump version to 0.0.2 in `libs/serializer/package.json`
+release(art-js): Prepare v0.0.2 of primitives, constructs, parser, and serializer
 ```
 
 ## Work
 
 ### Next
 
-Delegate instruction `archive-poc`.
+Delegate instruction `archive-poc-parse`.
 
 ### Blockers
 
@@ -163,11 +159,11 @@ None.
 
 ### Not In Scope
 
-- Primitives publish (done in v0.0.1).
+- Executing `npm publish` (performed manually by the user after review).
 
 ### Evidence
 
-- Published packages on npm registry.
+- Version bumps to `0.0.2` and CHANGELOGs in primitives, constructs, parser, and serializer.
 
 ### Decisions
 
