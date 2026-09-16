@@ -10,21 +10,27 @@ vi.mock('../../../helpers/rawSlice', async () => {
 });
 
 describe('stripStrong', () => {
-	it('strips ** wrappers', () => {
+	it('WHEN stripping ** wrappers', () => {
 		vi.mocked(rawSlice).mockReturnValue('**hello**');
+
 		const result = stripStrong({ type: 'strong', children: [] }, { markdown: '' } as never);
+
 		expect(result).toBe('hello');
 	});
 
-	it('strips __ wrappers', () => {
+	it('WHEN stripping __ wrappers', () => {
 		vi.mocked(rawSlice).mockReturnValue('__hello__');
+
 		const result = stripStrong({ type: 'strong', children: [] }, { markdown: '' } as never);
+
 		expect(result).toBe('hello');
 	});
 
-	it('returns raw when not wrapped', () => {
+	it('WHEN not wrapped returns raw', () => {
 		vi.mocked(rawSlice).mockReturnValue('hello');
+
 		const result = stripStrong({ type: 'strong', children: [] }, { markdown: '' } as never);
+
 		expect(result).toBe('hello');
 	});
 });

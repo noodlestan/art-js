@@ -7,10 +7,12 @@ vi.mock('@art-js/primitives', () => {
 });
 
 describe('createDocumentContext', () => {
-	it('creates a document context', async () => {
+	it('WHEN creating a document context', async () => {
 		const { createDocumentContext } = await import('./createDocumentContext');
 		const document = makeDocumentMock();
+
 		const result = createDocumentContext(document as never, '# Hello');
+
 		expect(result.construct).toBe(document);
 		expect(result.markdown).toBe('# Hello');
 	});

@@ -6,10 +6,12 @@ vi.mock('@art-js/primitives', () => {
 });
 
 describe('createDocument', () => {
-	it('creates an ArtDocument from a root node', async () => {
+	it('WHEN creating an ArtDocument from a root node', async () => {
 		const { createDocument } = await import('./createDocument');
 		const root = { type: 'root' };
+
 		const result = createDocument(root);
+
 		expect(result.construct).toBe('Document');
 		expect(result.children).toEqual([]);
 	});

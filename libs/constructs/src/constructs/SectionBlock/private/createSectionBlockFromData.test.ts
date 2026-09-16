@@ -7,12 +7,12 @@ import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 import { createSectionBlockFromData } from './createSectionBlockFromData';
 
 describe('createSectionBlockFromData', () => {
-	it('creates a SectionBlock from minimal data', () => {
+	it('WHEN creating a SectionBlock from minimal data', () => {
 		const result = createSectionBlockFromData({ name: 'Test' });
 		expect(result).toEqual(makeSectionBlockMock());
 	});
 
-	it('includes optional properties when provided', () => {
+	it('WHEN provided includes optional properties', () => {
 		const result = createSectionBlockFromData({
 			name: 'Test',
 			kind: 'Module',

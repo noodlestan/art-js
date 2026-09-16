@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { ParserConfig } from './types';
 
 describe('ParserConfig type', () => {
-	it('accepts a valid parser config shape', () => {
+	it('WHEN given a valid parser config shape accepts', () => {
 		const config: ParserConfig = {
 			defaultConstruct: () => ({
 				name: 'NaturalBlock',

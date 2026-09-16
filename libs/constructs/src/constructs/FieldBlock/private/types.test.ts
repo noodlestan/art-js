@@ -5,7 +5,7 @@ import { makeFieldBlockMock } from '../../../test/helpers/constructs/FieldBlock/
 import type { FieldBlock } from './types';
 
 describe('FieldBlock type', () => {
-	it('accepts a valid FieldBlock', () => {
+	it('WHEN given a valid FieldBlock accepts', () => {
 		const field: FieldBlock = makeFieldBlockMock();
 		expect(field.name).toBe('Test');
 	});

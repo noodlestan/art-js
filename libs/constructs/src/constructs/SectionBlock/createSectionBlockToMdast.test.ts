@@ -18,9 +18,11 @@ function stripPositions(node: unknown): unknown {
 }
 
 describe('createSectionBlockToMdast', () => {
-	it('converts a SectionBlock to an mdast heading', () => {
+	it('WHEN converting a SectionBlock to an mdast heading', () => {
 		const impl = createSectionBlockToMdast();
+
 		const result = impl.toMdast(makeSectionBlockMock({ name: 'Module', depth: 1 }) as never, []);
+
 		expect(stripPositions(result)).toEqual({
 			type: 'heading',
 			depth: 1,
@@ -28,9 +30,11 @@ describe('createSectionBlockToMdast', () => {
 		});
 	});
 
-	it('defaults depth to 1 when not provided', () => {
+	it('WHEN not provided defaults depth to 1', () => {
 		const impl = createSectionBlockToMdast();
+
 		const result = impl.toMdast(makeSectionBlockMock({ name: 'Section' }) as never, []);
+
 		expect(stripPositions(result)).toEqual({
 			type: 'heading',
 			depth: 1,
@@ -38,8 +42,9 @@ describe('createSectionBlockToMdast', () => {
 		});
 	});
 
-	it('preserves inline formatting in heading names', () => {
+	it('WHEN converting preserves inline formatting in heading names', () => {
 		const impl = createSectionBlockToMdast();
+
 		const result = impl.toMdast(
 			makeSectionBlockMock({ name: 'Hello _World_! How are **you**?', depth: 1 }) as never,
 			[],
@@ -57,8 +62,9 @@ describe('createSectionBlockToMdast', () => {
 		});
 	});
 
-	it('includes tags in the heading text when present', () => {
+	it('WHEN present includes tags in the heading text', () => {
 		const impl = createSectionBlockToMdast();
+
 		const result = impl.toMdast(
 			makeSectionBlockMock({ name: 'Hello', depth: 1, tags: [makeTagMock()] }) as never,
 			[],

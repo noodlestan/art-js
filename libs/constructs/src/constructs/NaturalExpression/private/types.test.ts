@@ -5,7 +5,7 @@ import { makeNaturalExpressionMock } from '../../../test/helpers/constructs/Natu
 import type { NaturalExpression } from './types';
 
 describe('NaturalExpression type', () => {
-	it('accepts a valid NaturalExpression', () => {
+	it('WHEN given a valid NaturalExpression accepts', () => {
 		const expression: NaturalExpression = makeNaturalExpressionMock();
 		expect(expression.type).toBe('text');
 	});

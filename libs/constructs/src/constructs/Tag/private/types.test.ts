@@ -5,7 +5,7 @@ import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 import type { Tag } from './types';
 
 describe('Tag type', () => {
-	it('accepts a valid Tag', () => {
+	it('WHEN given a valid Tag accepts', () => {
 		const tag: Tag = makeTagMock();
 		expect(tag.name).toBe('test');
 	});

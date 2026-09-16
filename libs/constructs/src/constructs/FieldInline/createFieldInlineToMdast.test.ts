@@ -6,9 +6,11 @@ import { makeTagMock } from '../../test/helpers/constructs/Tag/makeTagMock';
 import { createFieldInlineToMdast } from './createFieldInlineToMdast';
 
 describe('createFieldInlineToMdast', () => {
-	it('converts a FieldInline to a paragraph with strong label', () => {
+	it('WHEN converting a FieldInline to a paragraph with strong label', () => {
 		const impl = createFieldInlineToMdast();
+
 		const result = impl.toMdast(makeFieldInlineMock({ name: 'Purpose' }) as never, []);
+
 		expect(result).toEqual({
 			type: 'paragraph',
 			children: [
@@ -18,8 +20,9 @@ describe('createFieldInlineToMdast', () => {
 		});
 	});
 
-	it('appends tags when present', () => {
+	it('WHEN present appends tags', () => {
 		const impl = createFieldInlineToMdast();
+
 		const result = impl.toMdast(
 			makeFieldInlineMock({ name: 'Purpose', tags: [makeTagMock()] }) as never,
 			[],

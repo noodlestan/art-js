@@ -8,14 +8,14 @@ import type {
 } from './types';
 
 describe('construct types', () => {
-	it('accepts a valid ConstructProcessor', () => {
+	it('WHEN given a valid ConstructProcessor accepts', () => {
 		const processor: ConstructProcessor = {
 			captureNode: () => null,
 		};
 		expect(processor.captureNode).toBeInstanceOf(Function);
 	});
 
-	it('accepts a valid ConstructIntegrator', () => {
+	it('WHEN given a valid ConstructIntegrator accepts', () => {
 		const integrator: ConstructIntegrator = {
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			integrate: (_context, _node, _construct) => _context,
@@ -23,7 +23,7 @@ describe('construct types', () => {
 		expect(integrator.integrate).toBeInstanceOf(Function);
 	});
 
-	it('accepts a valid ConstructParser', () => {
+	it('WHEN given a valid ConstructParser accepts', () => {
 		const parser: ConstructParser = {
 			name: 'Test',
 			factory: { fromData: () => ({ construct: 'Test' }) as never },
@@ -31,7 +31,7 @@ describe('construct types', () => {
 		expect(parser.name).toBe('Test');
 	});
 
-	it('accepts a valid ConstructSerializer', () => {
+	it('WHEN given a valid ConstructSerializer accepts', () => {
 		const serializer: ConstructSerializer = {
 			name: 'Test',
 			toMdast: () => ({ type: 'text' }),

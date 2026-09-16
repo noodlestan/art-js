@@ -6,17 +6,17 @@ import { makeSectionBlockMock } from './test/helpers/constructs/SectionBlock/mak
 import { makeTagMock } from './test/helpers/constructs/Tag/makeTagMock';
 
 describe('registry types', () => {
-	it('accepts BlockContent union members', () => {
+	it('WHEN given BlockContent union members accepts', () => {
 		const block: BlockContent = makeSectionBlockMock();
 		expect(block.construct).toBe('SectionBlock');
 	});
 
-	it('accepts InlineContent union members', () => {
+	it('WHEN given InlineContent union members accepts', () => {
 		const inline: InlineContent = makeTagMock();
 		expect(inline.construct).toBe('Tag');
 	});
 
-	it('accepts Construct union members', () => {
+	it('WHEN given Construct union members accepts', () => {
 		const construct: Construct = makeNaturalBlockMock();
 		expect(construct.construct).toBe('NaturalBlock');
 	});

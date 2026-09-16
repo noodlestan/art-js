@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { SectionBlock } from './types';
 
 describe('SectionBlock type', () => {
-	it('accepts a valid SectionBlock', () => {
+	it('WHEN given a valid SectionBlock accepts', () => {
 		const section: SectionBlock = {
 			construct: 'SectionBlock',
 			name: 'Test',

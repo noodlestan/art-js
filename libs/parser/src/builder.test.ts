@@ -43,7 +43,7 @@ const naturalBlockParser =
 	});
 
 describe('buildDocument', () => {
-	it('builds a document from markdown', async () => {
+	it('WHEN building a document from markdown', async () => {
 		markdownTree.children = [
 			{
 				type: 'paragraph',
@@ -55,22 +55,26 @@ describe('buildDocument', () => {
 			defaultConstruct: naturalBlockParser(),
 			constructs: [],
 		};
+
 		const result = buildDocument(config as never, 'Hello');
+
 		expect(result).toEqual(makeDocumentMock());
 	});
 
-	it('skips blocks when the default construct has no processor', async () => {
+	it('WHEN the default construct has no processor skips blocks', async () => {
 		markdownTree.children = [{ type: 'list', children: [] }];
 		const { buildDocument } = await import('./builder');
 		const config = {
 			defaultConstruct: () => ({ name: 'NaturalBlock', factory: { fromData: () => ({}) } }),
 			constructs: [],
 		};
+
 		const result = buildDocument(config as never, '# Hello');
+
 		expect(result).toEqual(makeDocumentMock());
 	});
 
-	it('captures child constructs when a matched construct has no integrator', async () => {
+	it('WHEN a matched construct has no integrator captures child constructs', async () => {
 		markdownTree.children = [{ type: 'paragraph', children: [] }];
 		const { buildDocument } = await import('./builder');
 		const construct = { construct: 'FieldInline', name: 'Hello', children: [] };
@@ -84,18 +88,22 @@ describe('buildDocument', () => {
 				}),
 			],
 		};
+
 		const result = buildDocument(config as never, '**Hello:** world');
+
 		expect(result).toEqual(makeDocumentMock());
 	});
 
-	it('returns SKIP after handling a non-paragraph block type', async () => {
+	it('WHEN called returns SKIP after handling a non-paragraph block type', async () => {
 		markdownTree.children = [{ type: 'list', children: [{ type: 'text', value: 'item' }] }];
 		const { buildDocument } = await import('./builder');
 		const config = {
 			defaultConstruct: naturalBlockParser(() => ({ construct: 'NaturalBlock' })),
 			constructs: [],
 		};
+
 		const result = buildDocument(config as never, '- item');
+
 		expect(result).toEqual(makeDocumentMock());
 	});
 });

@@ -5,12 +5,12 @@ import { makeNaturalExpressionMock } from '../../../test/helpers/constructs/Natu
 import { createNaturalExpressionFromData } from './createNaturalExpressionFromData';
 
 describe('createNaturalExpressionFromData', () => {
-	it('creates a NaturalExpression from data', () => {
+	it('WHEN creating a NaturalExpression from data', () => {
 		const result = createNaturalExpressionFromData({ type: 'text', value: 'hello' });
 		expect(result).toEqual(makeNaturalExpressionMock());
 	});
 
-	it('includes children and attributes when provided', () => {
+	it('WHEN provided includes children and attributes', () => {
 		const result = createNaturalExpressionFromData({
 			type: 'strong',
 			attributes: { bold: true },

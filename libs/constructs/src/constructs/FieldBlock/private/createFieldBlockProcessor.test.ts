@@ -26,62 +26,76 @@ vi.mock('./isFieldStrong', async () => {
 });
 
 describe('createFieldBlockProcessor', () => {
-	it('returns a FieldBlock when the mocked isFieldStrong returns true by default', async () => {
+	it('WHEN the mocked isFieldStrong returns true by default returns a FieldBlock', async () => {
 		const { createFieldBlockProcessor } = await import('./createFieldBlockProcessor');
 		const processor = createFieldBlockProcessor();
 		const paragraph = { type: 'paragraph', children: [{ type: 'strong', children: [] }] };
+
 		const result = processor.captureNode({ markdown: '' } as never, paragraph as never);
+
 		expect(result).toMatchObject({ construct: 'FieldBlock', name: 'Test' });
 	});
 
-	it('returns a processor', async () => {
+	it('WHEN called returns a processor', async () => {
 		const { createFieldBlockProcessor } = await import('./createFieldBlockProcessor');
+
 		const processor = createFieldBlockProcessor();
+
 		expect(processor.captureNode).toBeInstanceOf(Function);
 	});
 
-	it('returns null for non-paragraph nodes', async () => {
+	it('FOR non-paragraph nodes returns null', async () => {
 		const { createFieldBlockProcessor } = await import('./createFieldBlockProcessor');
 		const processor = createFieldBlockProcessor();
 		const heading = { type: 'heading', children: [] };
+
 		const result = processor.captureNode({ markdown: '' } as never, heading as never);
+
 		expect(result).toBeNull();
 	});
 
-	it('returns null for paragraph with no children', async () => {
+	it('FOR paragraph with no children returns null', async () => {
 		const { createFieldBlockProcessor } = await import('./createFieldBlockProcessor');
 		const processor = createFieldBlockProcessor();
 		const paragraph = { type: 'paragraph', children: [] };
+
 		const result = processor.captureNode({ markdown: '' } as never, paragraph as never);
+
 		expect(result).toBeNull();
 	});
 
-	it('returns null when first child is not a field strong', async () => {
+	it('WHEN first child is not a field strong returns null', async () => {
 		vi.mocked(isFieldStrong).mockReturnValue(false);
 		const { createFieldBlockProcessor } = await import('./createFieldBlockProcessor');
 		const processor = createFieldBlockProcessor();
 		const paragraph = { type: 'paragraph', children: [{ type: 'text', value: 'hello' }] };
+
 		const result = processor.captureNode({ markdown: '' } as never, paragraph as never);
+
 		expect(result).toBeNull();
 	});
 
-	it('returns null when text after strong is not empty', async () => {
+	it('WHEN text after strong is not empty returns null', async () => {
 		vi.mocked(isFieldStrong).mockReturnValue(true);
 		vi.mocked(extractTags).mockReturnValue({ tags: [], stripped: ' leftover' });
 		const { createFieldBlockProcessor } = await import('./createFieldBlockProcessor');
 		const processor = createFieldBlockProcessor();
 		const paragraph = { type: 'paragraph', children: [{ type: 'strong', children: [] }] };
+
 		const result = processor.captureNode({ markdown: '' } as never, paragraph as never);
+
 		expect(result).toBeNull();
 	});
 
-	it('returns a FieldBlock when paragraph matches', async () => {
+	it('WHEN paragraph matches returns a FieldBlock', async () => {
 		vi.mocked(isFieldStrong).mockReturnValue(true);
 		vi.mocked(extractTags).mockReturnValue({ tags: [], stripped: '' });
 		const { createFieldBlockProcessor } = await import('./createFieldBlockProcessor');
 		const processor = createFieldBlockProcessor();
 		const paragraph = { type: 'paragraph', children: [{ type: 'strong', children: [] }] };
+
 		const result = processor.captureNode({ markdown: '' } as never, paragraph as never);
+
 		expect(result).toMatchObject({ construct: 'FieldBlock', name: 'Test' });
 	});
 });

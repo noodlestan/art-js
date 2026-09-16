@@ -7,8 +7,9 @@ vi.mock('./tagToMdast', () => {
 });
 
 describe('tagsToMdast', () => {
-	it('joins tag values into a text node', async () => {
+	it('WHEN joining tag values into a text node', async () => {
 		const { tagsToMdast } = await import('./tagsToMdast');
+
 		const result = tagsToMdast([
 			{ construct: 'Tag', name: 'a' },
 			{ construct: 'Tag', name: 'b' },

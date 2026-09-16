@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { nodePosition } from './nodePosition';
 
 describe('nodePosition', () => {
-	it('returns the position for a node with valid position', () => {
+	it('FOR a node with valid position returns the position', () => {
 		const node = {
 			type: 'text',
 			position: {
@@ -11,24 +11,26 @@ describe('nodePosition', () => {
 				end: { line: 1, column: 6, offset: 5 },
 			},
 		};
+
 		const result = nodePosition(node);
+
 		expect(result).toEqual({
 			start: { line: 1, column: 1, offset: 0 },
 			end: { line: 1, column: 6, offset: 5 },
 		});
 	});
 
-	it('throws when node has no position', () => {
+	it('WHEN node has no position throws', () => {
 		expect(() => nodePosition({ type: 'text' })).toThrow('Expected source position for text');
 	});
 
-	it('throws when position lacks start or end', () => {
+	it('WHEN position lacks start or end throws', () => {
 		expect(() => nodePosition({ type: 'text', position: {} as never })).toThrow(
 			'Expected source position for text',
 		);
 	});
 
-	it('defaults to 0 when offset is missing', () => {
+	it('WHEN offset is missing defaults to 0', () => {
 		const node = {
 			type: 'text',
 			position: {
@@ -36,7 +38,9 @@ describe('nodePosition', () => {
 				end: { line: 1, column: 6 },
 			},
 		};
+
 		const result = nodePosition(node);
+
 		expect(result.start.offset).toBe(0);
 		expect(result.end.offset).toBe(0);
 	});

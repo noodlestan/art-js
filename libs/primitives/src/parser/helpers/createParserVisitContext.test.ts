@@ -5,50 +5,62 @@ import { makeDocumentMock } from '../../test/helpers/document/makeDocumentMock';
 import { createParserVisitContext } from './createParserVisitContext';
 
 describe('createParserVisitContext', () => {
-	it('creates a context with the given construct', () => {
+	it('GIVEN construct creates a context with the', () => {
 		const construct = makeDocumentMock();
+
 		const ctx = createParserVisitContext(construct, undefined, 'markdown');
+
 		expect(ctx.construct).toBe(construct);
 		expect(ctx.markdown).toBe('markdown');
 		expect(ctx.parent()).toBeUndefined();
 	});
 
-	it('captures child constructs', () => {
+	it('WHEN capturing child constructs', () => {
 		const construct = makeDocumentMock();
+
 		const ctx = createParserVisitContext(construct, undefined);
+
 		ctx.captureChildConstruct({ construct: 'Child' });
 		expect(construct.children).toHaveLength(1);
 	});
 
-	it('calls onBeforeConstruct when provided', () => {
+	it('WHEN provided calls onBeforeConstruct', () => {
 		const construct = makeDocumentMock();
 		const onBeforeConstruct = vi.fn((_construct, _ctx) => _ctx);
 		const ctx = createParserVisitContext(construct, undefined, undefined, onBeforeConstruct);
 		const child = { construct: 'Child' };
+
 		const result = ctx.onBeforeConstruct(child);
+
 		expect(onBeforeConstruct).toHaveBeenCalledWith(child, ctx);
 		expect(result).toBe(ctx);
 	});
 
-	it('returns the same context when onBeforeConstruct is not provided', () => {
+	it('WHEN onBeforeConstruct is not provided returns the same context', () => {
 		const construct = makeDocumentMock();
 		const ctx = createParserVisitContext(construct, undefined);
+
 		const result = ctx.onBeforeConstruct({ construct: 'Child' });
+
 		expect(result).toBe(ctx);
 	});
 
-	it('falls back to parent context markdown when markdown is not provided', () => {
+	it('WHEN markdown is not provided falls back to parent context markdown', () => {
 		const parentConstruct = makeDocumentMock();
 		const parentCtx = createParserVisitContext(parentConstruct, undefined, 'parent-md');
 		const childConstruct = { construct: 'Section', children: [] };
+
 		const childCtx = createParserVisitContext(childConstruct, parentCtx);
+
 		expect(childCtx.markdown).toBe('parent-md');
 		expect(childCtx.parent()).toBe(parentCtx);
 	});
 
-	it('defaults to empty string when markdown and parent context are not provided', () => {
+	it('WHEN markdown and parent context are not provided defaults to empty string', () => {
 		const construct = makeDocumentMock();
+
 		const ctx = createParserVisitContext(construct, undefined);
+
 		expect(ctx.markdown).toBe('');
 	});
 });

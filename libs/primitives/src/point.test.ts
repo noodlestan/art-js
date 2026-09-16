@@ -3,8 +3,9 @@ import { describe, expect, it } from 'vitest';
 import type { Point, Position } from './point';
 
 describe('Point type', () => {
-	it('accepts a valid point', () => {
+	it('WHEN given a valid point accepts', () => {
 		const point: Point = { line: 1, column: 1, offset: 0 };
+
 		expect(point.line).toBe(1);
 		expect(point.column).toBe(1);
 		expect(point.offset).toBe(0);
@@ -12,7 +13,7 @@ describe('Point type', () => {
 });
 
 describe('Position type', () => {
-	it('accepts a valid position', () => {
+	it('WHEN given a valid position accepts', () => {
 		const position: Position = {
 			start: { line: 1, column: 1, offset: 0 },
 			end: { line: 2, column: 1, offset: 10 },

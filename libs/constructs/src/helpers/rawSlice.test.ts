@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { rawSlice } from './rawSlice';
 
 describe('rawSlice', () => {
-	it('returns the raw slice for a node with position', () => {
+	it('FOR a node with position returns the raw slice', () => {
 		const node = {
 			type: 'text',
 			position: {
@@ -12,18 +12,22 @@ describe('rawSlice', () => {
 			},
 		};
 		const context = { markdown: 'Hello world' } as never;
+
 		const result = rawSlice(node, context);
+
 		expect(result).toBe('Hello');
 	});
 
-	it('returns empty string when node lacks position', () => {
+	it('WHEN node lacks position returns empty string', () => {
 		const node = { type: 'text' };
 		const context = { markdown: 'Hello world' } as never;
+
 		const result = rawSlice(node, context);
+
 		expect(result).toBe('');
 	});
 
-	it('returns empty string when node lacks position end', () => {
+	it('WHEN node lacks position end returns empty string', () => {
 		const node = {
 			type: 'text',
 			position: {
@@ -31,7 +35,9 @@ describe('rawSlice', () => {
 			},
 		} as never;
 		const context = { markdown: 'Hello world' } as never;
+
 		const result = rawSlice(node, context);
+
 		expect(result).toBe('');
 	});
 });

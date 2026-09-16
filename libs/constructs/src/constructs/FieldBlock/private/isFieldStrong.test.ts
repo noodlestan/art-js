@@ -9,15 +9,19 @@ vi.mock('./stripStrong', () => {
 });
 
 describe('isFieldStrong', () => {
-	it('returns true for a strong node matching field pattern', () => {
+	it('FOR a strong node matching field pattern returns true', () => {
 		const node = { type: 'strong', children: [{ type: 'text', value: 'Purpose:' }] };
+
 		const result = isFieldStrong(node, { markdown: '**Purpose:**' } as never);
+
 		expect(result).toBe(true);
 	});
 
-	it('returns false for non-strong node', () => {
+	it('FOR non-strong node returns false', () => {
 		const node = { type: 'text', value: 'Purpose:' };
+
 		const result = isFieldStrong(node, { markdown: 'Purpose:' } as never);
+
 		expect(result).toBe(false);
 	});
 });

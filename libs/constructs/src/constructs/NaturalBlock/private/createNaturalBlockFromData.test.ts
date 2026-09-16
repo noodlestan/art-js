@@ -6,12 +6,12 @@ import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 import { createNaturalBlockFromData } from './createNaturalBlockFromData';
 
 describe('createNaturalBlockFromData', () => {
-	it('creates a NaturalBlock from minimal data', () => {
+	it('WHEN creating a NaturalBlock from minimal data', () => {
 		const result = createNaturalBlockFromData({ value: 'hello', children: [] });
 		expect(result).toEqual(makeNaturalBlockMock());
 	});
 
-	it('includes optional properties when provided', () => {
+	it('WHEN provided includes optional properties', () => {
 		const result = createNaturalBlockFromData({
 			value: 'hello',
 			children: [],

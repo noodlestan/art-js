@@ -24,7 +24,7 @@ vi.mock('../../Tag/private/extractTags', async () => {
 });
 
 describe('createNaturalBlock', () => {
-	it('creates a NaturalBlock from a node', async () => {
+	it('WHEN creating a NaturalBlock from a node', async () => {
 		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
 			type: 'paragraph',
@@ -32,21 +32,25 @@ describe('createNaturalBlock', () => {
 			children: [{ type: 'text', value: 'hello' }],
 		};
 		const context = { markdown: '' } as never;
+
 		const result = createNaturalBlock(node as never, context);
+
 		expect(result.construct).toBe('NaturalBlock');
 		expect(result.value).toBe('hello');
 	});
 
-	it('creates a NaturalBlock without children for nodes that have no children', async () => {
+	it('FOR nodes that have no children creates a NaturalBlock without children', async () => {
 		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = { type: 'thematicBreak' };
 		const context = { markdown: '' } as never;
+
 		const result = createNaturalBlock(node as never, context);
+
 		expect(result.construct).toBe('NaturalBlock');
 		expect(result.children).toEqual([]);
 	});
 
-	it('treats heading children as phrasing content', async () => {
+	it('WHEN treating heading children as phrasing content', async () => {
 		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
 			type: 'heading',
@@ -54,62 +58,72 @@ describe('createNaturalBlock', () => {
 			children: [{ type: 'text', value: 'Title' }],
 		};
 		const context = { markdown: '' } as never;
+
 		const result = createNaturalBlock(node as never, context);
+
 		expect(result.construct).toBe('NaturalBlock');
 		expect(result.children).toHaveLength(1);
 		expect(result.children[0]).toMatchObject({ construct: 'NaturalExpression' });
 	});
 
-	it('treats table-cell children as phrasing content', async () => {
+	it('WHEN treating table-cell children as phrasing content', async () => {
 		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
 			type: 'tableCell',
 			children: [{ type: 'text', value: 'Cell' }],
 		};
 		const context = { markdown: '' } as never;
+
 		const result = createNaturalBlock(node as never, context);
+
 		expect(result.construct).toBe('NaturalBlock');
 		expect(result.children).toHaveLength(1);
 		expect(result.children[0]).toMatchObject({ construct: 'NaturalExpression' });
 	});
 
-	it('creates natural expressions for phrasing children of block nodes', async () => {
+	it('FOR phrasing children of block nodes creates natural expressions', async () => {
 		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
 			type: 'list',
 			children: [{ type: 'text', value: 'item' }],
 		};
 		const context = { markdown: '' } as never;
+
 		const result = createNaturalBlock(node as never, context);
+
 		expect(result.construct).toBe('NaturalBlock');
 		expect(result.children).toHaveLength(1);
 		expect(result.children[0]).toMatchObject({ construct: 'NaturalExpression' });
 	});
 
-	it('recurses into non-phrasing children of block nodes', async () => {
+	it('WHEN recursing into non-phrasing children of block nodes', async () => {
 		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
 			type: 'list',
 			children: [{ type: 'code', value: 'const x = 1;' }],
 		};
 		const context = { markdown: '' } as never;
+
 		const result = createNaturalBlock(node as never, context);
+
 		expect(result.construct).toBe('NaturalBlock');
 		expect(result.children).toHaveLength(1);
 		expect(result.children[0]).toMatchObject({ construct: 'NaturalBlock' });
 	});
 
-	it('creates an empty NaturalBlock for an empty paragraph', async () => {
+	it('FOR an empty paragraph creates an empty NaturalBlock', async () => {
 		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = { type: 'paragraph', children: [] };
 		const context = { markdown: '' } as never;
+
 		const result = createNaturalBlock(node as never, context);
+
 		expect(result.construct).toBe('NaturalBlock');
 		expect(result.children).toEqual([]);
 		expect(result.tags).toBeUndefined();
 	});
 
-	it('does not extract tags when last child is not text', async () => {
+	it('WHEN last child is not text does not extract tags', async () => {
 		vi.mocked(extractTags).mockReturnValue({ tags: [], stripped: 'hello' });
 		const { createNaturalBlock } = await import('./createNaturalBlock');
 		const node = {
@@ -117,11 +131,13 @@ describe('createNaturalBlock', () => {
 			children: [{ type: 'strong', children: [] }],
 		};
 		const context = { markdown: '' } as never;
+
 		const result = createNaturalBlock(node as never, context);
+
 		expect(result.tags).toBeUndefined();
 	});
 
-	it('extracts tags when last text child has trailing tags', async () => {
+	it('WHEN last text child has trailing tags extracts tags', async () => {
 		vi.mocked(extractTags).mockReturnValue({
 			tags: [makeTagMock()],
 			stripped: 'hello',

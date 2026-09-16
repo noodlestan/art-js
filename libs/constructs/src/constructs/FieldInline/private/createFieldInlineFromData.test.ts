@@ -6,12 +6,12 @@ import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 import { createFieldInlineFromData } from './createFieldInlineFromData';
 
 describe('createFieldInlineFromData', () => {
-	it('creates a FieldInline from minimal data', () => {
+	it('WHEN creating a FieldInline from minimal data', () => {
 		const result = createFieldInlineFromData({ name: 'Test' });
 		expect(result).toEqual({ construct: 'FieldInline', name: 'Test', children: [] });
 	});
 
-	it('includes children and tags when provided', () => {
+	it('WHEN provided includes children and tags', () => {
 		const result = createFieldInlineFromData({
 			name: 'Test',
 			children: [makeNaturalExpressionMock()],

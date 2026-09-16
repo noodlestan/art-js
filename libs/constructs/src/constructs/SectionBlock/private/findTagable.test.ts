@@ -7,26 +7,30 @@ import { makeSectionBlockMock } from '../../../test/helpers/constructs/SectionBl
 import { findTagable } from './findTagable';
 
 describe('findTagable', () => {
-	it('returns the section block when found in context chain', () => {
+	it('WHEN found in context chain returns the section block', () => {
 		const section = makeSectionBlockMock();
 		const context = {
 			construct: section,
 			parent: () => undefined,
 		} as never;
+
 		const result = findTagable(context);
+
 		expect(result).toBe(section);
 	});
 
-	it('returns undefined when no section block is found', () => {
+	it('WHEN no section block is found returns undefined', () => {
 		const context = {
 			construct: makeDocumentMock(),
 			parent: () => undefined,
 		} as never;
+
 		const result = findTagable(context);
+
 		expect(result).toBeUndefined();
 	});
 
-	it('walks up the parent chain', () => {
+	it('WHEN walking up the parent chain', () => {
 		const section = makeSectionBlockMock();
 		const parent = {
 			construct: section,
@@ -36,7 +40,9 @@ describe('findTagable', () => {
 			construct: makeFieldBlockMock(),
 			parent: () => parent,
 		} as never;
+
 		const result = findTagable(context);
+
 		expect(result).toBe(section);
 	});
 });

@@ -13,7 +13,7 @@ vi.mock('./stripStrong', () => {
 });
 
 describe('createFieldBlockFromParagraph', () => {
-	it('creates a FieldBlock from a paragraph', async () => {
+	it('WHEN creating a FieldBlock from a paragraph', async () => {
 		const { createFieldBlockFromParagraph } = await import('./createFieldBlockFromParagraph');
 		const paragraph = {
 			type: 'paragraph',
@@ -25,12 +25,14 @@ describe('createFieldBlockFromParagraph', () => {
 			],
 		};
 		const context = { markdown: '' } as never;
+
 		const result = createFieldBlockFromParagraph(paragraph as never, context);
+
 		expect(result.construct).toBe('FieldBlock');
 		expect(result.name).toBe('Purpose');
 	});
 
-	it('includes tags when provided', async () => {
+	it('WHEN provided includes tags', async () => {
 		const { createFieldBlockFromParagraph } = await import('./createFieldBlockFromParagraph');
 		const paragraph = {
 			type: 'paragraph',
@@ -42,7 +44,9 @@ describe('createFieldBlockFromParagraph', () => {
 			],
 		};
 		const context = { markdown: '' } as never;
+
 		const result = createFieldBlockFromParagraph(paragraph as never, context, [makeTagMock()]);
+
 		expect(result.tags).toHaveLength(1);
 	});
 });

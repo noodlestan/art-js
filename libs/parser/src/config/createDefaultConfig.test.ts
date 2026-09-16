@@ -8,9 +8,11 @@ vi.mock('@art-js/constructs', () => ({
 }));
 
 describe('createDefaultConfig', () => {
-	it('returns a parser config with default construct and constructs array', async () => {
+	it('WHEN called returns a parser config with default construct and constructs array', async () => {
 		const { createDefaultConfig } = await import('./createDefaultConfig');
+
 		const config = createDefaultConfig();
+
 		expect(typeof config.defaultConstruct).toBe('function');
 		expect(config.constructs).toHaveLength(3);
 	});

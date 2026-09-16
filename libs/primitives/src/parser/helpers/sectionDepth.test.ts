@@ -3,12 +3,12 @@ import { describe, expect, it } from 'vitest';
 import { sectionDepth } from './sectionDepth';
 
 describe('sectionDepth', () => {
-	it('returns the depth when provided', () => {
+	it('WHEN provided returns the depth', () => {
 		const result = sectionDepth({ depth: 3 });
 		expect(result).toBe(3);
 	});
 
-	it('defaults to 1 when depth is missing', () => {
+	it('WHEN depth is missing defaults to 1', () => {
 		const result = sectionDepth({});
 		expect(result).toBe(1);
 	});

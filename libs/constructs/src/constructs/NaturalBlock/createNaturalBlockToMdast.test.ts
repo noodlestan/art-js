@@ -6,8 +6,9 @@ import { makeTagMock } from '../../test/helpers/constructs/Tag/makeTagMock';
 import { createNaturalBlockToMdast } from './createNaturalBlockToMdast';
 
 describe('createNaturalBlockToMdast', () => {
-	it('parses a text value into a root with paragraph', () => {
+	it('WHEN parsing a text value into a root with paragraph', () => {
 		const impl = createNaturalBlockToMdast();
+
 		const result = impl.toMdast(
 			makeNaturalBlockMock({ type: 'text', value: ' Hello world' }) as never,
 			[],
@@ -18,8 +19,9 @@ describe('createNaturalBlockToMdast', () => {
 		});
 	});
 
-	it('parses a code block value', () => {
+	it('WHEN parsing a code block value', () => {
 		const impl = createNaturalBlockToMdast();
+
 		const result = impl.toMdast(
 			makeNaturalBlockMock({
 				type: 'code',
@@ -35,8 +37,9 @@ describe('createNaturalBlockToMdast', () => {
 		});
 	});
 
-	it('includes children in a paragraph', () => {
+	it('WHEN children in a paragraph includes', () => {
 		const impl = createNaturalBlockToMdast();
+
 		const result = impl.toMdast(
 			makeNaturalBlockMock({ type: 'paragraph', value: 'Hello' }) as never,
 			[{ type: 'text', value: 'child' } as never],
@@ -52,8 +55,9 @@ describe('createNaturalBlockToMdast', () => {
 		});
 	});
 
-	it('includes tags in a paragraph when present', () => {
+	it('WHEN present includes tags in a paragraph', () => {
 		const impl = createNaturalBlockToMdast();
+
 		const result = impl.toMdast(
 			makeNaturalBlockMock({
 				type: 'paragraph',
@@ -73,8 +77,9 @@ describe('createNaturalBlockToMdast', () => {
 		});
 	});
 
-	it('does not include tags when paragraph has no children', () => {
+	it('WHEN paragraph has no children does not include tags', () => {
 		const impl = createNaturalBlockToMdast();
+
 		const result = impl.toMdast(
 			makeNaturalBlockMock({
 				type: 'paragraph',
@@ -94,8 +99,9 @@ describe('createNaturalBlockToMdast', () => {
 		});
 	});
 
-	it('does not include tags when paragraph tags are empty', () => {
+	it('WHEN paragraph tags are empty does not include tags', () => {
 		const impl = createNaturalBlockToMdast();
+
 		const result = impl.toMdast(
 			makeNaturalBlockMock({
 				type: 'paragraph',

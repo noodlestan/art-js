@@ -7,12 +7,12 @@ import { makeTagMock } from '../../../test/helpers/constructs/Tag/makeTagMock';
 import { createFieldBlockFromData } from './createFieldBlockFromData';
 
 describe('createFieldBlockFromData', () => {
-	it('creates a FieldBlock from minimal data', () => {
+	it('WHEN creating a FieldBlock from minimal data', () => {
 		const result = createFieldBlockFromData({ name: 'Test' });
 		expect(result).toEqual(makeFieldBlockMock());
 	});
 
-	it('includes children and tags when provided', () => {
+	it('WHEN provided includes children and tags', () => {
 		const result = createFieldBlockFromData({
 			name: 'Test',
 			children: [makeNaturalBlockMock()],
