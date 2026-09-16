@@ -94,7 +94,7 @@ None.
 
 | ID                  | Repository / Checkout / Branch | Policy       | Hash      | Status      |
 | ------------------- | ------------------------------ | ------------ | --------- | ----------- |
-| `archive-poc-parse` | $PROJECT / `building`          | `AUTONOMOUS` | `172d83a` | `COMMITTED` |
+| `archive-poc-parse` | $PROJECT / `building`          | `AUTONOMOUS` | `742419d` | `COMMITTED` |
 
 ##### Commit: `archive-poc-parse`
 
