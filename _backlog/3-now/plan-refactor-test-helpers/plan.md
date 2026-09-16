@@ -69,18 +69,18 @@ Execution occurs in `$PROJECT` on branch `building`.
 ## Items:
 
 | Iteration / Instructions                                                                                              | Status  |
-| --------------------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Rename and Reclassify Helpers `./plan-refactor-test-helpers/instructions/rename-and-reclassify-helpers.md` | `READY` |
-| Iteration: Deduplicate Primitive Helpers `./plan-refactor-test-helpers/instructions/deduplicate-primitive-helpers.md` | `DRAFT` |
-| Iteration: Simplify Async Imports `./plan-refactor-test-helpers/instructions/simplify-async-imports.md`               | `DRAFT` |
-| Iteration: Format Test Scenarios `./plan-refactor-test-helpers/instructions/format-test-scenarios.md`                 | `DRAFT` |
-| Iteration: Write Test Conventions `./plan-refactor-test-helpers/instructions/write-test-conventions.md`               | `DRAFT` |
+| --------------------------------------------------------------------------------------------------------------------- | ------- | --------- |
+| Iteration: Rename and Reclassify Helpers `./plan-refactor-test-helpers/instructions/rename-and-reclassify-helpers.md` | `DONE`  | `b9a179d` |
+| Iteration: Deduplicate Primitive Helpers `./plan-refactor-test-helpers/instructions/deduplicate-primitive-helpers.md` | `READY` |
+| Iteration: Simplify Async Imports `./plan-refactor-test-helpers/instructions/simplify-async-imports.md`               | `READY` |
+| Iteration: Format Test Scenarios `./plan-refactor-test-helpers/instructions/format-test-scenarios.md`                 | `READY` |
+| Iteration: Write Test Conventions `./plan-refactor-test-helpers/instructions/write-test-conventions.md`               | `READY` |
 
 ### Iteration: Rename and Reclassify Helpers
 
 **Id:** `rename-and-reclassify-helpers`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Collapse one-folder-per-file helper directories into domain-grouped folders and rename all helpers by their function (fixture factory vs mock factory).
 
@@ -117,9 +117,9 @@ None.
 
 #### Commits:
 
-| ID                      | Repository / Checkout / Branch | Policy   | Hash | Status     |
-| ----------------------- | ------------------------------ | -------- | ---- | ---------- |
-| `rename-and-reclassify` | $PROJECT / `building`          | `MANUAL` | TBD  | `AUTHORED` |
+| ID                      | Repository / Checkout / Branch | Policy   | Hash      | Status      |
+| ----------------------- | ------------------------------ | -------- | --------- | ----------- |
+| `rename-and-reclassify` | $PROJECT / `building`          | `MANUAL` | `b9a179d` | `COMMITTED` |
 
 ##### Commit: `rename-and-reclassify`
 
@@ -141,7 +141,7 @@ test(art-js): Rename and reclassify test helpers.
 
 **Id:** `deduplicate-primitive-helpers`
 
-**Status:** `DRAFT`
+**Status:** `READY`
 
 **Purpose:** Move primitives mocks into the primitives package and deduplicate `makeDocumentMock` across all three packages.
 
@@ -184,7 +184,7 @@ test(art-js): Deduplicate primitive test helpers
 
 **Id:** `simplify-async-imports`
 
-**Status:** `DRAFT`
+**Status:** `READY`
 
 **Purpose:** Evaluate whether async imports in `vi.mock()` blocks are necessary and simplify to static imports where possible.
 
@@ -228,7 +228,7 @@ test(art-js): Simplify imports in unit tests
 
 **Id:** `format-test-scenarios`
 
-**Status:** `DRAFT`
+**Status:** `READY`
 
 **Purpose:** Standardise test descriptions and layout across all unit tests.
 
@@ -269,7 +269,7 @@ conventions(art-js): Format and reword unit tests
 
 **Id:** `write-test-conventions`
 
-**Status:** `DRAFT`
+**Status:** `READY`
 
 **Purpose:** Capture all test helper and unit test conventions in `@noodlestan/conventions`.
 
@@ -387,7 +387,7 @@ conventions(art-js): Add unit test conventions
 
 ### Next
 
-Execute `rename-and-reclassify-helpers` iteration. Commit manually after verifying tests pass.
+Delegate the next `READY` iteration.
 
 ### Blockers
 
