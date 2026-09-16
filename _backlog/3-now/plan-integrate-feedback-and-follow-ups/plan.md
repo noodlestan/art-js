@@ -2,7 +2,7 @@
 
 **Id:** `integrate-feedback-and-follow-ups`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -57,8 +57,6 @@ Create TagReference spec, clean up tag spec projections prose, fix VocabularyDec
 
 ### Deployments
 
-None.
-
 ## Execution Context
 
 Execution occurs in `$PROJECT` on branch `main`.
@@ -67,22 +65,24 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 **Note:** The 2 commits below will be manually executed without instruction files.
 
-| Iteration / Instructions                                                                                    | Status  |
-| ----------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Tag Reference Spec `./plan-integrate-feedback-and-follow-ups/instructions/tag-reference-spec.md` | `READY` |
-| Iteration: Fixture Cleanup `./plan-integrate-feedback-and-follow-ups/instructions/fixture-cleanup.md`       | `READY` |
+| Iteration / Instructions                                                                                    | Status |
+| ----------------------------------------------------------------------------------------------------------- | ------ |
+| Iteration: Tag Reference Spec `./plan-integrate-feedback-and-follow-ups/instructions/tag-reference-spec.md` | `DONE` |
+| Iteration: Fixture Cleanup `./plan-integrate-feedback-and-follow-ups/instructions/fixture-cleanup.md`       | `DONE` |
 
 ### Iteration: Tag Reference Spec
 
 **Id:** `tag-reference-spec`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Introduce TagReference spec file, clean up tag spec by removing projection prose, and fix VocabularyDeclaration syntax reference.
 
 **Description:** Create `spec/grammar/constructs/expressions/tag-reference.art` for backticked `#<identifier>` references in instructions. Clean up `spec/grammar/constructs/expressions/tag.art` by removing all "projections" related prose and simplifying tag definitions to target `SectionBlock` and `VocabularyDeclaration`, fixing `<Vocabulary> <Tags>` to `<VocabularyDeclaration> <Tags>`.
 
 **Instructions:** `./plan-integrate-feedback-and-follow-ups/instructions/tag-reference-spec.md`
+
+**Report:** `./plan-integrate-feedback-and-follow-ups/instructions/tag-reference-spec__report.md`
 
 **Changes:**
 
@@ -91,13 +91,11 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 **Dependencies:**
 
-None.
-
 #### Commits:
 
-| ID                   | Repository / Checkout / Branch | Policy   | Hash  | Status     |
-| -------------------- | ------------------------------ | -------- | ----- | ---------- |
-| `tag-reference-spec` | $PROJECT / `main`              | `MANUAL` | (TBD) | `AUTHORED` |
+| ID                   | Repository / Checkout / Branch | Policy   | Hash      | Status      |
+| -------------------- | ------------------------------ | -------- | --------- | ----------- |
+| `tag-reference-spec` | $PROJECT / `main`              | `MANUAL` | `8b61ed5` | `COMMITTED` |
 
 ##### Commit: `tag-reference-spec`
 
@@ -117,7 +115,7 @@ spec(art-js): Add TagReference spec and clean up tag definitions
 
 **Id:** `fixture-cleanup`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Remove noisy POC-era `_`-prefixed fixture files from test suites.
 
@@ -125,19 +123,19 @@ spec(art-js): Add TagReference spec and clean up tag definitions
 
 **Instructions:** `./plan-integrate-feedback-and-follow-ups/instructions/fixture-cleanup.md`
 
+**Report:** `./plan-integrate-feedback-and-follow-ups/instructions/fixture-cleanup__report.md`
+
 **Changes:**
 
 - Delete `_`-prefixed fixture files and `.json` snapshots from `libs/constructs/test/fixtures/`.
 
 **Dependencies:**
 
-None.
-
 #### Commits:
 
-| ID                | Repository / Checkout / Branch | Policy   | Hash  | Status     |
-| ----------------- | ------------------------------ | -------- | ----- | ---------- |
-| `fixture-cleanup` | $PROJECT / `main`              | `MANUAL` | (TBD) | `AUTHORED` |
+| ID                | Repository / Checkout / Branch | Policy   | Hash      | Status      |
+| ----------------- | ------------------------------ | -------- | --------- | ----------- |
+| `fixture-cleanup` | $PROJECT / `main`              | `MANUAL` | `3ffe7bf` | `COMMITTED` |
 
 ##### Commit: `fixture-cleanup`
 
@@ -156,11 +154,10 @@ test(art-js): Remove noisy POC-era underscore-prefixed fixtures
 
 ### Next
 
+All iterations DONE. Commits `8b61ed5` and `3ffe7bf` tracked.
 Execute the 2 MANUAL commits: `tag-reference-spec` then `fixture-cleanup`.
 
 ### Blockers
-
-None.
 
 ## Coordination
 
@@ -171,6 +168,9 @@ None.
 ### Evidence
 
 - Updated specification and fixture directories.
+- Created `spec/grammar/constructs/expressions/tag-reference.art` with TagReference construct definition.
+- Cleaned `spec/grammar/constructs/expressions/tag.art` by removing projections prose and fixing VocabularyDeclaration reference.
+- Deleted 26 `_`-prefixed POC-era fixture files and their JSON snapshots from `libs/constructs/test/fixtures/`.
 
 ### Decisions
 
@@ -178,4 +178,4 @@ None.
 
 ### Follow Ups
 
-None.
+- **Feedback:** The Tag rules section in `tag.art` still contains one "per projection" clause: "A Tag determines the inclusion, exclusion, or transformation of the tagged declaration content per projection." It was left in place because the instruction scoped the projections cleanup to the Description only.
