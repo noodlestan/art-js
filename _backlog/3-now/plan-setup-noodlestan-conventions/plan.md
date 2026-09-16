@@ -65,10 +65,10 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                       | Status  |
-| ------------------------------------------------------------------------------ | ------- |
-| Iteration: Install Convention Packages `./instructions/install-conventions.md` | `DONE`  |
-| Iteration: Configure Guides `./instructions/configure-guides.md`               | `READY` |
+| Iteration / Instructions                                                       | Status |
+| ------------------------------------------------------------------------------ | ------ |
+| Iteration: Install Convention Packages `./instructions/install-conventions.md` | `DONE` |
+| Iteration: Configure Guides `./instructions/configure-guides.md`               | `DONE` |
 
 ### Iteration: Install Convention Packages
 
@@ -113,7 +113,7 @@ configs(art-js): Install @noodlestan/conventions-typescript
 
 **Id:** `configure-guides`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Configure Art JS `_guide.md` to reference installed Noodlestan conventions.
 
@@ -132,9 +132,9 @@ configs(art-js): Install @noodlestan/conventions-typescript
 
 #### Commits:
 
-| ID                 | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------ | ------------------------------ | ------------ | ----- | ---------- |
-| `configure-guides` | $PROJECT / `main`              | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                 | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| ------------------ | ------------------------------ | ------------ | --------- | ----------- |
+| `configure-guides` | $PROJECT / `main`              | `AUTONOMOUS` | `eaae335` | `COMMITTED` |
 
 ##### Commit: `configure-guides`
 
@@ -153,7 +153,7 @@ guides(art-js): Reference Noodlestan conventions in project guide
 
 ### Next
 
-Delegate instruction `install-conventions`.
+All iterations delegated and integrated.
 
 ### Blockers
 
