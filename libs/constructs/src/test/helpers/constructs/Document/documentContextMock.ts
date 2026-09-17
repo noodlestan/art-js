@@ -2,7 +2,7 @@
  * @mocks Document context for construct integration tests
  */
 
-import { makeDocumentMock } from '@art-js/primitives/src/test/helpers/document/makeDocumentMock';
+import { makeDocumentMock } from '@art-js/primitives/src/test/helpers';
 import { vi } from 'vitest';
 
 import type { ArtDocument } from '../../../../constructs/Document/types';

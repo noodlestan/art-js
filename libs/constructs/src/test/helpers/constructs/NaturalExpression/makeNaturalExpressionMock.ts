@@ -2,7 +2,7 @@
  * @provides NaturalExpression test fixture
  */
 
-import type { NaturalExpression } from '../../../../constructs/NaturalExpression/private/types';
+import type { NaturalExpression } from '../../../../constructs';
 
 export const makeNaturalExpressionMock = (options?: {
 	type?: string;

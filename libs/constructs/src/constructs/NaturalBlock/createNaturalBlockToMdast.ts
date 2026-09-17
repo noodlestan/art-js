@@ -1,10 +1,10 @@
 import type { Node } from 'mdast';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 
-import { tagsToMdast } from '../Tag/private/tagsToMdast';
+import { tagsToMdast } from '../../shared/tags';
 import type { ConstructSerializer } from '../types';
 
-import type { NaturalBlock } from './private/types';
+import type { NaturalBlock } from './types';
 
 export function createNaturalBlockToMdast(): ConstructSerializer {
 	return {

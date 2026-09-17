@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { makeFieldInlineMock } from '../../test/helpers/constructs/FieldInline/makeFieldInlineMock';
-import { makeTagMock } from '../../test/helpers/constructs/Tag/makeTagMock';
+import { makeFieldInlineMock, makeTagMock } from '../../test/helpers';
 
 import { createFieldInlineToMdast } from './createFieldInlineToMdast';
 

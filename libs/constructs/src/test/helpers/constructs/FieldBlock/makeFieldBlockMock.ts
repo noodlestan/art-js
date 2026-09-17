@@ -2,8 +2,7 @@
  * @provides FieldBlock test fixture
  */
 
-import type { FieldBlock } from '../../../../constructs/FieldBlock/private/types';
-import type { Tag } from '../../../../constructs/Tag/private/types';
+import type { FieldBlock, Tag } from '../../../../constructs';
 
 export const makeFieldBlockMock = (options?: {
 	name?: string;

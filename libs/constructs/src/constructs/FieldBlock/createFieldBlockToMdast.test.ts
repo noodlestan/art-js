@@ -1,8 +1,7 @@
 import type { Text } from 'mdast';
 import { describe, expect, it } from 'vitest';
 
-import { makeFieldBlockMock } from '../../test/helpers/constructs/FieldBlock/makeFieldBlockMock';
-import { makeTagMock } from '../../test/helpers/constructs/Tag/makeTagMock';
+import { makeFieldBlockMock, makeTagMock } from '../../test/helpers';
 
 import { createFieldBlockToMdast } from './createFieldBlockToMdast';
 

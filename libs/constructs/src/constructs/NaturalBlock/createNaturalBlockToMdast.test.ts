@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { makeNaturalBlockMock } from '../../test/helpers/constructs/NaturalBlock/makeNaturalBlockMock';
-import { makeTagMock } from '../../test/helpers/constructs/Tag/makeTagMock';
+import { makeNaturalBlockMock, makeTagMock } from '../../test/helpers';
 
 import { createNaturalBlockToMdast } from './createNaturalBlockToMdast';
 

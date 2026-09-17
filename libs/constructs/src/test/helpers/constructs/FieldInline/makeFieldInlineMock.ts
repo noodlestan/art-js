@@ -2,8 +2,8 @@
  * @provides FieldInline test fixture
  */
 
-import type { FieldInline } from '../../../../constructs/FieldInline/private/types';
-import type { Tag } from '../../../../constructs/Tag/private/types';
+import type { FieldInline } from '../../../../constructs/';
+import type { Tag } from '../../../../constructs/Tag/types';
 
 export const makeFieldInlineMock = (options?: {
 	name?: string;

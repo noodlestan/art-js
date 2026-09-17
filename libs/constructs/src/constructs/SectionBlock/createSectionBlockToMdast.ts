@@ -1,10 +1,10 @@
-import type { Content, Node } from 'mdast';
+import type { Node, RootContent } from 'mdast';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 
-import { tagsToMdast } from '../Tag/private/tagsToMdast';
+import { tagsToMdast } from '../../shared/tags';
 import type { ConstructSerializer } from '../types';
 
-import type { SectionBlock } from './private/types';
+import type { SectionBlock } from './types';
 
 export function createSectionBlockToMdast(): ConstructSerializer {
 	return {
@@ -16,7 +16,7 @@ export function createSectionBlockToMdast(): ConstructSerializer {
 			const parsed = fromMarkdown(`# ${section.name}`);
 			const heading = parsed.children.find(child => child.type === 'heading');
 			const tagNode = section.tags?.length ? tagsToMdast(section.tags) : null;
-			const children: Content[] =
+			const children: RootContent[] =
 				heading && 'children' in heading
 					? [...heading.children, ...(tagNode ? [tagNode] : [])]
 					: [{ type: 'text' as const, value: section.name }, ...(tagNode ? [tagNode] : [])];

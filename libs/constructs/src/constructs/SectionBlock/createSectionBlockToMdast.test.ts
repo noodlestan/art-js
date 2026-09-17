@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { makeSectionBlockMock } from '../../test/helpers/constructs/SectionBlock/makeSectionBlockMock';
-import { makeTagMock } from '../../test/helpers/constructs/Tag/makeTagMock';
+import { makeSectionBlockMock, makeTagMock } from '../../test/helpers';
 
 import { createSectionBlockToMdast } from './createSectionBlockToMdast';
 

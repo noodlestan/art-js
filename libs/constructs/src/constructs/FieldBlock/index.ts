@@ -1,2 +1,4 @@
 export { createFieldBlockParser } from './createFieldBlockParser';
 export { createFieldBlockToMdast } from './createFieldBlockToMdast';
+
+export type { FieldBlock } from './types';

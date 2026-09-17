@@ -22,3 +22,9 @@ export type ConstructBase = {
 export type ContainerConstructBase = ConstructBase & {
 	children: ConstructBase[];
 };
+
+/** Document — the parse result for one source file. */
+export type Document<TChildren extends ConstructBase = ConstructBase> = ConstructBase & {
+	construct: 'Document';
+	children: TChildren[];
+};

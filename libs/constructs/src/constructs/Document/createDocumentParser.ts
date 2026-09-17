@@ -1,6 +1,7 @@
 import type { ConstructParserFactory } from '../types';
 
-import { type DocumentFactoryData, createDocumentFromData } from './private/createDocumentFromData';
+import { createDocumentFromData } from './private';
+import type { DocumentFactoryData } from './private';
 import type { ArtDocument } from './types';
 
 export const createDocumentParser: ConstructParserFactory<ArtDocument> = () => ({

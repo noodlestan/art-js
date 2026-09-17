@@ -2,7 +2,7 @@
  * @provides Tag test fixture
  */
 
-import type { Tag } from '../../../../constructs/Tag/private/types';
+import type { Tag } from '../../../../constructs/Tag/types';
 
 export const makeTagMock = (options?: { name?: string }): Tag => ({
 	construct: 'Tag',

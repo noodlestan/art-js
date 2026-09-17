@@ -2,7 +2,7 @@ import type { Node } from 'mdast';
 
 import type { ConstructSerializer } from '../types';
 
-import type { NaturalExpression } from './private/types';
+import type { NaturalExpression } from './types';
 
 export function createNaturalExpressionToMdast(): ConstructSerializer {
 	return {

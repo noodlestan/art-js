@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { makeNaturalExpressionMock } from '../../test/helpers/constructs/NaturalExpression/makeNaturalExpressionMock';
+import { makeNaturalExpressionMock } from '../../test/helpers';
 
 import { createNaturalExpressionToMdast } from './createNaturalExpressionToMdast';
 

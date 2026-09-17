@@ -1,9 +1,6 @@
-import type { ConstructBase } from '@art-js/primitives';
+import type { Document } from '@art-js/primitives';
 
 import type { BlockContent } from '../../types';
 
 /** Document — the parse result for one source file. */
-export interface ArtDocument extends ConstructBase {
-	construct: 'Document';
-	children: BlockContent[];
-}
+export type ArtDocument = Document<BlockContent>;

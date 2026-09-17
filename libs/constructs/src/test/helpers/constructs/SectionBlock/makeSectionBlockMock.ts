@@ -2,8 +2,8 @@
  * @provides SectionBlock test fixture
  */
 
-import type { SectionBlock } from '../../../../constructs/SectionBlock/private/types';
-import type { Tag } from '../../../../constructs/Tag/private/types';
+import type { SectionBlock } from '../../../../constructs/SectionBlock/types';
+import type { Tag } from '../../../../constructs/Tag/types';
 
 export const makeSectionBlockMock = (options?: {
 	name?: string;

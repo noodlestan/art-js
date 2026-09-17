@@ -1,6 +1,7 @@
 import type { ConstructParserFactory } from '../types';
 
-import { type TagFactoryData, createTag } from './private/createTag';
+import { createTag } from './private';
+import type { TagFactoryData } from './private';
 
 export const createTagParser: ConstructParserFactory = () => ({
 	name: 'Tag',

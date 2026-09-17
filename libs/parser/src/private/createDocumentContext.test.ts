@@ -1,5 +1,4 @@
-import { makeDocumentMock } from '@art-js/primitives/src/test/helpers/document/makeDocumentMock';
-import { parserVisitContextMock } from '@art-js/primitives/src/test/helpers/primitives/parserVisitContextMock';
+import { makeDocumentMock, parserVisitContextMock } from '@art-js/primitives/src/test/helpers';
 import { describe, expect, it, vi } from 'vitest';
 
 import { createDocumentContext } from './createDocumentContext';

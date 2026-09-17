@@ -2,8 +2,7 @@
  * @provides NaturalBlock test fixture
  */
 
-import type { NaturalBlock } from '../../../../constructs/NaturalBlock/private/types';
-import type { Tag } from '../../../../constructs/Tag/private/types';
+import type { NaturalBlock, Tag } from '../../../../constructs';
 
 export const makeNaturalBlockMock = (options?: {
 	value?: string;

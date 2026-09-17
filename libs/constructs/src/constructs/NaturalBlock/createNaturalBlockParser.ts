@@ -1,10 +1,7 @@
 import type { ConstructParserFactory } from '../types';
 
-import {
-	type NaturalBlockFactoryData,
-	createNaturalBlockFromData,
-} from './private/createNaturalBlockFromData';
-import { createNaturalBlockProcessor } from './private/createNaturalBlockProcessor';
+import { createNaturalBlockFromData, createNaturalBlockProcessor } from './private';
+import type { NaturalBlockFactoryData } from './private/factory/types';
 
 export const createNaturalBlockParser: ConstructParserFactory = () => ({
 	name: 'NaturalBlock',
