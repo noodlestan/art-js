@@ -2,7 +2,7 @@
 
 **Id:** `audit-conventions-adoption`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -82,20 +82,20 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                      | Status  |
-| --------------------------------------------- | ------- |
-| Iteration: Audit Conventions Setup (Manual)   | `READY` |
-| Iteration: Fix Conventions Setup (Manual)     | `READY` |
-| Iteration: Audit Primitives Adoption (Manual) | `READY` |
-| Iteration: Audit Constructs Adoption (Manual) | `READY` |
-| Iteration: Audit Parser Adoption (Manual)     | `READY` |
-| Iteration: Audit Serializer Adoption (Manual) | `READY` |
+| Iteration / Instructions                      | Status |
+| --------------------------------------------- | ------ |
+| Iteration: Audit Conventions Setup (Manual)   | `DONE` |
+| Iteration: Fix Conventions Setup (Manual)     | `DONE` |
+| Iteration: Audit Primitives Adoption (Manual) | `DONE` |
+| Iteration: Audit Constructs Adoption (Manual) | `DONE` |
+| Iteration: Audit Parser Adoption (Manual)     | `DONE` |
+| Iteration: Audit Serializer Adoption (Manual) | `DONE` |
 
 ### Iteration: Audit Conventions Setup
 
 **Id:** `audit-conventions-setup`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Run the Audit Conventions Setup command to check if conventions are properly installed and configured in the Art JS project.
 
@@ -114,9 +114,9 @@ None.
 
 #### Commits:
 
-| ID                        | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `audit-conventions-setup` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                        | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| ------------------------- | ------------------------------ | ------------ | --------- | ----------- |
+| `audit-conventions-setup` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | `f606fb1` | `COMMITTED` |
 
 ##### Commit: `audit-conventions-setup`
 
@@ -132,7 +132,7 @@ conventions(art-js): Audit conventions setup.
 
 **Id:** `fix-conventions-setup`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Apply the fixes prescribed by the setup audit report.
 
@@ -151,9 +151,9 @@ conventions(art-js): Audit conventions setup.
 
 #### Commits:
 
-| ID                      | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ----------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `fix-conventions-setup` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                      | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| ----------------------- | ------------------------------ | ------------ | --------- | ----------- |
+| `fix-conventions-setup` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | `6720877` | `COMMITTED` |
 
 ##### Commit: `fix-conventions-setup`
 
@@ -163,13 +163,16 @@ conventions(art-js): Audit conventions setup.
 
 ```
 fix(art-js): Apply conventions setup fixes.
+
+- Rename reference to `.../art/index.md`.
+- Upgrade `@noodlestan/conventions-typescript` to 0.0.2.
 ```
 
 ### Iteration: Audit Primitives Adoption
 
 **Id:** `audit-primitives-adoption`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Audit convention adoption in the @art-js/primitives package.
 
@@ -188,9 +191,9 @@ fix(art-js): Apply conventions setup fixes.
 
 #### Commits:
 
-| ID                          | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| --------------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `audit-primitives-adoption` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                          | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| --------------------------- | ------------------------------ | ------------ | --------- | ----------- |
+| `audit-primitives-adoption` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | `6375f15` | `COMMITTED` |
 
 ##### Commit: `audit-primitives-adoption`
 
@@ -206,7 +209,7 @@ conventions(art-js): Audit conventions adoption in @art-js/primitives.
 
 **Id:** `audit-constructs-adoption`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Audit convention adoption in the @art-js/constructs package.
 
@@ -225,9 +228,9 @@ conventions(art-js): Audit conventions adoption in @art-js/primitives.
 
 #### Commits:
 
-| ID                          | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| --------------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `audit-constructs-adoption` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                          | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| --------------------------- | ------------------------------ | ------------ | --------- | ----------- |
+| `audit-constructs-adoption` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | `34b2afa` | `COMMITTED` |
 
 ##### Commit: `audit-constructs-adoption`
 
@@ -243,7 +246,7 @@ conventions(art-js): Audit conventions adoption in @art-js/constructs.
 
 **Id:** `audit-parser-adoption`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Audit convention adoption in the @art-js/parser package.
 
@@ -262,9 +265,9 @@ conventions(art-js): Audit conventions adoption in @art-js/constructs.
 
 #### Commits:
 
-| ID                      | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ----------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `audit-parser-adoption` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                      | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| ----------------------- | ------------------------------ | ------------ | --------- | ----------- |
+| `audit-parser-adoption` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | `8402d78` | `COMMITTED` |
 
 ##### Commit: `audit-parser-adoption`
 
@@ -280,7 +283,7 @@ conventions(art-js): Audit conventions adoption in @art-js/parser.
 
 **Id:** `audit-serializer-adoption`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Audit convention adoption in the @art-js/serializer package.
 
@@ -299,9 +302,9 @@ conventions(art-js): Audit conventions adoption in @art-js/parser.
 
 #### Commits:
 
-| ID                          | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| --------------------------- | ------------------------------ | ------------ | ----- | ---------- |
-| `audit-serializer-adoption` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                          | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| --------------------------- | ------------------------------ | ------------ | --------- | ----------- |
+| `audit-serializer-adoption` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | `a4388d5` | `COMMITTED` |
 
 ##### Commit: `audit-serializer-adoption`
 

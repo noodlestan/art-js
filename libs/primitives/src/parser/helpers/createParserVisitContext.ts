@@ -1,5 +1,5 @@
-import type { ConstructBase, ContainerConstructBase } from '../../types';
-import type { OnBeforeConstruct, ParserVisitContext } from '../types';
+import type { ConstructBase, ContainerConstructBase } from '../../index';
+import type { OnBeforeConstruct, ParserVisitContext } from '../index';
 
 export function createParserVisitContext(
 	construct: ContainerConstructBase,
@@ -7,13 +7,13 @@ export function createParserVisitContext(
 	markdown?: string,
 	onBeforeConstruct?: OnBeforeConstruct,
 ): ParserVisitContext {
-	const ctx: ParserVisitContext = {
+	const context: ParserVisitContext = {
 		construct,
 		captureChildConstruct(child: ConstructBase) {
 			construct.children.push(child);
 		},
 		onBeforeConstruct(construct: ConstructBase) {
-			return onBeforeConstruct ? onBeforeConstruct(construct, ctx) : ctx;
+			return onBeforeConstruct ? onBeforeConstruct(construct, context) : context;
 		},
 		parent() {
 			return parentContext;
@@ -21,5 +21,5 @@ export function createParserVisitContext(
 		markdown: markdown ?? parentContext?.markdown ?? '',
 	};
 
-	return ctx;
+	return context;
 }

@@ -1,6 +1,6 @@
 import type { Node } from 'unist';
 
-import type { Position } from '../../point';
+import type { Position } from '../../index';
 
 export function nodePosition(node: Node): Position {
 	if (!node.position) {
@@ -13,7 +13,15 @@ export function nodePosition(node: Node): Position {
 		throw new Error(`Expected source position for ${node.type}`);
 	}
 	return {
-		start: { line: raw.start.line, column: raw.start.column, offset: raw.start.offset ?? 0 },
-		end: { line: raw.end.line, column: raw.end.column, offset: raw.end.offset ?? 0 },
+		start: {
+			line: raw.start.line,
+			column: raw.start.column,
+			offset: raw.start.offset ?? 0,
+		},
+		end: {
+			line: raw.end.line,
+			column: raw.end.column,
+			offset: raw.end.offset ?? 0,
+		},
 	};
 }

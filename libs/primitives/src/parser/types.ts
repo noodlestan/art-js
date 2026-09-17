@@ -9,7 +9,7 @@ import type {
 	TableContent,
 } from 'mdast';
 
-import type { ConstructBase } from '../types';
+import type { ConstructBase } from '../index';
 
 type ChildNode =
 	| RootContent
@@ -30,10 +30,10 @@ export type OnBeforeConstruct = (
 	context: ParserVisitContext,
 ) => ParserVisitContext;
 
-export interface ParserVisitContext {
+export type ParserVisitContext = {
 	readonly construct: ConstructBase;
 	captureChildConstruct(child: ConstructBase): void;
 	onBeforeConstruct(construct: ConstructBase): ParserVisitContext;
 	parent(): ParserVisitContext | undefined;
 	readonly markdown: string;
-}
+};
