@@ -115,9 +115,10 @@ For each issue listed in the report, apply the recommended fix to the correspond
 **Message:**
 
 ```
-conventions(typescript): Apply noodlestan conventions.
+conventions(primitives): Apply noodlestan conventions in @art-js/primitives.
 
-- Apply adoption audit recommendations for @art-js/primitives.
+- Normalize primitive type declarations and module imports.
+- Clarify parser context naming and expand source position literals.
 ```
 
 ### Step `3 / 8` — Apply constructs fixes
@@ -135,9 +136,14 @@ For each issue listed in the report, apply the recommended fix to the correspond
 **Message:**
 
 ```
-conventions(typescript): Apply noodlestan conventions.
+conventions(typescript): Apply noodlestan conventions in @art-js/constructs.
 
-- Apply adoption audit recommendations for @art-js/constructs.
+- Extract Document shape type to primitives.
+- Replace interface declarations with explicit type aliases.
+- Relocate construct private functions into small module type files.
+- Route cross-module type imports through public module barrels.
+- Add explicit control-flow blocks and descriptive local names.
+- Extract shared tag/natural-expression helpers, add barrels to test helpers.
 ```
 
 ### Step `5 / 8` — Apply parser fixes

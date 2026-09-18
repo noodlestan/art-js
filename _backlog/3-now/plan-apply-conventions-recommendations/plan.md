@@ -2,7 +2,7 @@
 
 **Id:** `apply-conventions-recommendations`
 
-**Status:** `READY`
+**Status:** `WORKING`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -79,14 +79,14 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 | Iteration / Instructions                                                                                       | Status  |
 | -------------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Apply Conventions Audit Recommendations `./instructions/apply-conventions-audit-recommendations.md` | `READY` |
+| Iteration: Apply Conventions Audit Recommendations `./instructions/apply-conventions-audit-recommendations.md` | `DONE`  |
 | Iteration: Consolidate Process Insights `./instructions/consolidate-process-insights.md`                       | `READY` |
 
 ### Iteration: Apply Conventions Audit Recommendations
 
 **Id:** `apply-conventions-audit-recommendations`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Apply the convention fixes recommended in the per-package adoption reports.
 
@@ -98,6 +98,7 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 - For each package: read `$PROJECT/_audit/conventions/plan__conventions-adoption-{package-name}.md` attachment from the audit plan and apply recommended changes to the package source code.
 - Commit per package with message "conventions(typescript): Apply noodlestan conventions" and up to 5 bullet points summarising the changes.
+- For `@art-js/constructs`: additionally extract shared tag/natural-expression helpers to `src/shared/`, barrel test helpers (primitives + constructs), move the Document shape type to primitives, delete redundant type tests, and extract non-exported private helpers to construct `helpers/` folders.
 
 **Dependencies:**
 
@@ -105,12 +106,15 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 #### Commits:
 
-| ID                             | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------------------ | ------------------------------ | ------------ | ----- | ---------- |
-| `apply-conventions-primitives` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
-| `apply-conventions-constructs` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
-| `apply-conventions-parser`     | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
-| `apply-conventions-serializer` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                                     | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| -------------------------------------- | ------------------------------ | ------------ | --------- | ----------- |
+| `apply-conventions-primitives`         | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | `0f6bb4e` | `COMMITTED` |
+| `apply-conventions-constructs`         | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | `d006c14` | `COMMITTED` |
+| `refactor-constructs-normalise-layers` | Art JS / `$PROJECT` / `main`   | `MANUAL`     | `587ad7f` | `COMMITTED` |
+| `refactor-constructs-separate-layers`  | Art JS / `$PROJECT` / `main`   | `MANUAL`     | `1118f34` | `COMMITTED` |
+| `refactor-constructs-public-api`       | Art JS / `$PROJECT` / `main`   | `MANUAL`     | `c1aabec` | `COMMITTED` |
+| `update-parser-knowledge`              | Art JS / `$PROJECT` / `main`   | `MANUAL`     | `45f6d75` | `COMMITTED` |
+| `apply-conventions-serializer`         | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | `78fa011` | `COMMITTED` |
 
 ##### Commit: `apply-conventions-primitives`
 
@@ -119,9 +123,10 @@ Execution occurs in `$PROJECT` on branch `main`.
 **Message:**
 
 ```
-conventions(typescript): Apply noodlestan conventions.
+conventions(primitives): Apply noodlestan conventions in @art-js/primitives.
 
-- Apply adoption audit recommendations for @art-js/primitives.
+- Normalize primitive type declarations and module imports.
+- Clarify parser context naming and expand source position literals.
 ```
 
 ##### Commit: `apply-conventions-constructs`
@@ -131,21 +136,76 @@ conventions(typescript): Apply noodlestan conventions.
 **Message:**
 
 ```
-conventions(typescript): Apply noodlestan conventions.
+conventions(constructs): Apply noodlestan conventions in @art-js/constructs.
 
-- Apply adoption audit recommendations for @art-js/constructs.
+- Extract Document shape type to primitives.
+- Replace interface declarations with explicit type aliases.
+- Relocate construct private functions into small module type files.
+- Route cross-module type imports through public module barrels.
+- Add explicit control-flow blocks and descriptive local names.
+- Extract shared tag/natural-expression helpers, add barrels to test helpers.
 ```
 
-##### Commit: `apply-conventions-parser`
+##### Commit: `refactor-constructs-normalise-layers`
 
 **Repository:** Art JS
 
 **Message:**
 
 ```
-conventions(typescript): Apply noodlestan conventions.
+refactor(art-js): normalise constructs into processor/FromNode/factory layers
 
-- Apply adoption audit recommendations for @art-js/parser.
+- move ArtDocument and parser-visit-context test helpers into primitives
+- processor: validation + delegate only
+- helpers: create<Construct>FromNode extracts, calls factory, sets position after
+- factory: create<Construct> builds from data (FromData suffix dropped)
+- applied to FieldBlock, FieldInline, NaturalBlock, SectionBlock
+- NaturalBlock factory preserves passthrough mdast fields via `attributes`
+- tests mock only the direct collaborator and assert call + result identity
+- removed dead findTagableMock and documentContextMock helpers
+```
+
+##### Commit: `refactor-constructs-separate-layers`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+refactor(constructs): Separate constructs in 3 layers: constructs(factories), parsers, and serializers.
+
+- Extract factories to constructs/{Construct}/factory.
+- Extract parsers to parser/constructs/{Construct}.
+- Extract serializers to serializer/constructs/{Construct}.
+- Move helpers to parser/{group}.
+- Separate index and public.ts interfaces for constructs, parsers, and serializers.
+```
+
+##### Commit: `refactor-constructs-public-api`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+refactor(art-js): Expose only public items from constructs; Adapt parser and serializer config.
+
+- Route package root through constructs/parser/serializer public.ts barrels.
+- Nest factories under `factories/construcuts` for symmetry.
+- Expose createArtDocumentFromNode from the parser public surface.
+- Add CONSTRUCT_PARSERS / DEFAULT_CONSTRUCT_PARSER and CONSTRUCT_SERIALIZERS registries.
+- Rename parser createDefaultConfig to createDefaultParserConfig and consume the registries.
+- Adapt serializer default config to consume CONSTRUCT_SERIALIZERS.
+```
+
+##### Commit: `update-parser-knowledge`
+
+**Repository:** Art JS
+
+**Message:**
+
+```
+knowledge(parser): Update @art-js/parser architecture knowledge.
 ```
 
 ##### Commit: `apply-conventions-serializer`
@@ -155,9 +215,12 @@ conventions(typescript): Apply noodlestan conventions.
 **Message:**
 
 ```
-conventions(typescript): Apply noodlestan conventions.
+conventions(serializer): Apply noodlestan conventions in @art-js/serializer.
 
-- Apply adoption audit recommendations for @art-js/serializer.
+- Convert SerializerConfig to a type; extract SerialisableNode named type.
+- Replace nested ternary and chained array methods in artAstToMdast.
+- Move serializer.ts into serializer/ module directory; drop redundant type test.
+- Update serializer architecture knowledge.
 ```
 
 ### Iteration: Consolidate Process Insights
@@ -194,7 +257,7 @@ conventions(typescript): Apply noodlestan conventions.
 **Message:**
 
 ```
-docs(art-js): Document conventions adoption process insights.
+knowledge(conventions): Document conventions adoption process insights.
 
 - Summarise adoption process and audit-conventions skill feedback.
 - Provide recommendations for rolling out to other projects.
