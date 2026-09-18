@@ -1,4 +1,4 @@
-import type { ArtDocument } from '@art-js/constructs';
+import type { ArtDocument } from '@art-js/primitives';
 import type { Root } from 'mdast';
 import { toMarkdown } from 'mdast-util-to-markdown';
 

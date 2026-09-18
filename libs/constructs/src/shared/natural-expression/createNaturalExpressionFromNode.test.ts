@@ -1,3 +1,4 @@
+import type { MdastNode } from '@art-js/primitives';
 import { nodePositionMock } from '@art-js/primitives/src/test/helpers';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -7,16 +8,15 @@ vi.mock('@art-js/primitives/src/parser/helpers', () => {
 	return nodePositionMock();
 });
 
-describe('createNaturalExpression', () => {
+describe('createNaturalExpressionFronNode', () => {
 	it('WHEN creating a NaturalExpression from a node', async () => {
 		const node = {
 			type: 'text',
 			value: 'hello',
 			position: { start: { offset: 0 }, end: { offset: 5 } },
 		};
-		const context = { markdown: '' } as never;
 
-		const result = createNaturalExpressionFromNode(node as never, context);
+		const result = createNaturalExpressionFromNode(node as MdastNode);
 
 		expect(result.construct).toBe('NaturalExpression');
 		expect(result.type).toBe('text');
@@ -31,9 +31,8 @@ describe('createNaturalExpression', () => {
 				{ type: 'text', value: 'hello', position: { start: { offset: 0 }, end: { offset: 5 } } },
 			],
 		};
-		const context = { markdown: '' } as never;
 
-		const result = createNaturalExpressionFromNode(node as never, context);
+		const result = createNaturalExpressionFromNode(node as MdastNode);
 
 		expect(result.children).toHaveLength(1);
 		expect(result.children[0]?.type).toBe('text');

@@ -6,17 +6,17 @@ import { createNaturalExpressionToMdast } from './createNaturalExpressionToMdast
 
 describe('createNaturalExpressionToMdast', () => {
 	it('WHEN converting a NaturalExpression to an mdast node', () => {
-		const impl = createNaturalExpressionToMdast();
+		const toMdast = createNaturalExpressionToMdast();
 
-		const result = impl.toMdast(makeNaturalExpressionMock() as never, []);
+		const result = toMdast.toMdast(makeNaturalExpressionMock() as never, []);
 
 		expect(result).toEqual({ type: 'text', value: 'hello', children: [] });
 	});
 
 	it('WHEN converting preserves attributes in the mdast node', () => {
-		const impl = createNaturalExpressionToMdast();
+		const toMdast = createNaturalExpressionToMdast();
 
-		const result = impl.toMdast(
+		const result = toMdast.toMdast(
 			makeNaturalExpressionMock({
 				type: 'inlineCode',
 				value: 'code',

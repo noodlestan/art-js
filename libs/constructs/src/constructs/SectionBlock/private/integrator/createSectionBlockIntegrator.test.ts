@@ -1,101 +1,60 @@
-// eslint-disable-next-line import/order
-import { parserVisitContextMock } from '@art-js/primitives/src/test/helpers';
-// eslint-disable-next-line import/order
 import { createParserVisitContext } from '@art-js/primitives';
+import { makeDocumentMock, makeParserVisitContextMock } from '@art-js/primitives/src/test/helpers';
+import type { Heading } from 'mdast';
+import { fromMarkdown } from 'mdast-util-from-markdown';
 import { describe, expect, it, vi } from 'vitest';
 
-import {
-	documentContextMock,
-	findTagableMock,
-	makeSectionBlockMock,
-} from '../../../../test/helpers';
+import { makeSectionBlockMock } from '../../../../test/helpers';
 
 import { createSectionBlockIntegrator } from './createSectionBlockIntegrator';
 
-vi.mock('@art-js/primitives', async () => {
-	return parserVisitContextMock({ includeSectionDepth: true });
-});
-
-vi.mock('./findTagable', () => {
-	return findTagableMock();
-});
+function makeHeading(markdown: string): Heading {
+	return fromMarkdown(markdown).children[0] as Heading;
+}
 
 describe('createSectionBlockIntegrator', () => {
-	it('WHEN called returns an integrator that captures the construct and returns a new context', async () => {
+	it('WHEN integrating captures the construct and returns a child context', () => {
 		const integrator = createSectionBlockIntegrator();
-
-		expect(integrator.integrate).toBeInstanceOf(Function);
-		const context = documentContextMock() as never;
-		const section = makeSectionBlockMock();
-		const result = integrator.integrate(
-			context,
-			{ type: 'heading', depth: 1 } as never,
-			section as never,
-		);
-		expect(result).toBeDefined();
-	});
-
-	it('WHEN current context is not a SectionBlock breaks immediately', async () => {
-		const integrator = createSectionBlockIntegrator();
-		const context = documentContextMock();
+		const context = makeParserVisitContextMock();
+		const nextContext = makeParserVisitContextMock();
+		vi.mocked(context.childContext).mockReturnValue(nextContext);
 		const section = makeSectionBlockMock();
 
-		const result = integrator.integrate(
-			context as never,
-			{ type: 'heading', depth: 1 } as never,
-			section as never,
-		);
-		expect(result).toBeDefined();
+		const result = integrator.integrate(context, makeHeading('# Hello'), section);
+
 		expect(context.captureChildConstruct).toHaveBeenCalledWith(section);
+		expect(context.childContext).toHaveBeenCalledWith(section);
+		expect(result).toBe(nextContext);
 	});
 
-	it('WHEN parent section depth is greater than or equal to heading depth pops to parent', async () => {
+	it('WHEN the nearest section is at or below the heading depth pops to its parent', () => {
 		const integrator = createSectionBlockIntegrator();
-		const parentContext = documentContextMock();
-		const context = createParserVisitContext(
-			makeSectionBlockMock({ depth: 2 }) as never,
-			parentContext as never,
-		);
+		const documentContext = createParserVisitContext(makeDocumentMock(), {
+			markdown: '',
+			tree: fromMarkdown(''),
+		});
+		const capture = vi.spyOn(documentContext, 'captureChildConstruct');
+		const sectionContext = documentContext.childContext(makeSectionBlockMock({ depth: 2 }));
+		const context = sectionContext.childContext(makeSectionBlockMock({ depth: 2 }));
 		const section = makeSectionBlockMock();
 
-		const result = integrator.integrate(
-			context as never,
-			{ type: 'heading', depth: 1 } as never,
-			section as never,
-		);
-		expect(result).toBeDefined();
-		expect(parentContext.captureChildConstruct).toHaveBeenCalledWith(section);
+		integrator.integrate(context, makeHeading('# Hello'), section);
+
+		expect(capture).toHaveBeenCalledWith(section);
 	});
 
-	it('WHEN parent section depth is less than heading depth stops popping', async () => {
+	it('WHEN the nearest section is above the heading depth stops at it', () => {
 		const integrator = createSectionBlockIntegrator();
-		const context = createParserVisitContext(
-			makeSectionBlockMock({ depth: 1 }) as never,
-			undefined,
-		);
+		const documentContext = createParserVisitContext(makeDocumentMock(), {
+			markdown: '',
+			tree: fromMarkdown(''),
+		});
+		const context = documentContext.childContext(makeSectionBlockMock({ depth: 1 }));
+		const capture = vi.spyOn(context, 'captureChildConstruct');
 		const section = makeSectionBlockMock();
 
-		const result = integrator.integrate(
-			context as never,
-			{ type: 'heading', depth: 2 } as never,
-			section as never,
-		);
-		expect(result).toBeDefined();
-		expect(context.captureChildConstruct).toHaveBeenCalledWith(section);
-	});
+		integrator.integrate(context, makeHeading('## Hello'), section);
 
-	it('WHEN the new context has no onBeforeConstruct hook returns the same context', async () => {
-		const integrator = createSectionBlockIntegrator();
-		const context = documentContextMock() as never;
-		const section = makeSectionBlockMock();
-		const result = integrator.integrate(
-			context,
-			{ type: 'heading', depth: 1 } as never,
-			section as never,
-		);
-
-		const after = result.onBeforeConstruct({ construct: 'NaturalBlock', children: [] } as never);
-
-		expect(after).toBe(result);
+		expect(capture).toHaveBeenCalledWith(section);
 	});
 });

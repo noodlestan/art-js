@@ -1,4 +1,4 @@
-export * from './factory/createSectionBlockFromData';
+export * from './factory/createSectionBlock';
 export * from './integrator/createSectionBlockIntegrator';
 export * from './processor/createSectionBlockProcessor';
 

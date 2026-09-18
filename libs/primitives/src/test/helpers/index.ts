@@ -1,3 +1,3 @@
 export * from './document/makeDocumentMock';
-export * from './primitives/nodePositionMock';
-export * from './primitives/parserVisitContextMock';
+export * from './parser/makeParserVisitContextMock';
+export * from './parser/nodePositionMock';

@@ -11,7 +11,7 @@ describe('rawSlice', () => {
 				end: { line: 1, column: 6, offset: 5 },
 			},
 		};
-		const context = { markdown: 'Hello world' } as never;
+		const context = { source: { markdown: 'Hello world' } } as never;
 
 		const result = rawSlice(node, context);
 
@@ -20,7 +20,7 @@ describe('rawSlice', () => {
 
 	it('WHEN node lacks position returns empty string', () => {
 		const node = { type: 'text' };
-		const context = { markdown: 'Hello world' } as never;
+		const context = { source: { markdown: 'Hello world' } } as never;
 
 		const result = rawSlice(node, context);
 
@@ -34,7 +34,7 @@ describe('rawSlice', () => {
 				start: { line: 1, column: 1, offset: 0 },
 			},
 		} as never;
-		const context = { markdown: 'Hello world' } as never;
+		const context = { source: { markdown: 'Hello world' } } as never;
 
 		const result = rawSlice(node, context);
 

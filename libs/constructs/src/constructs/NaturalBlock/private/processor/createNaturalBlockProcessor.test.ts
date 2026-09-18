@@ -1,36 +1,24 @@
-import { describe, expect, it } from 'vitest';
+import { makeParserVisitContextMock } from '@art-js/primitives/src/test/helpers';
+import { describe, expect, it, vi } from 'vitest';
+
+import { createNaturalBlockFromNodeMock } from '../../../../test/helpers';
+import { createNaturalBlockFromNode } from '../helpers/createNaturalBlockFromNode';
 
 import { createNaturalBlockProcessor } from './createNaturalBlockProcessor';
 
+vi.mock('../helpers/createNaturalBlockFromNode', async () => {
+	return createNaturalBlockFromNodeMock();
+});
+
 describe('createNaturalBlockProcessor', () => {
-	it('WHEN called returns a processor that captures a node', () => {
+	it('WHEN capturing a node returns the createNaturalBlockFromNode result', () => {
 		const processor = createNaturalBlockProcessor();
-		expect(processor.captureNode).toBeInstanceOf(Function);
-	});
+		const context = makeParserVisitContextMock();
+		const node = { type: 'paragraph', children: [] };
 
-	it('WHEN capturing a paragraph node as a NaturalBlock', () => {
-		const processor = createNaturalBlockProcessor();
-		const paragraph = {
-			type: 'paragraph',
-			children: [
-				{
-					type: 'text',
-					value: 'hello',
-					position: {
-						start: { line: 1, column: 1, offset: 0 },
-						end: { line: 1, column: 6, offset: 5 },
-					},
-				},
-			],
-			position: {
-				start: { line: 1, column: 1, offset: 0 },
-				end: { line: 1, column: 6, offset: 5 },
-			},
-		};
-		const context = { markdown: 'hello' } as never;
+		const result = processor.captureNode(context, node);
 
-		const result = processor.captureNode(context, paragraph as never);
-
-		expect(result).toMatchObject({ construct: 'NaturalBlock', value: 'hello' });
+		expect(createNaturalBlockFromNode).toHaveBeenCalledWith(node, context);
+		expect(result).toBe(vi.mocked(createNaturalBlockFromNode).mock.results[0]?.value);
 	});
 });

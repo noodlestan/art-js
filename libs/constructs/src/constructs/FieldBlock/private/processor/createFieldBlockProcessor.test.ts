@@ -1,101 +1,63 @@
+import { makeParserVisitContextMock } from '@art-js/primitives/src/test/helpers';
+import { fromMarkdown } from 'mdast-util-from-markdown';
 import { describe, expect, it, vi } from 'vitest';
 
-import {
-	createFieldBlockFromNodeMock,
-	extractTagsMock,
-	isFieldStrongMock,
-	rawSliceMock,
-} from '../../../../test/helpers';
-// eslint-disable-next-line import/order
-import { extractTags } from '../../../../shared/tags';
-// eslint-disable-next-line import/order
-import { isFieldStrong } from '../../../../shared/fields';
+import { createFieldBlockFromNodeMock } from '../../../../test/helpers';
+import { createFieldBlockFromNode } from '../helpers/createFieldBlockFromNode';
 
 import { createFieldBlockProcessor } from './createFieldBlockProcessor';
 
-vi.mock('../../../../shared/mdast', () => {
-	return rawSliceMock('');
-});
-
-vi.mock('../../../../shared/fields', async importOriginal => {
-	const actual = (await importOriginal()) as object;
-	return {
-		...actual,
-		...isFieldStrongMock(),
-	};
-});
-
-vi.mock('../../../../shared/tags', async () => {
-	return extractTagsMock([], '');
-});
-
-vi.mock('../helpers/createFieldBlockFromNode', () => {
+vi.mock('../helpers/createFieldBlockFromNode', async () => {
 	return createFieldBlockFromNodeMock();
 });
 
 describe('createFieldBlockProcessor', () => {
-	it('WHEN the mocked isFieldStrong returns true by default returns a FieldBlock', async () => {
-		const processor = createFieldBlockProcessor();
-		const paragraph = { type: 'paragraph', children: [{ type: 'strong', children: [] }] };
-
-		const result = processor.captureNode({ markdown: '' } as never, paragraph as never);
-
-		expect(result).toMatchObject({ construct: 'FieldBlock', name: 'Test' });
-	});
-
-	it('WHEN called returns a processor', async () => {
+	it('WHEN called returns a processor function', () => {
 		const processor = createFieldBlockProcessor();
 
 		expect(processor.captureNode).toBeInstanceOf(Function);
 	});
 
-	it('FOR non-paragraph nodes returns null', async () => {
+	it('FOR non-paragraph nodes returns null', () => {
 		const processor = createFieldBlockProcessor();
-		const heading = { type: 'heading', children: [] };
+		const context = makeParserVisitContextMock({ markdown: 'Hello' });
 
-		const result = processor.captureNode({ markdown: '' } as never, heading as never);
+		const result = processor.captureNode(context, { type: 'heading', children: [] } as never);
 
 		expect(result).toBeNull();
 	});
 
-	it('FOR paragraph with no children returns null', async () => {
+	it('FOR paragraph with no children returns null', () => {
 		const processor = createFieldBlockProcessor();
-		const paragraph = { type: 'paragraph', children: [] };
+		const context = makeParserVisitContextMock({ markdown: 'Hello' });
 
-		const result = processor.captureNode({ markdown: '' } as never, paragraph as never);
+		const result = processor.captureNode(context, { type: 'paragraph', children: [] } as never);
 
 		expect(result).toBeNull();
 	});
 
-	it('WHEN first child is not a field strong returns null', async () => {
-		vi.mocked(isFieldStrong).mockReturnValue(false);
+	it('WHEN first child is not a field strong returns null', () => {
 		const processor = createFieldBlockProcessor();
-		const paragraph = { type: 'paragraph', children: [{ type: 'text', value: 'hello' }] };
+		const markdown = 'Hello world';
+		const tree = fromMarkdown(markdown);
+		const context = makeParserVisitContextMock({ markdown });
+		const paragraph = tree.children[0] as never;
 
-		const result = processor.captureNode({ markdown: '' } as never, paragraph as never);
+		const result = processor.captureNode(context, paragraph);
 
 		expect(result).toBeNull();
 	});
 
-	it('WHEN text after strong is not empty returns null', async () => {
-		vi.mocked(isFieldStrong).mockReturnValue(true);
-		vi.mocked(extractTags).mockReturnValue({ tags: [], stripped: ' leftover' });
+	it('WHEN first child is a field strong returns the createFieldBlockFromNode result', () => {
 		const processor = createFieldBlockProcessor();
-		const paragraph = { type: 'paragraph', children: [{ type: 'strong', children: [] }] };
+		const markdown = '**Name:** value';
+		const tree = fromMarkdown(markdown);
+		const context = makeParserVisitContextMock({ markdown });
+		const paragraph = tree.children[0] as never;
 
-		const result = processor.captureNode({ markdown: '' } as never, paragraph as never);
+		const result = processor.captureNode(context, paragraph);
 
-		expect(result).toBeNull();
-	});
-
-	it('WHEN paragraph matches returns a FieldBlock', async () => {
-		vi.mocked(isFieldStrong).mockReturnValue(true);
-		vi.mocked(extractTags).mockReturnValue({ tags: [], stripped: '' });
-		const processor = createFieldBlockProcessor();
-		const paragraph = { type: 'paragraph', children: [{ type: 'strong', children: [] }] };
-
-		const result = processor.captureNode({ markdown: '' } as never, paragraph as never);
-
+		expect(createFieldBlockFromNode).toHaveBeenCalledWith(paragraph, context);
 		expect(result).toMatchObject({ construct: 'FieldBlock', name: 'Test' });
 	});
 });

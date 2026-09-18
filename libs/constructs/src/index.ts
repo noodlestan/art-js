@@ -1,3 +1,3 @@
 export * from './constructs';
-export * from './document';
+export * from './constructs/Document/helpers';
 export * from './types';

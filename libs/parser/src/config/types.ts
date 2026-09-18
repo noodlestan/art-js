@@ -1,6 +1,6 @@
 import type { ConstructParserFactory } from '@art-js/constructs';
 
-export interface ParserConfig {
+export type ParserConfig = {
 	defaultConstruct: ConstructParserFactory;
 	constructs: ConstructParserFactory[];
-}
+};

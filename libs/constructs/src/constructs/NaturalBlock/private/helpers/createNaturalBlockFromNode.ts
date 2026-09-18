@@ -7,7 +7,9 @@ import { rawSlice } from '../../../../shared/mdast';
 import { createNaturalExpressionFromNode } from '../../../../shared/natural-expression';
 import { extractTags } from '../../../../shared/tags';
 import type { NaturalExpression } from '../../../NaturalExpression';
+import type { Tag } from '../../../Tag';
 import type { NaturalBlock } from '../../types';
+import { createNaturalBlock } from '../factory/createNaturalBlock';
 
 export function createNaturalBlockFromNode(node: Node, context: ParserVisitContext): NaturalBlock {
 	let children: (NaturalBlock | NaturalExpression)[] = [];
@@ -17,26 +19,31 @@ export function createNaturalBlockFromNode(node: Node, context: ParserVisitConte
 			node.type === 'paragraph' || node.type === 'heading' || node.type === 'tableCell';
 		children = nodeChildren.map(child =>
 			phrasingContainer || phrasing(child)
-				? createNaturalExpressionFromNode(child, context)
+				? createNaturalExpressionFromNode(child)
 				: createNaturalBlockFromNode(child as Node, context),
 		);
 	}
-	const block: NaturalBlock = {
-		construct: 'NaturalBlock',
-		...node,
-		value: rawSlice(node, context),
-		position: nodePosition(node),
-		children,
-	};
+
+	let tags: Tag[] = [];
 	if (node.type === 'paragraph') {
 		const last = children[children.length - 1];
 		if (last?.type === 'text' && typeof last.value === 'string') {
-			const { tags, stripped } = extractTags(last.value);
-			if (tags.length) {
-				block.tags = tags;
+			const { tags: extractedTags, stripped } = extractTags(last.value);
+			if (extractedTags.length) {
+				tags = extractedTags;
 				last.value = stripped;
 			}
 		}
 	}
+
+	const { type, ...attributes } = node as MdastNode;
+	const block = createNaturalBlock({
+		value: rawSlice(node, context),
+		children,
+		type,
+		attributes,
+		tags,
+	});
+	block.position = nodePosition(node);
 	return block;
 }

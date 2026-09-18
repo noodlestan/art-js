@@ -1,42 +1,32 @@
 import {
-	type ArtDocument,
 	type BlockContent,
 	type Construct,
 	type ConstructIntegrator,
 	type ConstructParser,
-	createArtDocument,
 } from '@art-js/constructs';
-import { type ParserVisitContext } from '@art-js/primitives';
-import { fromMarkdown } from 'mdast-util-from-markdown';
+import { type ArtDocument, type ConstructBase, type ParserVisitContext } from '@art-js/primitives';
+import type { RootContent } from 'mdast';
 import type { Node } from 'unist';
 import { SKIP, visit } from 'unist-util-visit';
 
-import type { ParserConfig } from '../config/types';
-import { isBlockType } from '../mdast/isBlockType';
-import { createDocumentContext } from '../private/createDocumentContext';
+import { isBlockType } from '../mdast';
+import type { DocumentVisitContext } from '../private';
 
-interface HandleResult {
+type HandleResult = {
 	constructs: Construct[];
 	integrator: ConstructIntegrator | null;
-}
+};
 
-export function buildDocument(config: ParserConfig, markdown: string): ArtDocument {
-	const tree = fromMarkdown(markdown);
-	const document = createArtDocument(tree);
-	// process.exit();
-	const docContext = createDocumentContext(document, markdown);
-	const defaultConstruct = config.defaultConstruct();
-	const constructParsers = [defaultConstruct, ...config.constructs.map(create => create())];
+export function buildDocument(
+	defaultConstruct: ConstructParser<ConstructBase>,
+	constructParsers: ConstructParser<ConstructBase>[],
+	docContext: DocumentVisitContext,
+): ArtDocument {
 	let currentContext: ParserVisitContext = docContext;
 
-	function tryConstructs(node: Node): HandleResult | null {
-		if (node.type === 'root') {
-			return null;
-		}
-
+	function tryConstructs(node: RootContent): HandleResult | null {
 		for (let i = 0; i < constructParsers.length; i++) {
 			const constructParser = constructParsers[i] as ConstructParser;
-			if (i === 0) continue; // default construct handled in handleNaturalBlock
 
 			const processor = constructParser.processor;
 			const construct = processor?.captureNode(currentContext, node);
@@ -62,7 +52,7 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 		return node.type === 'paragraph' ? undefined : SKIP;
 	}
 
-	function dispatch(
+	function integrate(
 		node: Node,
 		constructs: Construct[],
 		integrator: ConstructIntegrator | null,
@@ -83,9 +73,9 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 			return undefined;
 		}
 
-		const result = tryConstructs(node);
+		const result = tryConstructs(node as RootContent);
 		if (result) {
-			dispatch(node, result.constructs, result.integrator);
+			integrate(node, result.constructs, result.integrator);
 			return SKIP;
 		}
 
@@ -96,7 +86,7 @@ export function buildDocument(config: ParserConfig, markdown: string): ArtDocume
 		return SKIP;
 	}
 
-	visit(tree, (n: Node) => visitNode(n));
+	visit(docContext.source.tree, (node: Node) => visitNode(node));
 
-	return document;
+	return docContext.construct;
 }

@@ -1,5 +1,3 @@
-import { createParserVisitContext } from '@art-js/primitives';
-
 import type { ConstructIntegrator } from '../../../types';
 import type { FieldBlock } from '../../types';
 import { onBeforeConstruct } from '../helpers/onBeforeConstruct';
@@ -9,7 +7,7 @@ export function createFieldBlockIntegrator(): ConstructIntegrator {
 		integrate(context, _node, construct) {
 			const field = construct as FieldBlock;
 			context.captureChildConstruct(field);
-			return createParserVisitContext(field, context, undefined, onBeforeConstruct);
+			return context.childContext(field, onBeforeConstruct);
 		},
 	};
 }

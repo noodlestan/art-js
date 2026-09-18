@@ -1,4 +1,5 @@
-import type { ArtDocument, FieldBlock, NaturalBlock, SectionBlock } from '@art-js/constructs';
+import type { FieldBlock, NaturalBlock, SectionBlock } from '@art-js/constructs';
+import type { ArtDocument } from '@art-js/primitives';
 import { describe, expect, it } from 'vitest';
 
 import { serialize } from './serializer';
@@ -21,7 +22,7 @@ describe('serialize', () => {
 					name: 'Title',
 					depth: 1,
 					children: [],
-				},
+				} as SectionBlock,
 			],
 		};
 		const result = serialize(doc);
@@ -38,19 +39,19 @@ describe('serialize', () => {
 					depth: 1,
 					children: [
 						{
-							construct: 'FieldBlock' as const,
+							construct: 'FieldBlock',
 							name: 'Purpose',
 							children: [
 								{
-									construct: 'NaturalBlock' as const,
+									construct: 'NaturalBlock',
 									type: 'text',
 									value: ' Test purpose',
 									children: [],
-								},
+								} as NaturalBlock,
 							],
 						} as FieldBlock,
 					],
-				},
+				} as SectionBlock,
 			],
 		};
 		const result = serialize(doc);
@@ -67,7 +68,7 @@ describe('serialize', () => {
 					type: 'text',
 					value: ' Hello world',
 					children: [],
-				},
+				} as NaturalBlock,
 			],
 		};
 		const result = serialize(doc);
@@ -94,7 +95,7 @@ describe('serialize', () => {
 							children: [],
 						} as SectionBlock,
 					],
-				},
+				} as SectionBlock,
 			],
 		};
 		const result = serialize(doc);

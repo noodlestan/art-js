@@ -1,4 +1,3 @@
-export * from './fields/isFieldStrongMock';
 export * from './fields/stripStrongMock';
 export * from './mdast/rawSliceMock';
 export * from './natural-expression/createNaturalExpressionFromNodeMock';

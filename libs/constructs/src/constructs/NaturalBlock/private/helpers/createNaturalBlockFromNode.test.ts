@@ -1,154 +1,101 @@
-import { nodePositionMock } from '@art-js/primitives/src/test/helpers';
+import { makeParserVisitContextMock } from '@art-js/primitives/src/test/helpers';
+import type { Node } from 'mdast';
+import { fromMarkdown } from 'mdast-util-from-markdown';
 import { describe, expect, it, vi } from 'vitest';
 
-import {
-	createNaturalExpressionFromNodeMock,
-	extractTagsMock,
-	makeTagMock,
-	rawSliceMock,
-} from '../../../../test/helpers';
-// eslint-disable-next-line import/order
-import { extractTags } from '../../../../shared/tags';
+import { createNaturalBlockMock } from '../../../../test/helpers';
+import { createNaturalBlock } from '../factory/createNaturalBlock';
 
 import { createNaturalBlockFromNode } from './createNaturalBlockFromNode';
 
-vi.mock('@art-js/primitives', () => {
-	return nodePositionMock();
+vi.mock('../factory/createNaturalBlock', async () => {
+	return createNaturalBlockMock();
 });
 
-vi.mock('../../../../shared/mdast', () => {
-	return rawSliceMock('hello');
-});
+describe('createNaturalBlockFromNode', () => {
+	it('WHEN creating a NaturalBlock from a paragraph', () => {
+		const markdown = 'hello';
+		const tree = fromMarkdown(markdown);
+		const node = tree.children[0] as Node;
+		const context = makeParserVisitContextMock({ markdown });
 
-vi.mock('../../../../shared/natural-expression', async importOriginal => {
-	const actual = (await importOriginal()) as object;
-	return {
-		...actual,
-		...createNaturalExpressionFromNodeMock(),
-	};
-});
+		const result = createNaturalBlockFromNode(node, context);
 
-vi.mock('../../../../shared/tags', async () => {
-	return extractTagsMock([], 'hello');
-});
-
-describe('createNaturalBlock', () => {
-	it('WHEN creating a NaturalBlock from a node', async () => {
-		const node = {
-			type: 'paragraph',
-			position: { start: { offset: 0 }, end: { offset: 5 } },
-			children: [{ type: 'text', value: 'hello' }],
-		};
-		const context = { markdown: '' } as never;
-
-		const result = createNaturalBlockFromNode(node as never, context);
-
-		expect(result.construct).toBe('NaturalBlock');
-		expect(result.value).toBe('hello');
+		expect(createNaturalBlock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				value: 'hello',
+				type: 'paragraph',
+				children: [
+					expect.objectContaining({
+						construct: 'NaturalExpression',
+						type: 'text',
+						value: 'hello',
+					}),
+				],
+				tags: [],
+			}),
+		);
+		expect(result).toBe(vi.mocked(createNaturalBlock).mock.results[0]?.value);
 	});
 
-	it('FOR nodes that have no children creates a NaturalBlock without children', async () => {
-		const node = { type: 'thematicBreak' };
-		const context = { markdown: '' } as never;
+	it('WHEN trailing tags follow the last text child passes them to createNaturalBlock', () => {
+		const markdown = 'hello (#test)';
+		const tree = fromMarkdown(markdown);
+		const node = tree.children[0] as Node;
+		const context = makeParserVisitContextMock({ markdown });
 
-		const result = createNaturalBlockFromNode(node as never, context);
+		createNaturalBlockFromNode(node, context);
 
-		expect(result.construct).toBe('NaturalBlock');
-		expect(result.children).toEqual([]);
+		expect(createNaturalBlock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				children: [expect.objectContaining({ value: 'hello' })],
+				tags: [{ construct: 'Tag', name: 'test' }],
+			}),
+		);
 	});
 
-	it('WHEN treating heading children as phrasing content', async () => {
-		const node = {
-			type: 'heading',
-			depth: 1,
-			children: [{ type: 'text', value: 'Title' }],
-		};
-		const context = { markdown: '' } as never;
+	it('WHEN a child is not phrasing recurses into a nested NaturalBlock', () => {
+		const markdown = '> hello';
+		const tree = fromMarkdown(markdown);
+		const node = tree.children[0] as Node;
+		const context = makeParserVisitContextMock({ markdown });
 
-		const result = createNaturalBlockFromNode(node as never, context);
+		createNaturalBlockFromNode(node, context);
 
-		expect(result.construct).toBe('NaturalBlock');
-		expect(result.children).toHaveLength(1);
-		expect(result.children[0]).toMatchObject({ construct: 'NaturalExpression' });
+		expect(createNaturalBlock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				type: 'blockquote',
+				children: [expect.objectContaining({ construct: 'NaturalBlock' })],
+			}),
+		);
 	});
 
-	it('WHEN treating table-cell children as phrasing content', async () => {
-		const node = {
-			type: 'tableCell',
-			children: [{ type: 'text', value: 'Cell' }],
-		};
-		const context = { markdown: '' } as never;
+	it('FOR nodes without children creates a NaturalBlock without children', () => {
+		const markdown = '---';
+		const tree = fromMarkdown(markdown);
+		const node = tree.children[0] as Node;
+		const context = makeParserVisitContextMock({ markdown });
 
-		const result = createNaturalBlockFromNode(node as never, context);
+		createNaturalBlockFromNode(node, context);
 
-		expect(result.construct).toBe('NaturalBlock');
-		expect(result.children).toHaveLength(1);
-		expect(result.children[0]).toMatchObject({ construct: 'NaturalExpression' });
+		expect(createNaturalBlock).toHaveBeenCalledWith(
+			expect.objectContaining({ type: 'thematicBreak', children: [] }),
+		);
 	});
 
-	it('FOR phrasing children of block nodes creates natural expressions', async () => {
-		const node = {
-			type: 'list',
-			children: [{ type: 'text', value: 'item' }],
-		};
-		const context = { markdown: '' } as never;
+	it('WHEN the node has extra mdast fields passes them as attributes', () => {
+		const markdown = '- one\n- two';
+		const tree = fromMarkdown(markdown);
+		const node = tree.children[0] as Node;
+		const context = makeParserVisitContextMock({ markdown });
 
-		const result = createNaturalBlockFromNode(node as never, context);
+		createNaturalBlockFromNode(node, context);
 
-		expect(result.construct).toBe('NaturalBlock');
-		expect(result.children).toHaveLength(1);
-		expect(result.children[0]).toMatchObject({ construct: 'NaturalExpression' });
-	});
-
-	it('WHEN recursing into non-phrasing children of block nodes', async () => {
-		const node = {
-			type: 'list',
-			children: [{ type: 'code', value: 'const x = 1;' }],
-		};
-		const context = { markdown: '' } as never;
-
-		const result = createNaturalBlockFromNode(node as never, context);
-
-		expect(result.construct).toBe('NaturalBlock');
-		expect(result.children).toHaveLength(1);
-		expect(result.children[0]).toMatchObject({ construct: 'NaturalBlock' });
-	});
-
-	it('FOR an empty paragraph creates an empty NaturalBlock', async () => {
-		const node = { type: 'paragraph', children: [] };
-		const context = { markdown: '' } as never;
-
-		const result = createNaturalBlockFromNode(node as never, context);
-
-		expect(result.construct).toBe('NaturalBlock');
-		expect(result.children).toEqual([]);
-		expect(result.tags).toBeUndefined();
-	});
-
-	it('WHEN last child is not text does not extract tags', async () => {
-		vi.mocked(extractTags).mockReturnValue({ tags: [], stripped: 'hello' });
-		const node = {
-			type: 'paragraph',
-			children: [{ type: 'strong', children: [] }],
-		};
-		const context = { markdown: '' } as never;
-
-		const result = createNaturalBlockFromNode(node as never, context);
-
-		expect(result.tags).toBeUndefined();
-	});
-
-	it('WHEN last text child has trailing tags extracts tags', async () => {
-		vi.mocked(extractTags).mockReturnValue({
-			tags: [makeTagMock()],
-			stripped: 'hello',
-		});
-		const node = {
-			type: 'paragraph',
-			children: [{ type: 'text', value: 'hello (#test)' }],
-		};
-		const context = { markdown: '' } as never;
-		const result = createNaturalBlockFromNode(node as never, context);
-		expect(result.tags).toHaveLength(1);
+		expect(createNaturalBlock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				type: 'list',
+				attributes: expect.objectContaining({ ordered: false }),
+			}),
+		);
 	});
 });

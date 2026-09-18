@@ -9,8 +9,6 @@ import type {
 	TableContent,
 } from 'mdast';
 
-import type { ConstructBase } from '../index';
-
 type ChildNode =
 	| RootContent
 	| BlockContent
@@ -25,15 +23,15 @@ export type MdastNode = Node & {
 	value?: string;
 };
 
-export type OnBeforeConstruct = (
-	construct: ConstructBase,
-	context: ParserVisitContext,
-) => ParserVisitContext;
+/** A point in the source. */
+export type Point = {
+	line: number;
+	column: number;
+	offset: number;
+};
 
-export type ParserVisitContext = {
-	readonly construct: ConstructBase;
-	captureChildConstruct(child: ConstructBase): void;
-	onBeforeConstruct(construct: ConstructBase): ParserVisitContext;
-	parent(): ParserVisitContext | undefined;
-	readonly markdown: string;
+/** The source span of a record. */
+export type Position = {
+	start: Point;
+	end: Point;
 };

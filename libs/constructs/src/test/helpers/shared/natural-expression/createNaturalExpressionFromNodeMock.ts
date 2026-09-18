@@ -1,5 +1,5 @@
 /**
- * @mocks createNaturalExpression() from `@art-js/constructs`
+ * @mocks createNaturalExpressionFronNode() from `@art-js/constructs`
  */
 
 import { vi } from 'vitest';

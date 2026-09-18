@@ -14,6 +14,8 @@
 | No Interface              | [`src/buildDocument/buildDocument.ts:18`](../../libs/parser/src/buildDocument/buildDocument.ts#L18) | Declares `HandleResult` with `interface`; use a `type` declaration.                                        |
 | Barrel File Imports       | [`src/buildDocument/buildDocument.ts:14`](../../libs/parser/src/buildDocument/buildDocument.ts#L14) | Imports `ParserConfig` directly from `../config/types` even though `config/index.ts` is the module barrel. |
 | No Single Character Names | [`src/buildDocument/buildDocument.ts:99`](../../libs/parser/src/buildDocument/buildDocument.ts#L99) | Uses the single-character callback parameter `n`; use a semantic name such as `node`.                      |
+| Module Barrels            | `src/buildDocument/`, `src/mdast/`, `src/private/`                                                  | Added module barrels; `config/index.ts` now also exports the `ParserConfig` type.                          |
+| No Redundant Type Tests   | `src/config/types.test.ts`                                                                          | Deleted type-acceptance test that only asserts a value satisfies a type.                                   |
 
 ## Excluded or Corrected Findings
 

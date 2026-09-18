@@ -1,97 +1,34 @@
-import { nodePositionMock } from '@art-js/primitives/src/test/helpers';
+import { makeParserVisitContextMock } from '@art-js/primitives/src/test/helpers';
 import { describe, expect, it, vi } from 'vitest';
 
-// eslint-disable-next-line import/order
-import { extractTagsMock, rawSliceMock } from '../../../../test/helpers';
+import { createSectionBlockFromNodeMock } from '../../../../test/helpers';
+import { createSectionBlockFromNode } from '../helpers/createSectionBlockFromNode';
 
-// eslint-disable-next-line import/order
-import { rawSlice } from '../../../../shared/mdast';
-import { extractTags } from '../../../../shared/tags';
+import { createSectionBlockProcessor } from './createSectionBlockProcessor';
 
-import { createSectionBlock, createSectionBlockProcessor } from './createSectionBlockProcessor';
-
-vi.mock('@art-js/primitives', () => {
-	return nodePositionMock();
-});
-
-vi.mock('../../../../shared/mdast', async () => {
-	return rawSliceMock('# Hello World');
-});
-
-vi.mock('../../../../shared/tags', async () => {
-	return extractTagsMock([], 'Hello World');
+vi.mock('../helpers/createSectionBlockFromNode', async () => {
+	return createSectionBlockFromNodeMock();
 });
 
 describe('createSectionBlockProcessor', () => {
-	it('WHEN called returns a processor that captures a heading node', async () => {
+	it('FOR non-heading nodes returns null', () => {
 		const processor = createSectionBlockProcessor();
-		const heading = {
-			type: 'heading',
-			depth: 1,
-			children: [{ type: 'text', value: 'Hello World' }],
-		};
-		const context = { markdown: '' } as never;
+		const context = makeParserVisitContextMock();
+		const node = { type: 'paragraph', children: [] };
 
-		const result = processor.captureNode(context, heading as never);
-
-		expect(result).toMatchObject({ construct: 'SectionBlock', name: 'Hello World', depth: 1 });
-	});
-
-	it('FOR non-heading nodes returns null', async () => {
-		const processor = createSectionBlockProcessor();
-		const paragraph = { type: 'paragraph', children: [] };
-		const context = { markdown: '' } as never;
-
-		const result = processor.captureNode(context, paragraph as never);
+		const result = processor.captureNode(context, node);
 
 		expect(result).toBeNull();
 	});
-});
 
-describe('createSectionBlock', () => {
-	it('WHEN creating a SectionBlock from a heading', async () => {
-		const heading = {
-			type: 'heading',
-			depth: 2,
-			children: [{ type: 'text', value: 'Hello World' }],
-		};
-		const context = { markdown: '' } as never;
+	it('WHEN capturing a heading returns the createSectionBlockFromNode result', () => {
+		const processor = createSectionBlockProcessor();
+		const context = makeParserVisitContextMock();
+		const node = { type: 'heading', children: [] };
 
-		const result = createSectionBlock(heading as never, context);
+		const result = processor.captureNode(context, node);
 
-		expect(result.construct).toBe('SectionBlock');
-		expect(result.depth).toBe(2);
-	});
-
-	it('WHEN extracting kind from heading text', async () => {
-		vi.mocked(rawSlice).mockReturnValue('# Module: Hello');
-		vi.mocked(extractTags).mockReturnValue({ tags: [], stripped: 'Module: Hello' });
-		const heading = {
-			type: 'heading',
-			depth: 1,
-			children: [{ type: 'text', value: 'Module: Hello' }],
-		};
-		const context = { markdown: '' } as never;
-
-		const result = createSectionBlock(heading as never, context);
-
-		expect(result.kind).toBe('Module');
-		expect(result.name).toBe('Hello');
-	});
-
-	it('WHEN extracting tags from heading text', async () => {
-		vi.mocked(rawSlice).mockReturnValue('# Hello (#tag)');
-		vi.mocked(extractTags).mockReturnValue({
-			tags: [{ construct: 'Tag', name: 'tag' }],
-			stripped: 'Hello',
-		});
-		const heading = {
-			type: 'heading',
-			depth: 1,
-			children: [{ type: 'text', value: 'Hello' }],
-		};
-		const context = { markdown: '' } as never;
-		const result = createSectionBlock(heading as never, context);
-		expect(result.tags).toHaveLength(1);
+		expect(createSectionBlockFromNode).toHaveBeenCalledWith(node, context);
+		expect(result).toBe(vi.mocked(createSectionBlockFromNode).mock.results[0]?.value);
 	});
 });

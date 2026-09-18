@@ -1,4 +1,4 @@
-import { createParserVisitContext, sectionDepth } from '@art-js/primitives';
+import { sectionDepth } from '@art-js/primitives';
 import type { Heading } from 'mdast';
 
 import type { ConstructIntegrator } from '../../../types';
@@ -25,7 +25,7 @@ export function createSectionBlockIntegrator(): ConstructIntegrator {
 			}
 
 			currentContext.captureChildConstruct(section);
-			return createParserVisitContext(section, currentContext, undefined);
+			return currentContext.childContext(section);
 		},
 	};
 }

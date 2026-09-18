@@ -1,106 +1,128 @@
-import { makeDocumentMock, parserVisitContextMock } from '@art-js/primitives/src/test/helpers';
+import type { ConstructIntegrator, ConstructParser, ConstructProcessor } from '@art-js/constructs';
+import type { ConstructBase } from '@art-js/primitives';
+import { SKIP, visit } from 'unist-util-visit';
 import { describe, expect, it, vi } from 'vitest';
+
+import { createDocumentVisitContextMock } from '../test/helpers';
 
 import { buildDocument } from './buildDocument';
 
-const { markdownTree } = vi.hoisted(() => ({
-	markdownTree: { type: 'root', children: [] as unknown[] },
+vi.mock('unist-util-visit', () => ({
+	SKIP: Symbol('skip'),
+	visit: vi.fn(),
 }));
 
-vi.mock('@art-js/constructs', () => {
-	return {
-		createArtDocument: vi.fn(() => makeDocumentMock()),
-	};
+const visitMock = vi.mocked(visit);
+
+const naturalBlockParser = (
+	captureNode: (() => unknown) | undefined = () => null,
+): ConstructParser<ConstructBase> => ({
+	name: 'NaturalBlock',
+	processor: { captureNode: vi.fn(captureNode) as ConstructProcessor['captureNode'] },
+	factory: { fromData: () => ({}) as ConstructBase },
 });
 
-vi.mock('@art-js/primitives', () => {
-	return parserVisitContextMock();
+const matchedParser = (
+	captureNode: () => unknown,
+	integrator?: ConstructIntegrator,
+): ConstructParser<ConstructBase> => ({
+	name: 'FieldInline',
+	processor: { captureNode: vi.fn(captureNode) as ConstructProcessor['captureNode'] },
+	...(integrator ? { integrator } : {}),
+	factory: { fromData: () => ({}) as ConstructBase },
 });
 
-vi.mock('mdast-util-from-markdown', () => ({
-	fromMarkdown: vi.fn(() => markdownTree),
-}));
-
-vi.mock('unist-util-visit', () => {
-	const SKIP = Symbol('skip');
-	const visit = vi.fn((tree: unknown, callback: (node: unknown) => unknown) => {
-		const walk = (node: unknown): void => {
-			const result = callback(node);
-			if (result === SKIP) return;
-			const children = (node as { children?: unknown[] }).children ?? [];
-			for (const child of children) walk(child);
-		};
-		walk(tree);
+const visitNodes = (nodes: unknown[]): unknown[] => {
+	const returns: unknown[] = [];
+	visitMock.mockImplementation((_tree, callback) => {
+		const visitNode = callback as (node: unknown) => unknown;
+		for (const node of nodes) returns.push(visitNode(node));
 	});
-	return { SKIP, visit };
-});
-
-const naturalBlockParser =
-	(captureNode: (() => unknown) | undefined = () => null) =>
-	() => ({
-		name: 'NaturalBlock',
-		processor: { captureNode: vi.fn(captureNode) },
-		factory: { fromData: () => ({}) },
-	});
+	return returns;
+};
 
 describe('buildDocument', () => {
-	it('WHEN building a document from markdown', async () => {
-		markdownTree.children = [
-			{
-				type: 'paragraph',
-				children: [{ type: 'text', value: 'Hello' }],
-			},
-		];
-		const config = {
-			defaultConstruct: naturalBlockParser(),
-			constructs: [],
-		};
+	it('returns the document after visiting the tree', () => {
+		const docContext = createDocumentVisitContextMock();
+		visitNodes([{ type: 'root', children: [] }]);
 
-		const result = buildDocument(config as never, 'Hello');
+		const result = buildDocument(naturalBlockParser(), [], docContext);
 
-		expect(result).toEqual(makeDocumentMock());
+		expect(result).toBe(docContext.construct);
 	});
 
-	it('WHEN the default construct has no processor skips blocks', async () => {
-		markdownTree.children = [{ type: 'list', children: [] }];
-		const config = {
-			defaultConstruct: () => ({ name: 'NaturalBlock', factory: { fromData: () => ({}) } }),
-			constructs: [],
-		};
-
-		const result = buildDocument(config as never, '# Hello');
-
-		expect(result).toEqual(makeDocumentMock());
-	});
-
-	it('WHEN a matched construct has no integrator captures child constructs', async () => {
-		markdownTree.children = [{ type: 'paragraph', children: [] }];
+	it('captures a construct matched by a construct parser', () => {
+		const docContext = createDocumentVisitContextMock();
 		const construct = { construct: 'FieldInline', name: 'Hello', children: [] };
-		const config = {
-			defaultConstruct: naturalBlockParser(() => null),
-			constructs: [
-				() => ({
-					name: 'FieldInline',
-					processor: { captureNode: vi.fn(() => construct) },
-					factory: { fromData: () => ({}) },
-				}),
-			],
-		};
+		const defaultParser = naturalBlockParser();
+		const parser = matchedParser(() => construct);
+		visitNodes([{ type: 'paragraph', children: [] }]);
 
-		const result = buildDocument(config as never, '**Hello:** world');
+		buildDocument(defaultParser, [parser], docContext);
 
-		expect(result).toEqual(makeDocumentMock());
+		expect(parser.processor?.captureNode).toHaveBeenCalledWith(docContext, expect.anything());
+		expect(docContext.onBeforeConstruct).toHaveBeenCalledWith(construct);
+		expect(docContext.captureChildConstruct).toHaveBeenCalledWith(construct);
 	});
 
-	it('WHEN called returns SKIP after handling a non-paragraph block type', async () => {
-		markdownTree.children = [{ type: 'list', children: [{ type: 'text', value: 'item' }] }];
-		const config = {
-			defaultConstruct: naturalBlockParser(() => ({ construct: 'NaturalBlock' })),
-			constructs: [],
+	it('integrates a matched construct when the parser has an integrator', () => {
+		const docContext = createDocumentVisitContextMock();
+		const construct = { construct: 'FieldInline', name: 'Hello', children: [] };
+		const integrator = { integrate: vi.fn(() => docContext) };
+		const defaultParser = naturalBlockParser();
+		const parser = matchedParser(() => construct, integrator as never);
+		visitNodes([{ type: 'paragraph', children: [] }]);
+
+		buildDocument(defaultParser, [parser], docContext);
+
+		expect(integrator.integrate).toHaveBeenCalledWith(docContext, expect.anything(), construct);
+		expect(docContext.captureChildConstruct).not.toHaveBeenCalled();
+	});
+
+	it('handles a block node with the default construct', () => {
+		const docContext = createDocumentVisitContextMock();
+		const construct = { construct: 'NaturalBlock', value: 'item' };
+		const defaultParser = naturalBlockParser(() => construct);
+		const returns = visitNodes([{ type: 'list', children: [] }]);
+
+		buildDocument(defaultParser, [], docContext);
+
+		expect(defaultParser.processor?.captureNode).toHaveBeenCalled();
+		expect(docContext.onBeforeConstruct).toHaveBeenCalledWith(construct);
+		expect(docContext.captureChildConstruct).toHaveBeenCalledWith(construct);
+		expect(returns[0]).toBe(SKIP);
+	});
+
+	it('continues into a paragraph handled by the default construct', () => {
+		const docContext = createDocumentVisitContextMock();
+		const defaultParser = naturalBlockParser(() => ({ construct: 'NaturalBlock' }));
+		const returns = visitNodes([{ type: 'paragraph', children: [] }]);
+
+		buildDocument(defaultParser, [], docContext);
+
+		expect(returns[0]).toBeUndefined();
+	});
+
+	it('skips block nodes when the default construct has no processor', () => {
+		const docContext = createDocumentVisitContextMock();
+		const defaultParser = {
+			name: 'NaturalBlock',
+			factory: { fromData: () => ({}) as ConstructBase },
 		};
+		const returns = visitNodes([{ type: 'list', children: [] }]);
 
-		const result = buildDocument(config as never, '- item');
+		buildDocument(defaultParser as never, [], docContext);
 
-		expect(result).toEqual(makeDocumentMock());
+		expect(returns[0]).toBe(SKIP);
+	});
+
+	it('returns SKIP for non-block, non-matched nodes', () => {
+		const docContext = createDocumentVisitContextMock();
+		const defaultParser = naturalBlockParser();
+		const returns = visitNodes([{ type: 'text', value: 'x' }]);
+
+		buildDocument(defaultParser, [], docContext);
+
+		expect(returns[0]).toBe(SKIP);
 	});
 });

@@ -1,51 +1,62 @@
-import { nodePositionMock } from '@art-js/primitives/src/test/helpers';
+import { makeParserVisitContextMock } from '@art-js/primitives/src/test/helpers';
+import { fromMarkdown } from 'mdast-util-from-markdown';
 import { describe, expect, it, vi } from 'vitest';
 
-import { makeTagMock, stripStrongMock } from '../../../../test/helpers';
+import { createFieldBlockMock } from '../../../../test/helpers';
+import { createFieldBlock } from '../factory/createFieldBlock';
 
 import { createFieldBlockFromNode } from './createFieldBlockFromNode';
 
-vi.mock('@art-js/primitives', () => {
-	return nodePositionMock();
-});
-
-vi.mock('../../../../shared/fields', () => {
-	return stripStrongMock('Purpose:');
+vi.mock('../factory/createFieldBlock', async () => {
+	return createFieldBlockMock();
 });
 
 describe('createFieldBlockFromNode', () => {
-	it('WHEN creating a FieldBlock from a paragraph', async () => {
-		const paragraph = {
-			type: 'paragraph',
-			children: [
-				{
-					type: 'strong',
-					children: [{ type: 'text', value: 'Purpose:' }],
-				},
-			],
-		};
-		const context = { markdown: '' } as never;
+	it('WHEN text does not start with strong returns null', () => {
+		const markdown = 'Foo **Purpose:**';
+		const tree = fromMarkdown(markdown);
+		const paragraph = tree.children[0] as never;
+		const context = makeParserVisitContextMock({ markdown });
 
-		const result = createFieldBlockFromNode(paragraph as never, context);
+		const result = createFieldBlockFromNode(paragraph, context);
 
-		expect(result.construct).toBe('FieldBlock');
-		expect(result.name).toBe('Purpose');
+		expect(result).toBeNull();
 	});
 
-	it('WHEN provided includes tags', async () => {
-		const paragraph = {
-			type: 'paragraph',
-			children: [
-				{
-					type: 'strong',
-					children: [{ type: 'text', value: 'Purpose:' }],
-				},
-			],
-		};
-		const context = { markdown: '' } as never;
+	it('WHEN text after the strong is not empty returns null', () => {
+		const markdown = '**Purpose:** leftover';
+		const tree = fromMarkdown(markdown);
+		const paragraph = tree.children[0] as never;
+		const context = makeParserVisitContextMock({ markdown });
 
-		const result = createFieldBlockFromNode(paragraph as never, context, [makeTagMock()]);
+		const result = createFieldBlockFromNode(paragraph, context);
 
-		expect(result.tags).toHaveLength(1);
+		expect(result).toBeNull();
+	});
+
+	it('WHEN creating a FieldBlock from a paragraph', () => {
+		const markdown = '**Purpose:**';
+		const tree = fromMarkdown(markdown);
+		const paragraph = tree.children[0] as never;
+		const context = makeParserVisitContextMock({ markdown });
+
+		const result = createFieldBlockFromNode(paragraph, context);
+
+		expect(createFieldBlock).toHaveBeenCalledWith({ name: 'Purpose', tags: [] });
+		expect(result).toBe(vi.mocked(createFieldBlock).mock.results[0]?.value);
+	});
+
+	it('WHEN trailing tags follow the strong passes them to createFieldBlock', () => {
+		const markdown = '**Purpose:** (#purpose)';
+		const tree = fromMarkdown(markdown);
+		const paragraph = tree.children[0] as never;
+		const context = makeParserVisitContextMock({ markdown });
+
+		createFieldBlockFromNode(paragraph, context);
+
+		expect(createFieldBlock).toHaveBeenCalledWith({
+			name: 'Purpose',
+			tags: [{ construct: 'Tag', name: 'purpose' }],
+		});
 	});
 });

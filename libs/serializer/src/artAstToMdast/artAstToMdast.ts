@@ -1,4 +1,5 @@
-import type { ArtDocument, ConstructSerializer } from '@art-js/constructs';
+import type { ConstructSerializer } from '@art-js/constructs';
+import type { ArtDocument } from '@art-js/primitives';
 import type { Node, Root } from 'mdast';
 
 import type { SerializerConfig } from '../config/types';
@@ -6,8 +7,8 @@ import type { SerializerConfig } from '../config/types';
 export function artAstToMdast(config: SerializerConfig, document: ArtDocument): Node {
 	const registry = new Map<string, ConstructSerializer>();
 	for (const factory of config.constructs) {
-		const impl = factory();
-		registry.set(impl.name, impl);
+		const toMdast = factory();
+		registry.set(toMdast.name, toMdast);
 	}
 
 	function visit(node: { construct: string; children?: unknown[]; value?: unknown }): Node[] {
@@ -25,11 +26,11 @@ export function artAstToMdast(config: SerializerConfig, document: ArtDocument): 
 			)
 			.flatMap(visit);
 
-		const impl = registry.get(node.construct);
-		if (!impl) {
+		const toMdast = registry.get(node.construct);
+		if (!toMdast) {
 			throw new Error(`Unknown construct: ${node.construct}`);
 		}
-		const mainNode = impl.toMdast(node as never, childNodes);
+		const mainNode = toMdast.toMdast(node as never, childNodes);
 		const mainNodes = mainNode.type === 'root' ? (mainNode as Root).children : [mainNode];
 
 		// For block constructs with nested children content (SectionBlock, FieldBlock),

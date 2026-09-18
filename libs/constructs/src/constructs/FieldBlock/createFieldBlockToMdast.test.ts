@@ -7,10 +7,10 @@ import { createFieldBlockToMdast } from './createFieldBlockToMdast';
 
 describe('createFieldBlockToMdast', () => {
 	it('WHEN converting a FieldBlock to a label paragraph', () => {
-		const impl = createFieldBlockToMdast();
+		const toMdast = createFieldBlockToMdast();
 		const value: Text = { type: 'text', value: ' Generate and manage agent instructions.' };
 
-		const result = impl.toMdast(makeFieldBlockMock({ name: 'Purpose' }) as never, [value]);
+		const result = toMdast.toMdast(makeFieldBlockMock({ name: 'Purpose' }) as never, [value]);
 
 		expect(result).toEqual({
 			type: 'paragraph',
@@ -19,9 +19,9 @@ describe('createFieldBlockToMdast', () => {
 	});
 
 	it('WHEN present includes tags', () => {
-		const impl = createFieldBlockToMdast();
+		const toMdast = createFieldBlockToMdast();
 
-		const result = impl.toMdast(
+		const result = toMdast.toMdast(
 			makeFieldBlockMock({ name: 'Purpose', tags: [makeTagMock()] }) as never,
 			[],
 		);

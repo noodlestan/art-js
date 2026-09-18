@@ -9,4 +9,5 @@ export type NaturalBlockFactoryData = {
 	lang?: string | null;
 	meta?: string | null;
 	tags?: Tag[];
+	attributes?: Record<string, unknown>;
 };
