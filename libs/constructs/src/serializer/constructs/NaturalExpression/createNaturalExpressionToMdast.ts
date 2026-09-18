@@ -1,0 +1,15 @@
+import type { Node } from 'mdast';
+
+import type { NaturalExpression } from '../../../constructs';
+import type { ConstructSerializer } from '../../types';
+
+export function createNaturalExpressionToMdast(): ConstructSerializer {
+	return {
+		name: 'NaturalExpression',
+		toMdast(node, children) {
+			const expression = node as unknown as NaturalExpression;
+			const attributes = { ...expression.attributes };
+			return { type: expression.type, value: expression.value, children, ...attributes } as Node;
+		},
+	};
+}

@@ -1,3 +1,3 @@
-export { createArtDocumentFromNode } from './helpers';
-export { createDocumentParser } from './createDocumentParser';
-export { createDocumentToMdast } from './createDocumentToMdast';
+export { createDocument } from './factory/createDocument';
+
+export type { DocumentFactoryData } from './factory/types';

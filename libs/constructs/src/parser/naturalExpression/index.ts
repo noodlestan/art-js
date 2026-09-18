@@ -1,0 +1,1 @@
+export { createNaturalExpressionFromNode } from './createNaturalExpressionFromNode';

@@ -1,10 +1,10 @@
 /**
- * @provides NaturalExpression test fixture
+ * @fixture NaturalExpression of factory`libs/constructs/src/constructs/NaturalExpression/factory/createNaturalExpression.ts`
  */
 
 import type { NaturalExpression } from '../../../../constructs';
 
-export const makeNaturalExpressionMock = (options?: {
+export const makeNaturalExpressionFixture = (options?: {
 	type?: string;
 	value?: string;
 	attributes?: Record<string, unknown>;

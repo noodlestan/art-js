@@ -1,5 +1,5 @@
 /**
- * @mocks createFieldBlockFromNode() from `@art-js/constructs`
+ * @mocks createFieldBlockFromNode() from `src/constructs/FieldBlock/private/helpers`
  */
 
 import { vi } from 'vitest';

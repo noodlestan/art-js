@@ -1,8 +1,8 @@
-import type { ArtDocument } from './types';
+import type { ArtDocument, ArtDocumentFactoryData } from './types';
 
-export function createArtDocument(): ArtDocument {
+export function createArtDocument(data?: ArtDocumentFactoryData): ArtDocument {
 	return {
 		construct: 'Document',
-		children: [],
+		children: data?.children ?? [],
 	};
 }

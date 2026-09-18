@@ -1,11 +1,10 @@
 /**
- * @provides SectionBlock test fixture
+ * @fixture SectionBlock of factory`libs/constructs/src/constructs/SectionBlock/factory/createSectionBlock.ts`
  */
 
-import type { SectionBlock } from '../../../../constructs/SectionBlock/types';
-import type { Tag } from '../../../../constructs/Tag/types';
+import type { SectionBlock, Tag } from '../../../../constructs';
 
-export const makeSectionBlockMock = (options?: {
+export const makeSectionBlockFixture = (options?: {
 	name?: string;
 	depth?: number;
 	kind?: string;

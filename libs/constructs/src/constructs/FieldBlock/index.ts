@@ -1,4 +1,4 @@
-export { createFieldBlockParser } from './createFieldBlockParser';
-export { createFieldBlockToMdast } from './createFieldBlockToMdast';
+export { createFieldBlock } from './factory/createFieldBlock';
 
 export type { FieldBlock } from './types';
+export type { FieldBlockFactoryData } from './factory/types';

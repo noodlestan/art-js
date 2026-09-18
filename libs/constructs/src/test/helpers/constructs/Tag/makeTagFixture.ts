@@ -1,10 +1,10 @@
 /**
- * @provides Tag test fixture
+ * @fixture Tag of factory`libs/constructs/src/constructs/Tag/factory/createTag.ts`
  */
 
-import type { Tag } from '../../../../constructs/Tag/types';
+import type { Tag } from '../../../../constructs';
 
-export const makeTagMock = (options?: { name?: string }): Tag => ({
+export const makeTagFixture = (options?: { name?: string }): Tag => ({
 	construct: 'Tag',
 	name: options?.name ?? 'test',
 });

@@ -1,0 +1,1 @@
+export { createDocumentToMdast } from './createDocumentToMdast';

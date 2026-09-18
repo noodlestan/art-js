@@ -1,5 +1,5 @@
 /**
- * @mocks createFieldInlineFromNode() from `@art-js/constructs`
+ * @mocks createFieldInlineFromNode() from `src/constructs/FieldInline/private/helpers`
  */
 
 import { vi } from 'vitest';

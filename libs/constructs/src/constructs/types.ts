@@ -1,35 +1,28 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { FieldBlock } from './FieldBlock';
+import type { FieldInline } from './FieldInline';
+import type { NaturalBlock } from './NaturalBlock';
+import type { NaturalExpression } from './NaturalExpression';
+import type { SectionBlock } from './SectionBlock';
+import type { Tag } from './Tag';
 
-import type { ConstructBase, MdastNode, ParserVisitContext } from '@art-js/primitives';
-import type { Node } from 'mdast';
-
-import type { Construct } from '../types';
-
-export type ConstructProcessor = {
-	captureNode(context: ParserVisitContext, node: MdastNode): Construct | null;
+/** Open registry of block-level constructs. Augment via declaration merging when new constructs land. */
+export type BlockConstructMap = {
+	SectionBlock: SectionBlock;
+	FieldBlock: FieldBlock;
+	FieldInline: FieldInline;
+	NaturalBlock: NaturalBlock;
 };
 
-export type ConstructIntegrator = {
-	integrate(context: ParserVisitContext, node: MdastNode, construct: Construct): ParserVisitContext;
+/** Open registry of inline/expression-level constructs. */
+export type InlineConstructMap = {
+	NaturalExpression: NaturalExpression;
+	Tag: Tag;
 };
 
-export type ConstructFactory<T extends ConstructBase> = {
-	fromData(data: unknown): T;
-};
+/** Open registry of all constructs. */
+export type ConstructMap = BlockConstructMap & InlineConstructMap;
 
-export type ConstructParser<T extends ConstructBase = ConstructBase> = {
-	readonly name: string;
-	processor?: ConstructProcessor;
-	integrator?: ConstructIntegrator;
-	factory: ConstructFactory<T>;
-};
+export type BlockContent = BlockConstructMap[keyof BlockConstructMap];
+export type InlineContent = InlineConstructMap[keyof InlineConstructMap];
 
-export type ConstructParserFactory<T extends ConstructBase = ConstructBase> =
-	() => ConstructParser<T>;
-
-export type ConstructSerializer = {
-	readonly name: string;
-	toMdast(node: Construct, children: Node[]): Node;
-};
-
-export type ConstructSerializerFactory = () => ConstructSerializer;
+export type Construct = ConstructMap[keyof ConstructMap];

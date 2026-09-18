@@ -1,0 +1,1 @@
+export { createNaturalBlockToMdast } from './createNaturalBlockToMdast';

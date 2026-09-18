@@ -1,10 +1,10 @@
 /**
- * @provides FieldBlock test fixture
+ * @fixture FieldBlock of factory`libs/constructs/src/constructs/FieldBlock/factory/createFieldBlock.ts`
  */
 
 import type { FieldBlock, Tag } from '../../../../constructs';
 
-export const makeFieldBlockMock = (options?: {
+export const makeFieldBlockFixture = (options?: {
 	name?: string;
 	children?: FieldBlock['children'];
 	tags?: Tag[];

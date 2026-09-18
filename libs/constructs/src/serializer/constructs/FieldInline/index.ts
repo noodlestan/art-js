@@ -1,0 +1,1 @@
+export { createFieldInlineToMdast } from './createFieldInlineToMdast';

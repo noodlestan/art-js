@@ -1,10 +1,10 @@
-import {
-	type BlockContent,
-	type Construct,
-	type ConstructIntegrator,
-	type ConstructParser,
+import type {
+	BlockContent,
+	Construct,
+	ConstructIntegrator,
+	ConstructParser,
 } from '@art-js/constructs';
-import { type ArtDocument, type ConstructBase, type ParserVisitContext } from '@art-js/primitives';
+import type { ArtDocument, ParserVisitContext } from '@art-js/primitives';
 import type { RootContent } from 'mdast';
 import type { Node } from 'unist';
 import { SKIP, visit } from 'unist-util-visit';
@@ -18,8 +18,8 @@ type HandleResult = {
 };
 
 export function buildDocument(
-	defaultConstruct: ConstructParser<ConstructBase>,
-	constructParsers: ConstructParser<ConstructBase>[],
+	defaultConstruct: ConstructParser,
+	constructParsers: ConstructParser[],
 	docContext: DocumentVisitContext,
 ): ArtDocument {
 	let currentContext: ParserVisitContext = docContext;

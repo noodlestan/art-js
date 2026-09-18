@@ -1,5 +1,5 @@
 /**
- * @mocks createNaturalBlockFromNode() from `@art-js/constructs`
+ * @mocks createNaturalBlockFromNode() from `src/constructs/NaturalBlock/private/helpers`
  */
 
 import { vi } from 'vitest';

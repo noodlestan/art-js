@@ -16,20 +16,18 @@ const visitMock = vi.mocked(visit);
 
 const naturalBlockParser = (
 	captureNode: (() => unknown) | undefined = () => null,
-): ConstructParser<ConstructBase> => ({
+): ConstructParser => ({
 	name: 'NaturalBlock',
 	processor: { captureNode: vi.fn(captureNode) as ConstructProcessor['captureNode'] },
-	factory: { fromData: () => ({}) as ConstructBase },
 });
 
 const matchedParser = (
 	captureNode: () => unknown,
 	integrator?: ConstructIntegrator,
-): ConstructParser<ConstructBase> => ({
+): ConstructParser => ({
 	name: 'FieldInline',
 	processor: { captureNode: vi.fn(captureNode) as ConstructProcessor['captureNode'] },
 	...(integrator ? { integrator } : {}),
-	factory: { fromData: () => ({}) as ConstructBase },
 });
 
 const visitNodes = (nodes: unknown[]): unknown[] => {

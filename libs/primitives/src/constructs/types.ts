@@ -11,3 +11,7 @@ export type ConstructBase = {
 export type ContainerConstructBase = ConstructBase & {
 	children: ConstructBase[];
 };
+
+export type ConstructFactory<T extends ConstructBase> = {
+	fromData(data: unknown): T;
+};

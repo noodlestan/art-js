@@ -1,5 +1,5 @@
 /**
- * @mocks createFieldBlock() from `@art-js/constructs`
+ * @mocks createFieldBlock() from `src/constructs/FieldBlock/private/factory`
  */
 
 import { vi } from 'vitest';

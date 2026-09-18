@@ -1,5 +1,5 @@
 /**
- * @mocks createSectionBlockFromNode() from `@art-js/constructs`
+ * @mocks createSectionBlockFromNode() from `src/constructs/SectionBlock/private/helpers`
  */
 
 import { vi } from 'vitest';
