@@ -1,64 +1,81 @@
 # Serializer Implementation
 
-> **Adding new patterns:** This file documents how the serializer converts `ArtDocument` records back to mdast. When a new construct uses the serializer contract in a way not covered below, add a new example section. See [Constructs Implementation](../../constructs/architecture/implementation.md) for detailed construct-side `toMdast` examples.
+> **Adding new patterns:** This file documents how the serializer converts `ArtDocument` records back to mdast. When a new construct uses the serializer contract in a way not covered below, add a new example section. See [Constructs Implementation](../../constructs/architecture/serializers.md) for detailed construct-side `toMdast` examples.
 
-## Entry Point
+## Serializer Entry Point
 
-`artAstToMdast(config, document)` converts an `ArtDocument` to an mdast `Root` node:
+`serialize(document)` converts an `ArtDocument` to a markdown string:
 
-1. Build a registry from `config.constructs` — instantiate each factory, store in a `Map<string, ConstructToMdast>` keyed by `impl.construct`.
-2. Visit each top-level child in `document.children` through the `visit` function.
-3. Collect all results and wrap in `{ type: 'root', children: [...] }`.
-
-## Registry Build
+1. Build the default config via `createDefaultSerializerConfig()`.
+2. Convert the document to an mdast `Root` via `artAstToMdast(config, document)`.
+3. Render the root to markdown with `toMarkdown(root, { bullet: '-', emphasis: '_' })`.
 
 ```ts
-const registry = new Map<string, ConstructToMdast>();
+export function serialize(document: ArtDocument): string {
+  const config = createDefaultSerializerConfig();
+  const root = artAstToMdast(config, document) as Root;
+  return toMarkdown(root, { bullet: '-', emphasis: '_' });
+}
+```
+
+The serializer is the inverse of the parser: the parser reads markdown into an `ArtDocument`, the serializer writes an `ArtDocument` back out to markdown.
+
+## ArtAst to Mdast
+
+`artAstToMdast(config, document)` converts an `ArtDocument` to an mdast `Root` node. It has three phases: build the registry, visit the construct tree, and wrap the results in a root.
+
+### Build the Registry
+
+The serializer dispatches through a registry built from the config. Each factory is called once, producing a `ConstructSerializer` adapter keyed by its `name`:
+
+```ts
+const registry = new Map<string, ConstructSerializer>();
 for (const factory of config.constructs) {
-  const impl = factory();
-  registry.set(impl.construct, impl);
+  const toMdast = factory();
+  registry.set(toMdast.name, toMdast);
 }
 ```
 
-Four lines. Each factory is called once, producing a `ConstructToMdast` adapter. The `construct` string is the lookup key. If two factories produce the same key, the last one wins.
+If two factories produce the same name, the last one wins.
 
-## The Visit Function
+### Visit — Recursive Conversion
 
-The `visit` function processes one construct node and returns an array of mdast nodes:
+The `visit` function processes one construct node and returns an array of mdast nodes. It is recursive and **bottom-up**: children are converted before their parent, so the `childNodes` passed to `toMdast` are already mdast nodes, not `Construct` records.
 
 ```ts
-function visit(node): Node[] {
-  1. Gather raw children from node.children or node.value
-  2. Filter for construct-shaped objects (have a 'construct' property)
-  3. Recurse: flatMap(visit) — bottom-up, children converted first
-  4. Look up adapter: registry.get(node.construct)
-  5. Call toMdast(node, childNodes) — produces the main mdast node
-  6. If mainNode is a root, unwrap its children
-  7. Apply sibling placement rules (see below)
-  8. Return the resulting node array
+function visit(node: SerialisableNode): Node[] {
+  // 1. Gather raw children from node.children or node.value
+  // 2. Filter for construct-shaped objects (have a 'construct' property)
+  // 3. Recurse: flatMap(visit) — children converted first
+  // 4. Look up adapter: registry.get(node.construct)
+  // 5. Call toMdast(node, childNodes) — produces the main mdast node
+  // 6. If mainNode is a root, unwrap its children
+  // 7. Apply sibling placement rules (see below)
+  // 8. Return the resulting node array
 }
 ```
 
-The bottom-up order is critical: `childNodes` passed to `toMdast` are already fully converted mdast nodes, not `Construct` records.
-
-## Child Gathering
-
-Children are gathered from either `node.children` or `node.value`, depending on the construct's data shape. Only objects with a `construct` property are treated as nested constructs — plain values (strings, numbers) are ignored.
+**Child gathering.** Children come from either `node.children` or `node.value`, depending on the construct's data shape. Only objects with a `construct` property are treated as nested constructs — plain values (strings, numbers) are ignored:
 
 ```ts
-const rawChildren =
-  'children' in node && Array.isArray(node.children)
-    ? node.children
-    : 'value' in node && Array.isArray(node.value)
-      ? node.value
-      : [];
+let rawChildren: unknown[] = [];
+if ('children' in node && Array.isArray(node.children)) {
+  rawChildren = node.children;
+} else if ('value' in node && Array.isArray(node.value)) {
+  rawChildren = node.value;
+}
 
-const childNodes = rawChildren
-  .filter(c => typeof c === 'object' && c !== null && 'construct' in c)
-  .flatMap(visit);
+const nestedConstructs = rawChildren.filter(
+  (c): c is SerialisableNode => typeof c === 'object' && c !== null && 'construct' in c,
+);
+const childNodes: Node[] = nestedConstructs.flatMap(visit);
 ```
 
-## Sibling Placement
+**Factory lookup.** Each construct is looked up in the registry by its `construct` string. An unknown construct throws `Error('Unknown construct: ${node.construct}')` — meaning a construct exists in the `ArtDocument` but was not registered in the config.
+
+**Why `flatMap`?** `visit` returns an array of mdast nodes (a construct may produce several sibling nodes), so recursion must flatten one level. `flatMap(visit)` both recurses and flattens, producing a single flat list of converted children.
+
+### Sibling Placement
 
 The serializer handles two output patterns:
 
@@ -67,26 +84,23 @@ The serializer handles two output patterns:
 **Sibling children** — for block constructs with nested content (`SectionBlock`, `FieldBlock`), the children are returned as **siblings** after the main node:
 
 ```ts
-if (node.construct === 'SectionBlock' && node.children?.length) {
-  return [...mainNodes, ...childNodes];
-}
-if ((node.construct === 'SectionBlock' || node.construct === 'FieldBlock') && node.value?.length) {
+if (
+  'children' in node &&
+  Array.isArray(node.children) &&
+  node.children.length > 0 &&
+  (node.construct === 'SectionBlock' || node.construct === 'FieldBlock')
+) {
   return [...mainNodes, ...childNodes];
 }
 ```
 
 This matches markdown's flat structure: a heading is followed by its body content as sibling nodes, not as mdast children. The `toMdast` method for these constructs produces only the heading or label node — the serializer handles the sibling placement.
 
-## Root Wrapping
+### Build the Root Node
 
 All top-level results are collected into a single mdast root:
 
 ```ts
-const mdastChildren = document.children.flatMap(child => visit(child));
-return { type: 'root', children: mdastChildren };
+const mdastChildren = document.children.flatMap(child => visit(child as SerialisableNode));
+return { type: 'root', children: mdastChildren } as Node;
 ```
-
-## Error Handling
-
-- **Unknown construct:** throws `Error('Unknown construct: ${node.construct}')`. This means a construct exists in the `ArtDocument` but was not registered in the config.
-- **Factory returns undefined:** would crash at registry build time — factories must return a valid `ConstructToMdast`.

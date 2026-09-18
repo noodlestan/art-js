@@ -2,8 +2,8 @@ import type { ArtDocument } from '@art-js/primitives';
 import type { Root } from 'mdast';
 import { toMarkdown } from 'mdast-util-to-markdown';
 
-import { artAstToMdast } from './artAstToMdast/artAstToMdast';
-import { createDefaultSerializerConfig } from './config/createDefaultSerializerConfig';
+import { artAstToMdast } from '../artAstToMdast/artAstToMdast';
+import { createDefaultSerializerConfig } from '../config/createDefaultSerializerConfig';
 
 export function serialize(document: ArtDocument): string {
 	const config = createDefaultSerializerConfig();
