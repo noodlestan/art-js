@@ -1,6 +1,10 @@
-# Parser Principles & Construct API
+# Parser Implementation
 
-## Design Principles
+**Purpose:** Explain how the `@art-js/parser` package maps raw markdown into an `ArtDocument` — the MD to Art mapping, the parser entry point, and the document builder's visit loop and dispatch. It is written from the parser's perspective: how nodes are claimed, how constructs enter capturing mode, and how the context stack is mutated.
+
+## MD to Art Overview
+
+The parser walks an mdast tree and produces an `ArtDocument` populated with constructs. The mapping is driven by the construct contract types from `@art-js/constructs`; the parser itself never names a concrete construct.
 
 ### Block / Phrasing Boundary
 
@@ -28,7 +32,7 @@ FieldInline
     NaturalExpression { type: "text",    value: " there?" }
 ```
 
-This leaves room for future constructs (e.g. `Tag`) to claim or transform an inline child instead of silently losing its structure.
+This leaves room for future constructs to claim or transform an inline child instead of silently losing its structure.
 
 ### Block Constructs Own Their Capture Boundary
 
@@ -40,90 +44,172 @@ FieldBlock:
   stop when the next FieldBlock, FieldInline, or SectionBlock begins
 ```
 
-The active context calls `beforeRecord(record)` — if a boundary record arrives, the context returns to its parent. The builder remains construct-agnostic.
+The active context calls `onBeforeConstruct(construct)` — if a boundary record arrives, the context returns to its parent. The builder remains construct-agnostic.
 
 ### Natural Conversion Is Recursive
 
 Natural conversion recurses through all mdast children and retains generic attributes. No restrictive special cases per node type — list-item attributes, code metadata, and other mdast fields pass through.
 
----
+### Tags and NaturalExpressions
 
-## Construct Parser API
+`Tag` and `NaturalExpression` do **not** have their own parser factory. They are not claimed as top-level nodes by the visit loop; instead they are produced by other constructs' processors:
 
-Each construct registers a `ConstructParser` with up to two hooks:
+- **Tags** — each construct that supports `(#tag)` syntax knows how to extract tags, and where from, and does so in its own processor hook via the shared `extractTags` helper. For example, `SectionBlock` extracts tags from the heading text, while `FieldInline` extracts them from the paragraph tail.
+- **NaturalExpression** — inline constructs delegate child conversion to `createNaturalExpressionFromNode` rather than registering a parser for it.
 
-```
-ConstructParser
-  captureNode?(context, node) → record | null     ← claims full node immediately
-  handle?(record, node, ctx) → VisitContext        ← post-creation mutation / nesting
-```
+Because they are produced inside other constructs' processors, they need no entry in the parser's construct list.
 
-### Dispatch Order
+## Parser Entry Point
 
-```
-1. Processors run over constructs in order:
-   - For each construct, processor.captureNode is tried
-   - The default construct is skipped in this loop and handled separately
-2. If no construct claims the node, NaturalBlock fallback
-3. After record creation, beforeRecord() lets the active context close
-4. Handler runs if present (SectionBlock, FieldBlock use this path)
-```
+`src/parse/parse.ts` exposes the single public function `parse(markdown: string): ArtDocument`. Its responsibilities:
 
-### Example: FieldBlock
+1. **Build the default config** — `createDefaultConfig()` returns the `ParserConfig` (the default construct and the ordered construct list).
+2. **Create the document parser context** — `createDocumentParserContext(markdown)` parses the source to an mdast tree via `fromMarkdown`, initialises the `ArtDocument` via `createArtDocumentFromNode`, and wraps both in a `ParserVisitContext`.
+3. **Instantiate the construct parsers** — calls each `ConstructParserFactory` to produce `ConstructParser` instances.
+4. **Delegate to the builder** — calls `buildDocument(defaultConstruct, constructParsers, docContext)` and returns the resulting `ArtDocument`.
 
-```
-captureNode → detects "**Name:**" paragraph where content continues on next line
-              returns { construct: "FieldBlock", name, value: [] }
-              or returns null (content on same line → FieldInline territory)
-handle      → pushes nested VisitContext; subsequent NaturalBlocks append to field.value
-              closes when next FieldBlock / FieldInline / SectionBlock arrives via beforeRecord()
+```ts
+export function parse(markdown: string = ''): ArtDocument {
+  const config = createDefaultConfig();
+  const docContext = createDocumentParserContext(markdown);
+
+  const defaultConstruct = config.defaultConstruct();
+  const constructParsers = config.constructs.map(create => create());
+
+  return buildDocument(defaultConstruct, constructParsers, docContext);
+}
 ```
 
-### Example: FieldInline
+## Document Builder
 
-```
-captureNode → detects "**Name:**" paragraph where content follows on the SAME line
-              consumes the entire paragraph tail as value (array of NaturalExpression)
-              returns the FieldInline record — no handler needed (leaf construct)
-```
+`src/buildDocument/buildDocument.ts` walks the mdast tree and assembles the `ArtDocument`. It keeps a mutable `currentContext` that starts as the document context and is reassigned as constructs enter and leave capturing mode.
 
-### Example: SectionBlock
+### Visit Loop
 
-```
-captureNode → matches heading nodes (# Name)
-              returns { construct: "SectionBlock", name, depth }
-handle      → pushes nested VisitContext for child content
-              heading depth drives nesting (depth 2 nests under depth 1)
-```
+The builder visits every node in the mdast tree in order via `unist-util-visit`. For each node it decides whether a construct claims it, whether it falls back to the default construct, or whether it is skipped.
 
----
+```ts
+function visitNode(node: Node): typeof SKIP | undefined {
+  if (node.type === 'root') {
+    return undefined;
+  }
 
-## Serializer: `toMdast()` Pipeline
+  const result = tryConstructs(node as RootContent);
+  if (result) {
+    integrate(node, result.constructs, result.integrator);
+    return SKIP;
+  }
 
-Each serializer adapter is selected by the construct name. `toMdast(node, children)` converts one AST construct into mdast nodes.
+  if (isBlockType(node.type)) {
+    return handleNaturalBlock(node);
+  }
 
-```
-SectionBlock.toMdast    → heading node (depth + parsed name children)
-FieldBlock.toMdast      → paragraph with strong "Name:" (children follow as siblings)
-FieldInline.toMdast     → paragraph with strong "Name:" + space + inline value children
-NaturalBlock.toMdast    → re-parses stored value via fromMarkdown(), replaces paragraph children
-NaturalExpression.toMdast → reconstructs mdast node from type, attributes, value, children
+  return SKIP;
+}
 ```
 
-**Rule:** Read the relevant `create*ToMdast.ts` files before diagnosing a roundtrip mismatch. Never "fix" a fixture by changing its expected output without understanding the construct conversion.
+### Construct Mapping — Claiming a Node
 
----
+`tryConstructs` consults each construct's `processor` in order. The first processor whose `captureNode` returns a record claims the node; the construct's `integrator` (if any) is carried along.
 
-## Key Files
+```ts
+function tryConstructs(node: RootContent): HandleResult | null {
+  for (let i = 0; i < constructParsers.length; i++) {
+    const constructParser = constructParsers[i] as ConstructParser;
+    const processor = constructParser.processor;
+    const construct = processor?.captureNode(currentContext, node);
+    if (construct) {
+      const integrator = constructParser.integrator ?? null;
+      return { constructs: [construct], integrator };
+    }
+  }
+  return null;
+}
+```
 
-| File                                                                                      | Role                                       |
-| ----------------------------------------------------------------------------------------- | ------------------------------------------ |
-| `$PACKAGE_PARSER/src/builder.ts`                                                          | Parser dispatch order and context handling |
-| `$PACKAGE_PARSER/src/config/createDefaultConfig.ts`                                       | Enabled constructs and their order         |
-| `$PACKAGE_CONSTRUCTS/src/constructs/FieldInline/createFieldInlineProcessor.ts`            | Inline field detection and capture         |
-| `$PACKAGE_CONSTRUCTS/src/constructs/FieldInline/createFieldInlineToMdast.ts`              | Inline field rendering                     |
-| `$PACKAGE_CONSTRUCTS/src/constructs/FieldBlock/private/createFieldBlockProcessor.ts`      | Block field detection                      |
-| `$PACKAGE_CONSTRUCTS/src/constructs/FieldBlock/private/createFieldBlockIntegrator.ts`     | Block field nesting/context                |
-| `$PACKAGE_CONSTRUCTS/src/constructs/SectionBlock/createSectionBlockParser.ts`             | Section processor and handler wiring       |
-| `$PACKAGE_CONSTRUCTS/src/constructs/SectionBlock/private/createSectionBlockProcessor.ts`  | Section AST creation                       |
-| `$PACKAGE_CONSTRUCTS/src/constructs/SectionBlock/private/createSectionBlockIntegrator.ts` | Section nesting behavior                   |
+For example, `SectionBlock`'s processor claims heading nodes:
+
+```ts
+captureNode(context, node) {
+	if (node.type !== 'heading') {
+		return null;
+	}
+	return createSectionBlockFromNode(node as Heading, context);
+}
+```
+
+### Fallback — handleNaturalBlock
+
+If no construct claims the node and it is a block type, the builder falls back to the default construct (`NaturalBlock`). It captures the record directly as a child of the current context.
+
+```ts
+function handleNaturalBlock(node: Node): typeof SKIP | undefined {
+  if (!defaultConstruct.processor) {
+    return SKIP;
+  }
+
+  const construct = defaultConstruct.processor.captureNode(currentContext, node) as Construct;
+  currentContext = currentContext.onBeforeConstruct(construct);
+  currentContext.captureChildConstruct(construct);
+  return node.type === 'paragraph' ? undefined : SKIP;
+}
+```
+
+### Integrate — Context Mutation
+
+After a node is claimed, `integrate` runs. For each construct it first calls `onBeforeConstruct` (letting the active context close if a boundary arrives), then either:
+
+- **Calls the construct's `integrator`** — the construct enters capturing mode, mutating the context (e.g. pushing a nested context) and returning the context for subsequent visits.
+- **Captures the construct directly** — for leaf constructs with no integrator, the record is appended as a child of the current context.
+
+```ts
+function integrate(
+  node: Node,
+  constructs: Construct[],
+  integrator: ConstructIntegrator | null,
+): void {
+  for (const construct of constructs) {
+    currentContext = currentContext.onBeforeConstruct(construct);
+
+    if (integrator) {
+      currentContext = integrator.integrate(currentContext, node, construct);
+    } else {
+      currentContext.captureChildConstruct(construct as BlockContent);
+    }
+  }
+}
+```
+
+For example, `SectionBlock`'s integrator walks up the context stack by heading depth to find the correct nesting level, then captures the section and pushes a nested context:
+
+```ts
+integrate(context, node, construct) {
+	const section = construct as SectionBlock;
+	let currentContext = context;
+
+	const heading = node as Heading;
+	while (currentContext.construct.construct === 'SectionBlock') {
+		const parentSection = findParentSection(currentContext);
+		if (parentSection && sectionDepth(parentSection) >= heading.depth) {
+			const parentContext = currentContext.parent();
+			if (parentContext) {
+				currentContext = parentContext;
+			}
+		} else {
+			break;
+		}
+	}
+
+	currentContext.captureChildConstruct(section);
+	return currentContext.childContext(section);
+}
+```
+
+A leaf construct such as `FieldInline` has no integrator, so `integrate` captures it directly as a child of the current context.
+
+## See Also
+
+- [Parser API](api.md) — the parser config, entry point, and constructs overview.
+- [Constructs Architecture](../../constructs/architecture/index.md) — the three construct layers (factories, parsers, serializers) and their layout.
+- [Constructs API](../../constructs/architecture/api.md) — the contract types the parser drives detection through.
+- [Constructs Parsers](../../constructs/architecture/parsers.md) — the parser hooks (`ConstructProcessor`, `ConstructIntegrator`) and the scenarios each construct implements.
