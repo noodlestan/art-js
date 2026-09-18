@@ -51,20 +51,20 @@ Carry forward the unfinished work split out of the MD Art Roundtrip milestone: c
 
 ## Items
 
-| Phase | Resource / Record                                                                                        | Status     |
-| ----- | -------------------------------------------------------------------------------------------------------- | ---------- |
-| 1     | Plan: Refactoring and ~Test Coverage~ `_backlog/1-done/plan-refactoring-and-test-coverage/plan.md`       | `DONE`     |
-| 1     | Plan: Refactor Tag Extraction `_backlog/1-done/plan-refactor-tag-extraction/plan.md`                     | `DONE`     |
-| 1     | Plan: Refactor Constructs `_backlog/1-done/plan-refactor-constructs/plan.md`                             | `DONE`     |
-| 1     | Plan: Test Coverage `_backlog/1-done/plan-test-coverage/plan.md`                                         | `DONE`     |
-| 1     | Plan: Refactor Test Helpers `_backlog/1-done/plan-refactor-test-helpers/plan.md`                         | `DONE`     |
-| 1     | Plan: Integrate Feedback and Follow-Ups `_backlog/1-done/plan-integrate-feedback-and-follow-ups/plan.md` | `DONE`     |
-| -     |                                                                                                          |            |
-| 2     | Plan: Archive and Publish `_backlog/1-done/plan-archive-poc-and-publish/plan.md`                         | `DONE`     |
-| 2     | Plan: Setup Noodlestan Conventions `_backlog/3-now/plan-setup-noodlestan-conventions/plan.md`            | `READY`    |
-| 2     | Plan: Audit Conventions Setup and Adoption `_backlog/3-now/plan-audit-conventions-adoption/plan.md`      | `READY`    |
-| 2     | Plan: Apply Conventions Recommendations `_backlog/3-now/plan-apply-conventions-recommendations/plan.md`  | `READY`    |
-| 2     | Plan: Integrate Knowledge `_backlog/6-plan/plan-integrate-knowledge/plan.md`                             | `PLANNING` |
+| Phase | Resource / Record                                                                                                   | Status     |
+| ----- | ------------------------------------------------------------------------------------------------------------------- | ---------- |
+| 1     | Plan: Refactoring and ~Test Coverage~ `_backlog/1-done/2026-09-15-plan-refactoring-and-test-coverage/plan.md`       | `DONE`     |
+| 1     | Plan: Refactor Tag Extraction `_backlog/1-done/2026-09-15-plan-refactor-tag-extraction/plan.md`                     | `DONE`     |
+| 1     | Plan: Refactor Constructs `_backlog/1-done/2026-09-15-plan-refactor-constructs/plan.md`                             | `DONE`     |
+| 1     | Plan: Test Coverage `_backlog/1-done/2026-09-15-plan-test-coverage/plan.md`                                         | `DONE`     |
+| 1     | Plan: Refactor Test Helpers `_backlog/1-done/2026-09-16-plan-refactor-test-helpers/plan.md`                         | `DONE`     |
+| 1     | Plan: Integrate Feedback and Follow-Ups `_backlog/1-done/2026-09-16-plan-integrate-feedback-and-follow-ups/plan.md` | `DONE`     |
+| -     |                                                                                                                     |            |
+| 2     | Plan: Archive and Publish `_backlog/1-done/2026-09-16-plan-archive-poc-and-publish/plan.md`                         | `DONE`     |
+| 2     | Plan: Setup Noodlestan Conventions `_backlog/1-done/2026-09-16-plan-setup-noodlestan-conventions/plan.md`           | `DONE`     |
+| 2     | Plan: Audit Conventions Setup and Adoption `_backlog/1-done/2026-09-17-plan-audit-conventions-adoption/plan.md`     | `DONE`     |
+| 2     | Plan: Apply Conventions Recommendations `_backlog/1-done/2026-09-18-plan-apply-conventions-recommendations/plan.md` | `DONE`     |
+| 2     | Plan: Integrate Knowledge `_backlog/6-plan/plan-integrate-knowledge/plan.md`                                        | `PLANNING` |
 
 ## Work
 

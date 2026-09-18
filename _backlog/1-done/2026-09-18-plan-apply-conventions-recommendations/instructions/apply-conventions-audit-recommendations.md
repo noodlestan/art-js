@@ -102,7 +102,7 @@ npm run test # runs test-parser and test-serializer against stable fixtures
 
 ### Step `1 / 8` — Apply primitives fixes
 
-Read the adoption audit report at `$PROJECT/_audit/conventions/plan__conventions-adoption-primitives.md`.
+Read the adoption audit report at `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-primitives.md`.
 
 For each issue listed in the report, apply the recommended fix to the corresponding source file in `$PROJECT/libs/primitives/`.
 
@@ -123,7 +123,7 @@ conventions(primitives): Apply noodlestan conventions in @art-js/primitives.
 
 ### Step `3 / 8` — Apply constructs fixes
 
-Read the adoption audit report at `$PROJECT/_audit/conventions/plan__conventions-adoption-constructs.md`.
+Read the adoption audit report at `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-constructs.md`.
 
 For each issue listed in the report, apply the recommended fix to the corresponding source file in `$PROJECT/libs/constructs/`.
 
@@ -148,7 +148,7 @@ conventions(typescript): Apply noodlestan conventions in @art-js/constructs.
 
 ### Step `5 / 8` — Apply parser fixes
 
-Read the adoption audit report at `$PROJECT/_audit/conventions/plan__conventions-adoption-parser.md`.
+Read the adoption audit report at `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-parser.md`.
 
 For each issue listed in the report, apply the recommended fix to the corresponding source file in `$PROJECT/libs/parser/`.
 
@@ -168,7 +168,7 @@ conventions(typescript): Apply noodlestan conventions.
 
 ### Step `7 / 8` — Apply serializer fixes
 
-Read the adoption audit report at `$PROJECT/_audit/conventions/plan__conventions-adoption-serializer.md`.
+Read the adoption audit report at `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-serializer.md`.
 
 For each issue listed in the report, apply the recommended fix to the corresponding source file in `$PROJECT/libs/serializer/`.
 

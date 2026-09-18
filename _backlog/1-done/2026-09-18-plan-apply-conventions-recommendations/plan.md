@@ -2,7 +2,7 @@
 
 **Id:** `apply-conventions-recommendations`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -69,7 +69,7 @@ None.
 
 ## Attachments
 
-- `$PROJECT/_audit/conventions/plan__adoption-process-insights.md` (Report) — Process insights and recommendations.
+- `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/adoption-process-insights.md` (Report) — Process insights and recommendations.
 
 ## Execution Context
 
@@ -77,12 +77,12 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 ## Items:
 
-| Iteration / Instructions                                                                                       | Status  |
-| -------------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Apply Conventions Audit Recommendations `./instructions/apply-conventions-audit-recommendations.md` | `DONE`  |
-| Iteration: Consolidate Process Insights `./instructions/consolidate-process-insights.md`                       | `READY` |
+| Iteration / Instructions                                                                                       | Status |
+| -------------------------------------------------------------------------------------------------------------- | ------ |
+| Iteration: Apply Conventions Audit Recommendations `./instructions/apply-conventions-audit-recommendations.md` | `DONE` |
+| Iteration: Consolidate Process Insights `./instructions/consolidate-process-insights.md`                       | `DONE` |
 
-### Iteration: Apply Conventions Audit Recommendations
+### Iteration: Apply Conventions Audit Recommendationse
 
 **Id:** `apply-conventions-audit-recommendations`
 
@@ -96,7 +96,7 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 **Changes:**
 
-- For each package: read `$PROJECT/_audit/conventions/plan__conventions-adoption-{package-name}.md` attachment from the audit plan and apply recommended changes to the package source code.
+- For each package: read `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-{package-name}.md` attachment from the audit plan and apply recommended changes to the package source code.
 - Commit per package with message "conventions(typescript): Apply noodlestan conventions" and up to 5 bullet points summarising the changes.
 - For `@art-js/constructs`: additionally extract shared tag/natural-expression helpers to `src/shared/`, barrel test helpers (primitives + constructs), move the Document shape type to primitives, delete redundant type tests, and extract non-exported private helpers to construct `helpers/` folders.
 
@@ -227,18 +227,18 @@ conventions(serializer): Apply noodlestan conventions in @art-js/serializer.
 
 **Id:** `consolidate-process-insights`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Document the convention adoption process, audit-conventions skill feedback, and recommendations for other projects.
 
-**Description:** Create `$PROJECT/_audit/conventions/plan__adoption-process-insights.md` describing this plan's execution, the adoption process followed, feedback from using the audit-conventions skill, and recommendations for rolling out to other projects. This is the input the conventions repo needs for its "Document Adoption Process" iteration.
+**Description:** Create `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/adoption-process-insights.md` describing this plan's execution, the adoption process followed, feedback from using the audit-conventions skill, and recommendations for rolling out to other projects. This is the input the conventions repo needs for its "Document Adoption Process" iteration.
 
 **Instructions:** `./instructions/consolidate-process-insights.md`
 
 **Changes:**
 
 - Read all plan attachments (setup audit report, per-package adoption reports from the audit plan).
-- Create `$PROJECT/_audit/conventions/plan__adoption-process-insights.md` describing: this plan, the adoption process followed, feedback from using the audit-conventions skill, and recommendations for rolling out to other projects.
+- Create `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/adoption-process-insights.md` describing: this plan, the adoption process followed, feedback from using the audit-conventions skill, and recommendations for rolling out to other projects.
 
 **Dependencies:**
 
@@ -246,9 +246,9 @@ conventions(serializer): Apply noodlestan conventions in @art-js/serializer.
 
 #### Commits:
 
-| ID                             | Repository / Checkout / Branch | Policy       | Hash  | Status     |
-| ------------------------------ | ------------------------------ | ------------ | ----- | ---------- |
-| `consolidate-process-insights` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | (TBD) | `AUTHORED` |
+| ID                             | Repository / Checkout / Branch | Policy       | Hash      | Status      |
+| ------------------------------ | ------------------------------ | ------------ | --------- | ----------- |
+| `consolidate-process-insights` | Art JS / `$PROJECT` / `main`   | `AUTONOMOUS` | `9aff5c0` | `COMMITTED` |
 
 ##### Commit: `consolidate-process-insights`
 
@@ -283,7 +283,7 @@ None.
 ### Evidence
 
 - Applied convention fixes in package source code.
-- Process insights document (`$PROJECT/_audit/conventions/plan__adoption-process-insights.md`).
+- Process insights document (`$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/adoption-process-insights.md`).
 
 ### Decisions
 

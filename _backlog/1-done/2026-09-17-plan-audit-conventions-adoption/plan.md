@@ -70,11 +70,11 @@ None.
 
 ## Attachments
 
-- `$PROJECT/_audit/conventions/plan__conventions-setup-audit.md` (Report) — Setup audit report from iteration 1.
-- `$PROJECT/_audit/conventions/plan__conventions-adoption-primitives.md` (Report) — Adoption audit report for primitives.
-- `$PROJECT/_audit/conventions/plan__conventions-adoption-constructs.md` (Report) — Adoption audit report for constructs.
-- `$PROJECT/_audit/conventions/plan__conventions-adoption-parser.md` (Report) — Adoption audit report for parser.
-- `$PROJECT/_audit/conventions/plan__conventions-adoption-serializer.md` (Report) — Adoption audit report for serializer.
+- `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-setup-audit.md` (Report) — Setup audit report from iteration 1.
+- `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-primitives.md` (Report) — Adoption audit report for primitives.
+- `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-constructs.md` (Report) — Adoption audit report for constructs.
+- `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-parser.md` (Report) — Adoption audit report for parser.
+- `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-serializer.md` (Report) — Adoption audit report for serializer.
 
 ## Execution Context
 
@@ -99,14 +99,14 @@ Execution occurs in `$PROJECT` on branch `main`.
 
 **Purpose:** Run the Audit Conventions Setup command to check if conventions are properly installed and configured in the Art JS project.
 
-**Description:** Execute Command: Audit Conventions Setup with `$PROJECT` as `%base-path` and save the resulting `%setup-report` as attachment `$PROJECT/_audit/conventions/plan__conventions-setup-audit.md`.
+**Description:** Execute Command: Audit Conventions Setup with `$PROJECT` as `%base-path` and save the resulting `%setup-report` as attachment `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-setup-audit.md`.
 
 **Instructions:** MANUAL — Execute using the `audit-conventions` skill.
 
 **Changes:**
 
 - Execute **Command: Audit Conventions Setup** with `$PROJECT` as `%base-path`.
-- Save the resulting `%setup-report` as attachment `$PROJECT/_audit/conventions/plan__conventions-setup-audit.md`.
+- Save the resulting `%setup-report` as attachment `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-setup-audit.md`.
 
 **Dependencies:**
 
@@ -136,13 +136,13 @@ conventions(art-js): Audit conventions setup.
 
 **Purpose:** Apply the fixes prescribed by the setup audit report.
 
-**Description:** Read `$PROJECT/_audit/conventions/plan__conventions-setup-audit.md` and apply the prescribed fixes to the project setup (e.g., add missing convention references to `_guide.md`).
+**Description:** Read `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-setup-audit.md` and apply the prescribed fixes to the project setup (e.g., add missing convention references to `_guide.md`).
 
 **Instructions:** MANUAL — Execute using the `audit-conventions` skill.
 
 **Changes:**
 
-- Read `$PROJECT/_audit/conventions/plan__conventions-setup-audit.md` attachment.
+- Read `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-setup-audit.md` attachment.
 - Apply prescribed fixes to the project setup (e.g., add missing convention references to `_guide.md`).
 
 **Dependencies:**
@@ -176,14 +176,14 @@ fix(art-js): Apply conventions setup fixes.
 
 **Purpose:** Audit convention adoption in the @art-js/primitives package.
 
-**Description:** Execute Command: Audit Conventions Adoption with `$PROJECT/libs/primitives/` as `%base-path` and save the resulting `%report` as attachment `$PROJECT/_audit/conventions/plan__conventions-adoption-primitives.md`.
+**Description:** Execute Command: Audit Conventions Adoption with `$PROJECT/libs/primitives/` as `%base-path` and save the resulting `%report` as attachment `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-primitives.md`.
 
 **Instructions:** MANUAL — Execute using the `audit-conventions` skill.
 
 **Changes:**
 
 - Execute **Command: Audit Conventions Adoption** with `$PROJECT/libs/primitives/` as `%base-path`.
-- Save the `%report` as attachment `$PROJECT/_audit/conventions/plan__conventions-adoption-primitives.md`.
+- Save the `%report` as attachment `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-primitives.md`.
 
 **Dependencies:**
 
@@ -213,14 +213,14 @@ conventions(art-js): Audit conventions adoption in @art-js/primitives.
 
 **Purpose:** Audit convention adoption in the @art-js/constructs package.
 
-**Description:** Execute Command: Audit Conventions Adoption with `$PROJECT/libs/constructs/` as `%base-path` and save the resulting `%report` as attachment `$PROJECT/_audit/conventions/plan__conventions-adoption-constructs.md`.
+**Description:** Execute Command: Audit Conventions Adoption with `$PROJECT/libs/constructs/` as `%base-path` and save the resulting `%report` as attachment `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-constructs.md`.
 
 **Instructions:** MANUAL — Execute using the `audit-conventions` skill.
 
 **Changes:**
 
 - Execute **Command: Audit Conventions Adoption** with `$PROJECT/libs/constructs/` as `%base-path`.
-- Save the `%report` as attachment `$PROJECT/_audit/conventions/plan__conventions-adoption-constructs.md`.
+- Save the `%report` as attachment `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-constructs.md`.
 
 **Dependencies:**
 
@@ -250,14 +250,14 @@ conventions(art-js): Audit conventions adoption in @art-js/constructs.
 
 **Purpose:** Audit convention adoption in the @art-js/parser package.
 
-**Description:** Execute Command: Audit Conventions Adoption with `$PROJECT/libs/parser/` as `%base-path` and save the resulting `%report` as attachment `$PROJECT/_audit/conventions/plan__conventions-adoption-parser.md`.
+**Description:** Execute Command: Audit Conventions Adoption with `$PROJECT/libs/parser/` as `%base-path` and save the resulting `%report` as attachment `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-parser.md`.
 
 **Instructions:** MANUAL — Execute using the `audit-conventions` skill.
 
 **Changes:**
 
 - Execute **Command: Audit Conventions Adoption** with `$PROJECT/libs/parser/` as `%base-path`.
-- Save the `%report` as attachment `$PROJECT/_audit/conventions/plan__conventions-adoption-parser.md`.
+- Save the `%report` as attachment `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-parser.md`.
 
 **Dependencies:**
 
@@ -287,14 +287,14 @@ conventions(art-js): Audit conventions adoption in @art-js/parser.
 
 **Purpose:** Audit convention adoption in the @art-js/serializer package.
 
-**Description:** Execute Command: Audit Conventions Adoption with `$PROJECT/libs/serializer/` as `%base-path` and save the resulting `%report` as attachment `$PROJECT/_audit/conventions/plan__conventions-adoption-serializer.md`.
+**Description:** Execute Command: Audit Conventions Adoption with `$PROJECT/libs/serializer/` as `%base-path` and save the resulting `%report` as attachment `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-serializer.md`.
 
 **Instructions:** MANUAL — Execute using the `audit-conventions` skill.
 
 **Changes:**
 
 - Execute **Command: Audit Conventions Adoption** with `$PROJECT/libs/serializer/` as `%base-path`.
-- Save the `%report` as attachment `$PROJECT/_audit/conventions/plan__conventions-adoption-serializer.md`.
+- Save the `%report` as attachment `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-serializer.md`.
 
 **Dependencies:**
 
@@ -336,8 +336,8 @@ None.
 
 ### Evidence
 
-- Setup audit report (`$PROJECT/_audit/conventions/plan__conventions-setup-audit.md`).
-- Per-package adoption reports (`$PROJECT/_audit/conventions/plan__conventions-adoption-*.md`).
+- Setup audit report (`$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-setup-audit.md`).
+- Per-package adoption reports (`$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-*.md`).
 - Applied setup fixes.
 
 ### Decisions

@@ -18,10 +18,11 @@ This section describes how to report back to the delegator after completing the 
 
 1. Summarise the current context, asking: are you reporting completion or a BLOCKER?
 2. Gather the evidence of changes made and outcomes achieved, or the blocker error details.
-3. Use the `render-template` skill with the `.agents/domains/plans/templates/instructions-report.tart` to render your report and write it next to this instruction file: `plan-apply-conventions-recommendations/instructions/consolidate-process-insights__report.md`. No separate delegation record is created.
-4. If your prompt included a `DIRECTIVE FEEDBACK:` include the feedback sections in the rendered report.
-5. Generate the response and send it back to the delegator.
-6. Keep the response terse per the Working Agreements: happy face + up to 3 bullet points (done `consolidate-process-insights`, created `{artefacts}`, thumbs up). The full trail lives in the report file; never repeat it in chat.
+3. Filter out refactoring changes carried out opportunistically during the conventions adoption process.
+4. Use the `render-template` skill with the `.agents/domains/plans/templates/instructions-report.tart` to render your report and write it next to this instruction file: `plan-apply-conventions-recommendations/instructions/consolidate-process-insights__report.md`. No separate delegation record is created.
+5. If your prompt included a `DIRECTIVE FEEDBACK:` include the feedback sections in the rendered report.
+6. Generate the response and send it back to the delegator.
+7. Keep the response terse per the Working Agreements: happy face + up to 3 bullet points (done `consolidate-process-insights`, created `{artefacts}`, thumbs up). The full trail lives in the report file; never repeat it in chat.
 
 ## Path Variables
 
@@ -41,7 +42,7 @@ The plan workflow (see the entry point guide → Planning Workflow → Working T
 
 ## Goals
 
-Document the convention adoption process, audit-conventions skill feedback, and recommendations for other projects. Create `$PROJECT/_audit/conventions/plan__adoption-process-insights.md` as the input the conventions repo needs for its "Document Adoption Process" iteration.
+Document the convention adoption process, audit-conventions skill feedback, and recommendations for other projects. Create `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/adoption-process-insights.md` as the input the conventions repo needs for its "Document Adoption Process" iteration.
 
 ## Mandatory Reading
 
@@ -74,11 +75,11 @@ Write a message following: `{Type}({Scope}): {Description}.` max 120 chars, opti
 
 Read all attachments produced by previous iterations of the audit plan:
 
-- `$PROJECT/_audit/conventions/plan__conventions-setup-audit.md` — Setup audit report.
-- `$PROJECT/_audit/conventions/plan__conventions-adoption-primitives.md` — Primitives adoption report.
-- `$PROJECT/_audit/conventions/plan__conventions-adoption-constructs.md` — Constructs adoption report.
-- `$PROJECT/_audit/conventions/plan__conventions-adoption-parser.md` — Parser adoption report.
-- `$PROJECT/_audit/conventions/plan__conventions-adoption-serializer.md` — Serializer adoption report.
+- `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-setup-audit.md` — Setup audit report.
+- `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-primitives.md` — Primitives adoption report.
+- `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-constructs.md` — Constructs adoption report.
+- `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-parser.md` — Parser adoption report.
+- `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-serializer.md` — Serializer adoption report.
 
 Also read the plan itself to understand the full adoption process:
 
@@ -86,7 +87,7 @@ Also read the plan itself to understand the full adoption process:
 
 ### Step `2 / 3` — Write insights document
 
-Create the file `$PROJECT/_audit/conventions/plan__adoption-process-insights.md` with the following structure:
+Create the file `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/adoption-process-insights.md` with the following structure:
 
 **Sections to include:**
 
@@ -104,7 +105,7 @@ Create the file `$PROJECT/_audit/conventions/plan__adoption-process-insights.md`
 **Message:**
 
 ```
-docs(art-js): Document conventions adoption process insights.
+knowledge(conventions): Document conventions adoption process insights.
 
 - Summarise adoption process and audit-conventions skill feedback.
 - Provide recommendations for rolling out to other projects.
@@ -113,5 +114,5 @@ docs(art-js): Document conventions adoption process insights.
 ## Final Verification
 
 - Verify that commits have been executed and pushed (or not pushed) according to the commit's policy.
-- Verify that `$PROJECT/_audit/conventions/plan__adoption-process-insights.md` exists and contains all four sections.
+- Verify that `$PROJECT/_backlog/1-done/2026-09-18-audit-conventions/adoption-process-insights.md` exists and contains all four sections.
 - Report according to the "How to Report Back to the Delegator" instructions.

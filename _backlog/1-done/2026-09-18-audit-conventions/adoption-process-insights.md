@@ -69,7 +69,7 @@ The `audit-conventions` skill exposes two commands: **Audit Conventions Adoption
 ### What was confusing / missing
 
 - **Routine path mismatch.** The skill's `::READ` directives point at `$DOMAINS/conventions/routines/*.art`, but the routines actually live in `$DOMAINS/conventions/processes/*.art`. The skill cannot resolve its own mandatory reading. This must be fixed.
-- **No report-file command.** The skill presents reports in chat but has no command to write them to a file (e.g. `_audit/conventions/plan__conventions-adoption-{package}.md`). The plan had to instruct saving the report manually.
+- **No report-file command.** The skill presents reports in chat but has no command to write them to a file (e.g. `_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-{package}.md`). The plan had to instruct saving the report manually.
 - **No "audit all packages" command.** Each package required a separate manual invocation. A single command that discovers packages and produces one report per package would remove the repetition.
 - **No apply command.** The skill audits but does not apply. The apply step (read report → fix → verify → commit) is entirely manual and unautomated.
 - **No exclusion mechanism.** The "Excluded Findings" sections (test files, closure functions, All Caps Constants scope) were added by hand. The skill should support declaring exclusions so reports are reproducible.
@@ -112,7 +112,7 @@ The adoption process is currently plan-driven and manual. The following automati
 
 ### 5.1 New routines (in the Conventions domain)
 
-- **Routine: Audit All Packages** — given a monorepo root, discover packages (e.g. `libs/*/`), run the adoption audit per package, and write one report per package to `_audit/conventions/plan__conventions-adoption-{package}.md`.
+- **Routine: Audit All Packages** — given a monorepo root, discover packages (e.g. `libs/*/`), run the adoption audit per package, and write one report per package to `_backlog/1-done/2026-09-18-audit-conventions/conventions-adoption-{package}.md`.
 - **Routine: Apply Convention Report** — given a report file and a base path, apply each finding, verify (lint/test/build), and commit with a `conventions({package})` message.
 - **Routine: Update Package Knowledge** — after applying fixes, update the package's `architecture/` docs to reflect the changes (e.g. renamed modules, moved types, new barrels).
 
