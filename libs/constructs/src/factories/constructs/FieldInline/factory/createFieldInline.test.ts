@@ -4,7 +4,7 @@ import {
 	makeFieldInlineFixture,
 	makeNaturalExpressionFixture,
 	makeTagFixture,
-} from '../../../test/helpers';
+} from '../../../../test/helpers';
 
 import { createFieldInline } from './createFieldInline';
 

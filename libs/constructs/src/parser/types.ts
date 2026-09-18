@@ -2,7 +2,7 @@
 
 import type { MdastNode, ParserVisitContext } from '@art-js/primitives';
 
-import type { Construct } from '../constructs/types';
+import type { Construct } from '../factories';
 
 export type ConstructProcessor = {
 	captureNode(context: ParserVisitContext, node: MdastNode): Construct | null;

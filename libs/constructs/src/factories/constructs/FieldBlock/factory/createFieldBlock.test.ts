@@ -4,7 +4,7 @@ import {
 	makeFieldBlockFixture,
 	makeNaturalBlockFixture,
 	makeTagFixture,
-} from '../../../test/helpers';
+} from '../../../../test/helpers';
 
 import { createFieldBlock } from './createFieldBlock';
 

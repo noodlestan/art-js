@@ -2,7 +2,7 @@ import { nodePosition } from '@art-js/primitives';
 import type { ParserVisitContext } from '@art-js/primitives';
 import type { Heading } from 'mdast';
 
-import { type SectionBlock, createSectionBlock } from '../../../../../constructs';
+import { type SectionBlock, createSectionBlock } from '../../../../../factories';
 import { rawSlice } from '../../../../mdast';
 import { extractTags } from '../../../../tags';
 import { KIND_PATTERN } from '../constants';

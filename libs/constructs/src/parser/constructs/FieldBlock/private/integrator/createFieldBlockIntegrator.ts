@@ -1,4 +1,4 @@
-import type { FieldBlock } from '../../../../../constructs';
+import type { FieldBlock } from '../../../../../factories';
 import type { ConstructIntegrator } from '../../../../types';
 import { onBeforeConstruct } from '../helpers/onBeforeConstruct';
 

@@ -4,7 +4,7 @@ import {
 	makeNaturalBlockFixture,
 	makeSectionBlockFixture,
 	makeTagFixture,
-} from '../../../test/helpers';
+} from '../../../../test/helpers';
 
 import { createSectionBlock } from './createSectionBlock';
 

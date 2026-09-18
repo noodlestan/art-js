@@ -2,7 +2,7 @@
  * @fixture SectionBlock of factory`libs/constructs/src/constructs/SectionBlock/factory/createSectionBlock.ts`
  */
 
-import type { SectionBlock, Tag } from '../../../../constructs';
+import type { SectionBlock, Tag } from '../../../../factories';
 
 export const makeSectionBlockFixture = (options?: {
 	name?: string;

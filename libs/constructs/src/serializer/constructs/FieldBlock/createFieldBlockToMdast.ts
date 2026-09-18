@@ -1,6 +1,6 @@
 import type { Node } from 'mdast';
 
-import type { FieldBlock } from '../../../constructs';
+import type { FieldBlock } from '../../../factories';
 import { tagsToMdast } from '../../tags';
 import type { ConstructSerializer } from '../../types';
 

@@ -2,7 +2,7 @@ import type { ParserVisitContext } from '@art-js/primitives';
 import { nodePosition } from '@art-js/primitives';
 import type { Paragraph, Strong } from 'mdast';
 
-import { type FieldInline, type Tag, createFieldInline } from '../../../../../constructs';
+import { type FieldInline, type Tag, createFieldInline } from '../../../../../factories';
 import { stripStrong } from '../../../../fields';
 import { rawSlice } from '../../../../mdast';
 import { createNaturalExpressionFromNode } from '../../../../naturalExpression';

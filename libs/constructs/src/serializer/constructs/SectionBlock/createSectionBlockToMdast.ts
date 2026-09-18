@@ -1,7 +1,7 @@
 import type { Node, RootContent } from 'mdast';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 
-import type { SectionBlock } from '../../../constructs';
+import type { SectionBlock } from '../../../factories';
 import { tagsToMdast } from '../../tags';
 import type { ConstructSerializer } from '../../types';
 

@@ -8,7 +8,7 @@ import {
 	type NaturalExpression,
 	type Tag,
 	createNaturalBlock,
-} from '../../../../../constructs';
+} from '../../../../../factories';
 import { rawSlice } from '../../../../mdast';
 import { createNaturalExpressionFromNode } from '../../../../naturalExpression';
 import { extractTags } from '../../../../tags';

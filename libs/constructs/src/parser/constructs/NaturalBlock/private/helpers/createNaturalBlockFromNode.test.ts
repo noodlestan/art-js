@@ -3,11 +3,11 @@ import type { Node } from 'mdast';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import { describe, expect, it, vi } from 'vitest';
 
-import { createNaturalBlock } from '../../../../../constructs';
+import { createNaturalBlock } from '../../../../../factories';
 
 import { createNaturalBlockFromNode } from './createNaturalBlockFromNode';
 
-vi.mock('../../../../../constructs/NaturalBlock/factory/createNaturalBlock', async () => {
+vi.mock('../../../../../factories/constructs/NaturalBlock/factory/createNaturalBlock', async () => {
 	const { createNaturalBlockMock } = await import('../../../../../test/helpers');
 	return createNaturalBlockMock();
 });

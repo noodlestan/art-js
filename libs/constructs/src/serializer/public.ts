@@ -6,8 +6,6 @@ import { createNaturalExpressionToMdast } from './constructs/NaturalExpression';
 import { createSectionBlockToMdast } from './constructs/SectionBlock';
 import type { ConstructSerializerFactory } from './types';
 
-export type * from './types';
-
 export const CONSTRUCT_SERIALIZERS: ConstructSerializerFactory[] = [
 	createDocumentToMdast,
 	createFieldBlockToMdast,
@@ -16,3 +14,5 @@ export const CONSTRUCT_SERIALIZERS: ConstructSerializerFactory[] = [
 	createNaturalExpressionToMdast,
 	createSectionBlockToMdast,
 ];
+
+export type * from './types';

@@ -3,17 +3,17 @@ import { describe, expect, it, vi } from 'vitest';
 import { createDefaultSerializerConfig } from './createDefaultSerializerConfig';
 
 vi.mock('@art-js/constructs', () => ({
-	createDocumentToMdast: vi.fn(() => ({ name: 'Document' })),
-	createFieldBlockToMdast: vi.fn(() => ({ name: 'FieldBlock' })),
-	createFieldInlineToMdast: vi.fn(() => ({ name: 'FieldInline' })),
-	createNaturalBlockToMdast: vi.fn(() => ({ name: 'NaturalBlock' })),
-	createNaturalExpressionToMdast: vi.fn(() => ({ name: 'NaturalExpression' })),
-	createSectionBlockToMdast: vi.fn(() => ({ name: 'SectionBlock' })),
+	CONSTRUCT_SERIALIZERS: [
+		vi.fn(() => ({ name: 'Document' })),
+		vi.fn(() => ({ name: 'FieldBlock' })),
+		vi.fn(() => ({ name: 'FieldInline' })),
+	],
 }));
 
 describe('createDefaultSerializerConfig', () => {
 	it('returns a serializer config with constructs array', async () => {
 		const config = createDefaultSerializerConfig();
-		expect(config.constructs).toHaveLength(6);
+
+		expect(config.constructs).toHaveLength(3);
 	});
 });

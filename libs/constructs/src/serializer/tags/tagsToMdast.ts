@@ -1,6 +1,6 @@
 import type { Text } from 'mdast';
 
-import type { Tag } from '../../constructs';
+import type { Tag } from '../../factories';
 
 import { tagToMdast } from './tagToMdast';
 

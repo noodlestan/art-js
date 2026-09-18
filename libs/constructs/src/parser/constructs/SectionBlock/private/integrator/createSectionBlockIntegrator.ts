@@ -1,7 +1,7 @@
 import { sectionDepth } from '@art-js/primitives';
 import type { Heading } from 'mdast';
 
-import type { SectionBlock } from '../../../../../constructs';
+import type { SectionBlock } from '../../../../../factories';
 import type { ConstructIntegrator } from '../../../../types';
 import { findParentSection } from '../helpers/findParentSection';
 

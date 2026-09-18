@@ -1,10 +1,10 @@
 /**
- * @fixture NaturalBlock of factory`libs/constructs/src/constructs/NaturalBlock/factory/createNaturalBlock.ts`
+ * @fixture NaturalBlock of factory`libs/constructs/src/constructs/NaturalBlock/private/factory/createNaturalBlock.ts`
  */
 
 import type { NaturalBlock, Tag } from '../../../../factories';
 
-export const makeNaturalBlockFixture = (options?: {
+export const makeNaturalBlockMock = (options?: {
 	value?: string;
 	type?: string;
 	lang?: string | null;

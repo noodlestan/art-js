@@ -1,7 +1,7 @@
 import { type MdastNode } from '@art-js/primitives';
 import { nodePosition } from '@art-js/primitives/src/parser/helpers';
 
-import type { NaturalExpression } from '../../constructs';
+import type { NaturalExpression } from '../../factories';
 
 export function createNaturalExpressionFromNode(node: MdastNode): NaturalExpression {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

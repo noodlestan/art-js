@@ -1,6 +1,6 @@
 import type { Node } from 'mdast';
 
-import type { FieldInline } from '../../../constructs';
+import type { FieldInline } from '../../../factories';
 import { tagsToMdast } from '../../tags';
 import type { ConstructSerializer } from '../../types';
 

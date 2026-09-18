@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { makeNaturalBlockFixture, makeTagFixture } from '../../../test/helpers';
+import { makeNaturalBlockFixture, makeTagFixture } from '../../../../test/helpers';
 
 import { createNaturalBlock } from './createNaturalBlock';
 

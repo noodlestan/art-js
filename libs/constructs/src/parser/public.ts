@@ -4,7 +4,7 @@ import { createNaturalBlockParser } from './constructs/NaturalBlock';
 import { createSectionBlockParser } from './constructs/SectionBlock';
 import type { ConstructParserFactory } from './types';
 
-export type * from './types';
+export { createArtDocumentFromNode } from './document/createArtDocumentFromNode';
 
 export const CONSTRUCT_PARSERS: ConstructParserFactory[] = [
 	createFieldBlockParser,
@@ -12,3 +12,5 @@ export const CONSTRUCT_PARSERS: ConstructParserFactory[] = [
 	createSectionBlockParser,
 ];
 export const DEFAULT_CONSTRUCT_PARSER = createNaturalBlockParser;
+
+export type * from './types';

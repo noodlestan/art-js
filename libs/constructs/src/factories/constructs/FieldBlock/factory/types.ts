@@ -1,5 +1,5 @@
+import type { BlockContent } from '../../../types';
 import type { Tag } from '../../Tag';
-import type { BlockContent } from '../../types';
 
 export type FieldBlockFactoryData = {
 	name: string;

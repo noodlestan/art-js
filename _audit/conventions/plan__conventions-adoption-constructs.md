@@ -65,6 +65,45 @@
 | No Redundant Type Tests     | `src/constructs/**/types.test.ts`                                                                                                                                                       | Deleted 8 type-acceptance tests that only assert a value satisfies a type.                                                     |
 | Helper Extraction           | `FieldBlock/private/helpers/onBeforeConstruct.ts`, `FieldInline/private/helpers/trimFieldEdges.ts`                                                                                      | Non-exported helpers extracted from two-function private files into construct `helpers/` (not added to private barrel).        |
 
+## Recommended Layout (Refactoring)
+
+The refactoring separates the package into three physically distinct layers, each with a single responsibility and a `public.ts` barrel exposing only the public surface. The package root re-exports the three public surfaces.
+
+```text
+src/
+  factories/    # what constructs are and how they are created
+    constructs/
+      {Construct}/
+        types.ts          # construct type
+        factory/          # create{Construct} factory + factory data type
+        index.ts
+    public.ts           # public construct surface (types + CONSTRUCTS registry)
+    types.ts            # shared construct types (Construct, ConstructFactory, ...)
+  parser/        # MDAST → constructs
+    constructs/{Construct}/   # per-construct parser (processor, integrator, FromNode helpers)
+    document/               # createArtDocumentFromNode
+    fields/                 # field parsing helpers (isFieldStrong, stripStrong)
+    mdast/                  # mdast parsing utilities (rawSlice)
+    naturalExpression/      # createNaturalExpressionFromNode
+    tags/                   # extractTags
+    public.ts               # public parser surface (CONSTRUCT_PARSERS, DEFAULT_CONSTRUCT_PARSER)
+    types.ts                # parser types (ConstructParser, ConstructParserFactory, ...)
+  serializer/    # constructs → MDAST
+    constructs/{Construct}/   # per-construct serializer (create{Construct}ToMdast)
+    tags/                     # tag serialization (tagToMdast, tagsToMdast)
+    public.ts                 # public serializer surface (CONSTRUCT_SERIALIZERS)
+    types.ts                  # serializer types (ConstructSerializer, ConstructSerializerFactory)
+  index.ts         # re-exports the three public surfaces
+```
+
+Ownership rules:
+
+- Construct behaviour (types + factories) lives in `constructs/`.
+- MDAST → construct behaviour lives in `parser/`.
+- Construct → MDAST behaviour lives in `serializer/`.
+- No cross-layer `shared/` area remains; each helper lives with the capability it supports.
+- Cross-construct helpers are grouped by capability (`fields/`, `mdast/`, `tags/`, `naturalExpression/`) within their owning layer, not in a generic `helpers/` area.
+
 ## Excluded Findings
 
 - Test files were excluded from this audit.

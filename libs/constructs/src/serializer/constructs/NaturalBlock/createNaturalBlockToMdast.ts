@@ -1,7 +1,7 @@
 import type { Node } from 'mdast';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 
-import type { NaturalBlock } from '../../../constructs';
+import type { NaturalBlock } from '../../../factories';
 import { tagsToMdast } from '../../tags';
 import type { ConstructSerializer } from '../../types';
 
