@@ -1,0 +1,32 @@
+# Module
+
+## Project: Art JS
+
+**Purpose:** Enable Art files to be authored as programs, with validation, language tooling, and automated projection to target formats.
+
+**Description:** Libraries and tools for working with Art MD as a programming language, including records, resources, modules, programs, program builders, validators, projectors, language services, and related tooling.
+
+**Owner:** Project: Art JS
+
+**Author:** Noodlestan Collective
+
+**Repository:** Repository: Art JS
+
+**Code:** https://github.com/noodlestan/art-js
+
+**Resources:**
+
+- Package: Bundler
+- Package: Program
+- Package: Validator
+- Package: Bin
+- Package: Dev Server
+- Package: Language Server
+- Package: Tools
+- Package: Watcher
+
+**Private:** `false`
+
+**Management:** Uses Workflow: Planning Work with one backlog per package, coordinating with Workflow: Roadmapping from one project-wide roadmap.
+
+**License:** License: Noodlestan 2026 MIT
