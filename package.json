@@ -1,0 +1,43 @@
+{
+  "name": "noodlestan/art-js",
+  "version": "0.0.1",
+  "description": "Monorepo containing the Art JS roadmap and backlogs, architecture knowledge, and library source code.",
+  "author": "Noodlestan",
+  "license": "MIT",
+  "private": true,
+  "packageManager": "npm@10.2.3",
+  "workspaces": [
+    "libs/**",
+    "cli/**",
+    "spec/**"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "turbo": "turbo",
+    "dev": "turbo run dev --ui tui",
+    "clean": "turbo run build:clean",
+    "lint": "prettier . -c",
+    "lint:fix": "prettier . -c --write",
+    "extract": "echo no purrception yet",
+    "ci:root": "npm run lint",
+    "ci": "npm run ci:root && turbo run ci"
+  },
+  "devDependencies": {
+    "@noodlestan/conventions-typescript": "0.0.2",
+    "@noodlestan/eslint-config": "0.0.8",
+    "@noodlestan/esbuild": "0.0.13",
+    "@noodlestan/tsconfig": "0.0.14",
+    "@types/node": "24.13.0",
+    "@vitest/coverage-v8": "4.1.8",
+    "eslint": "8.57.1",
+    "lefthook": "2.1.9",
+    "prettier": "3.8.4",
+    "rollup": "4.61.1",
+    "turbo": "2.9.18",
+    "typescript": "5.9.3",
+    "vite": "8.0.16",
+    "vitest": "4.1.8"
+  }
+}
