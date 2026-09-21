@@ -212,10 +212,9 @@ Execution occurs from `$WORKSPACE/`; The new Art JS repository is created as a n
 
 This section describes the ordered phases used to organise downstream work, identifying blocking dependencies across resources of different owners.
 
-| Index | Name        | Status    |
-| ----- | ----------- | --------- |
-| 1     | Migrate     | `WORKING` |
-| 2     | Consolidate | `DRAFT`   |
+| Index | Name    | Status |
+| ----- | ------- | ------ |
+| 1     | Migrate | `DONE` |
 
 ### Phase: 1 — Migrate
 
@@ -223,23 +222,11 @@ This section describes the ordered phases used to organise downstream work, iden
 
 **Description:** Create and scaffold the new Art JS repository, then extract the placeholder libs and cli packages from Art MD into Art JS.
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Dependencies:**
 
 - None.
-
-### Phase: 2 — Consolidate
-
-**Goal:** Update the Artificials umbrella and the Noodlestan website to reflect the new repository layout.
-
-**Description:** Consolidate the repository list in the Artificials umbrella project and update the Noodlestan website.
-
-**Status:** `DRAFT`
-
-**Dependencies:**
-
-- Phase 1 — Migrate: extraction must complete before consolidation.
 
 ---
 
@@ -247,13 +234,10 @@ This section describes the ordered phases used to organise downstream work, iden
 
 This section lists the downstream work items produced, coordinated, or advanced by the milestone.
 
-| Phase | Resource / Record                                                                                                           | Status  |
-| ----- | --------------------------------------------------------------------------------------------------------------------------- | ------- |
-| 1     | Plan: Create Art JS Repository `_backlog/3-now/plan-create-art-js-repository/plan.md`                                       | `READY` |
-| 1     | Plan: Extract Libs and CLI Placeholders to Art JS `_backlog/3-now/plan-extract-libs-and-cli-placeholders-to-art-js/plan.md` | `READY` |
-| -     |                                                                                                                             |         |
-| 2     | Plan: Consolidate Repos in Artificials (create)                                                                             | `DRAFT` |
-| 2     | Plan: Update Noodlestan Website(create)                                                                                     | `DRAFT` |
+| Phase | Resource / Record                                                                                                            | Status |
+| ----- | ---------------------------------------------------------------------------------------------------------------------------- | ------ |
+| 1     | Plan: Create Art JS Repository `_backlog/1-done/plan-create-art-js-repository/plan.md`                                       | `DONE` |
+| 1     | Plan: Extract Libs and CLI Placeholders to Art JS `_backlog/1-done/plan-extract-libs-and-cli-placeholders-to-art-js/plan.md` | `DONE` |
 
 The following items are not yet captured in a work item document.
 

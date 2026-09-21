@@ -2,7 +2,7 @@
 
 **ID:** `extract-libs-and-cli-placeholders-to-art-js`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -205,19 +205,19 @@ Execution occurs from `$WORKSPACE/`; the placeholder packages move from `$ART_MD
 
 ## Items:
 
-| Iteration / Instructions                                  | Status  |
-| --------------------------------------------------------- | ------- |
-| Iteration: Move Placeholder Packages to Art JS            | `READY` |
-| Iteration: Update Art JS Records                          | `READY` |
-| Iteration: Update Art MD Records                          | `READY` |
-| Iteration: Rename @art-js to @art-md for Staying Packages | `READY` |
-| Iteration: Update Knowledge Files                         | `READY` |
+| Iteration / Instructions                                  | Status |
+| --------------------------------------------------------- | ------ |
+| Iteration: Move Placeholder Packages to Art JS            | `DONE` |
+| Iteration: Update Art JS Records                          | `DONE` |
+| Iteration: Update Art MD Records                          | `DONE` |
+| Iteration: Rename @art-js to @art-md for Staying Packages | `DONE` |
+| Iteration: Update Knowledge Files                         | `DONE` |
 
 ### Iteration: Move Placeholder Packages to Art JS
 
 **ID:** `move-placeholder-packages-to-art-js`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Move the placeholder libs and cli packages from Art MD to Art JS.
 
@@ -239,10 +239,10 @@ Execution occurs from `$WORKSPACE/`; the placeholder packages move from `$ART_MD
 
 #### Commits:
 
-| ID                                        | Repository / Checkout / Branch  | Policy   | Hash | Status     |
-| ----------------------------------------- | ------------------------------- | -------- | ---- | ---------- |
-| `add-placeholder-packages-to-art-js`      | Art JS / `$ART_JS` / `building` | `MANUAL` |      | `AUTHORED` |
-| `remove-placeholder-packages-from-art-md` | Art MD / `$ART_MD` / `building` | `MANUAL` |      | `AUTHORED` |
+| ID                                        | Repository / Checkout / Branch  | Policy   | Hash      | Status      |
+| ----------------------------------------- | ------------------------------- | -------- | --------- | ----------- |
+| `add-placeholder-packages-to-art-js`      | Art JS / `$ART_JS` / `main`     | `MANUAL` | `753d49a` | `COMMITTED` |
+| `remove-placeholder-packages-from-art-md` | Art MD / `$ART_MD` / `building` | `MANUAL` | `9a1dbc1` | `COMMITTED` |
 
 ##### Commit: `add-placeholder-packages-to-art-js`
 
@@ -251,7 +251,7 @@ Execution occurs from `$WORKSPACE/`; the placeholder packages move from `$ART_MD
 **Message:**
 
 ```text
-migrate(art-js): Add placeholder packages extracted from Art MD.
+migrate(art-js): Migrate packages from Repository: Art MD.
 ```
 
 ##### Commit: `remove-placeholder-packages-from-art-md`
@@ -268,7 +268,7 @@ migrate(art-md): Remove placeholder packages moved to Art JS.
 
 **ID:** `update-art-js-records`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Update the Art JS namespace and project records to the migrated scope.
 
@@ -293,9 +293,9 @@ migrate(art-md): Remove placeholder packages moved to Art JS.
 
 #### Commits:
 
-| ID                             | Repository / Checkout / Branch  | Policy   | Hash | Status     |
-| ------------------------------ | ------------------------------- | -------- | ---- | ---------- |
-| `update-art-js-project-record` | Art JS / `$ART_JS` / `building` | `MANUAL` |      | `AUTHORED` |
+| ID                             | Repository / Checkout / Branch | Policy   | Hash      | Status      |
+| ------------------------------ | ------------------------------ | -------- | --------- | ----------- |
+| `update-art-js-project-record` | Art JS / `$ART_JS` / `main`    | `MANUAL` | `5b5ca1b` | `COMMITTED` |
 
 ##### Commit: `update-art-js-project-record`
 
@@ -304,14 +304,16 @@ migrate(art-md): Remove placeholder packages moved to Art JS.
 **Message:**
 
 ```text
-records(art-js): Update project record resources for migrated packages.
+records(art-js): Add project, repository, and all other records.
 ```
+
+> Folded into the plan `create-art-js-repository` records commit.
 
 ### Iteration: Update Art MD Records
 
 **ID:** `update-art-md-records`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Update the Art MD namespace and project records to the md core scope.
 
@@ -336,10 +338,10 @@ records(art-js): Update project record resources for migrated packages.
 
 #### Commits:
 
-| ID                               | Repository / Checkout / Branch    | Policy   | Hash | Status     |
-| -------------------------------- | --------------------------------- | -------- | ---- | ---------- |
-| `rename-art-md-records`          | Art MD / `$ART_MD` / `building`   | `MANUAL` |      | `AUTHORED` |
-| `update-workspace-art-md-record` | Workspace / `$WORKSPACE` / `main` | `MANUAL` |      | `AUTHORED` |
+| ID                               | Repository / Checkout / Branch    | Policy   | Hash      | Status      |
+| -------------------------------- | --------------------------------- | -------- | --------- | ----------- |
+| `rename-art-md-records`          | Art MD / `$ART_MD` / `building`   | `MANUAL` | `82f07f4` | `COMMITTED` |
+| `update-workspace-art-md-record` | Workspace / `$WORKSPACE` / `main` | `MANUAL` | `aee7e09` | `COMMITTED` |
 
 ##### Commit: `rename-art-md-records`
 
@@ -365,7 +367,7 @@ records(workspace): Update art-md repository record owner.
 
 **ID:** `rename-art-js-to-art-md-for-staying-packages`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Rename the `@art-js` scope to `@art-md` for the packages staying in Art MD.
 
@@ -398,9 +400,9 @@ records(workspace): Update art-md repository record owner.
 
 #### Commits:
 
-| ID                              | Repository / Checkout / Branch  | Policy   | Hash | Status     |
-| ------------------------------- | ------------------------------- | -------- | ---- | ---------- |
-| `rename-staying-packages-scope` | Art MD / `$ART_MD` / `building` | `MANUAL` |      | `AUTHORED` |
+| ID                              | Repository / Checkout / Branch  | Policy   | Hash      | Status      |
+| ------------------------------- | ------------------------------- | -------- | --------- | ----------- |
+| `rename-staying-packages-scope` | Art MD / `$ART_MD` / `building` | `MANUAL` | `40b87a4` | `COMMITTED` |
 
 ##### Commit: `rename-staying-packages-scope`
 
@@ -416,7 +418,7 @@ renames(art-md): Rename @art-js scope to @art-md for staying packages.
 
 **ID:** `update-knowledge-files`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Update README, `_guide.md`, and package.json descriptions in both repositories.
 
@@ -446,10 +448,10 @@ renames(art-md): Rename @art-js scope to @art-md for staying packages.
 
 #### Commits:
 
-| ID                              | Repository / Checkout / Branch  | Policy   | Hash | Status     |
-| ------------------------------- | ------------------------------- | -------- | ---- | ---------- |
-| `update-art-md-knowledge-files` | Art MD / `$ART_MD` / `building` | `NOPUSH` |      | `AUTHORED` |
-| `update-art-js-knowledge-files` | Art JS / `$ART_JS` / `building` | `NOPUSH` |      | `AUTHORED` |
+| ID                              | Repository / Checkout / Branch  | Policy   | Hash      | Status      |
+| ------------------------------- | ------------------------------- | -------- | --------- | ----------- |
+| `update-art-md-knowledge-files` | Art MD / `$ART_MD` / `building` | `NOPUSH` | `3551655` | `COMMITTED` |
+| `update-art-js-knowledge-files` | Art JS / `$ART_JS` / `main`     | `NOPUSH` | `33c9606` | `COMMITTED` |
 
 ##### Commit: `update-art-md-knowledge-files`
 
@@ -468,8 +470,10 @@ docs(art-md): Update README, guide, and package description to Art MD scope.
 **Message:**
 
 ```text
-docs(art-js): Update README, guide, and package description to Art JS scope.
+guides(art-js): Add README and guide.
 ```
+
+> Folded into the plan `create-art-js-repository` guides commit.
 
 ---
 
@@ -477,7 +481,7 @@ docs(art-js): Update README, guide, and package description to Art JS scope.
 
 ### Next
 
-Execute in a pairing ession.
+All iterations complete.
 
 ### Blockers
 
@@ -537,7 +541,14 @@ npm run test
 
 ### Evidence
 
-- None yet.
+- `migrate(art-js): Migrate packages from Repository: Art MD.` — `753d49a`
+- `migrate(art-md): Remove placeholder packages moved to Art JS.` — `9a1dbc1`
+- `records(art-js): Add project, repository, and all other records.` — `5b5ca1b`
+- `records(art-md): Rename repository and project records to Art MD scope.` — `82f07f4`
+- `records(workspace): Update art-md repository record owner.` — `aee7e09`
+- `renames(art-md): Rename @art-js scope to @art-md for staying packages.` — `40b87a4`
+- `docs(art-md): Update README, guide, and package description to Art MD scope.` — `3551655`
+- `guides(art-js): Add README and guide.` — `33c9606`
 
 ### Findings
 
@@ -549,6 +560,8 @@ npm run test
 - **Missing Spec in project record** — `$ART_MD/_records/project.art` Resources lists 5 packages, missing Spec.
 - **Missing guide rows** — `$ART_MD/_guide.md` Projects table omits Language Server and Tools.
 - **Package guides and READMEs** — all 6 staying packages reference `@art-js/{pkg}` in `_guide.md` intros; READMEs reference "Art-JS toolkit" or "@artificials".
+- **ART_JS iterations folded into plan 1** — Update Art JS Records and Update Knowledge Files (ART_JS side) were committed within plan `create-art-js-repository`'s records and guides commits.
+- **Follow-up commits** — beyond the plan iterations, follow-up commits updated README/package READMEs, project/namespace records, backlog, roadmap, architecture, conventions, and the lockfile in Art MD.
 
 ### Decisions
 
@@ -564,8 +577,8 @@ npm run test
 ### Follow Ups
 
 - **Update checkout records** after the extraction (`$WORKSPACE/_records/checkouts/art-md-@-building-checkout.art` still says "Checkout: Art JS @ building").
-- **Update `_backlog/_architect.md` and `_roadmap/_architect.md`** — still reference "Art JS" in titles.
-- **Update `architecture/*`** — repository-level architecture docs reference Art JS.
+- ~~**Update `_backlog/_architect.md` and `_roadmap/_architect.md`**~~ — done (`backlog(art-md)` + `roadmap(art-md)`).
+- ~~**Update `architecture/*`**~~ — done (`docs(art-md): Update architecture.`).
 
 ### Feedback
 

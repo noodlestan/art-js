@@ -2,7 +2,7 @@
 
 **ID:** `create-art-js-repository`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -101,18 +101,18 @@ Execution occurs from `$WORKSPACE/`; the new Art JS repository is created as a n
 
 ## Items:
 
-| Iteration / Instructions                                                                                   | Status  |
-| ---------------------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Create Art JS Repository and Checkout `./instructions/create-art-js-repository-and-checkout.md` | `READY` |
-| Iteration: Scaffold Project Skeleton `./instructions/scaffold-project-skeleton.md`                         | `READY` |
-| Iteration: Create Records at `$ART_JS/_records` `./instructions/create-records-at-art-js-records.md`       | `READY` |
-| Iteration: Create Workspace Repository Record `./instructions/create-workspace-repository-record.md`       | `READY` |
+| Iteration / Instructions                                                                                   | Status |
+| ---------------------------------------------------------------------------------------------------------- | ------ |
+| Iteration: Create Art JS Repository and Checkout `./instructions/create-art-js-repository-and-checkout.md` | `DONE` |
+| Iteration: Scaffold Project Skeleton `./instructions/scaffold-project-skeleton.md`                         | `DONE` |
+| Iteration: Create Records at `$ART_JS/_records` `./instructions/create-records-at-art-js-records.md`       | `DONE` |
+| Iteration: Create Workspace Repository Record `./instructions/create-workspace-repository-record.md`       | `DONE` |
 
 ### Iteration: Create Art JS Repository and Checkout
 
 **ID:** `create-art-js-repository-and-checkout`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Create the new Art JS repository and its checkout.
 
@@ -130,23 +130,25 @@ Execution occurs from `$WORKSPACE/`; the new Art JS repository is created as a n
 
 #### Commits:
 
-| ID                                      | Repository / Checkout / Branch  | Policy   | Hash | Status     |
-| --------------------------------------- | ------------------------------- | -------- | ---- | ---------- |
-| `create-art-js-repository-and-checkout` | Art JS / `$ART_JS` / `building` | `NOPUSH` |      | `AUTHORED` |
+| ID                                      | Repository / Checkout / Branch | Policy   | Hash      | Status      |
+| --------------------------------------- | ------------------------------ | -------- | --------- | ----------- |
+| `create-art-js-repository-and-checkout` | Art JS / `$ART_JS` / `main`    | `NOPUSH` | `91efd3a` | `COMMITTED` |
 
 ##### Commit: `create-art-js-repository-and-checkout`
 
 **Message:**
 
 ```text
-scaffold(art-js): Create Art JS repository and checkout.
+scaffold(art-js): Scaffold project skeleton.
 ```
+
+> Combined with Iteration: Scaffold Project Skeleton into a single commit.
 
 ### Iteration: Scaffold Project Skeleton
 
 **ID:** `scaffold-project-skeleton`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Scaffold the project skeleton in the new repository.
 
@@ -164,9 +166,9 @@ scaffold(art-js): Create Art JS repository and checkout.
 
 #### Commits:
 
-| ID                          | Repository / Checkout / Branch  | Policy   | Hash | Status     |
-| --------------------------- | ------------------------------- | -------- | ---- | ---------- |
-| `scaffold-project-skeleton` | Art JS / `$ART_JS` / `building` | `NOPUSH` |      | `AUTHORED` |
+| ID                          | Repository / Checkout / Branch | Policy   | Hash      | Status      |
+| --------------------------- | ------------------------------ | -------- | --------- | ----------- |
+| `scaffold-project-skeleton` | Art JS / `$ART_JS` / `main`    | `NOPUSH` | `91efd3a` | `COMMITTED` |
 
 ##### Commit: `scaffold-project-skeleton`
 
@@ -176,11 +178,13 @@ scaffold(art-js): Create Art JS repository and checkout.
 scaffold(art-js): Scaffold project skeleton.
 ```
 
+> Combined with Iteration: Create Art JS Repository and Checkout into a single commit.
+
 ### Iteration: Create Records at `$ART_JS/_records`
 
 **ID:** `create-records-at-art-js-records`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Create the project, repository, and namespace records for Art JS.
 
@@ -204,23 +208,23 @@ scaffold(art-js): Scaffold project skeleton.
 
 #### Commits:
 
-| ID                                 | Repository / Checkout / Branch  | Policy   | Hash | Status     |
-| ---------------------------------- | ------------------------------- | -------- | ---- | ---------- |
-| `create-records-at-art-js-records` | Art JS / `$ART_JS` / `building` | `NOPUSH` |      | `AUTHORED` |
+| ID                                 | Repository / Checkout / Branch | Policy   | Hash      | Status      |
+| ---------------------------------- | ------------------------------ | -------- | --------- | ----------- |
+| `create-records-at-art-js-records` | Art JS / `$ART_JS` / `main`    | `NOPUSH` | `5b5ca1b` | `COMMITTED` |
 
 ##### Commit: `create-records-at-art-js-records`
 
 **Message:**
 
 ```text
-records(art-js): Create project, repository, and namespace records.
+records(art-js): Add project, repository, and all other records.
 ```
 
 ### Iteration: Create Workspace Repository Record
 
 **ID:** `create-workspace-repository-record`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Register the new Art JS repository in the workspace records.
 
@@ -238,9 +242,9 @@ records(art-js): Create project, repository, and namespace records.
 
 #### Commits:
 
-| ID                                   | Repository / Checkout / Branch    | Policy   | Hash | Status     |
-| ------------------------------------ | --------------------------------- | -------- | ---- | ---------- |
-| `create-workspace-repository-record` | Workspace / `$WORKSPACE` / `main` | `NOPUSH` |      | `AUTHORED` |
+| ID                                   | Repository / Checkout / Branch    | Policy   | Hash      | Status      |
+| ------------------------------------ | --------------------------------- | -------- | --------- | ----------- |
+| `create-workspace-repository-record` | Workspace / `$WORKSPACE` / `main` | `NOPUSH` | `d31c0d7` | `COMMITTED` |
 
 ##### Commit: `create-workspace-repository-record`
 
@@ -256,7 +260,7 @@ records(workspace): Add art-js repository record.
 
 ### Next
 
-Delegate the next `READY` iteration: `create-art-js-repository-and-checkout`.
+All iterations complete.
 
 ### Blockers
 
@@ -314,11 +318,15 @@ npm run test
 
 ### Evidence
 
-- None yet.
+- `scaffold(art-js): Scaffold project skeleton.` — `91efd3a`
+- `records(art-js): Add project, repository, and all other records.` — `5b5ca1b`
+- `records(workspace): Add art-js repository record.` — `d31c0d7`
 
 ### Findings
 
 - **Placeholder packages move here** — bundler, program, validator, bin, dev-server, language-server, tools, and watcher are scaffolds (dist, LICENSE, README only) with no real code.
+- **Iterations 1 and 2 combined** — repository creation and scaffold were committed together in a single `scaffold` commit.
+- **Branch is `main`** — the Art JS repository was created on `main`, not `building`.
 
 ### Decisions
 
