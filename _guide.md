@@ -28,17 +28,17 @@ libs/               — library packages
 
 ## Projects
 
-| Project           | Guide                          | Backlog     |
-| ----------------- | ------------------------------ | ----------- |
-| Art JS (root)     | `_guide.md`                    | `_backlog/` |
-| Bin               | `cli/bin/_guide.md`            | `NONE`      |
-| Dev Server        | `cli/dev-server/_guide.md`     | `NONE`      |
-| Watcher           | `cli/watcher/_guide.md`        | `NONE`      |
-| Bundler           | `libs/bundler/_guide.md`       | `NONE`      |
-| Program           | `libs/program/_guide.md`       | `NONE`      |
-| Validator         | `libs/validator/_guide.md`     | `NONE`      |
-| Language Server   | `cli/language-server/_guide.md`| `NONE`      |
-| Tools             | `cli/tools/_guide.md`          | `NONE`      |
+| Project         | Guide                           | Backlog     |
+| --------------- | ------------------------------- | ----------- |
+| Art JS (root)   | `_guide.md`                     | `_backlog/` |
+| Bin             | `cli/bin/_guide.md`             | `NONE`      |
+| Dev Server      | `cli/dev-server/_guide.md`      | `NONE`      |
+| Watcher         | `cli/watcher/_guide.md`         | `NONE`      |
+| Bundler         | `libs/bundler/_guide.md`        | `NONE`      |
+| Program         | `libs/program/_guide.md`        | `NONE`      |
+| Validator       | `libs/validator/_guide.md`      | `NONE`      |
+| Language Server | `cli/language-server/_guide.md` | `NONE`      |
+| Tools           | `cli/tools/_guide.md`           | `NONE`      |
 
 ## Records Management
 
