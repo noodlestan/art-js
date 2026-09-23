@@ -116,16 +116,16 @@ Unit tests to create in `$PROJECT/libs/records/`:
 
 ## Items:
 
-| Iteration / Instructions          | Status     |
-| --------------------------------- | ---------- |
-| Iteration: Design Lib Records API | `PLANNING` |
-| Iteration: Scaffold Lib Records   | `PLANNING` |
+| Iteration / Instructions          | Status  |
+| --------------------------------- | ------- |
+| Iteration: Design Lib Records API | `READY` |
+| Iteration: Scaffold Lib Records   | `READY` |
 
 ### Iteration: Design Lib Records API
 
 **ID:** `design-lib-records-api`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Produce the records architecture knowledge and the full package spec.
 
@@ -153,7 +153,7 @@ knowledge(art-js): records API spec and components update.
 
 **ID:** `scaffold-lib-records`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Scaffold the `@art-js/records` package skeleton and register it in the project records and knowledge.
 
@@ -187,7 +187,7 @@ scaffold(records): create @art-js/records package skeleton.
 
 ### Next
 
-Draft instructions for Iteration: Design Lib Records API.
+Delegate Iteration: Design Lib Records API and Iteration: Scaffold Lib Records.
 
 ### Blockers
 
