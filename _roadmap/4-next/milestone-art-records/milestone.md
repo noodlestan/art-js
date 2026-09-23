@@ -12,15 +12,22 @@
 
 **Description:** Build a records library that wraps extracted records (representations of `SectionBlock` keeping as much of the art AST data as possible) in a consumer-facing API with accessors, positioning anchors for write-back, and an optional content-hash guard. Works on content strings, not the filesystem.
 
+## Path Variables
+
+| Variable   | Resolved Path               | Purpose                                                                    |
+| ---------- | --------------------------- | -------------------------------------------------------------------------- |
+| `$PROJECT` | Provided with prompt        | Where work execution is taking place.                                      |
+| `$ART_MD`  | `checkouts/art-md-planning` | Repository: Art MD checkout — codec and source design, constructs, parser. |
+
 ## Summary
 
 Expose a constructor consumers use to wrap extracted records. The returned API encapsulates the extracted record (`raw()`) plus the metadata needed to write it back. Records are representations of `SectionBlock` that keep as much of the art AST data as possible, but expose the block children of type `FieldBlock` or `FieldInline` as direct fields of the resource. Consider a `ProxyObject` so the object also returns the record fields transparently, with setters routing data to the encapsulated `field.value` and tracking `field.modifiedValue` when modified. Everything carries positioning anchors enough to write back. The API works with content strings (not the filesystem) and returns a hash of the original file alongside the record so the write operation can check before attempting to write back into the file — this behaviour is opt-in (or opt-out), possibly split into separate safe vs unsafe functions.
 
 ## Source Tasks
 
-- Briefing: `_backlog/_architect.md` — approach (POC-first, schema-first in TS, mdast substrate).
-- Constructs: `libs/constructs/src/constructs/SectionBlock/`, `FieldBlock/`, `FieldInline/` — the AST shapes the records wrap.
-- Parser: `libs/parser/` — how records are extracted from content.
+- Briefing: `$ART_MD/_backlog/_architect.md` — approach (POC-first, schema-first in TS, mdast substrate).
+- Constructs: `$ART_MD/libs/constructs/` — `SectionBlock`, `FieldBlock`, `FieldInline` — the AST shapes the records wrap.
+- Parser: `$ART_MD/libs/parser/` — how records are extracted from content.
 
 ## Phases
 
@@ -41,7 +48,7 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 **Dependencies:**
 
-- Constructs: `libs/constructs/src/constructs/SectionBlock/`
+- Codec and source contracts: `Milestone: Art Codec` at `$ART_MD/_roadmap/3-now/milestone-art-codec/milestone.md` — `@art-md/primitives` (contracts), `@art-md/codec` (implementation)
 
 ### Phase: 2 — Extraction API
 
@@ -83,12 +90,12 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 The following items are not yet captured in a work item document.
 
-| Phase | Resource / Record                                                      | Status  |
-| ----- | ---------------------------------------------------------------------- | ------- |
-| 1     | Plan: Design API `_backlog/7-backlog/plan-design-lib-records/plan.md`  | `DRAFT` |
-| -     |                                                                        |         |
-| 2     | Plan: Create Lib Records `_backlog/7-backlog/plan-records-api/plan.md` | `DRAFT` |
-| -     |                                                                        |         |
+| Phase | Resource / Record                                                             | Status  |
+| ----- | ----------------------------------------------------------------------------- | ------- |
+| 1     | Plan: Design API `_backlog/7-backlog/plan-design-lib-records/plan.md`         | `DRAFT` |
+| -     |                                                                               |         |
+| 2     | Plan: Create Lib Records `_backlog/7-backlog/plan-create-lib-records/plan.md` | `DRAFT` |
+| -     |                                                                               |         |
 
 ## Work
 
@@ -98,7 +105,7 @@ The following items are not yet captured in a work item document.
 
 ### Blockers
 
-None.
+- None.
 
 ## Operating Instructions
 

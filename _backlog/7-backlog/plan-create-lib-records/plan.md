@@ -14,6 +14,5 @@
 
 **Dependencies:**
 
-- Constructs: `libs/constructs/` — `SectionBlock`, `FieldBlock`, `FieldInline`
-- `@art-md/codec`
-- `@art-md/source`
+- `@art-md/primitives` — codec and source contracts (`ArtCodec`, `ArtContentSource`, `ArtDocumentSource`)
+- `@art-md/codec` — configured codec implementation

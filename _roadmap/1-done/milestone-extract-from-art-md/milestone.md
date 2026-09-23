@@ -22,14 +22,13 @@
 
 This section lists the path variables used throughout the Milestone file and its downstream work items. All file references in the Milestone and downstream work items MUST use these variables — never bare filesystem paths.
 
-| Variable          | Resolved Path                                  | Purpose                              |
-| ----------------- | ---------------------------------------------- | ------------------------------------ |
-| `$WORKSPACE`      | Current working directory                      | Workspace root directory.            |
-| `$PROJECT`        | `checkouts/art-js-planning`                    | Current checkout for planning only.  |
-| `$ART_MD`         | `checkouts/art-md-building` (after rename)     | Repository: Art MD checkout.         |
-| `$ART_JS`         | `checkouts/art-js-building` (to be re-created) | Repository: Art JS checkout.         |
-| `$ARTIFICIALS`    | `checkouts/artificials`                        | Repository: Artificials checkout.    |
-| `$NOODLESTAN_WEB` | `checkouts/noodlestan-web`                     | Repository: Noodlestan Web checkout. |
+| Variable          | Resolved Path               | Purpose                               |
+| ----------------- | --------------------------- | ------------------------------------- |
+| `$WORKSPACE`      | Current working directory   | Workspace root directory.             |
+| `$PROJECT`        | Provided with prompt        | Where work execution is taking place. |
+| `$ART_MD`         | `checkouts/art-md-planning` | Repository: Art MD checkout.          |
+| `$ARTIFICIALS`    | `checkouts/artificials`     | Repository: Artificials checkout.     |
+| `$NOODLESTAN_WEB` | `checkouts/noodlestan-web`  | Repository: Noodlestan Web checkout.  |
 
 ## Summary
 
@@ -175,7 +174,7 @@ Changes in 4 repositories: the current Art JS repo is renamed to Art MD; a new A
 **Changes:**
 
 - Create the repository and scaffold the project skeleton.
-- Create the records at `$ART_JS/_records` (project, repository, namespace) with purposes and descriptions adapted to new scope.
+- Create the records at `$PROJECT/_records` (project, repository, namespace) with purposes and descriptions adapted to new scope.
 - Update knowledge: README, `_guide.md`, `package.json` description.
 - Receive the extracted placeholder packages from Art MD.
 
@@ -238,40 +237,6 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | ----- | ---------------------------------------------------------------------------------------------------------------------------- | ------ |
 | 1     | Plan: Create Art JS Repository `_backlog/1-done/plan-create-art-js-repository/plan.md`                                       | `DONE` |
 | 1     | Plan: Extract Libs and CLI Placeholders to Art JS `_backlog/1-done/plan-extract-libs-and-cli-placeholders-to-art-js/plan.md` | `DONE` |
-
-The following items are not yet captured in a work item document.
-
-### Plan: Consolidate Repos in Artificials
-
-**Status:** `DRAFT`
-
-**Purpose:** Update the Artificials umbrella to list the owned projects and repositories.
-
-**Description:** Consolidate the repository list in the Artificials umbrella project to include Art MD and Art JS.
-
-**Changes:**
-
-- Update the Artificials repository record and roadmap to list Art MD and Art JS.
-
-**Dependencies:**
-
-- Plan: Extract Libs and CLI Placeholders to Art JS.
-
-### Plan: Update Noodlestan Website
-
-**Status:** `DRAFT`
-
-**Purpose:** Update the Noodlestan website to reflect the new repository layout.
-
-**Description:** Update website content referencing the Art JS and Art MD repositories.
-
-**Changes:**
-
-- Update website content and links in `$NOODLESTAN_WEB`.
-
-**Dependencies:**
-
-- Plan: Consolidate Repos in Artificials.
 
 ---
 
