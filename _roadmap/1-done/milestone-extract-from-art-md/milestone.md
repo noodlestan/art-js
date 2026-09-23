@@ -2,7 +2,7 @@
 
 **ID:** `milestone-extract-from-art-md`
 
-**Status:** `PLANNING`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/roadmaps/templates/milestone.tart`
 
