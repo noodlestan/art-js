@@ -4,7 +4,7 @@
 
 **Status:** `DRAFT`
 
-**Template:** `.agents/domains/roadmaps/templates/milestone.tart`
+**Template:** `$DOMAINS/milestones/templates/milestone.tart`
 
 **Skill:** `write-milestone`
 
