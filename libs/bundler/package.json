@@ -21,10 +21,10 @@
     "LICENSE-MIT"
   ],
   "scripts": {
-    "dev": "vite build --watch",
+    "dev": "esbuild-cli-watch",
     "lint": "prettier . -c && eslint . && tsc --noEmit",
     "lint:fix": "prettier . -c --write && eslint . --fix",
-    "build": "vite build",
+    "build": "esbuild-cli",
     "build:clean": "rm -rf dist",
     "test": "vitest run",
     "test:ci": "vitest run --coverage",

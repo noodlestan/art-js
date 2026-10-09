@@ -22,8 +22,8 @@
     "README.md"
   ],
   "scripts": {
-    "dev": "vite build --watch",
-    "build": "vite build",
+    "dev": "esbuild-cli-watch",
+    "build": "esbuild-cli",
     "build:clean": "rm -rf dist",
     "lint": "prettier . -c && eslint . && tsc --noEmit",
     "lint:fix": "prettier . -c --write && eslint . --fix",
