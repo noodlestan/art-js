@@ -117,7 +117,7 @@ Create the records architecture knowledge document at `$PROJECT/architecture/rec
 
 The document MUST cover:
 
-- **Purpose** — the role of the records library in the Art JS ecosystem: record identity, locating, extraction, update and serialisation for Art records.
+- **Purpose** — the role of the records library in the Art JS ecosystem: Record identity, discovery, extraction, update and serialisation for Markdown documents.
 - **Responsibilities** — record modelling extracted from `SectionBlock` and `Field` constructs; extraction and presence-assertion API; write-back with positioning anchors and an optional content-hash guard; optional `ProxyObject`-based transparent field access. Primary types: `ArtRecord`, `ArtRecordCapsule`, `Records`.
 - **Principles** — the design principles used, with the goal in mind. Ground them in `$PROJECT/architecture/index.md` and its ADRs, and in `$PROJECT/_roadmap/_architect.md`.
 - **Dependencies** — with other packages: upstream contracts from `@art-md/primitives` (`ArtCodec`, `ArtContentSource`, `ArtDocumentSource`) and implementation from `@art-md/codec`; downstream adoption by `@art-lib/fs-records` (`$ART_LIB`) and the Art Work CLI (`$ART_WORK`).
@@ -132,7 +132,7 @@ Update the components document so the Records library reflects the plan.
 
 - Move the `### Records (@art-js/records)` section from `## Planned Packages` to `## Core Libraries (libs/)`, keeping the alphabetical order of the core libraries (Bundler, Program, Records, Validator).
 - Set `**Status:** SCAFFOLD` for Records.
-- Keep the description aligned with the plan: record identity, locating, extraction, update and serialisation; primary types `ArtRecord`, `ArtRecordCapsule`, `Records`.
+- Keep the description aligned with the plan: Record identity, discovery, extraction, update and serialisation; primary types `ArtRecord`, `ArtRecordCapsule`, `Records`.
 - Remove the duplicate `### Records (@art-js/modules)` section from `## Planned Packages`.
 - If `## Planned Packages` becomes empty, remove the section and update the intro paragraph so it no longer references planned packages derived from the records design.
 

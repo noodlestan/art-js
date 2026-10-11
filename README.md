@@ -6,17 +6,17 @@ Libraries and tools for working with [Art MD](https://github.com/noodlestan/art-
 
 ## Packages
 
-| namespace | dir                    | package                   | description                                                     |
-| --------- | ---------------------- | ------------------------- | --------------------------------------------------------------- |
-| `@art-js` | `libs/bundler/`        | `@art-js/bundler`         | Bundles Art modules                                             |
-| `@art-js` | `libs/program/`        | `@art-js/program`         | Executes parsed Art modules                                     |
-| `@art-js` | `libs/validator/`      | `@art-js/validator`       | Validates parsed modules                                        |
-| `@art-js` | `libs/records/`        | `@art-js/records`         | Record identity, locating, extraction, update and serialisation |
-| `@art-js` | `cli/bin/`             | `@art-js/bin`             | CLI for pipeline commands                                       |
-| `@art-js` | `cli/dev-server/`      | `@art-js/dev-server`      | Local dev server for Art modules                                |
-| `@art-js` | `cli/language-server/` | `@art-js/language-server` | Language server for Art modules                                 |
-| `@art-js` | `cli/tools/`           | `@art-js/tools`           | Tools for Art modules                                           |
-| `@art-js` | `cli/watcher/`         | `@art-js/watcher`         | Watches for changes, triggers rebuilds                          |
+| namespace | dir                    | package                   | description                                                      |
+| --------- | ---------------------- | ------------------------- | ---------------------------------------------------------------- |
+| `@art-js` | `libs/bundler/`        | `@art-js/bundler`         | Bundles Art modules                                              |
+| `@art-js` | `libs/program/`        | `@art-js/program`         | Executes parsed Art modules                                      |
+| `@art-js` | `libs/validator/`      | `@art-js/validator`       | Validates parsed modules                                         |
+| `@art-js` | `libs/records/`        | `@art-js/records`         | Record identity, discovery, extraction, update and serialisation |
+| `@art-js` | `cli/bin/`             | `@art-js/bin`             | CLI for pipeline commands                                        |
+| `@art-js` | `cli/dev-server/`      | `@art-js/dev-server`      | Local dev server for Art modules                                 |
+| `@art-js` | `cli/language-server/` | `@art-js/language-server` | Language server for Art modules                                  |
+| `@art-js` | `cli/tools/`           | `@art-js/tools`           | Tools for Art modules                                            |
+| `@art-js` | `cli/watcher/`         | `@art-js/watcher`         | Watches for changes, triggers rebuilds                           |
 
 ## Development
 

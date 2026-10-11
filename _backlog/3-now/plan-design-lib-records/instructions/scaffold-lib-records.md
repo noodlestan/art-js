@@ -116,12 +116,12 @@ If `$PROJECT/libs/records/` already exists (e.g. stale build artifacts such as `
 Create the following files:
 
 - `_guide.md` — package overview, layout, records management, and operating instructions, adapted from `libs/bundler/_guide.md` to the records package.
-- `_records/package.art` — `Package: Records` record: purpose "Record identity, locating, extraction, update and serialisation for Art records.", path `libs/records/`, canonical name `@art-js/records`, published `true`, private `false`, deployment `NPM Package Deployment: Records`, language Typescript, engines Node `>= 22`, package manager `npm@10.2.3`, package file `package.json`, dev dependency set `Solid Lib Development`, license `License: Noodlestan 2026 MIT`.
+- `_records/package.art` — `Package: Records` record: purpose "Record identity, discovery, extraction, update and serialisation for Markdown documents.", path `libs/records/`, canonical name `@art-js/records`, published `true`, private `false`, deployment `NPM Package Deployment: Records`, language Typescript, engines Node `>= 22`, package manager `npm@10.2.3`, package file `package.json`, dev dependency set `Solid Lib Development`, license `License: Noodlestan 2026 MIT`.
 - `_records/npm-deployment.art` — `NPM Package Deployment: Records` record: owner `Package: Records`, status `DEPLOYED`, build `Deployment Build: NPM Command`, deploy `Deployment Command: NPM Package CLI`, canonical name `@art-js/records`, registry `https://registry.npmjs.org`, access `public`.
 - `.npmignore` — `*.test.ts`, `*.test.tsx`.
 - `.prettierignore` — `.coverage/`, `coverage/`, `env.d.ts`, `dist/`.
 - `LICENSE-MIT` — copy from `libs/bundler/LICENSE-MIT`.
-- `package.json` — name `@art-js/records`, version `0.0.1`, description "Record identity, locating, extraction, update and serialisation for Art records.", author `Noodlestan Collective`, license `MIT`, private `false`, publishConfig access `public`, repository directory `libs/records/`, type `module`, sideEffects `false`, main `./src/index.ts`, files `["src", "LICENSE-MIT"]`, and the same scripts and devDependencies as `libs/bundler/package.json`.
+- `package.json` — name `@art-js/records`, version `0.0.1`, description "Record identity, discovery, extraction, update and serialisation for Markdown documents.", author `Noodlestan Collective`, license `MIT`, private `false`, publishConfig access `public`, repository directory `libs/records/`, type `module`, sideEffects `false`, main `./src/index.ts`, files `["src", "LICENSE-MIT"]`, and the same scripts and devDependencies as `libs/bundler/package.json`.
 - `README.md` — adapted from `libs/bundler/README.md` to the records package.
 - `src/index.ts` — placeholder: `// placeholder`.
 - `tsconfig.json` — copy from `libs/bundler/tsconfig.json`.
@@ -137,7 +137,7 @@ Add `Package: Records` to the `**Resources:**` list of the project record, keepi
 
 Add the `@art-js/records` row to the `## Packages` table, keeping the libraries grouped together: insert it after the `@art-js/validator` row.
 
-Row: `| `@art-js`|`libs/records/`|`@art-js/records` | Record identity, locating, extraction, update and serialisation |`
+Row: `| `@art-js`|`libs/records/`|`@art-js/records` | Record identity, discovery, extraction, update and serialisation |`
 
 ### Step `4 / 5` — Update `$PROJECT/_guide.md`
 

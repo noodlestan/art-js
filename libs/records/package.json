@@ -1,7 +1,7 @@
 {
   "name": "@art-js/records",
   "version": "0.0.1",
-  "description": "Record identity, locating, extraction, update and serialisation for Art records.",
+  "description": "Record identity, discovery, extraction, update and serialisation for Markdown documents.",
   "author": "Noodlestan Collective",
   "license": "MIT",
   "private": false,

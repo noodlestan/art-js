@@ -20,7 +20,7 @@ Program execution engine for Art modules. Executes parsed Art modules and manage
 
 **Status:** SCAFFOLD
 
-Record identity, locating, extraction, update and serialisation for Art records. Record modelling extracted from `SectionBlock` and `Field` constructs, with an extraction and presence-assertion API, write-back with positioning anchors and an optional content-hash guard, and optional `ProxyObject`-based transparent field access.
+Record identity, discovery, extraction, update and serialisation for Markdown documents. Record modelling extracted from `SectionBlock` and `Field` constructs, with an extraction and presence-assertion API, write-back with positioning anchors and an optional content-hash guard, and optional `ProxyObject`-based transparent field access.
 
 Primary types: `ArtRecord`, `ArtRecordCapsule`, `Records`.
 

@@ -1,8 +1,8 @@
 # @art-js/records
 
-> Record identity, locating, extraction, update and serialisation for Art records.
+> Record identity, discovery, extraction, update and serialisation for Markdown records.
 
-Record identity, locating, extraction, update and serialisation for Art records.
+Record identity, discovery, extraction, update and serialisation for Markdown documents.
 
 This package is part of the [Art JS toolkit](../../README.md) toolkit.
 

@@ -8,7 +8,7 @@
 | -------------------- | --------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------- |
 | Codec contracts      | `@art-md/primitives`  | `ArtCodec`, `ArtContentSource`, `ArtDocumentSource`                       | Declare the codec and source contracts (no `@art-md/source` package) |
 | Codec implementation | `@art-md/codec`       | `ArtCodecConfig`, `createArtCodec()`                                      | Configured codec implementation and overloaded parse/serialize       |
-| Records              | `@art-js/records`     | `ArtRecord`, `ArtRecordCapsule`, `Records`                                | Record identity, locating, extraction, update and serialisation      |
+| Records              | `@art-js/records`     | `ArtRecord`, `ArtRecordCapsule`, `Records`                                | Record identity, discovery, extraction, update and serialisation     |
 | FS adapter           | `@art-lib/fs-records` | `FSContentSource`, `FSRecordFile`, `FSRecordPosition`, `FSRecordsAdapter` | Filesystem discovery and content acquisition                         |
 | Consumer             | ArtWork               | `NamespaceRecord`                                                         | Use-case-specific record structures and orchestration                |
 

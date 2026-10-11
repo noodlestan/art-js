@@ -1,6 +1,6 @@
 # Records
 
-The `@art-js/records` package provides record identity, locating, extraction, update and serialisation for Art records.
+The `@art-js/records` package provides Record identity, discovery, extraction, update and serialisation for Markdown documents.
 
 ## Recommended Reading
 

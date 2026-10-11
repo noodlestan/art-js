@@ -1,6 +1,6 @@
 # Art JS - Records
 
-**Purpose:** Explain how the records library gives the Art JS ecosystem one model for Art records: identity, locating, extraction, update, and serialisation. It is anchored on the primary types `ArtRecord`, `ArtRecordCapsule`, and `Records`, and explains how a record is identified in a document, extracted into a capsule, updated, and serialised back to content.
+**Purpose:** Explain how the records library gives the Art JS ecosystem one model for Markdown documents: identity, locating, extraction, update, and serialisation. It is anchored on the primary types `ArtRecord`, `ArtRecordCapsule`, and `Records`, and explains how a record is identified in a document, extracted into a capsule, updated, and serialised back to content.
 
 ## The Model at a Glance
 

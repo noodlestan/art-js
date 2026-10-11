@@ -41,7 +41,7 @@ Design the `@art-js/records` package API, including abstract record primitives (
 
 **Canonical Name:** `@art-js/records`
 
-**Purpose:** Provide record identity, locating, extraction, update and serialisation for Art records.
+**Purpose:** Provide Record identity, discovery, extraction, update and serialisation for Markdown documents.
 
 **Description:** Record modelling extracted from `SectionBlock` and `Field` constructs. Extraction and presence-assertion API, write-back with positioning anchors and an optional content-hash guard, and optional `ProxyObject`-based transparent field access. Primary types: `ArtRecord`, `ArtRecordCapsule`, `Records`.
 
@@ -61,7 +61,7 @@ Design the `@art-js/records` package API, including abstract record primitives (
 | --------------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------- |
 | Parking Lot           | `$PROJECT/_backlog/_parking-lot.md`                          | Tracks short-term actionables, pending questions, and blockers.              |
 | Architecture Briefing | `$PROJECT/_roadmap/_architect.md`                            | Art JS principles, NFRs, milestones.                                         |
-| Milestone             | `$PROJECT/_roadmap/3-now/milestone-art-records/milestone.md` | Coordinates this plan within the Art Records milestone.                      |
+| Milestone             | `$PROJECT/_roadmap/3-now/milestone-art-records/milestone.md` | Coordinates this plan within the Art records milestone.                      |
 | Milestone             | `$ART_MD/_roadmap/1-done/milestone-art-codec/milestone.md`   | Upstream codec and source contracts (`@art-md/primitives`, `@art-md/codec`). |
 
 ### Required Skills

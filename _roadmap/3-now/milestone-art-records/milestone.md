@@ -1,4 +1,4 @@
-# Milestone: Art Records
+# Milestone: Art records
 
 **ID:** `art-records`
 
