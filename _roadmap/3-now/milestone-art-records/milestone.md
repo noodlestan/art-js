@@ -31,12 +31,12 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 ## Phases
 
-| Index | Name                | Status    |
-| ----- | ------------------- | --------- |
-| #1    | Define record model | `WORKING` |
-| #2    | Extraction API      | `DRAFT`   |
-| #3    | Update Records      | `DRAFT`   |
-| #4    | Proxy field access  | `DRAFT`   |
+| Index | Name                | Status  |
+| ----- | ------------------- | ------- |
+| #1    | Define record model | `DONE`  |
+| #2    | Extraction API      | `DRAFT` |
+| #3    | Update Records      | `DRAFT` |
+| #4    | Proxy field access  | `DRAFT` |
 
 ### Phase: 1 — Define record model
 
@@ -44,7 +44,7 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 **Description:** Define how a record keeps as much of the art AST data as possible while exposing `FieldBlock`/`FieldInline` children as direct fields of the resource, plus the positioning anchors needed for write-back.
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Dependencies:**
 
@@ -92,7 +92,7 @@ The following items are not yet captured in a work item document.
 
 | Phase | Resource / Record                                                          | Status  |
 | ----- | -------------------------------------------------------------------------- | ------- |
-| 1     | Plan: Design Lib Records `_backlog/3-now/plan-design-lib-records/plan.md`  | `READY` |
+| 1     | Plan: Design Lib Records `_backlog/1-done/plan-design-lib-records/plan.md` | `DONE`  |
 | -     |                                                                            |         |
 | 2     | Plan: Create Lib Records `_backlog/6-plan/plan-create-lib-records/plan.md` | `DRAFT` |
 | -     |                                                                            |         |
