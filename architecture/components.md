@@ -1,6 +1,6 @@
 # Art JS Components
 
-The Art JS implementation is a modular set of libraries and CLI tools with small responsibilities that add up to a pipeline for authoring, validating, and projecting Art MD programs. Components are grouped into core libraries (`libs/`), CLI packages (`cli/`), and planned packages derived from the records design in `_backlog/7-backlog`.
+The Art JS implementation is a modular set of libraries and CLI tools with small responsibilities that add up to a pipeline for authoring, validating, and projecting Art MD programs. Components are grouped into core libraries (`libs/`) and CLI packages (`cli/`).
 
 ## Core Libraries (`libs/`)
 
@@ -15,6 +15,14 @@ Bundles Art modules for distribution.
 **Status:** SCAFFOLD
 
 Program execution engine for Art modules. Executes parsed Art modules and manages program state.
+
+### Records (`@art-js/records`)
+
+**Status:** SCAFFOLD
+
+Record identity, locating, extraction, update and serialisation for Art records. Record modelling extracted from `SectionBlock` and `Field` constructs, with an extraction and presence-assertion API, write-back with positioning anchors and an optional content-hash guard, and optional `ProxyObject`-based transparent field access.
+
+Primary types: `ArtRecord`, `ArtRecordCapsule`, `Records`.
 
 ### Validator (`@art-js/validator`)
 
@@ -53,19 +61,3 @@ Agent tools for working with Art. Deterministic operations for agents to work wi
 **Status:** SCAFFOLD
 
 File watcher for Art modules. Watches for changes in Art modules and triggers rebuilds.
-
-## Planned Packages
-
-The following packages are part of the Art JS ecosystem but are not yet implemented. Their responsibilities come from the records design in `_backlog/7-backlog/plan-design-lib-records`.
-
-### Records (`@art-js/records`)
-
-**Status:** PLANNED
-
-Record modelling extracted from `SectionBlock` and `Field` constructs. Extraction and presence-assertion API, write-back with positioning anchors and an optional content-hash guard, and optional `ProxyObject`-based transparent field access.
-
-Primary types: `ArtRecord`, `ArtRecordCapsule`, `Records`. Responsibility: record identity, locating, extraction, update and serialisation.
-
-### Records (`@art-js/modules`)
-
-**Status:** PLANNED
