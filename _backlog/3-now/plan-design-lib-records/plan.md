@@ -2,7 +2,7 @@
 
 **ID:** `design-lib-records`
 
-**Status:** `READY`
+**Status:** `WORKING`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -118,7 +118,7 @@ Unit tests to create in `$PROJECT/libs/records/`:
 
 | Iteration / Instructions                                                           | Status  |
 | ---------------------------------------------------------------------------------- | ------- |
-| Iteration: Design Lib Records API `./instructions/design-lib-records-api.md`       | `READY` |
+| Iteration: Design Lib Records API `./instructions/design-lib-records-api.md`       | `DONE`  |
 | Iteration: Scaffold Lib Records `./instructions/scaffold-lib-records.md`           | `READY` |
 | Iteration: Fix Package Readme Titles `./instructions/fix-package-readme-titles.md` | `READY` |
 
@@ -126,7 +126,11 @@ Unit tests to create in `$PROJECT/libs/records/`:
 
 **ID:** `design-lib-records-api`
 
-**Status:** `READY`
+**Status:** `DONE`
+
+**Delegated:** 2026-10-11T09:00:00Z to `agent-worker` (iteration 1 of 3)
+
+**Report:** `./instructions/design-lib-records-api__report.md`
 
 **Purpose:** Produce the records architecture knowledge and the full package spec.
 
@@ -144,9 +148,9 @@ Unit tests to create in `$PROJECT/libs/records/`:
 
 #### Commits:
 
-| ID                       | Repository / Checkout / Branch   | Policy       | Hash | Status     |
-| ------------------------ | -------------------------------- | ------------ | ---- | ---------- |
-| `design-lib-records-api` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` |      | `AUTHORED` |
+| ID                       | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
+| ------------------------ | -------------------------------- | ------------ | --------- | ----------- |
+| `design-lib-records-api` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` | `a2cbbb3` | `COMMITTED` |
 
 ##### Commit: `design-lib-records-api`
 
@@ -239,7 +243,7 @@ renames(art-js): README titles to canonical package names.
 
 ### Next
 
-Delegate the three `READY` iterations, starting with `design-lib-records-api`.
+Iteration `design-lib-records-api` DONE. Delegate the next `READY` iteration: `scaffold-lib-records`.
 
 ### Blockers
 
@@ -300,6 +304,7 @@ npm run test
 ### Evidence
 
 - **Type signatures reviewed** against `$ART_LIB` and `$ART_WORK`.
+- **Records architecture doc created** and verified: `architecture/records.md` covers purpose, responsibilities, principles, dependencies; no layout diagram; CI 6/6 green (commit `a2cbbb3`).
 
 ### Findings
 
@@ -322,4 +327,4 @@ npm run test
 
 ### Feedback
 
-- None.
+- Worker noted `$PROJECT/node_modules` was stale (lock required `@noodlestan/tsconfig@0.2.0`, installed `0.0.14`); reinstalled with `npm ci` in `$PROJECT` — pre-existing issue, no plan impact.
