@@ -61,8 +61,8 @@ libs/records/
 │       ├── types.ts
 │       └── createProxyObject.ts
 ├── tsconfig.json
-├── tsconfig.vite.json
-├── vite.config.ts
+├── tsconfig.build.json
+├── build.config.mjs
 └── vitest.config.ts
 ```
 

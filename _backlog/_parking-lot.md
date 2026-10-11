@@ -4,7 +4,7 @@ WIP tracker, structured like the session parking lot: **ACTIONABLE** (in progres
 
 ## ACTIONABLE
 
-- **Rename README titles** — Currently read legacy name `# artificial-program` should be package name `# @art-js/program`.
+- None
 
 ## PENDING
 

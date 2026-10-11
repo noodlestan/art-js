@@ -44,7 +44,7 @@ Scaffold the `@art-js/records` package skeleton in `$PROJECT/libs/records/` and 
 
 ## Mandatory Reading
 
-- reference: `$PROJECT/libs/bundler/` — the reference package scaffold to mirror: `_guide.md`, `_records/package.art`, `_records/npm-deployment.art`, `.npmignore`, `.prettierignore`, `LICENSE-MIT`, `package.json`, `README.md`, `src/index.ts`, `tsconfig.json`, `tsconfig.vite.json`, `vite.config.ts`, `vitest.config.ts`.
+- reference: `$PROJECT/libs/bundler/` — the reference package scaffold to mirror: `_guide.md`, `_records/package.art`, `_records/npm-deployment.art`, `.npmignore`, `.prettierignore`, `LICENSE-MIT`, `package.json`, `README.md`, `src/index.ts`, `tsconfig.json`, `tsconfig.build.json`, `build.config.mjs`, `vitest.config.ts`.
 - records: `$PROJECT/_records/project.art` — the project record to update.
 - guide: `$PROJECT/_guide.md` — the project guide with the Projects table to update.
 - readme: `$PROJECT/README.md` — the project readme with the Packages table to update.
@@ -111,6 +111,8 @@ This section summarises the changes to be made in this iteration.
 
 Create the `@art-js/records` package skeleton at `$PROJECT/libs/records/`, mirroring the reference package `$PROJECT/libs/bundler/` file by file.
 
+If `$PROJECT/libs/records/` already exists (e.g. stale build artifacts such as `dist/` left over from an earlier run), remove its contents first so the skeleton starts clean.
+
 Create the following files:
 
 - `_guide.md` — package overview, layout, records management, and operating instructions, adapted from `libs/bundler/_guide.md` to the records package.
@@ -123,8 +125,8 @@ Create the following files:
 - `README.md` — adapted from `libs/bundler/README.md` to the records package.
 - `src/index.ts` — placeholder: `// placeholder`.
 - `tsconfig.json` — copy from `libs/bundler/tsconfig.json`.
-- `tsconfig.vite.json` — copy from `libs/bundler/tsconfig.vite.json`.
-- `vite.config.ts` — copy from `libs/bundler/vite.config.ts`.
+- `tsconfig.build.json` — copy from `libs/bundler/tsconfig.build.json`.
+- `build.config.mjs` — copy from `libs/bundler/build.config.mjs`.
 - `vitest.config.ts` — copy from `libs/bundler/vitest.config.ts`.
 
 ### Step `2 / 5` — Update `$PROJECT/_records/project.art`
@@ -162,7 +164,7 @@ scaffold(records): create @art-js/records package skeleton.
 **Instructions:**
 
 - Verify that commits have been executed and pushed (or not pushed) according to the commit's policy.
-- Verify `$PROJECT/libs/records/` contains all the skeleton files: `_guide.md`, `_records/package.art`, `_records/npm-deployment.art`, `.npmignore`, `.prettierignore`, `LICENSE-MIT`, `package.json`, `README.md`, `src/index.ts`, `tsconfig.json`, `tsconfig.vite.json`, `vite.config.ts`, `vitest.config.ts`.
+- Verify `$PROJECT/libs/records/` contains all the skeleton files: `_guide.md`, `_records/package.art`, `_records/npm-deployment.art`, `.npmignore`, `.prettierignore`, `LICENSE-MIT`, `package.json`, `README.md`, `src/index.ts`, `tsconfig.json`, `tsconfig.build.json`, `build.config.mjs`, `vitest.config.ts`.
 - Verify `$PROJECT/_records/project.art` lists `Package: Records` in Resources.
 - Verify `$PROJECT/README.md` Packages table has the `@art-js/records` row.
 - Verify `$PROJECT/_guide.md` Projects table has the Records row.

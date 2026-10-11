@@ -2,7 +2,7 @@
 
 **ID:** `design-lib-records`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -16,7 +16,7 @@
 
 ::READ `$DOMAINS/plans/structures/plan.art` (Structure) — Describe the work-item changes through a series of iterations and commits with detailed instructions.
 
-::READ `$ART_LIB/_backlog/4-next/add-fs-records-adapter/plan.md` (Plan) — `$ART_LIB` provider plan defining FS-backed concrete extensions of the abstractions designed here.
+::READ `$ART_LIB/_backlog/4-next/plan-add-fs-records-adapter/plan.md` (Plan) — `$ART_LIB` provider plan defining FS-backed concrete extensions of the abstractions designed here.
 
 ::READ `$ART_WORK/_backlog/4-next/plan-art-work-cli-global-install/plan.md` (Plan) — `$ART_WORK` consumer plan showing real consumption patterns for the abstractions designed here.
 
@@ -57,12 +57,12 @@ Design the `@art-js/records` package API, including abstract record primitives (
 
 ### Upstream Work
 
-| Kind                  | Path                                                          | Role                                                                         |
-| --------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| Parking Lot           | `$PROJECT/_backlog/_parking-lot.md`                           | Tracks short-term actionables, pending questions, and blockers.              |
-| Architecture Briefing | `$PROJECT/_roadmap/_architect.md`                             | Art JS principles, NFRs, milestones.                                         |
-| Milestone             | `$PROJECT/_roadmap/4-next/milestone-art-records/milestone.md` | Coordinates this plan within the Art Records milestone.                      |
-| Milestone             | `$ART_MD/_roadmap/3-now/milestone-art-codec/milestone.md`     | Upstream codec and source contracts (`@art-md/primitives`, `@art-md/codec`). |
+| Kind                  | Path                                                         | Role                                                                         |
+| --------------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| Parking Lot           | `$PROJECT/_backlog/_parking-lot.md`                          | Tracks short-term actionables, pending questions, and blockers.              |
+| Architecture Briefing | `$PROJECT/_roadmap/_architect.md`                            | Art JS principles, NFRs, milestones.                                         |
+| Milestone             | `$PROJECT/_roadmap/3-now/milestone-art-records/milestone.md` | Coordinates this plan within the Art Records milestone.                      |
+| Milestone             | `$ART_MD/_roadmap/1-done/milestone-art-codec/milestone.md`   | Upstream codec and source contracts (`@art-md/primitives`, `@art-md/codec`). |
 
 ### Required Skills
 
@@ -81,7 +81,7 @@ Design the `@art-js/records` package API, including abstract record primitives (
 
 ::READ `$PROJECT/architecture/index.md` — Architecture document index.
 
-::READ `$ART_MD/architecture/codec.md` — Codec and source contracts: `ArtCodec`, `ArtContentSource`, `ArtDocumentSource`, operation contexts, and dependency direction.
+::READ `$ART_MD/architecture/design/codec.md` — Codec and source contracts: `ArtCodec`, `ArtContentSource`, `ArtDocumentSource`, operation contexts, and dependency direction.
 
 ## Scope
 
@@ -94,7 +94,7 @@ The design covers:
 3. Write-back with positioning anchors and an optional content-hash guard.
 4. Optional `ProxyObject`-based transparent field access.
 
-The codec and source contracts (`ArtCodec`, `ArtContentSource`, `ArtDocumentSource`) are declared in `@art-md/primitives` and implemented in `@art-md/codec` upstream in `$ART_MD` by `Milestone: Art Codec` at `$ART_MD/_roadmap/3-now/milestone-art-codec/milestone.md`. No new `@art-md/source` package is created.
+The codec and source contracts (`ArtCodec`, `ArtContentSource`, `ArtDocumentSource`) are declared in `@art-md/primitives` and implemented in `@art-md/codec` upstream in `$ART_MD` by `Milestone: Art Codec` at `$ART_MD/_roadmap/1-done/milestone-art-codec/milestone.md`. No new `@art-md/source` package is created.
 
 ## Execution Context
 
@@ -116,10 +116,11 @@ Unit tests to create in `$PROJECT/libs/records/`:
 
 ## Items:
 
-| Iteration / Instructions          | Status  |
-| --------------------------------- | ------- |
-| Iteration: Design Lib Records API | `READY` |
-| Iteration: Scaffold Lib Records   | `READY` |
+| Iteration / Instructions                                                           | Status  |
+| ---------------------------------------------------------------------------------- | ------- |
+| Iteration: Design Lib Records API `./instructions/design-lib-records-api.md`       | `READY` |
+| Iteration: Scaffold Lib Records `./instructions/scaffold-lib-records.md`           | `READY` |
+| Iteration: Fix Package Readme Titles `./instructions/fix-package-readme-titles.md` | `READY` |
 
 ### Iteration: Design Lib Records API
 
@@ -128,6 +129,12 @@ Unit tests to create in `$PROJECT/libs/records/`:
 **Status:** `READY`
 
 **Purpose:** Produce the records architecture knowledge and the full package spec.
+
+**Description:** Create `architecture/records.md`, move Records to Core Libraries in `architecture/components.md`, and finalise `plan__design.md` as the complete `@art-js/records` package spec.
+
+**Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/design-lib-records-api.md`
 
 **Changes:**
 
@@ -139,7 +146,7 @@ Unit tests to create in `$PROJECT/libs/records/`:
 
 | ID                       | Repository / Checkout / Branch   | Policy       | Hash | Status     |
 | ------------------------ | -------------------------------- | ------------ | ---- | ---------- |
-| `design-lib-records-api` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` |      | `PLANNING` |
+| `design-lib-records-api` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` |      | `AUTHORED` |
 
 ##### Commit: `design-lib-records-api`
 
@@ -157,12 +164,18 @@ knowledge(art-js): records API spec and components update.
 
 **Purpose:** Scaffold the `@art-js/records` package skeleton and register it in the project records and knowledge.
 
+**Description:** Create the `libs/records/` package skeleton mirroring `libs/bundler`, and register it in `_records/project.art`, `README.md`, and `_guide.md`.
+
+**Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/scaffold-lib-records.md`
+
 **Changes:**
 
 - Create `$PROJECT/libs/records/` package skeleton:
   - `_guide.md`, `_records/package.art`, `_records/npm-deployment.art`
   - `.npmignore`, `.prettierignore`, `LICENSE-MIT`, `package.json`, `README.md`
-  - `src/index.ts`, `tsconfig.json`, `tsconfig.vite.json`, `vite.config.ts`, `vitest.config.ts`
+  - `src/index.ts`, `tsconfig.json`, `tsconfig.build.json`, `build.config.mjs`, `vitest.config.ts`
 - Update `$PROJECT/_records/project.art` — add `Package: Records` to Resources.
 - Update `$PROJECT/README.md` — add `@art-js/records` row to the Packages table.
 - Update `$PROJECT/_guide.md` — add Records to the Projects table.
@@ -171,7 +184,7 @@ knowledge(art-js): records API spec and components update.
 
 | ID                     | Repository / Checkout / Branch   | Policy       | Hash | Status     |
 | ---------------------- | -------------------------------- | ------------ | ---- | ---------- |
-| `scaffold-lib-records` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` |      | `PLANNING` |
+| `scaffold-lib-records` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` |      | `AUTHORED` |
 
 ##### Commit: `scaffold-lib-records`
 
@@ -181,13 +194,52 @@ knowledge(art-js): records API spec and components update.
 scaffold(records): create @art-js/records package skeleton.
 ```
 
+### Iteration: Fix Package Readme Titles
+
+**ID:** `fix-package-readme-titles`
+
+**Status:** `READY`
+
+**Purpose:** Clear the backlog parking lot actionable by replacing legacy `Artificial`/`artificial` README titles with canonical package names; rides along this plan.
+
+**Description:** Update the 8 package README titles across `libs/` and `cli/` to their canonical `@art-js/*` names.
+
+**Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/fix-package-readme-titles.md`
+
+**Changes:**
+
+- Update `$PROJECT/libs/bundler/README.md` — title `# Artificial Bundler` → `# @art-js/bundler`.
+- Update `$PROJECT/libs/program/README.md` — title `# artificial-program` → `# @art-js/program`.
+- Update `$PROJECT/libs/validator/README.md` — title `# artificial-validator` → `# @art-js/validator`.
+- Update `$PROJECT/cli/bin/README.md` — title `# Artificial Bin` → `# @art-js/bin`.
+- Update `$PROJECT/cli/dev-server/README.md` — title `# Artificial Dev Server` → `# @art-js/dev-server`.
+- Update `$PROJECT/cli/language-server/README.md` — title `# Artificial Language Server` → `# @art-js/language-server`.
+- Update `$PROJECT/cli/tools/README.md` — title `# Artificial Tools` → `# @art-js/tools`.
+- Update `$PROJECT/cli/watcher/README.md` — title `# Artificials Watcher` → `# @art-js/watcher`.
+
+#### Commits:
+
+| ID                          | Repository / Checkout / Branch   | Policy       | Hash | Status     |
+| --------------------------- | -------------------------------- | ------------ | ---- | ---------- |
+| `fix-package-readme-titles` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` |      | `AUTHORED` |
+
+##### Commit: `fix-package-readme-titles`
+
+**Message:**
+
+```text
+renames(art-js): README titles to canonical package names.
+```
+
 ---
 
 ## Work
 
 ### Next
 
-Delegate Iteration: Design Lib Records API and Iteration: Scaffold Lib Records.
+Delegate the three `READY` iterations, starting with `design-lib-records-api`.
 
 ### Blockers
 
@@ -252,6 +304,7 @@ npm run test
 ### Findings
 
 - **ArtRecord coincides with SectionBlock** — Both have `kind` and `name`. The bridge layer (`construct-bridge.ts`) will map `SectionBlock` → `ArtRecord` by extracting these fields.
+- **`architecture/principles.md` is missing** — referenced by `$PROJECT/_guide.md` but does not exist; principles grounding uses `architecture/index.md` ADRs and `_roadmap/_architect.md` instead.
 
 ### Decisions
 

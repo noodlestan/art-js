@@ -48,7 +48,7 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 **Dependencies:**
 
-- Codec and source contracts: `Milestone: Art Codec` at `$ART_MD/_roadmap/3-now/milestone-art-codec/milestone.md` — `@art-md/primitives` (contracts), `@art-md/codec` (implementation)
+- Codec and source contracts: `Milestone: Art Codec` at `$ART_MD/_roadmap/1-done/milestone-art-codec/milestone.md` — `@art-md/primitives` (contracts), `@art-md/codec` (implementation)
 
 ### Phase: 2 — Extraction API
 
@@ -90,18 +90,18 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 The following items are not yet captured in a work item document.
 
-| Phase | Resource / Record                                                          | Status    |
-| ----- | -------------------------------------------------------------------------- | --------- |
-| 1     | Plan: Design API `_backlog/3-now/plan-design-lib-records/plan.md`          | `WORKING` |
-| -     |                                                                            |           |
-| 2     | Plan: Create Lib Records `_backlog/6-plan/plan-create-lib-records/plan.md` | `DRAFT`   |
-| -     |                                                                            |           |
+| Phase | Resource / Record                                                          | Status  |
+| ----- | -------------------------------------------------------------------------- | ------- |
+| 1     | Plan: Design Lib Records `_backlog/3-now/plan-design-lib-records/plan.md`  | `READY` |
+| -     |                                                                            |         |
+| 2     | Plan: Create Lib Records `_backlog/6-plan/plan-create-lib-records/plan.md` | `DRAFT` |
+| -     |                                                                            |         |
 
 ## Work
 
 ### Next
 
-- Delegate Plan: Design Lib Records.
+- Delegate Iteration `design-lib-records-api` of Plan: Design Lib Records.
 
 ### Blockers
 
