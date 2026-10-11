@@ -94,7 +94,7 @@ The following items are not yet captured in a work item document.
 | ----- | -------------------------------------------------------------------------- | ------- |
 | 1     | Plan: Design Lib Records `_backlog/1-done/plan-design-lib-records/plan.md` | `DONE`  |
 | -     |                                                                            |         |
-| 2     | Plan: Create Lib Records `_backlog/6-plan/plan-create-lib-records/plan.md` | `DRAFT` |
+| 2     | Plan: Create Lib Records `_backlog/4-next/plan-create-lib-records/plan.md` | `DRAFT` |
 | -     |                                                                            |         |
 
 ## Work
