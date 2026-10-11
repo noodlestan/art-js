@@ -1,4 +1,4 @@
-# Artificial Records
+# @art-js/records
 
 > Record identity, locating, extraction, update and serialisation for Art records.
 

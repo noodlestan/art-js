@@ -1,4 +1,4 @@
-# Artificial Bundler
+# @art-js/bundler
 
 > Bundler for Art modules.
 

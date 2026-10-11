@@ -1,4 +1,4 @@
-# artificial-validator
+# @art-js/validator
 
 > Validates parsed modules.
 

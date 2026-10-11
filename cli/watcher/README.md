@@ -1,4 +1,4 @@
-# Artificials Watcher
+# @art-js/watcher
 
 > File watcher for Art modules.
 

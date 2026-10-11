@@ -1,4 +1,4 @@
-# Artificial Dev Server
+# @art-js/dev-server
 
 > Development server for Art modules.
 

@@ -1,4 +1,4 @@
-# Artificial Language Server
+# @art-js/language-server
 
 > Language server (WIP).
 

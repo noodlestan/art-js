@@ -1,4 +1,4 @@
-# Artificial Tools
+# @art-js/tools
 
 > Agent Tools for working with Art.
 

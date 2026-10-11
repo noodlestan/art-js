@@ -1,4 +1,4 @@
-# Artificial Bin
+# @art-js/bin
 
 > Static entry point to parser, validator, compiler, bundler, watcher.
 

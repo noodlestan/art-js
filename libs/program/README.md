@@ -1,4 +1,4 @@
-# artificial-program
+# @art-js/program
 
 > Program execution engine for Art modules.
 
