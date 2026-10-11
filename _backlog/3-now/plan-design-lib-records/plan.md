@@ -119,7 +119,7 @@ Unit tests to create in `$PROJECT/libs/records/`:
 | Iteration / Instructions                                                           | Status  |
 | ---------------------------------------------------------------------------------- | ------- |
 | Iteration: Design Lib Records API `./instructions/design-lib-records-api.md`       | `DONE`  |
-| Iteration: Scaffold Lib Records `./instructions/scaffold-lib-records.md`           | `READY` |
+| Iteration: Scaffold Lib Records `./instructions/scaffold-lib-records.md`           | `DONE`  |
 | Iteration: Fix Package Readme Titles `./instructions/fix-package-readme-titles.md` | `READY` |
 
 ### Iteration: Design Lib Records API
@@ -150,7 +150,7 @@ Unit tests to create in `$PROJECT/libs/records/`:
 
 | ID                       | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
 | ------------------------ | -------------------------------- | ------------ | --------- | ----------- |
-| `design-lib-records-api` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` | `a2cbbb3` | `COMMITTED` |
+| `design-lib-records-api` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` | `49fe2d5` | `COMMITTED` |
 
 ##### Commit: `design-lib-records-api`
 
@@ -164,7 +164,11 @@ knowledge(art-js): records API spec and components update.
 
 **ID:** `scaffold-lib-records`
 
-**Status:** `READY`
+**Status:** `DONE`
+
+**Delegated:** 2026-10-11T09:30:00Z to `agent-worker` (iteration 2 of 3; first attempt blocked on stale vite refs, re-delegated after instruction refresh)
+
+**Report:** `./instructions/scaffold-lib-records__report.md`
 
 **Purpose:** Scaffold the `@art-js/records` package skeleton and register it in the project records and knowledge.
 
@@ -186,9 +190,9 @@ knowledge(art-js): records API spec and components update.
 
 #### Commits:
 
-| ID                     | Repository / Checkout / Branch   | Policy       | Hash | Status     |
-| ---------------------- | -------------------------------- | ------------ | ---- | ---------- |
-| `scaffold-lib-records` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` |      | `AUTHORED` |
+| ID                     | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
+| ---------------------- | -------------------------------- | ------------ | --------- | ----------- |
+| `scaffold-lib-records` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` | `562c555` | `COMMITTED` |
 
 ##### Commit: `scaffold-lib-records`
 
@@ -243,7 +247,7 @@ renames(art-js): README titles to canonical package names.
 
 ### Next
 
-Iteration `design-lib-records-api` DONE. Delegate the next `READY` iteration: `scaffold-lib-records`.
+Iterations `design-lib-records-api` and `scaffold-lib-records` DONE. Delegate the final `READY` iteration: `fix-package-readme-titles`.
 
 ### Blockers
 
@@ -304,7 +308,8 @@ npm run test
 ### Evidence
 
 - **Type signatures reviewed** against `$ART_LIB` and `$ART_WORK`.
-- **Records architecture doc created** and verified: `architecture/records.md` covers purpose, responsibilities, principles, dependencies; no layout diagram; CI 6/6 green (commit `a2cbbb3`).
+- **Records architecture doc created** and verified: `architecture/records.md` covers purpose, responsibilities, principles, dependencies; no layout diagram; CI 6/6 green (commit `49fe2d5`).
+- **Records package scaffolded** and verified: `libs/records/` 13-file skeleton mirrors `libs/bundler` (esbuild: `tsconfig.build.json` + `build.config.mjs`); registered in `_records/project.art`, `README.md`, `_guide.md`; lint/build/test green (commit `562c555`).
 
 ### Findings
 
@@ -328,3 +333,4 @@ npm run test
 ### Feedback
 
 - Worker noted `$PROJECT/node_modules` was stale (lock required `@noodlestan/tsconfig@0.2.0`, installed `0.0.14`); reinstalled with `npm ci` in `$PROJECT` — pre-existing issue, no plan impact.
+- Iteration 1 commit was orphaned when `building` was reset to `561b4c7`; restored via cherry-pick (`49fe2d5` knowledge + `c4652f7` integrate). Plan commit hash updated from `a2cbbb3` → `49fe2d5`.
