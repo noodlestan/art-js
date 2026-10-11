@@ -18,6 +18,7 @@
 
 - Package: Bundler
 - Package: Program
+- Package: Records
 - Package: Validator
 - Package: Bin
 - Package: Dev Server
