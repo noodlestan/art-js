@@ -31,25 +31,25 @@
 
 ## Summary
 
-Implement the records package strictly from the design delivered by the DONE plan `design-lib-records` (spec: `$PROJECT/_backlog/1-done/plan-design-lib-records/plan__design.md`; knowledge: `$PROJECT/architecture/records.md`). The module dependency chain dictates the sequence: `record` → `capsule` → `extract` + `write-back` → `proxy` + `records` facade → `src/index.ts` exports → documentation once the API is stable. Declare `@art-md/primitives` (published, `0.0.3`) as the package dependency for the contract types and `createArtDocumentSource`.
+Implement the records package strictly from the design delivered by the DONE plan `design-lib-records` (spec: `$PROJECT/_backlog/1-done/plan-design-lib-records/plan__design.md`; knowledge: `$PROJECT/knowledge/records.md`). The module dependency chain dictates the sequence: `record` → `capsule` → `extract` + `write-back` → `proxy` + `records` facade → `src/index.ts` exports → documentation once the API is stable. Declare `@art-md/primitives` (published, `0.0.3`) as the package dependency for the contract types and `createArtDocumentSource`.
 
 Iterations 1–3 are delegated code work with self-contained instruction files; iteration 4 is a compact doc sweep carried inlined in this plan.
 
 ### Summary of Changes
 
-| File / Area                                     | Change                                                                                  |
-| ----------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `$PROJECT/libs/records/package.json`            | **Updated** — add `@art-md/primitives` dependency.                                      |
-| `$PROJECT/libs/records/src/record/`             | **Created** — `ArtRecord` identity and the `SectionBlock` bridge.                       |
-| `$PROJECT/libs/records/src/capsule/`            | **Created** — `ArtRecordCapsule<T>` transporting identity and its `ArtDocumentSource`.  |
-| `$PROJECT/libs/records/src/extract/`            | **Created** — `assertRecordPresence`, `extractRecords` with options.                    |
-| `$PROJECT/libs/records/src/write-back/`         | **Created** — anchored `writeRecord` with opt-in content-hash guard.                    |
-| `$PROJECT/libs/records/src/proxy/`              | **Created** — `FieldResolver` and `createProxyObject`.                                  |
-| `$PROJECT/libs/records/src/records/`            | **Created** — `Records<T>` facade (`assertPresence`, `extract`, `update`, `serialize`). |
-| `$PROJECT/libs/records/src/index.ts`            | **Updated** — public exports per spec (replaces placeholder).                           |
-| `$PROJECT/libs/records/README.md`               | **Updated** — add Usage section shaped after the `esbuild-cli` README.                  |
-| `$PROJECT/libs/records/_guide.md`               | **Updated** — replace bundler-adapted prose with records-specific guide.                |
-| `$PROJECT/architecture/{components,records}.md` | **Updated** — Records status refresh; align records doc with the implementation.        |
+| File / Area                                  | Change                                                                                  |
+| -------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `$PROJECT/libs/records/package.json`         | **Updated** — add `@art-md/primitives` dependency.                                      |
+| `$PROJECT/libs/records/src/record/`          | **Created** — `ArtRecord` identity and the `SectionBlock` bridge.                       |
+| `$PROJECT/libs/records/src/capsule/`         | **Created** — `ArtRecordCapsule<T>` transporting identity and its `ArtDocumentSource`.  |
+| `$PROJECT/libs/records/src/extract/`         | **Created** — `assertRecordPresence`, `extractRecords` with options.                    |
+| `$PROJECT/libs/records/src/write-back/`      | **Created** — anchored `writeRecord` with opt-in content-hash guard.                    |
+| `$PROJECT/libs/records/src/proxy/`           | **Created** — `FieldResolver` and `createProxyObject`.                                  |
+| `$PROJECT/libs/records/src/records/`         | **Created** — `Records<T>` facade (`assertPresence`, `extract`, `update`, `serialize`). |
+| `$PROJECT/libs/records/src/index.ts`         | **Updated** — public exports per spec (replaces placeholder).                           |
+| `$PROJECT/libs/records/README.md`            | **Updated** — add Usage section shaped after the `esbuild-cli` README.                  |
+| `$PROJECT/libs/records/_guide.md`            | **Updated** — replace bundler-adapted prose with records-specific guide.                |
+| `$PROJECT/knowledge/{components,records}.md` | **Updated** — Records status refresh; align records doc with the implementation.        |
 
 ## Context
 
@@ -77,9 +77,9 @@ Iterations 1–3 are delegated code work with self-contained instruction files; 
 
 ::READ `$PROJECT/_backlog/1-done/plan-design-lib-records/plan__design.md` — Full package spec: responsibilities, boundaries, layout tree, and files with type/factory signatures.
 
-::READ `$PROJECT/architecture/records.md` — Records architecture doc: purpose, responsibilities, principles, dependencies.
+::READ `$PROJECT/knowledge/records.md` — Records architecture doc: purpose, responsibilities, principles, dependencies.
 
-::READ `$PROJECT/architecture/components.md` — Components and relationships; Records status under Core Libraries.
+::READ `$PROJECT/knowledge/components.md` — Components and relationships; Records status under Core Libraries.
 
 ::READ `$PROJECT/_guide.md` — Conventions indexes (TypeScript, Unit Tests) and operating instructions.
 
@@ -91,7 +91,7 @@ Implement `@art-js/records` in `$PROJECT/libs/records/` exactly as specified by 
 2. **Extraction** — `assertRecordPresence` and `extractRecords` returning capsules with fields and examples.
 3. **Write-back** — anchored `writeRecord` on content strings with an opt-in content-hash guard (`WriteBackOptions.guard`).
 4. **Proxy and facade** — `createProxyObject` delegating unknown properties to `FieldResolver`, setters routing to `field.value` and tracking `field.modifiedValue`; `Records` facade (`assertPresence`, `extract`, `update`, `serialize`).
-5. **Documentation** — README usage section, records-specific package guide, architecture status/doc refresh.
+5. **Documentation** — README usage section, records-specific package guide, knowledge status/doc refresh.
 
 The codec contracts consumed here (`ArtCodec`, `ArtContentSource`, `ArtDocumentSource`) are declared in `@art-md/primitives` upstream in `$ART_MD`; no codec implementation work happens in this plan. Downstream adoption stays in `$ART_LIB` (`add-fs-records-adapter`) and `$ART_WORK` (`plan-art-work-cli-global-install`).
 
@@ -239,7 +239,7 @@ build(create-lib-records): Implement proxy access and Records facade with tests.
 
 **Purpose:** Make the finished package consumable and refresh the knowledge that describes it; rides along after the API is stable.
 
-**Description:** README usage section, records-specific package guide, and architecture status/doc refresh.
+**Description:** README usage section, records-specific package guide, and knowledge status/doc refresh.
 
 **Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
 
@@ -247,8 +247,8 @@ build(create-lib-records): Implement proxy access and Records facade with tests.
 
 - Update `$PROJECT/libs/records/README.md` — add a `## Usage` section: install; source/codec → `createRecords` → assert/extract/update/serialize examples; API notes — shaped after `$WORKSPACE/checkouts/workspace-tooling/cli/esbuild-cli/README.md` (rationale, Usage with subsections, examples against the real exports).
 - Update `$PROJECT/libs/records/_guide.md` — replace bundler-adapted prose with records-specific overview, layout, records management, and operating instructions.
-- Update `$PROJECT/architecture/components.md` — refresh the Records `**Status:**` now that the implementation lands (decide target status when writing instructions; all packages currently read `SCAFFOLD`).
-- Update `$PROJECT/architecture/records.md` — align with the implementation if signatures or module layout deviated from the design.
+- Update `$PROJECT/knowledge/components.md` — refresh the Records `**Status:**` now that the implementation lands (decide target status when writing instructions; all packages currently read `SCAFFOLD`).
+- Update `$PROJECT/knowledge/records.md` — align with the implementation if signatures or module layout deviated from the design.
 - Verify from `$PROJECT/libs/records/`: `npm run lint`, `npm run build`, `npm run test`; confirm the README usage snippet matches the exports in `src/index.ts`.
 
 #### Commits:
@@ -349,8 +349,8 @@ npm run test
 
 ### Knowledge to Update
 
-- **`$PROJECT/architecture/components.md`** — Records status refresh after implementation (iteration 4).
-- **`$PROJECT/architecture/records.md`** — align with the implementation if the design deviated (iteration 4).
+- **`$PROJECT/knowledge/components.md`** — Records status refresh after implementation (iteration 4).
+- **`$PROJECT/knowledge/records.md`** — align with the implementation if the design deviated (iteration 4).
 
 ### Follow Ups
 

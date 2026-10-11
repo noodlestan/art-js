@@ -2,7 +2,7 @@
 
 > Host and manage the Art JS packages and tools, and their knowledge and planning artefacts.
 
-Monorepo containing the Art JS roadmap and backlogs, architecture knowledge, and library source code.
+Monorepo containing the Art JS roadmap and backlogs, knowledge, and library source code.
 
 Uses Workflow: Planning Work with one backlog per package, coordinating with Workflow: Roadmapping from one project-wide roadmap.
 
@@ -21,7 +21,7 @@ _guide.md           — this file
 _backlog/           — plans, instructions, reports
 _records/           — project, repository, namespace, and license records
 _roadmap/           — project roadmap and architect briefing
-architecture/       — repository-level architecture documentation
+knowledge/          — repository-level knowledge
 cli/                — CLI packages
 libs/               — library packages
 ```
@@ -52,11 +52,11 @@ Records are co-located with the resources they describe in `_records/` directori
 
 ## Knowledge References
 
-This repository maintains architecture references at:
+This repository maintains knowledge references at:
 
-- `architecture/index.md` — repository-level architecture index.
-- `architecture/principles.md` — design principles.
-- `architecture/components.md` — components and relationships.
+- `knowledge/index.md` — repository-level knowledge index.
+- `knowledge/principles.md` — design principles.
+- `knowledge/components.md` — components and relationships.
 
 ## Conventions
 

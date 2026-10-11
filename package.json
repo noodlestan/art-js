@@ -1,7 +1,7 @@
 {
   "name": "noodlestan/art-js",
   "version": "0.0.1",
-  "description": "Monorepo containing the Art JS roadmap and backlogs, architecture knowledge, and library source code.",
+  "description": "Monorepo containing the Art JS roadmap and backlogs, knowledge, and library source code.",
   "author": "Noodlestan",
   "license": "MIT",
   "private": true,
