@@ -2,7 +2,7 @@
 
 **ID:** `design-lib-records`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Template:** `.agents/domains/plans/templates/plan.tart`
 
@@ -116,11 +116,11 @@ Unit tests to create in `$PROJECT/libs/records/`:
 
 ## Items:
 
-| Iteration / Instructions                                                           | Status  |
-| ---------------------------------------------------------------------------------- | ------- |
-| Iteration: Design Lib Records API `./instructions/design-lib-records-api.md`       | `DONE`  |
-| Iteration: Scaffold Lib Records `./instructions/scaffold-lib-records.md`           | `DONE`  |
-| Iteration: Fix Package Readme Titles `./instructions/fix-package-readme-titles.md` | `READY` |
+| Iteration / Instructions                                                           | Status |
+| ---------------------------------------------------------------------------------- | ------ |
+| Iteration: Design Lib Records API `./instructions/design-lib-records-api.md`       | `DONE` |
+| Iteration: Scaffold Lib Records `./instructions/scaffold-lib-records.md`           | `DONE` |
+| Iteration: Fix Package Readme Titles `./instructions/fix-package-readme-titles.md` | `DONE` |
 
 ### Iteration: Design Lib Records API
 
@@ -206,7 +206,11 @@ scaffold(records): create @art-js/records package skeleton.
 
 **ID:** `fix-package-readme-titles`
 
-**Status:** `READY`
+**Status:** `DONE`
+
+**Delegated:** 2026-10-11T19:05:00Z to `agent-worker` (iteration 3 of 3)
+
+**Report:** `./instructions/fix-package-readme-titles__report.md`
 
 **Purpose:** Clear the backlog parking lot actionable by replacing legacy `Artificial`/`artificial` README titles with canonical package names; rides along this plan.
 
@@ -229,9 +233,9 @@ scaffold(records): create @art-js/records package skeleton.
 
 #### Commits:
 
-| ID                          | Repository / Checkout / Branch   | Policy       | Hash | Status     |
-| --------------------------- | -------------------------------- | ------------ | ---- | ---------- |
-| `fix-package-readme-titles` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` |      | `AUTHORED` |
+| ID                          | Repository / Checkout / Branch   | Policy       | Hash      | Status      |
+| --------------------------- | -------------------------------- | ------------ | --------- | ----------- |
+| `fix-package-readme-titles` | Art JS / `$PROJECT` / `building` | `AUTONOMOUS` | `58bd610` | `COMMITTED` |
 
 ##### Commit: `fix-package-readme-titles`
 
@@ -247,7 +251,7 @@ renames(art-js): README titles to canonical package names.
 
 ### Next
 
-Iterations `design-lib-records-api` and `scaffold-lib-records` DONE. Delegate the final `READY` iteration: `fix-package-readme-titles`.
+All 3 iterations DONE. Plan complete — artefacts delivered: `architecture/records.md`, `libs/records/` scaffold, canonical README titles.
 
 ### Blockers
 
@@ -310,6 +314,7 @@ npm run test
 - **Type signatures reviewed** against `$ART_LIB` and `$ART_WORK`.
 - **Records architecture doc created** and verified: `architecture/records.md` covers purpose, responsibilities, principles, dependencies; no layout diagram; CI 6/6 green (commit `49fe2d5`).
 - **Records package scaffolded** and verified: `libs/records/` 13-file skeleton mirrors `libs/bundler` (esbuild: `tsconfig.build.json` + `build.config.mjs`); registered in `_records/project.art`, `README.md`, `_guide.md`; lint/build/test green (commit `562c555`).
+- **README titles canonicalised** and verified: 9 READMEs (8 enumerated + `libs/records`) renamed to `@art-js/*`; grep for `Artificial` titles returns no matches; lint/build/test 7/7 green (commit `58bd610`).
 
 ### Findings
 
@@ -334,3 +339,4 @@ npm run test
 
 - Worker noted `$PROJECT/node_modules` was stale (lock required `@noodlestan/tsconfig@0.2.0`, installed `0.0.14`); reinstalled with `npm ci` in `$PROJECT` — pre-existing issue, no plan impact.
 - Iteration 1 commit was orphaned when `building` was reset to `561b4c7`; restored via cherry-pick (`49fe2d5` knowledge + `c4652f7` integrate). Plan commit hash updated from `a2cbbb3` → `49fe2d5`.
+- Worker extended iteration 3 to also rename `libs/records/README.md` (scaffolded after the 8-file list was drafted) so its own verification grep would pass — reasonable deviation, first line only.
