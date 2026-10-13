@@ -2,7 +2,7 @@
 
 **ID:** `create-lib-records`
 
-**Status:** `PLANNING`
+**Status:** `BLOCKED`
 
 **Template:** `$DOMAINS/plans/templates/plan.tart`
 
@@ -110,7 +110,7 @@ Unit tests to create in `$PROJECT/libs/records/` (one suite per module):
 - `src/extract/` — presence assertion returns true/false for records present/absent in content; extraction returns capsules with fields and examples.
 - `src/write-back/` — write-back lands at the positioning anchors; content-hash guard: safe write refuses when content changed, unsafe write proceeds; **same-kind disambiguation: a file with several records of one kind (e.g. `Package Dependency` ×5, names with spaces/colon, as in `$ART_WORK/cli/work/_records/package.art`) writes back exactly one record and leaves siblings byte-identical**.
 - `src/proxy/` — `ProxyObject`: `kind`/`name` returned from record identity; unknown fields resolve through `FieldResolver`; setters route to `field.value` and track `field.modifiedValue`. `createFieldResolver`: resolves `field.value`, tracks `field.modifiedValue` on set.
-- `src/records/` — facade round-trip: `extract` → mutate → `update`/`serialize` returns content with the change applied and untouched records preserved.
+- `src/records/` — facade round-trip: `extract` → mutate → `update`/`serialize` returns content with the change applied and untouched records preserved. **New-file kind round-trip (gated on codec fix):** `serialize` on a new file emits `## Checkout: Art Work` — `kind` survives `codec.serialize` (Option A, no fallback emitter).
 
 ---
 
@@ -121,7 +121,7 @@ Unit tests to create in `$PROJECT/libs/records/` (one suite per module):
 | Iteration: Implement Record Model              | `PLANNING` |
 | Iteration: Implement Extraction and Write-Back | `PLANNING` |
 | Iteration: Implement Proxy and Field Resolver  | `PLANNING` |
-| Iteration: Implement Records Facade            | `PLANNING` |
+| Iteration: Implement Records Facade            | `BLOCKED`  |
 | Iteration: Document Records Usage              | `PLANNING` |
 
 ### Iteration: Implement Record Model
@@ -234,11 +234,11 @@ build(create-lib-records): Implement proxy access and field resolver with tests.
 
 **ID:** `implement-records-facade`
 
-**Status:** `PLANNING`
+**Status:** `BLOCKED`
 
 **Purpose:** Complete the public API — the collection-level facade and the exported surface.
 
-**Description:** Implement `src/records/` on top of iteration 2, wire `src/index.ts` per the spec, and cover with unit tests.
+**Description:** Implement `src/records/` on top of iteration 2, wire `src/index.ts` per the spec, and cover with unit tests. **Gated on ART_MD's codec kind-drop fix** (see Blockers): `serialize` reaches `codec.serialize` (Option A), so its new-file test cannot pass until `kind` survives serialization. Do not hand-roll a fallback emitter — if the fix has not landed when everything else is done, report `BLOCKER`.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
@@ -304,11 +304,11 @@ docs(art-js): Records README usage, package guide, and architecture status.
 
 ### Next
 
-**Write Instructions**: generate self-contained files for `implement-record-model`, `implement-extract-write-back`, `implement-proxy-resolver`, `implement-records-facade`; render the inline instruction block for `document-records-usage`; mark iterations `READY`. Then delegate iteration 1. All cross-project contracts are `AGREED` on the records whiteboard (`$WORKSPACE/whiteboard-art-records/whiteboard.md`) — no open consumer questions block delegation. Note: `$ART_LIB`'s adapter no longer waits on this plan (decoupled — imports only `@art-md/primitives`); only `$ART_WORK`'s adoption depends on this plan going green workspace-linked (npm publish NOT required).
+**BLOCKED — awaiting ART_MD's drafted codec kind-drop fix plan** (requested via whiteboard parking lot 2026-10-13). When it lands: **Write Instructions** for all 5 iterations (`implement-record-model`, `implement-extract-write-back`, `implement-proxy-resolver`, `implement-records-facade` self-contained; `document-records-usage` inline), mark iterations `READY`, then delegate iteration 1. Rationale for holding all five (not just the gated one): single review pass by `ART_MD`/`ART_LIB`/`ART_WORK` under goal step 3, not two. All cross-project contracts are `AGREED` on the records whiteboard (`$ART_JS/_backlog/whiteboard-art-records/whiteboard.md`); `$ART_LIB` is decoupled; only `$ART_WORK` adoption depends on this plan going green workspace-linked (npm publish NOT required).
 
 ### Blockers
 
-- None.
+- **Codec kind-drop blocks iteration `implement-records-facade`** (`BLOCKED` 2026-10-13): `@art-md/codec` drops `SectionBlock.kind` on serialize — `serialize(capsule)` on a **new file** would emit `## Art Work` instead of `## Checkout: Art Work`, breaking contract Y on `$ART_WORK`'s clone path. Decision **Option A** (whiteboard): `serialize` reaches `codec.serialize`; no second serializer. Owner: `ART_MD` (their `Ergonomic Factories API` plan); drafted fix plan requested via whiteboard parking lot. Instruction files for all 5 iterations are on hold until that draft arrives (one review pass, not two); iterations `implement-record-model`, `implement-extract-write-back`, `implement-proxy-resolver` are technically unaffected — releaseable early if needed. When the fix plan is tracked here: unblock, Write Instructions, resume goal step 2.
 
 ---
 
@@ -369,15 +369,17 @@ npm run test
 
 ### Findings
 
+- **Codec drops `SectionBlock.kind` — blocks iteration `implement-records-facade` (ART_MD verified 2026-10-13)** — `{kind:'Checkout', name:'Art Work'}` serialises to `## Art Work` (kind stripped) and a parsed document loses `kind` on round-trip. Bites `serialize(capsule)` on **new files**: nothing to splice, so content must come from `codec.serialize` → contract Y broken on `$ART_WORK`'s clone path. ART_MD owns the fix (`Ergonomic Factories API`, 4 iterations, `PLANNING`) and offered sequencing ahead of our iteration 4; drafted fix plan requested via whiteboard parking lot.
 - **`ART_MD` audit findings (2026-10-13, whiteboard)** — (1) `SectionBlock`/`FieldBlock`/`FieldInline` live in `@art-md/constructs@0.0.3`, not `primitives` — iteration 1 now adds both deps; (2) no upstream `Field` union — use `FieldBlock`/`FieldInline`; (3) `field.modifiedValue` does not exist upstream — stays records-domain (resolver tracks it); (4) `SectionBlock.kind` is optional — `createArtRecord` returns `undefined` for `kind: undefined` (signature now `ArtRecord | undefined`).
 - **`@art-lib/fs-records@0.0.1` exports pre-rename names** (`findRecordFiles`, `FSRecordsConfig`, `FSRecordsPath`, `searchPath`) — verified in source by `ART_LIB`; agreed names land with their iteration 1. No impact on this plan (decoupled), recorded so nobody cites `0.0.1` as carrying the agreed surface.
-- **Records whiteboard converged (2026-10-13)** — `$WORKSPACE/whiteboard-art-records/whiteboard.md`: `@art-js/records` + `@art-lib/fs-records` contracts `AGREED`; `FSRecordsAdapter`/`createFSRecordsAdapter` canonical; ART_WORK confirms per-document facade + `discover`/`extract` verb split.
+- **Records whiteboard converged (2026-10-13)** — `$ART_JS/_backlog/whiteboard-art-records/whiteboard.md` (moved from workspace root): `@art-js/records` + `@art-lib/fs-records` contracts `AGREED`; `FSRecordsAdapter`/`createFSRecordsAdapter` canonical; ART_WORK confirms per-document facade + `discover`/`extract` verb split.
 - **`@art-md/primitives@0.0.3` is published on npm** — `libs/records/package.json` currently declares no dependencies; iteration 1 adds it.
 - **Execution environment lessons (from the design plan)** — run `npm ci` inside `$PROJECT` if package CI fails (stale `node_modules` bit twice); pre-commit runs repo-wide Prettier, so run `npm run lint:fix` before committing.
 - **`libs/records` tests are vacuous today** — scaffold sets `passWithNoTests`; the first test suites here make CI meaningful.
 
 ### Decisions
 
+- **Option A for `serialize` (whiteboard, 2026-10-13): `serialize(capsule)` reaches `codec.serialize` — single serializer, no hand-rolled emitter.** ART_MD's question on new-file markdown answered definitively: serialization is `@art-md`'s domain and `records` will not hold a second copy of the format (drift risk `ART_LIB` argued from the persistence side). Consequence: iteration `implement-records-facade` is gated on ART_MD's codec kind-drop fix (sequenced ahead per their offer); the iteration's test suite must include the kind round-trip case (`{kind:'Checkout', name:'Art Work'}` → `## Checkout: Art Work` on a new file). If the fix slips, report `BLOCKER` → `turn: FACILITATOR` — do not hand-roll.
 - **Whiteboard contracts `AGREED` (2026-10-13)** — `update` = guarded write over existing content, `serialize` = unguarded for new files; line-based `RecordPosition` stands (adapter re-reads after `writeContent()`, guard covers drift); `writeRecord` is a pure line-splice preserving non-modelled content byte-identically; consumers import `ArtContentSource`/`ArtDocumentSource` straight from `@art-md/primitives` — `index.ts` exports only the package's own symbols.
 - **`createFieldResolver` added as a deliverable** — field mapping is records-domain; `$ART_WORK` will not hand-roll resolvers and the adapter must not own mapping. Lands in iteration 3 next to `createProxyObject`.
 - **Five iterations follow the module dependency chain** — split per cross-review (`ART_LIB` + `ART_WORK`): the former iteration 3 was three independently testable units in one commit chain; now proxy+resolver (`implement-proxy-resolver`, they share `FieldResolver`) is separate from facade+wiring (`implement-records-facade`, depends on extract+write-back, not the proxy). Phases 2–3 of the milestone still share the extract/write-back iteration; docs ride last when signatures are stable. Thin iteration 1 stays thin — deliberately not padded.

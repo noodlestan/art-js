@@ -2,7 +2,7 @@
 
 **ID:** `art-records`
 
-**Status:** `PLANNING`
+**Status:** `BLOCKED`
 
 **Template:** `$DOMAINS/milestones/templates/milestone.tart`
 
@@ -88,22 +88,22 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 ## Items
 
-| Phase | Resource / Record                                                          | Status     |
-| ----- | -------------------------------------------------------------------------- | ---------- |
-| 1     | Plan: Design Lib Records `_backlog/1-done/plan-design-lib-records/plan.md` | `DONE`     |
-| -     |                                                                            |            |
-| 2     | Plan: Create Lib Records `_backlog/4-next/plan-create-lib-records/plan.md` | `PLANNING` |
-| -     |                                                                            |            |
+| Phase | Resource / Record                                                          | Status    |
+| ----- | -------------------------------------------------------------------------- | --------- |
+| 1     | Plan: Design Lib Records `_backlog/1-done/plan-design-lib-records/plan.md` | `DONE`    |
+| -     |                                                                            |           |
+| 2     | Plan: Create Lib Records `_backlog/4-next/plan-create-lib-records/plan.md` | `BLOCKED` |
+| -     |                                                                            |           |
 
 ## Work
 
 ### Next
 
-- Whiteboard `$WORKSPACE/whiteboard-art-records/whiteboard.md` converged (contracts `AGREED`, all consumer questions answered) — **Write Instructions** for Plan: Create Lib Records (iterations 1–4 self-contained files, iteration 5 inline — split per cross-review), mark iterations `READY`, then delegate `implement-record-model`. Note: `$ART_LIB`'s adapter is decoupled from this milestone's package (imports only `@art-md/primitives`); only `$ART_WORK` adoption depends on this plan going green in the workspace; npm publish is a follow-up.
+- **BLOCKED (2026-10-13):** codec kind-drop — `@art-md/codec` strips `SectionBlock.kind` on serialize, breaking `serialize(capsule)` on new files (contract Y) on `$ART_WORK`'s clone path. Decision **Option A**: `serialize` → `codec.serialize`, single serializer; ART_MD owns the fix (`Ergonomic Factories API`), fix plan requested via whiteboard. **When the fix plan is tracked:** Write Instructions for Plan: Create Lib Records (5 iterations), mark `READY`, delegate `implement-record-model`. Plan `BLOCKED`; iteration `implement-records-facade` gated; iterations 1–3 unaffected. `$ART_LIB` decoupled; only `$ART_WORK` adoption depends on this plan going green workspace-linked (npm publish NOT required).
 
 ### Blockers
 
-- None.
+- **Codec kind-drop** (owner `ART_MD`, 2026-10-13) — `@art-md/codec` strips `SectionBlock.kind` on serialize; blocks `serialize(capsule)` on new files and iteration `implement-records-facade`. Fix plan (`Ergonomic Factories API`) to be reported via whiteboard; plan `create-lib-records` set `BLOCKED` until tracked.
 
 ## Operating Instructions
 
