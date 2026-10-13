@@ -31,12 +31,12 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 ## Phases
 
-| Index | Name                | Status  |
-| ----- | ------------------- | ------- |
-| #1    | Define record model | `DONE`  |
-| #2    | Extraction API      | `DRAFT` |
-| #3    | Update Records      | `DRAFT` |
-| #4    | Proxy field access  | `DRAFT` |
+| Index | Name                | Status     |
+| ----- | ------------------- | ---------- |
+| #1    | Define record model | `DONE`     |
+| #2    | Extraction API      | `PLANNING` |
+| #3    | Update Records      | `PLANNING` |
+| #4    | Proxy field access  | `PLANNING` |
 
 ### Phase: 1 — Define record model
 
@@ -56,7 +56,7 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 **Description:** Provide functions to assert the presence of records in an art file's content and to extract records from a source file along with their fields, examples, etc. The returned records include both the record with its fields and the metadata needed to write back.
 
-**Status:** `DRAFT`
+**Status:** `PLANNING`
 
 **Dependencies:**
 
@@ -68,7 +68,7 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 **Description:** Return a hash of the original content alongside the record so the write operation can check before attempting to write back into the content. The guard is opt-in (or opt-out); consider separate safe vs unsafe functions. Works with content strings, not the filesystem.
 
-**Status:** `DRAFT`
+**Status:** `PLANNING`
 
 **Dependencies:**
 
@@ -78,9 +78,9 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 **Goal:** Provide transparent field access via a `ProxyObject`.
 
-**Description:** Consider a `ProxyObject` so the object also returns the record fields transparently, with setters routing data to the encapsulated `field.value` and tracking `field.modifiedValue` when modified.
+**Description:** Consider a `ProxyObject` so the object also returns the record fields transparently, with setters routing data to the encapsulated `field.value` and tracking `field.modifiedValue` when modified. Decided on the whiteboard (2026-10-13): `createProxyObject` is an explicit always-available factory — opt-in by construction; `createFieldResolver` ships from this package; `modifiedValue` is records-domain tracking state (does not exist upstream in `@art-md/constructs`).
 
-**Status:** `DRAFT`
+**Status:** `PLANNING`
 
 **Dependencies:**
 
@@ -88,20 +88,18 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 ## Items
 
-The following items are not yet captured in a work item document.
-
-| Phase | Resource / Record                                                          | Status  |
-| ----- | -------------------------------------------------------------------------- | ------- |
-| 1     | Plan: Design Lib Records `_backlog/1-done/plan-design-lib-records/plan.md` | `DONE`  |
-| -     |                                                                            |         |
-| 2     | Plan: Create Lib Records `_backlog/4-next/plan-create-lib-records/plan.md` | `DRAFT` |
-| -     |                                                                            |         |
+| Phase | Resource / Record                                                          | Status     |
+| ----- | -------------------------------------------------------------------------- | ---------- |
+| 1     | Plan: Design Lib Records `_backlog/1-done/plan-design-lib-records/plan.md` | `DONE`     |
+| -     |                                                                            |            |
+| 2     | Plan: Create Lib Records `_backlog/4-next/plan-create-lib-records/plan.md` | `PLANNING` |
+| -     |                                                                            |            |
 
 ## Work
 
 ### Next
 
-- Delegate Iteration `design-lib-records-api` of Plan: Design Lib Records.
+- Whiteboard `$WORKSPACE/whiteboard-art-records/whiteboard.md` converged (contracts `AGREED`, all consumer questions answered) — **Write Instructions** for Plan: Create Lib Records (iterations 1–4 self-contained files, iteration 5 inline — split per cross-review), mark iterations `READY`, then delegate `implement-record-model`. Note: `$ART_LIB`'s adapter is decoupled from this milestone's package (imports only `@art-md/primitives`); only `$ART_WORK` adoption depends on this plan going green in the workspace; npm publish is a follow-up.
 
 ### Blockers
 
@@ -135,9 +133,9 @@ npm run test # runs test-parser and test-serializer against stable fixtures
 
 ## Follow ups
 
-- Decide safe vs unsafe write-back functions and the default for the hash guard.
-- Decide whether `ProxyObject` field access is the default or opt-in.
+- ~~Decide safe vs unsafe write-back functions and the default for the hash guard.~~ Closed on the whiteboard (2026-10-13): `update` = guarded (safe), `serialize` = unguarded (new files).
+- ~~Decide whether `ProxyObject` field access is the default or opt-in.~~ Closed on the whiteboard (2026-10-13): `createProxyObject` is an explicit always-available factory — opt-in by construction, no default switching; consumer (`$ART_WORK`) never asked for opt-in.
 
 ## Feedback
 
-No sub-agent reports yet.
+- **Records whiteboard (2026-10-13, `$WORKSPACE/whiteboard-art-records/whiteboard.md`)** — `@art-js/records` and `@art-lib/fs-records` contracts `AGREED`: line-based anchors stand (adapter stateless, re-reads after `writeContent()`); `writeRecord` is a pure line-splice preserving non-modelled content; canonical names `FSRecordsAdapter`/`createFSRecordsAdapter`; consumers import contracts from `@art-md/primitives` directly. New deliverable: `createFieldResolver` factory (iteration 3). Decoupling verdict (2026-10-13): `$ART_LIB`'s adapter imports only `@art-md/primitives` — its hold is released independently of this milestone; `$ART_WORK` adoption still depends on this plan going green in the workspace (publish not required).
