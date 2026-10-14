@@ -105,12 +105,12 @@ Implementation is performed in `$PROJECT` on branch `main` via delegation (self-
 
 Unit tests to create in `$PROJECT/libs/records/` (one suite per module):
 
-- `src/record/` — `ArtRecord` identity: `kind` and `name` present; bridge mapping from `SectionBlock` extracts `kind`/`name`.
+- `src/record/` — `ArtRecord` identity: `kind` and `name` present; bridge splits `block.name` (whole heading text) at the first `: ` — `## Checkout: Art Work` → `{kind:'Checkout', name:'Art Work'}`; no `: ` → `undefined` (not-a-record).
 - `src/capsule/` — `ArtRecordCapsule`: exposes identity via `_id` before source hydration; exposes the record via `_maybeRecord`/`raw()` after hydration; `_source` is the `ArtDocumentSource`.
 - `src/extract/` — presence assertion returns true/false for records present/absent in content; extraction returns capsules with fields and examples.
 - `src/write-back/` — write-back lands at the positioning anchors; content-hash guard: safe write refuses when content changed, unsafe write proceeds; **same-kind disambiguation: a file with several records of one kind (e.g. `Package Dependency` ×5, names with spaces/colon, as in `$ART_WORK/cli/work/_records/package.art`) writes back exactly one record and leaves siblings byte-identical**.
 - `src/proxy/` — `ProxyObject`: `kind`/`name` returned from record identity; unknown fields resolve through `FieldResolver`; setters route to `field.value` and track `field.modifiedValue`. `createFieldResolver`: resolves `field.value`, tracks `field.modifiedValue` on set.
-- `src/records/` — facade round-trip: `extract` → mutate → `update`/`serialize` returns content with the change applied and untouched records preserved. **New-file kind round-trip (gated on codec fix):** `serialize` on a new file emits `## Checkout: Art Work` — `kind` survives `codec.serialize` (Option A, no fallback emitter).
+- `src/records/` — facade round-trip: `extract` → mutate → `update`/`serialize` returns content with the change applied and untouched records preserved. **New-file heading round-trip:** `serialize` on a new file emits `## Checkout: Art Work` verbatim via `codec.serialize` (Option A, no fallback emitter; gate = constructs release carrying `delete-kind-from-code`).
 
 ---
 
@@ -121,7 +121,7 @@ Unit tests to create in `$PROJECT/libs/records/` (one suite per module):
 | Iteration: Implement Record Model              | `PLANNING` |
 | Iteration: Implement Extraction and Write-Back | `PLANNING` |
 | Iteration: Implement Proxy and Field Resolver  | `PLANNING` |
-| Iteration: Implement Records Facade            | `BLOCKED`  |
+| Iteration: Implement Records Facade            | `PLANNING` |
 | Iteration: Document Records Usage              | `PLANNING` |
 
 ### Iteration: Implement Record Model
@@ -138,9 +138,9 @@ Unit tests to create in `$PROJECT/libs/records/` (one suite per module):
 
 **Changes:**
 
-- Add `@art-md/primitives@0.0.3` and `@art-md/constructs@0.0.3` to `$PROJECT/libs/records/package.json` dependencies (`SectionBlock`/`FieldBlock`/`FieldInline` live in constructs, not primitives — `ART_MD` audit finding 1).
+- Add `@art-md/primitives@0.0.3` and `@art-md/constructs` to `$PROJECT/libs/records/package.json` dependencies — **constructs pin bumped to the release carrying `delete-kind-from-code`** (see Blockers; `SectionBlock`/`FieldBlock`/`FieldInline` live in constructs, not primitives — `ART_MD` audit finding 1).
 - Create `src/record/types.ts` — `ArtRecord` (`kind`, `name`).
-- Create `src/record/createArtRecord.ts` — `createArtRecord(block: SectionBlock): ArtRecord | undefined` (returns `undefined` when `kind` is absent). `SectionBlock.kind` is optional upstream; `kind: undefined` means "not a record" — the bridge returns `undefined` for such blocks (audit finding 4), and `Field` is not an upstream type: use `FieldBlock`/`FieldInline` (audit finding 2).
+- Create `src/record/createArtRecord.ts` — `createArtRecord(block: SectionBlock): ArtRecord | undefined`: parse `kind`/`name` from `block.name` (the whole heading text) by splitting at the first `: `; no `: ` → `undefined` (not-a-record — same semantics as the old `kind: undefined`). **`kind` is records-domain** — `ART_MD`'s fix plan deletes `SectionBlock.kind`; constructs never split headings, we do (finding 4 re-baselined 2026-10-14). `FieldBlock`/`FieldInline` used directly — no `Field` union (finding 2).
 - Create `src/capsule/types.ts` — `ArtRecordCapsule<T>` (`_source`, `_maybeRecord`, `_id`, `raw()`, index signature).
 - Create `src/capsule/createArtRecordCapsule.ts` — `createArtRecordCapsule<T>(source, maybeRecord?)`.
 - Unit tests for `src/record/` and `src/capsule/` per the Unit Tests section.
@@ -234,11 +234,11 @@ build(create-lib-records): Implement proxy access and field resolver with tests.
 
 **ID:** `implement-records-facade`
 
-**Status:** `BLOCKED`
+**Status:** `PLANNING`
 
 **Purpose:** Complete the public API — the collection-level facade and the exported surface.
 
-**Description:** Implement `src/records/` on top of iteration 2, wire `src/index.ts` per the spec, and cover with unit tests. **Gated on ART_MD's codec kind-drop fix** (see Blockers): `serialize` reaches `codec.serialize` (Option A), so its new-file test cannot pass until `kind` survives serialization. Do not hand-roll a fallback emitter — if the fix has not landed when everything else is done, report `BLOCKER`.
+**Description:** Implement `src/records/` on top of iteration 2, wire `src/index.ts` per the spec, and cover with unit tests. **Option A applies:** `serialize` reaches `codec.serialize` — no hand-rolled emitter, ever (see Decisions). Its new-file test asserts the heading survives verbatim (`## Checkout: Art Work`) — against the constructs release carrying `delete-kind-from-code` (shared plan-level gate, see Blockers). If that release has not landed when everything else is done, report `BLOCKER`; do not write a fallback serializer.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
@@ -304,11 +304,11 @@ docs(art-js): Records README usage, package guide, and architecture status.
 
 ### Next
 
-**BLOCKED — awaiting ART_MD's drafted codec kind-drop fix plan** (requested via whiteboard parking lot 2026-10-13). When it lands: **Write Instructions** for all 5 iterations (`implement-record-model`, `implement-extract-write-back`, `implement-proxy-resolver`, `implement-records-facade` self-contained; `document-records-usage` inline), mark iterations `READY`, then delegate iteration 1. Rationale for holding all five (not just the gated one): single review pass by `ART_MD`/`ART_LIB`/`ART_WORK` under goal step 3, not two. All cross-project contracts are `AGREED` on the records whiteboard (`$ART_JS/_backlog/whiteboard-art-records/whiteboard.md`); `$ART_LIB` is decoupled; only `$ART_WORK` adoption depends on this plan going green workspace-linked (npm publish NOT required).
+**Fix plan drafted and reviewed (2026-10-14): `$ART_MD/_backlog/3-now/plan-drop-kind-and-reword-claims/plan.md`** (`PLANNING`, 3 iterations; supersedes the earlier `Ergonomic Factories API` name). Instruction hold released — the draft arrived and the specs are re-baselined (bridge parses `Kind: Name` from heading text; see Decisions). **Next:** **Write Instructions** for all 5 iterations (`implement-record-model`, `implement-extract-write-back`, `implement-proxy-resolver`, `implement-records-facade` self-contained; `document-records-usage` inline), mark iterations `READY`, then delegate `implement-record-model` once the constructs release carrying `delete-kind-from-code` is available (pin bump in instruction 1 — see Blockers). Rationale for holding all five for a single review pass: `ART_MD`/`ART_LIB`/`ART_WORK` review under goal step 3, not two. Board contracts: `AGREED` except `ART_MD`'s two re-proposals (`kind` removal; structural round-trip) — agreed by us, pending `ART_LIB` + `ART_WORK`. `$ART_LIB` is decoupled; only `$ART_WORK` adoption depends on this plan going green workspace-linked (npm publish NOT required).
 
 ### Blockers
 
-- **Codec kind-drop blocks iteration `implement-records-facade`** (`BLOCKED` 2026-10-13): `@art-md/codec` drops `SectionBlock.kind` on serialize — `serialize(capsule)` on a **new file** would emit `## Art Work` instead of `## Checkout: Art Work`, breaking contract Y on `$ART_WORK`'s clone path. Decision **Option A** (whiteboard): `serialize` reaches `codec.serialize`; no second serializer. Owner: `ART_MD` (their `Ergonomic Factories API` plan); drafted fix plan requested via whiteboard parking lot. Instruction files for all 5 iterations are on hold until that draft arrives (one review pass, not two); iterations `implement-record-model`, `implement-extract-write-back`, `implement-proxy-resolver` are technically unaffected — releaseable early if needed. When the fix plan is tracked here: unblock, Write Instructions, resume goal step 2.
+- **Delegation of `implement-record-model` gated on the constructs release carrying `delete-kind-from-code`** (owner `ART_MD`; fix plan `$ART_MD/_backlog/3-now/plan-drop-kind-and-reword-claims/plan.md`, `PLANNING`, 3 iterations, reviewed + accepted by us 2026-10-14). The fix **deletes** `SectionBlock.kind` (heading text is never split upstream), which dissolves this blocker's original cause — `serialize` cannot drop a field that no longer exists; Option A (`serialize` reaches `codec.serialize`) stands. **Gate:** against today's `@art-md/constructs@0.0.3` the bridge would see split names and fail, so iteration 1 waits for the release where `block.name` is the whole heading text. Unblock when: `delete-kind-from-code` lands + `cli/codec-tests` 43/43 `LOSSLESS ROUNDTRIP` + pin bumped to that release (one line in instruction 1). **Instruction writing is NOT gated** (specs decided 2026-10-14). _Disclosure: `ART_MD` edited this file's `Next`/`Blockers` directly on 2026-10-14 (working-agreement break, acknowledged upstream); their substance kept, but two references they cited don't exist — `plan-fix-kind-and-roundtrip-claim` and iteration `fix-sectionblock-kind-serialization` — corrected here to the canonical `plan-drop-kind-and-reword-claims` / `delete-kind-from-code` (verified in `$ART_MD/_backlog/3-now/`)._
 
 ---
 
@@ -369,7 +369,7 @@ npm run test
 
 ### Findings
 
-- **Codec drops `SectionBlock.kind` — blocks iteration `implement-records-facade` (ART_MD verified 2026-10-13)** — `{kind:'Checkout', name:'Art Work'}` serialises to `## Art Work` (kind stripped) and a parsed document loses `kind` on round-trip. Bites `serialize(capsule)` on **new files**: nothing to splice, so content must come from `codec.serialize` → contract Y broken on `$ART_WORK`'s clone path. ART_MD owns the fix (`Ergonomic Factories API`, 4 iterations, `PLANNING`) and offered sequencing ahead of our iteration 4; drafted fix plan requested via whiteboard parking lot.
+- **`kind` is being deleted from Art MD — fix plan drafted, reviewed, accepted (ART_MD, 2026-10-14)** — `plan-drop-kind-and-reword-claims` (`$ART_MD/_backlog/3-now/`, `PLANNING`, 3 iterations): parser stops splitting headings, `SectionBlock.kind` and `KIND_PATTERN` deleted, round-trip claim reworded to structural fidelity. Evidence: `## Module: Greeting` → `## Greeting` under `test-serializer`; 42/43 fixtures lossless, only kind fails. _Correction: `ART_MD`'s direct edit to this file cited `plan-fix-kind-and-roundtrip-claim` + iteration `fix-sectionblock-kind-serialization` — neither exists; canonical names verified on disk and used above._
 - **`ART_MD` audit findings (2026-10-13, whiteboard)** — (1) `SectionBlock`/`FieldBlock`/`FieldInline` live in `@art-md/constructs@0.0.3`, not `primitives` — iteration 1 now adds both deps; (2) no upstream `Field` union — use `FieldBlock`/`FieldInline`; (3) `field.modifiedValue` does not exist upstream — stays records-domain (resolver tracks it); (4) `SectionBlock.kind` is optional — `createArtRecord` returns `undefined` for `kind: undefined` (signature now `ArtRecord | undefined`).
 - **`@art-lib/fs-records@0.0.1` exports pre-rename names** (`findRecordFiles`, `FSRecordsConfig`, `FSRecordsPath`, `searchPath`) — verified in source by `ART_LIB`; agreed names land with their iteration 1. No impact on this plan (decoupled), recorded so nobody cites `0.0.1` as carrying the agreed surface.
 - **Records whiteboard converged (2026-10-13)** — `$ART_JS/_backlog/whiteboard-art-records/whiteboard.md` (moved from workspace root): `@art-js/records` + `@art-lib/fs-records` contracts `AGREED`; `FSRecordsAdapter`/`createFSRecordsAdapter` canonical; ART_WORK confirms per-document facade + `discover`/`extract` verb split.
@@ -379,6 +379,8 @@ npm run test
 
 ### Decisions
 
+- **Bridge re-baselined after `kind` deletion (2026-10-14): `kind` is parsed from heading text — records-domain, identity contract unchanged.** `ART_MD`'s fix deletes `SectionBlock.kind`; `createArtRecord` parses `block.name` at the first `: ` (no colon → `undefined`, not-a-record). `ArtRecord{kind, name}` and every consumer API (`assertPresence(kind, name)`, `extract(kinds?)`, discovery `kinds`, CLI record kinds) stay as `AGREED` — only the source moved; the same call as `modifiedValue` (constructs = pure parse model). Unit tests updated to the split-heading cases.
+- **Both `ART_MD` re-proposed contracts agreed (whiteboard, 2026-10-14)** — (1) shape freeze without `kind?`: `SectionBlock.name` is the whole heading text; (2) structural round-trip, not byte-identity: our `writeRecord`/`update` byte guarantee is _ours_ (line-splice on content strings; codec never invoked; non-modelled content passes byte-for-byte) and stands regardless; contract Y underwrites only `serialize` on new files. Statuses stay `PROPOSED` until `ART_LIB` + `ART_WORK` confirm.
 - **Option A for `serialize` (whiteboard, 2026-10-13): `serialize(capsule)` reaches `codec.serialize` — single serializer, no hand-rolled emitter.** ART_MD's question on new-file markdown answered definitively: serialization is `@art-md`'s domain and `records` will not hold a second copy of the format (drift risk `ART_LIB` argued from the persistence side). Consequence: iteration `implement-records-facade` is gated on ART_MD's codec kind-drop fix (sequenced ahead per their offer); the iteration's test suite must include the kind round-trip case (`{kind:'Checkout', name:'Art Work'}` → `## Checkout: Art Work` on a new file). If the fix slips, report `BLOCKER` → `turn: FACILITATOR` — do not hand-roll.
 - **Whiteboard contracts `AGREED` (2026-10-13)** — `update` = guarded write over existing content, `serialize` = unguarded for new files; line-based `RecordPosition` stands (adapter re-reads after `writeContent()`, guard covers drift); `writeRecord` is a pure line-splice preserving non-modelled content byte-identically; consumers import `ArtContentSource`/`ArtDocumentSource` straight from `@art-md/primitives` — `index.ts` exports only the package's own symbols.
 - **`createFieldResolver` added as a deliverable** — field mapping is records-domain; `$ART_WORK` will not hand-roll resolvers and the adapter must not own mapping. Lands in iteration 3 next to `createProxyObject`.

@@ -99,11 +99,11 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 ### Next
 
-- **BLOCKED (2026-10-13):** codec kind-drop — `@art-md/codec` strips `SectionBlock.kind` on serialize, breaking `serialize(capsule)` on new files (contract Y) on `$ART_WORK`'s clone path. Decision **Option A**: `serialize` → `codec.serialize`, single serializer; ART_MD owns the fix (`Ergonomic Factories API`), fix plan requested via whiteboard. **When the fix plan is tracked:** Write Instructions for Plan: Create Lib Records (5 iterations), mark `READY`, delegate `implement-record-model`. Plan `BLOCKED`; iteration `implement-records-facade` gated; iterations 1–3 unaffected. `$ART_LIB` decoupled; only `$ART_WORK` adoption depends on this plan going green workspace-linked (npm publish NOT required).
+- **Instruction hold released (fix plan reviewed 2026-10-14)** — `ART_MD`'s `plan-drop-kind-and-reword-claims` accepted (kind deletion; `Ergonomic Factories API` superseded). **Next: Write Instructions** for Plan: Create Lib Records (5 iterations), mark `READY`; **delegate `implement-record-model` once the constructs release carrying `delete-kind-from-code` is published** (pin bump). Bridge re-baselined: `createArtRecord` parses `Kind: Name` from heading text — `ArtRecord{kind, name}` and consumer APIs unchanged. Plan `BLOCKED` = delegation gate only; both `ART_MD` re-proposed contracts agreed by us, pending `ART_LIB` + `ART_WORK`. `$ART_LIB` decoupled; only `$ART_WORK` adoption depends on this plan going green workspace-linked (npm publish NOT required).
 
 ### Blockers
 
-- **Codec kind-drop** (owner `ART_MD`, 2026-10-13) — `@art-md/codec` strips `SectionBlock.kind` on serialize; blocks `serialize(capsule)` on new files and iteration `implement-records-facade`. Fix plan (`Ergonomic Factories API`) to be reported via whiteboard; plan `create-lib-records` set `BLOCKED` until tracked.
+- **Delegation gated on the constructs release carrying `delete-kind-from-code`** (owner `ART_MD`, fix plan `plan-drop-kind-and-reword-claims` reviewed + accepted 2026-10-14; `delete-kind-from-code` lands + `cli/codec-tests` 43/43 + pin bump). Kind deletion dissolves the original cause (serialize cannot drop a non-existent field); Option A stands. Instruction writing NOT gated — specs re-baselined (bridge parses `Kind: Name` from heading text; identity contract unchanged). Agreements outstanding: `ART_LIB` + `ART_WORK` on `ART_MD`'s two re-proposed contracts (we agreed both).
 
 ## Operating Instructions
 

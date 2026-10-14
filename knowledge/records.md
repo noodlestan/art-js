@@ -4,13 +4,13 @@
 
 ## The Model at a Glance
 
-- `ArtRecord` (`src/record/types.ts`) — record identity: `kind` and `name`. It coincides with `SectionBlock`: the bridge layer maps a `SectionBlock` to an `ArtRecord` by extracting these fields.
+- `ArtRecord` (`src/record/types.ts`) — record identity: `kind` and `name`. The upstream `SectionBlock` carries only the section's full heading text (`name`); the bridge parses `Kind: Name` from it (records-domain — `kind` was removed from `@art-md/constructs` by ART_MD's kind-deletion fix; constructs never split headings, we do).
 - `ArtRecordCapsule<T>` (`src/capsule/types.ts`) — transports a record identity together with the `ArtDocumentSource` that contains it. Identity (`_id`) is available regardless of hydration state; the hydrated record is exposed through `_maybeRecord` and `raw()`.
 - `Records<T>` (`src/records/types.ts`) — collection-level API over a document source: `assertPresence`, `extract`, `update`, and `serialize`.
 
 ## Responsibilities
 
-- **Record modelling** — records are modelled from the `SectionBlock` and `Field` constructs the codec already produces; the library never re-parses markdown itself.
+- **Record modelling** — records are modelled from the `SectionBlock`, `FieldBlock`, and `FieldInline` constructs the codec already produces (identity parsed from heading text); the library never re-parses markdown itself.
 - **Extraction and presence assertion** — assert that a record with a given `kind` and `name` exists in a document, and extract records (with fields, examples, etc.) into capsules.
 - **Write-back** — write a record back into content at its positioning anchors (`RecordPosition`), with an optional content-hash guard (opt-in) that refuses the write when the underlying content changed since the capsule was extracted. Write-back operates on content strings; persistence belongs to content sources downstream.
 - **Transparent field access (optional)** — a `ProxyObject` over a capsule: properties defined on the record type (`kind`, `name`) come from the record identity; all other accesses resolve through a `FieldResolver`, and setters route data to `field.value` while tracking `field.modifiedValue`. Field mapping is records-domain: the package ships a default `FieldResolver` factory so consumers never hand-roll resolvers.
