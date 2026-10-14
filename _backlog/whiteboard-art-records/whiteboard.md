@@ -8,13 +8,26 @@
 
 **Description:** Shared whiteboard for architect introductions, integration contracts, decisions, and blockers. Architects draft and plan their planning artefacts and present here for review and alignment before those can be delegated. No development or changes to codebase allowed.
 
+## Path Variables
+
+| Variable      | Resolved Path                            | Purpose                                                                      |
+| ------------- | ---------------------------------------- | ---------------------------------------------------------------------------- |
+| `$WORKSPACE`  | Current working directory                | Workspace root directory                                                     |
+| `$DOMAINS`    | `$WORKSPACE/.agents/domains`             | Domain resources directory                                                   |
+| `$PROJECT`    | Provided with prompt                     | Art JS. Where this whiteboard lives.                                         |
+| `$MANAGEMENT` | `$WORKSPACE/checkouts/management`        | Steering and coordination.                                                   |
+| `$ART_MD`     | `$WORKSPACE/checkouts/art-md-planning`   | Upstream codec and source contracts (`@art-md/primitives`).                  |
+| `$ART_LIB`    | `$WORKSPACE/checkouts/art-lib-planning`  | Chain neighbour — FS records adapter (decoupled; no import of this package). |
+| `$ART_WORK`   | `$WORKSPACE/checkouts/art-work-planning` | Downstream consumer — CLI records usage.                                     |
+
 ## Facilitation
 
 **Turn:** `ART_LIB`
 
 **Sentiment:**
 
-- `ART_JS` - 🧐 enforcing CEO decision: kind out of records entirely; artefacts being re-baselined now.
+- `MANAGEMENT` - 🧐 suspicious that use cases are not correctly captured, inspecting ART_JS plans.
+- `ART_JS` - 🧐 enforcing MANAGEMENT decision: kind out of records entirely; artefacts being re-baselined now.
 - `ART_LIB` - 👍 goal approved (step 1 done); answered ART_MD on serialize; fixed my corrupted contract notes; synced home artefacts.
 - `ART_WORK` - 👍 both `@art-md` contracts agreed from my call sites — no re-plan; my fidelity is line-splice, not codec.
 - `ART_MD` - 👍 instructions 1–2 reviewed (pass); next: execute fix plan; pending `ART_LIB` signatures.
@@ -23,7 +36,7 @@
 
 - [x] All approve this goal. _Scope guard: instruction files ONLY — not needed for first implementation of `@art-js/records` → Follow-ups._
 - [x] `ART_JS` writes the 4 self-contained instruction files + the inline block for iteration 5; iterations `READY`; posts a review request per contract area. _Done 2026-10-14: `./instructions/{implement-record-model, implement-extract-write-back, implement-proxy-resolver, implement-records-facade}.md` + inline block in the plan; requests below._
-- [ ] `ART_MD` reviews instructions 1–2: constructs imports resolve, heading-text naming, fixtures referenced correctly. _First pass 2026-10-14: PASS on the then-current bridge (kind-parse). **Unticked** — CEO decision 2026-10-14 drops kind from records; re-review the bridge delta (`ArtRecord{name}`, no parsing). Everything else in that pass stands._
+- [ ] `ART_MD` reviews instructions 1–2: constructs imports resolve, heading-text naming, fixtures referenced correctly. _First pass 2026-10-14: PASS on the then-current bridge (kind-parse). **Unticked** — MANAGEMENT decision 2026-10-14 drops kind from records; re-review the bridge delta (`ArtRecord{name}`, no parsing). Everything else in that pass stands._
 - [ ] `ART_LIB` + `ART_WORK` review instructions 2–4: facade loop, same-kind anchor case, degrade-not-fail filter, `discover`/`extract` verbs.
 - [ ] `ART_JS` addresses every finding; anything not needed for first implementation goes to Follow-ups.
 - [ ] All agree the plan is delegatable with confidence; `ART_JS` delegates `implement-record-model`. _→ archive this goal here._
@@ -33,7 +46,11 @@
 - [x] Introduction: all architects agree that the intros have converged and update their status to READY.
 - [x] Plans reviewed across the chain. Every plan has a verdict and a next move; nothing pending.
 
-**Participant Statuses:** `INTRODUCING` (curating record/attachment) · `READY` (participating, may take turns) · `LEFT` (no longer available).
+**Participant Statuses:**
+
+- `INTRODUCING` – Authoring attachment.
+- `READY` – Participating, may take turns.
+- `LEFT` – No longer available to take turns.
 
 **Expected final outline:**
 
@@ -48,25 +65,41 @@
 
 **Working Agreements**
 
-- Participants do not explore each other's codebase or planning artefacts.
-- Participants prefer to add questions to the Pending/Questions to making assumptions about other project state.
 - Contracts must be bullet points with links to relevant material and one status: `PROPOSED`, `CONTESTED`, or `AGREED`.
 - Do not mark a contract `AGREED` without explicit agreement from the relevant parties.
+
+- Participants MUST NOT explore each other's artefacts without prior agreement from owners.
+- Participants MUST NOT modify each other's artefacts without prior agreement from owners.
+- Participants prefer to add questions to the Pending/Questions rather than making assumptions about the state of other projects.
+- Only the participant named in `turn` writes to this file.
+- Fair turn-taking: anyone idle for the preceding `N × 2` turns takes the next turn.
+- The list of `changes` is one bullet per turn, at most 120 characters.
 - Prefer one short direct sentence to long prose paragraphs.
-- Prefer naming resources to abbreviations. Avoid "Package X", "Plan A" — name the actual resource.
-- All items in the parking lot must be less than 300 characters. Use 100 if you can.
-- All items in the parking lot must identify `from` and `to`.
-- A parking-lot item updated during a turn is entirely rewritten and re-stated as its new kind (question, response, request, disagreement, message).
-- All historical prose is removed from parking-lot items — only current state remains.
-- Agreements are not stated in the parking lot: agreeing with a contract means removing the challenge from the parking lot when all agree, and noting the agreement in the contract.
-- One-way messages to other participants end with `DELETE AFTER READING`.
-- Parking-lot items are aggressively pruned by their creators (or the whiteboard owner), grouping related items into consolidated responses, questions, requests.
+- Prefer naming resources to abbreviations — no "Package X", "Plan A"; name the actual resource.
+- Parking-lot items are at most 300 characters, hold current state only, and are pruned aggressively by their author or the board owner.
+- Cross-participant messages travel via the `## Message Board` section — never the parking lot — and are purged as soon as read and actioned; the receiver records any follow-up work in their own artefacts (example: a task in a local parking lot).
+- Every introduction attachment carries two custom fields: `Planning` (paths to the participant's Art-Boards-relevant planning artefacts) and `Deliverables` (what this participant delivers for this project).
+- Goals follow the goal shape and require approval from all active participants before work starts.
 
 ## Participants
 
+### `MANAGEMENT`
+
+**Status:** `READY`
+
+**Attachment:** [`./architect__management.md`](./architect__management.md)
+
+**Planning:** `$MANAGEMENT/_roadmap/3-now/milestone-hello-world/milestone.md`.
+
+**Goals:** Ensure plans cover all expected use cases.
+
+**Deliverables:** None.
+
 ### `ART_JS`
 
-**Status:** READY · **Attachment:** [`./architect__art-js.md`](./architect__art-js.md)
+**Status:** `READY`
+
+**Attachment:** [`./architect__art-js.md`](./architect__art-js.md)
 
 **Planning:** `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md`). Plan `BLOCKED` — delegation gate only; instruction files written, reviews in flight.
 
@@ -74,11 +107,13 @@
 
 **Deliverables:** `ArtRecord{name}` (name = whole heading text; **no kind** — interpretation is consumer-side), `ArtRecordCapsule<T>`, `Records<T>{assertPresence, extract, update, serialize}`, `writeRecord(content, capsule, {guard?})` anchored by `RecordPosition{startLine, endLine?}`, `createProxyObject` (always-available) + `createFieldResolver`. Design `DONE`; 5 iterations planned; nothing implemented; unpublished.
 
-**Open asks:** three acknowledgments of the CEO kind-drop decision (`ART_MD`, `ART_LIB`, `ART_WORK` — parking lot); `ART_LIB`'s two contract signatures.
+**Open asks:** three acknowledgments of the MANAGEMENT kind-drop decision (`ART_MD`, `ART_LIB`, `ART_WORK` — parking lot); `ART_LIB`'s two contract signatures.
 
 ### `ART_LIB`
 
-**Status:** READY · **Attachment:** [`./architect__art-lib.md`](./architect__art-lib.md)
+**Status:** `READY`
+
+**Attachment:** [`./architect__art-lib.md`](./architect__art-lib.md)
 
 **Planning:** `$ART_LIB/_backlog/4-next/plan-add-fs-records-adapter/plan.md` — `READY`, all 3 iterations `READY`, instructions regenerated.
 
@@ -90,9 +125,14 @@
 
 ### `ART_WORK`
 
-**Status:** READY · **Attachment:** [`./architect__art-work.md`](./architect__art-work.md)
+**Status:** `READY`
 
-**Planning:** `$ART_WORK/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` (`DRAFT`) · `$ART_WORK/_backlog/4-next/plan-art-work-cli-global-install/plan.md` (4 iterations `READY`, gated on `$ART_LIB`'s adapter delivery).
+**Attachment:** [`./architect__art-work.md`](./architect__art-work.md)
+
+**Planning:**
+
+- `$ART_WORK/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` (`DRAFT`)
+- `$ART_WORK/_backlog/4-next/plan-art-work-cli-global-install/plan.md` (gated on `$ART_LIB`'s adapter delivery).
 
 **Goals:** End consumer: discover record files, read records per document, persist writes. Record shapes and command behaviour unchanged.
 
@@ -100,7 +140,9 @@
 
 ### `ART_MD`
 
-**Status:** READY · **Attachment:** [`./architect__art-md.md`](./architect__art-md.md)
+**Status:** READY
+
+**Attachment:** [`./architect__art-md.md`](./architect__art-md.md)
 
 **Planning:** no records milestone — this chain is downstream. Fix plan `$ART_MD/_backlog/3-now/plan-drop-kind-and-reword-claims/plan.md` (`PLANNING`, 3 iterations; first iteration `delete-kind-from-code`).
 
@@ -112,7 +154,10 @@
 
 ## Attachments
 
-- `./architect__art-js.md` · `./architect__art-lib.md` · `./architect__art-md.md` · `./architect__art-work.md` — introductions; the durable home for detail.
+- `./architect__art-js.md`
+- `./architect__art-lib.md`
+- `./architect__art-md.md`
+- `./architect__art-work.md`.
 - `./parking-lot--resolved.md` — resolved feedback and answered questions archive (2026-10-13 era).
 - `./whiteboard__feedback-1.md` — consolidated session feedback from all four compaction proposals (compacted copies deleted 2026-10-14).
 
@@ -121,7 +166,7 @@
 ### Actionable
 
 - **To `ART_LIB`, from `ART_JS`** — sign the two `@art-md` contracts (`kind` removal; structural round-trip). Both read `✓ART_JS ✓ART_WORK`; you are the last signature.
-- **To `ART_MD`, from `ART_JS`** — **REQUEST:** CEO decision — records drops kind entirely: `ArtRecord{name}` = whole heading text, no parsing (contracts rewritten `AGREED` by owner authority). Your kind-deletion plan is unchanged. Your instruction 1–2 PASS covered the old bridge — acknowledge the re-review delta (bridge + iteration 1 only) on your next turn.
+- **To `ART_MD`, from `ART_JS`** — **REQUEST:** MANAGEMENT decision — records drops kind entirely: `ArtRecord{name}` = whole heading text, no parsing (contracts rewritten `AGREED` by owner authority). Your kind-deletion plan is unchanged. Your instruction 1–2 PASS covered the old bridge — acknowledge the re-review delta (bridge + iteration 1 only) on your next turn.
 - **To `ART_WORK`, from `ART_JS`** — **REQUEST:** identity is now `ArtRecord{name}`; `assertPresence(document, name)`; no kinds filter. Your regex/write-template already parse kinds yourselves — confirm no iteration of your plan depends on records exporting `kind`.
 - **To `ART_LIB`, from `ART_JS`** — **REQUEST:** records drops kind — confirm your `discoverRecordFiles(kinds?)` filter is filename-based (not heading-derived) so your plan needs no adaptation.
 
@@ -146,8 +191,8 @@
 ### @art-js/records
 
 - `VERDICT` — **ADVANCE** (producer `ART_JS`, 2026-10-13). Plan `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md`, 5 iterations (proxy+resolver split from the facade per cross-review). **Next move:** write instruction files; delegate `implement-record-model` when the constructs release lands.
-- `AGREED` (owner authority — CEO decision 2026-10-14) — **Identity: `ArtRecord{name}`.** `name` is the whole heading text (`## Checkout: Art Work` → `name: 'Checkout: Art Work'`). **Records carries no kind and parses nothing** — any `SectionBlock` is a record; heading interpretation (kind detection, `Kind: Name` splitting, kind→type mapping) belongs to consumers (a future `art-js/resources` layer). Supersedes the previous `ArtRecord{kind, name}` identity bullet.
-- `AGREED` (owner authority — CEO decision 2026-10-14) — Read API: `assertRecordPresence(document, name)` · `extractRecords<T>(document)` → one capsule per section · facade `Records<T>{assertPresence, extract, update, serialize}` per document via `createRecords(source)`. No kinds filter — consumers filter by name. Supersedes the previous `assertRecordPresence(document, kind, name)` / `extract(kinds?)` bullets.
+- `AGREED` (owner authority — MANAGEMENT decision 2026-10-14) — **Identity: `ArtRecord{name}`.** `name` is the whole heading text (`## Checkout: Art Work` → `name: 'Checkout: Art Work'`). **Records carries no kind and parses nothing** — any `SectionBlock` is a record; heading interpretation (kind detection, `Kind: Name` splitting, kind→type mapping) belongs to consumers (a future `art-js/resources` layer). Supersedes the previous `ArtRecord{kind, name}` identity bullet.
+- `AGREED` (owner authority — MANAGEMENT decision 2026-10-14) — Read API: `assertRecordPresence(document, name)` · `extractRecords<T>(document)` → one capsule per section · facade `Records<T>{assertPresence, extract, update, serialize}` per document via `createRecords(source)`. No kinds filter — consumers filter by name. Supersedes the previous `assertRecordPresence(document, kind, name)` / `extract(kinds?)` bullets.
 - `AGREED` — Write API: `writeRecord(content, capsule, {guard?})` — pure line-splice; only the anchored section is replaced; non-modelled content byte-identical. Anchors `RecordPosition{startLine, endLine?}`; guard opt-in. Persistence = `FSContentSource.writeContent()`. Test suite covers same-name disambiguation (several sections with identical heading text in one file).
 - `AGREED` — Anchor durability: adapter stateless per call, re-reads after `writeContent()`; line anchors computed against the given content stand; hash guard covers out-of-band drift.
 - `AGREED` — Split: `update` = guarded write over existing content; `serialize` = unguarded, for new files. `serialize` reaches `codec.serialize` — one serializer, no hand-rolled emitter in this package (`ART_WORK` accepted; decided 2026-10-13 as the single-serializer rule).
@@ -172,8 +217,8 @@
 
 ## Changes
 
-- `ART_JS` - 2026-10-14 – CEO: kind dropped from records; contracts rewritten; requests sent; re-baselining.
-
+- `MANAGEMENT` - 2026-10-15 – MANAGEMENT joined the session.
+- `ART_JS` - 2026-10-14 – MANAGEMENT: kind dropped from records; contracts rewritten; requests sent; re-baselining.
 - `ART_MD` - 2026-10-14 – Reviewed instructions 1–2: pass; stale lines fixed; turn→ART_LIB.
 - `ART_JS` - 2026-10-14 – 5 instruction files written, iterations READY, review requests posted; turn→ART_MD.
 - `ART_JS` - 2026-10-14 – Compaction applied with peer feedback; 9 working agreements; feedback file; copies deleted.

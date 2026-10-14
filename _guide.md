@@ -54,9 +54,7 @@ Records are co-located with the resources they describe in `_records/` directori
 
 This repository maintains knowledge references at:
 
-- `knowledge/index.md` — repository-level knowledge index.
-- `knowledge/principles.md` — design principles.
-- `knowledge/components.md` — components and relationships.
+- `knowledge/index.md` — Repository-level knowledge.
 
 ## Conventions
 
@@ -66,8 +64,8 @@ Read the convention indexes listed below and follow them when planning and execu
 
 The following conventions apply to all packages in this repository:
 
-::READ `./node_modules/@noodlestan/conventions-typescript/art/index.md` — TypeScript conventions.
-::READ `./node_modules/@noodlestan/conventions-unit-tests/art/index.md` — Unit Test conventions.
+- `./node_modules/@noodlestan/conventions-typescript/art/index.md` — TypeScript conventions.
+- `./node_modules/@noodlestan/conventions-unit-tests/art/index.md` — Unit Test conventions.
 
 In case of ambiguity or conflict applying conventions, follow links from the convention indexes to extended convention files and read the examples there for what to follow and what to avoid.
 
@@ -82,11 +80,19 @@ Projects in this repository use the following workflows:
 | **Executing Work** `$DOMAINS/work/workflows/executing-work/workflow.art`   | Organize work execution by sub-agents to produce completed, verified outcomes and feedback.       |
 | **Deploying** `$DOMAINS/deployments/workflows/deploying/workflow.art`      | Organizes deployment of artefacts in operations.                                                  |
 
+### Roadmapping
+
+This repository maintains one repository level roadmap:
+
+- The roadmap lives at `_roadmap/` with subdirectories such as `/3-now` and `/4-next/`.
+- The short-term roadmapping focus is captured in `_roadmap/_parking-lot.md`.
+
 ### Planning Work
 
+This repository maintains one repository level backlog:
+
 - The backlog lives at `_backlog/` with subdirectories such as `/3-now` and `/4-next/`.
-- The short-term focus is captured in `_backlog/_parking-lot.md`.
-- The requirements, use cases, and principles are captured in `_backlog/_architect.md`.
+- The short-term focus is captured in `_backlog/_parking-lot.md`.lot.md`.
 
 ## Operating Instructions
 
