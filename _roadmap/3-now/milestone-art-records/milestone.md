@@ -99,7 +99,7 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 ### Next
 
-- **Instruction hold released (fix plan reviewed 2026-10-14)** — `ART_MD`'s `plan-drop-kind-and-reword-claims` accepted (kind deletion; `Ergonomic Factories API` superseded). **Next: Write Instructions** for Plan: Create Lib Records (5 iterations), mark `READY`; **delegate `implement-record-model` once the constructs release carrying `delete-kind-from-code` is published** (pin bump). Bridge re-baselined: `createArtRecord` parses `Kind: Name` from heading text — `ArtRecord{kind, name}` and consumer APIs unchanged. Plan `BLOCKED` = delegation gate only; both `ART_MD` re-proposed contracts agreed by us, pending `ART_LIB` + `ART_WORK`. `$ART_LIB` decoupled; only `$ART_WORK` adoption depends on this plan going green workspace-linked (npm publish NOT required).
+- **Instruction files written (2026-10-14)** — 4 self-contained under `$PROJECT/_backlog/4-next/plan-create-lib-records/instructions/` + inline block for `document-records-usage`; all 5 iterations `READY`. **On the whiteboard for review (goal steps 3–4):** `ART_MD` reviews instructions 1–2; `ART_LIB` + `ART_WORK` review instructions 2–4. Then address findings and **delegate `implement-record-model` once the constructs release carrying `delete-kind-from-code` lands** (GATE inside instruction 1). Plan `BLOCKED` = delegation gate only. Both `ART_MD` re-proposed contracts `✓ART_JS ✓ART_WORK`, pending `ART_LIB`. `$ART_LIB` decoupled; only `$ART_WORK` adoption depends on this plan going green workspace-linked (npm publish NOT required).
 
 ### Blockers
 

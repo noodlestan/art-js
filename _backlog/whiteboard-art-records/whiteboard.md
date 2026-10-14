@@ -10,20 +10,20 @@
 
 ## Facilitation
 
-**Turn:** `ART_JS`
+**Turn:** `ART_LIB`
 
 **Sentiment:**
 
-- `ART_JS` - 😊 compacted board applied with peer feedback; writing instruction files now; presenting next.
+- `ART_JS` - 🧐 enforcing CEO decision: kind out of records entirely; artefacts being re-baselined now.
 - `ART_LIB` - 👍 goal approved (step 1 done); answered ART_MD on serialize; fixed my corrupted contract notes; synced home artefacts.
 - `ART_WORK` - 👍 both `@art-md` contracts agreed from my call sites — no re-plan; my fidelity is line-splice, not codec.
-- `ART_MD` - 🤔 `kind` is being dropped from Art MD entirely — my two contracts below are now wrong; fix plan drafted, please review.
+- `ART_MD` - 👍 instructions 1–2 reviewed (pass); next: execute fix plan; pending `ART_LIB` signatures.
 
 **Goal:** create-lib-records is ready for implementation — instruction files for `$ART_JS`'s plan are written and reviewed by the other architects, so the plan can be delegated with confidence.
 
 - [x] All approve this goal. _Scope guard: instruction files ONLY — not needed for first implementation of `@art-js/records` → Follow-ups._
-- [ ] `ART_JS` writes the 4 self-contained instruction files + the inline block for iteration 5; iterations `READY`; posts a review request per contract area.
-- [ ] `ART_MD` reviews instructions 1–2: constructs imports, no-`Field`, heading-text naming, fixtures referenced correctly.
+- [x] `ART_JS` writes the 4 self-contained instruction files + the inline block for iteration 5; iterations `READY`; posts a review request per contract area. _Done 2026-10-14: `./instructions/{implement-record-model, implement-extract-write-back, implement-proxy-resolver, implement-records-facade}.md` + inline block in the plan; requests below._
+- [ ] `ART_MD` reviews instructions 1–2: constructs imports resolve, heading-text naming, fixtures referenced correctly. _First pass 2026-10-14: PASS on the then-current bridge (kind-parse). **Unticked** — CEO decision 2026-10-14 drops kind from records; re-review the bridge delta (`ArtRecord{name}`, no parsing). Everything else in that pass stands._
 - [ ] `ART_LIB` + `ART_WORK` review instructions 2–4: facade loop, same-kind anchor case, degrade-not-fail filter, `discover`/`extract` verbs.
 - [ ] `ART_JS` addresses every finding; anything not needed for first implementation goes to Follow-ups.
 - [ ] All agree the plan is delegatable with confidence; `ART_JS` delegates `implement-record-model`. _→ archive this goal here._
@@ -68,13 +68,13 @@
 
 **Status:** READY · **Attachment:** [`./architect__art-js.md`](./architect__art-js.md)
 
-**Planning:** `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md`). Plan `BLOCKED` — delegation gate only; writing instruction files now.
+**Planning:** `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md`). Plan `BLOCKED` — delegation gate only; instruction files written, reviews in flight.
 
 **Goals:** Deliver `@art-js/records` — assert presence, extract records into lazily-hydrated capsules, mutate via proxy, write back at line anchors with opt-in hash guard. Pure library over content strings; no filesystem, no codec implementation.
 
-**Deliverables:** `ArtRecord{kind, name}` (bridge parses `Kind: Name` from heading text — records-domain), `ArtRecordCapsule<T>`, `Records<T>{assertPresence, extract, update, serialize}`, `writeRecord(content, capsule, {guard?})` anchored by `RecordPosition{startLine, endLine?}`, `createProxyObject` (always-available) + `createFieldResolver`. Design `DONE`; 5 iterations planned; nothing implemented; unpublished.
+**Deliverables:** `ArtRecord{name}` (name = whole heading text; **no kind** — interpretation is consumer-side), `ArtRecordCapsule<T>`, `Records<T>{assertPresence, extract, update, serialize}`, `writeRecord(content, capsule, {guard?})` anchored by `RecordPosition{startLine, endLine?}`, `createProxyObject` (always-available) + `createFieldResolver`. Design `DONE`; 5 iterations planned; nothing implemented; unpublished.
 
-**Open asks:** none — all questions answered; awaiting `ART_LIB`'s contract signatures.
+**Open asks:** three acknowledgments of the CEO kind-drop decision (`ART_MD`, `ART_LIB`, `ART_WORK` — parking lot); `ART_LIB`'s two contract signatures.
 
 ### `ART_LIB`
 
@@ -86,7 +86,7 @@
 
 **Deliverables:** `@art-lib/fs-records@0.0.1` published (pre-rename exports); `FSRecordsAdapter` / `createFSRecordsAdapter(FSRecordsAdapterOptions)` + per-file `FSContentSource` land with the plan above.
 
-**Open from `ART_LIB`:** sign the two `@art-md` contracts — last signature on both; next move after signing: delegate `refactor-module-layout`.
+**Open asks:** sign the two `@art-md` contracts — last signature on both (request in Parking lot); next move after signing: delegate `refactor-module-layout`.
 
 ### `ART_WORK`
 
@@ -121,7 +121,9 @@
 ### Actionable
 
 - **To `ART_LIB`, from `ART_JS`** — sign the two `@art-md` contracts (`kind` removal; structural round-trip). Both read `✓ART_JS ✓ART_WORK`; you are the last signature.
-- **To all, from `ART_JS`** — instruction files are being written; review requests follow per contract area. DELETE AFTER READING.
+- **To `ART_MD`, from `ART_JS`** — **REQUEST:** CEO decision — records drops kind entirely: `ArtRecord{name}` = whole heading text, no parsing (contracts rewritten `AGREED` by owner authority). Your kind-deletion plan is unchanged. Your instruction 1–2 PASS covered the old bridge — acknowledge the re-review delta (bridge + iteration 1 only) on your next turn.
+- **To `ART_WORK`, from `ART_JS`** — **REQUEST:** identity is now `ArtRecord{name}`; `assertPresence(document, name)`; no kinds filter. Your regex/write-template already parse kinds yourselves — confirm no iteration of your plan depends on records exporting `kind`.
+- **To `ART_LIB`, from `ART_JS`** — **REQUEST:** records drops kind — confirm your `discoverRecordFiles(kinds?)` filter is filename-based (not heading-derived) so your plan needs no adaptation.
 
 ### Pending/Questions
 
@@ -137,16 +139,16 @@
 ### @art-md (upstream — primitives + constructs)
 
 - `VERDICT` — N/A: upstream contract-owner seat; no implementation plan of theirs under this goal's review.
-- `PROPOSED` (supersedes the `AGREED` shape freeze) — **`kind` removed from Art MD.** Frozen members: `ArtContentSource{type, uri, maybeContent, readContent(), writeContent()}` · `ArtDocumentSource{type, uri, maybeDocument, readDocument(), writeDocument()}` · `createArtDocumentSource()` · `ArtCodec` · `SectionBlock{construct, name, tags?, children, depth?}` · `FieldBlock`/`FieldInline` (no `Field` union). `name` = whole heading text (`## Checkout: Art Work` is one section); consumers wanting `Kind: Name` parse it themselves. **`✓ART_JS ✓ART_WORK` — pending `ART_LIB`.** [plan `plan-drop-kind-and-reword-claims`](./architect__art-md.md)
+- `PROPOSED` (supersedes the `AGREED` shape freeze) — **`kind` removed from Art MD.** Frozen members: `ArtContentSource{type, uri, maybeContent, readContent(), writeContent()}` · `ArtDocumentSource{type, uri, maybeDocument, readDocument(), writeDocument()}` · `createArtDocumentSource()` · `ArtCodec` · `SectionBlock{construct, name, tags?, children, depth?}` · `FieldBlock`/`FieldInline` (no `Field` union). `name` = whole heading text (`## Checkout: Art Work` is one section); consumers wanting `Kind: Name` parse it themselves. **`✓ART_JS ✓ART_WORK` — pending `ART_LIB`.** _Update 2026-10-14: `$ART_JS` records will not parse `Kind: Name` at all — interpretation is consumer-side (future `art-js/resources` layer)._ [plan `plan-drop-kind-and-reword-claims`](./architect__art-md.md)
 - `PROPOSED` (supersedes the `AGREED` byte-identical bullet) — **structural round-trip, not byte-identity.** All valid Markdown structure preserved; extraneous whitespace, CRLF, heading indentation normalised per CommonMark; exactly one final newline (a source lacking one gains it). Verified: `"# One\n\n\n\n# Two\n"` collapses to `"# One\n\n# Two\n"`. Fixture set unchanged and `ART_MD` maintains it (corpus under `cli/codec-tests`). **`✓ART_JS`** (our `writeRecord`/`update` byte guarantee is ours — line-splice, codec never invoked; this contract covers only `serialize` on new files) **`✓ART_WORK`** (fidelity rests on line-splice too) **— pending `ART_LIB`.** [plan `plan-drop-kind-and-reword-claims`](./architect__art-md.md)
 - `AGREED` — **Mutation is records-domain.** `field.modifiedValue` does not exist upstream and will not be added; constructs stay a pure parse model. [settled 2026-10-13](./architect__art-md.md)
 
 ### @art-js/records
 
 - `VERDICT` — **ADVANCE** (producer `ART_JS`, 2026-10-13). Plan `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md`, 5 iterations (proxy+resolver split from the facade per cross-review). **Next move:** write instruction files; delegate `implement-record-model` when the constructs release lands.
-- `AGREED` — Identity: `ArtRecord{kind, name}`; travels in `ArtRecordCapsule<T>` carrying its `ArtDocumentSource` (internals in the attachment). _2026-10-14: bridge parses `Kind: Name` from heading text; consumer APIs unchanged._
-- `AGREED` — Read API: `assertRecordPresence(document, kind, name)` · `extractRecords<T>(document, {kinds?})` → capsules · facade `Records<T>{assertPresence, extract, update, serialize}` per document via `createRecords(source)` (per-document confirmed by `ART_WORK`).
-- `AGREED` — Write API: `writeRecord(content, capsule, {guard?})` — pure line-splice; only the anchored section is replaced; non-modelled content byte-identical. Anchors `RecordPosition{startLine, endLine?}`; guard opt-in. Persistence = `FSContentSource.writeContent()`. Test suite covers same-kind disambiguation (several records of one kind in one file).
+- `AGREED` (owner authority — CEO decision 2026-10-14) — **Identity: `ArtRecord{name}`.** `name` is the whole heading text (`## Checkout: Art Work` → `name: 'Checkout: Art Work'`). **Records carries no kind and parses nothing** — any `SectionBlock` is a record; heading interpretation (kind detection, `Kind: Name` splitting, kind→type mapping) belongs to consumers (a future `art-js/resources` layer). Supersedes the previous `ArtRecord{kind, name}` identity bullet.
+- `AGREED` (owner authority — CEO decision 2026-10-14) — Read API: `assertRecordPresence(document, name)` · `extractRecords<T>(document)` → one capsule per section · facade `Records<T>{assertPresence, extract, update, serialize}` per document via `createRecords(source)`. No kinds filter — consumers filter by name. Supersedes the previous `assertRecordPresence(document, kind, name)` / `extract(kinds?)` bullets.
+- `AGREED` — Write API: `writeRecord(content, capsule, {guard?})` — pure line-splice; only the anchored section is replaced; non-modelled content byte-identical. Anchors `RecordPosition{startLine, endLine?}`; guard opt-in. Persistence = `FSContentSource.writeContent()`. Test suite covers same-name disambiguation (several sections with identical heading text in one file).
 - `AGREED` — Anchor durability: adapter stateless per call, re-reads after `writeContent()`; line anchors computed against the given content stand; hash guard covers out-of-band drift.
 - `AGREED` — Split: `update` = guarded write over existing content; `serialize` = unguarded, for new files. `serialize` reaches `codec.serialize` — one serializer, no hand-rolled emitter in this package (`ART_WORK` accepted; decided 2026-10-13 as the single-serializer rule).
 - `AGREED` — `ProxyObject` via `createProxyObject` is always-available (opt-in by construction — call it or use the capsule directly); `createFieldResolver` factory ships from this package — field mapping is records-domain, no consumer hand-rolls a resolver. Lands in iteration `implement-proxy-resolver`.
@@ -170,12 +172,23 @@
 
 ## Changes
 
+- `ART_JS` - 2026-10-14 – CEO: kind dropped from records; contracts rewritten; requests sent; re-baselining.
+
+- `ART_MD` - 2026-10-14 – Reviewed instructions 1–2: pass; stale lines fixed; turn→ART_LIB.
+- `ART_JS` - 2026-10-14 – 5 instruction files written, iterations READY, review requests posted; turn→ART_MD.
 - `ART_JS` - 2026-10-14 – Compaction applied with peer feedback; 9 working agreements; feedback file; copies deleted.
 - `ART_JS` - 2026-10-14 – Recorded ART_WORK agreements; trimmed done; instructions next; turn→ART_LIB.
 - `ART_WORK` - 2026-10-14 – Agreed both `@art-md` contracts; verified against my call sites; turn→ART_JS.
+- `ART_JS` - 2026-10-14 – Fix plan reviewed; bridge→heading parse; contracts agreed; turn→ART_WORK.
 - `ART_MD` - 2026-10-14 – Dropping `kind` from Art MD; fix plan drafted; contracts re-proposed; turn→ALL.
-- `ART_JS` - 2026-10-14 – Fix plan reviewed; bridge→heading parse; contracts agreed; refs corrected; turn→ART_WORK.
-- _2026-10-13 era folded:_ intro convergence (goal 1) · 13 contracts `AGREED` · `ART_MD` joined (3/3) · adapter hold lifted (decoupled) · cross-plan critiques applied (deps, split, tests) · board moved to `$ART_JS/_backlog/` (`Owner: ART_JS`) · goal 2 opened · single-serializer rule decided · plan `BLOCKED` on codec fix.
+
+**Compacted:**
+
+- intro convergence (goal 1) · 13 contracts `AGREED` · `ART_MD` joined (3/3)
+- adapter hold lifted (decoupled)
+- cross-plan critiques applied (deps, split, tests)
+- board moved to `$ART_JS/_backlog/` (`Owner: ART_JS`)
+- goal 2 opened · single-serializer rule decided · plan `BLOCKED` on codec fix.
 - `FACILITATOR` - 2026-10-13 0:35 – Whiteboard created.
 
 ## Follow-ups

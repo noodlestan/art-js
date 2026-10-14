@@ -87,7 +87,7 @@ Iterations 1–4 are delegated code work with self-contained instruction files; 
 
 Implement `@art-js/records` in `$PROJECT/libs/records/` exactly as specified by `plan__design.md`:
 
-1. **Record model** — `ArtRecord` (`kind`, `name`) and the `SectionBlock` bridge; `ArtRecordCapsule<T>` transporting identity and its `ArtDocumentSource`.
+1. **Record model** — `ArtRecord{name}` (`name` = whole heading text; **no kind** — CEO decision 2026-10-14) and the `SectionBlock` bridge; `ArtRecordCapsule<T>` transporting identity and its `ArtDocumentSource`.
 2. **Extraction** — `assertRecordPresence` and `extractRecords` returning capsules with fields and examples.
 3. **Write-back** — anchored `writeRecord` on content strings with an opt-in content-hash guard (`WriteBackOptions.guard`).
 4. **Proxy and facade** — `createProxyObject` delegating unknown properties to `FieldResolver`, setters routing to `field.value` and tracking `field.modifiedValue`; default `createFieldResolver` factory (records own field mapping); `Records` facade (`assertPresence`, `extract`, `update` = guarded, `serialize` = unguarded).
@@ -105,30 +105,30 @@ Implementation is performed in `$PROJECT` on branch `main` via delegation (self-
 
 Unit tests to create in `$PROJECT/libs/records/` (one suite per module):
 
-- `src/record/` — `ArtRecord` identity: `kind` and `name` present; bridge splits `block.name` (whole heading text) at the first `: ` — `## Checkout: Art Work` → `{kind:'Checkout', name:'Art Work'}`; no `: ` → `undefined` (not-a-record).
+- `src/record/` — `ArtRecord{name}` identity: bridge copies `block.name` (whole heading text) verbatim — `## Checkout: Art Work` → `{name:'Checkout: Art Work'}`; no parsing, no filtering; every `SectionBlock` is a record.
 - `src/capsule/` — `ArtRecordCapsule`: exposes identity via `_id` before source hydration; exposes the record via `_maybeRecord`/`raw()` after hydration; `_source` is the `ArtDocumentSource`.
 - `src/extract/` — presence assertion returns true/false for records present/absent in content; extraction returns capsules with fields and examples.
-- `src/write-back/` — write-back lands at the positioning anchors; content-hash guard: safe write refuses when content changed, unsafe write proceeds; **same-kind disambiguation: a file with several records of one kind (e.g. `Package Dependency` ×5, names with spaces/colon, as in `$ART_WORK/cli/work/_records/package.art`) writes back exactly one record and leaves siblings byte-identical**.
-- `src/proxy/` — `ProxyObject`: `kind`/`name` returned from record identity; unknown fields resolve through `FieldResolver`; setters route to `field.value` and track `field.modifiedValue`. `createFieldResolver`: resolves `field.value`, tracks `field.modifiedValue` on set.
+- `src/write-back/` — write-back lands at the positioning anchors; content-hash guard: safe write refuses when content changed, unsafe write proceeds; **same-name disambiguation: a file with several sections sharing an identical heading text (model: `$ART_WORK/cli/work/_records/package.art`) writes back exactly one record and leaves siblings byte-identical**.
+- `src/proxy/` — `ProxyObject`: `name` returned from record identity; unknown fields resolve through `FieldResolver`; setters route to `field.value` and track `field.modifiedValue`. `createFieldResolver`: resolves `field.value`, tracks `field.modifiedValue` on set.
 - `src/records/` — facade round-trip: `extract` → mutate → `update`/`serialize` returns content with the change applied and untouched records preserved. **New-file heading round-trip:** `serialize` on a new file emits `## Checkout: Art Work` verbatim via `codec.serialize` (Option A, no fallback emitter; gate = constructs release carrying `delete-kind-from-code`).
 
 ---
 
 ## Items:
 
-| Iteration / Instructions                       | Status     |
-| ---------------------------------------------- | ---------- |
-| Iteration: Implement Record Model              | `PLANNING` |
-| Iteration: Implement Extraction and Write-Back | `PLANNING` |
-| Iteration: Implement Proxy and Field Resolver  | `PLANNING` |
-| Iteration: Implement Records Facade            | `PLANNING` |
-| Iteration: Document Records Usage              | `PLANNING` |
+| Iteration / Instructions                       | Status  |
+| ---------------------------------------------- | ------- |
+| Iteration: Implement Record Model              | `READY` |
+| Iteration: Implement Extraction and Write-Back | `READY` |
+| Iteration: Implement Proxy and Field Resolver  | `READY` |
+| Iteration: Implement Records Facade            | `READY` |
+| Iteration: Document Records Usage              | `READY` |
 
 ### Iteration: Implement Record Model
 
 **ID:** `implement-record-model`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Land the identity and transport foundation every other module builds on.
 
@@ -136,11 +136,13 @@ Unit tests to create in `$PROJECT/libs/records/` (one suite per module):
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
+**Instructions:** `./instructions/implement-record-model.md`
+
 **Changes:**
 
 - Add `@art-md/primitives@0.0.3` and `@art-md/constructs` to `$PROJECT/libs/records/package.json` dependencies — **constructs pin bumped to the release carrying `delete-kind-from-code`** (see Blockers; `SectionBlock`/`FieldBlock`/`FieldInline` live in constructs, not primitives — `ART_MD` audit finding 1).
-- Create `src/record/types.ts` — `ArtRecord` (`kind`, `name`).
-- Create `src/record/createArtRecord.ts` — `createArtRecord(block: SectionBlock): ArtRecord | undefined`: parse `kind`/`name` from `block.name` (the whole heading text) by splitting at the first `: `; no `: ` → `undefined` (not-a-record — same semantics as the old `kind: undefined`). **`kind` is records-domain** — `ART_MD`'s fix plan deletes `SectionBlock.kind`; constructs never split headings, we do (finding 4 re-baselined 2026-10-14). `FieldBlock`/`FieldInline` used directly — no `Field` union (finding 2).
+- Create `src/record/types.ts` — `ArtRecord{name: string}` (`name` = whole heading text).
+- Create `src/record/createArtRecord.ts` — `createArtRecord(block: SectionBlock): ArtRecord` = `{ name: block.name }`. **No parsing, no filtering, no kind** (CEO decision 2026-10-14): every `SectionBlock` is a record; heading interpretation belongs to consumers (future `art-js/resources`). The constructs release must still be the kind-free one — the old parser split headings, which would leave `block.name` incomplete (GATE in the instruction file).
 - Create `src/capsule/types.ts` — `ArtRecordCapsule<T>` (`_source`, `_maybeRecord`, `_id`, `raw()`, index signature).
 - Create `src/capsule/createArtRecordCapsule.ts` — `createArtRecordCapsule<T>(source, maybeRecord?)`.
 - Unit tests for `src/record/` and `src/capsule/` per the Unit Tests section.
@@ -164,7 +166,7 @@ build(create-lib-records): Implement `ArtRecord` and `ArtRecordCapsule` with tes
 
 **ID:** `implement-extract-write-back`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Deliver the read and write halves of the API — presence assertion, extraction, and guarded write-back.
 
@@ -172,11 +174,12 @@ build(create-lib-records): Implement `ArtRecord` and `ArtRecordCapsule` with tes
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
+**Instructions:** `./instructions/implement-extract-write-back.md`
+
 **Changes:**
 
-- Create `src/extract/types.ts` — `ExtractOptions`.
-- Create `src/extract/assertRecordPresence.ts` — `assertRecordPresence(document, kind, name)`.
-- Create `src/extract/extractRecords.ts` — `extractRecords(document, options?)` returning capsules with fields and examples.
+- Create `src/extract/assertRecordPresence.ts` — `assertRecordPresence(document, name)` (exact heading-text match).
+- Create `src/extract/extractRecords.ts` — `extractRecords(document)` returning one capsule per section, with fields and examples.
 - Create `src/write-back/types.ts` — `RecordPosition`, `WriteBackOptions` (`guard` opt-in).
 - Create `src/write-back/writeRecord.ts` — `writeRecord(content, capsule, options?)` on content strings, not the filesystem.
 - Unit tests for `src/extract/` and `src/write-back/` per the Unit Tests section.
@@ -200,13 +203,15 @@ build(create-lib-records): Implement extraction and guarded write-back with test
 
 **ID:** `implement-proxy-resolver`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Transparent field access — the `ProxyObject` and the default field-mapping resolver it runs on.
 
 **Description:** Implement `src/proxy/` with unit tests; split from the facade per cross-review (proxy + resolver share `FieldResolver`; the facade depends on iteration 2, not on the proxy).
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/implement-proxy-resolver.md`
 
 **Changes:**
 
@@ -234,13 +239,15 @@ build(create-lib-records): Implement proxy access and field resolver with tests.
 
 **ID:** `implement-records-facade`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Complete the public API — the collection-level facade and the exported surface.
 
 **Description:** Implement `src/records/` on top of iteration 2, wire `src/index.ts` per the spec, and cover with unit tests. **Option A applies:** `serialize` reaches `codec.serialize` — no hand-rolled emitter, ever (see Decisions). Its new-file test asserts the heading survives verbatim (`## Checkout: Art Work`) — against the constructs release carrying `delete-kind-from-code` (shared plan-level gate, see Blockers). If that release has not landed when everything else is done, report `BLOCKER`; do not write a fallback serializer.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/implement-records-facade.md`
 
 **Changes:**
 
@@ -268,13 +275,21 @@ build(create-lib-records): Implement Records facade and public exports with test
 
 **ID:** `document-records-usage`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Make the finished package consumable and refresh the knowledge that describes it; rides along after the API is stable.
 
 **Description:** README usage section, records-specific package guide, and knowledge status/doc refresh.
 
 **Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
+
+**Instructions:** (inlined — the Changes below are the complete instructions; report completion in chat, no instruction file.)
+
+::switch `agent-worker` — switch to the agent-worker agent mode before you start changing files. Self-contained rule applies: everything you need is this iteration plus its knowledge links; if a link under Mandatory Reading (plan's Knowledge section) is unreadable, REPORT A BLOCKER and STOP. Report back terse: happy face + up to 3 bullet points; the trail lives in the commit.
+
+**Mandatory Reading:** `$PROJECT/_guide.md` · `$PROJECT/knowledge/records.md` · `$PROJECT/knowledge/design/records.md` · README shaped after `$WORKSPACE/checkouts/workspace-tooling/cli/esbuild-cli/README.md`.
+
+**Gate:** run only after `implement-records-facade` is complete (the README snippet must match real exports).
 
 **Changes:**
 
@@ -304,7 +319,7 @@ docs(art-js): Records README usage, package guide, and architecture status.
 
 ### Next
 
-**Fix plan drafted and reviewed (2026-10-14): `$ART_MD/_backlog/3-now/plan-drop-kind-and-reword-claims/plan.md`** (`PLANNING`, 3 iterations; supersedes the earlier `Ergonomic Factories API` name). Instruction hold released — the draft arrived and the specs are re-baselined (bridge parses `Kind: Name` from heading text; see Decisions). **Next:** **Write Instructions** for all 5 iterations (`implement-record-model`, `implement-extract-write-back`, `implement-proxy-resolver`, `implement-records-facade` self-contained; `document-records-usage` inline), mark iterations `READY`, then delegate `implement-record-model` once the constructs release carrying `delete-kind-from-code` is available (pin bump in instruction 1 — see Blockers). Rationale for holding all five for a single review pass: `ART_MD`/`ART_LIB`/`ART_WORK` review under goal step 3, not two. Board contracts: `AGREED` except `ART_MD`'s two re-proposals (`kind` removal; structural round-trip) — agreed by us, pending `ART_LIB` + `ART_WORK`. `$ART_LIB` is decoupled; only `$ART_WORK` adoption depends on this plan going green workspace-linked (npm publish NOT required).
+**Next:** **Instruction files written (2026-10-14):** 4 self-contained under `./instructions/` + the inline block for `document-records-usage`; all 5 iterations `READY`. **Posted on the whiteboard for review (goal steps 3–4):** `ART_MD` reviews instructions 1–2; `ART_LIB` + `ART_WORK` review instructions 2–4. After findings are addressed: delegate `implement-record-model` once the constructs release carrying `delete-kind-from-code` is available (GATE inside instruction 1). Board contracts: `AGREED` except `ART_MD`'s two re-proposals (`kind` removal; structural round-trip) — `✓ART_JS ✓ART_WORK`, pending `ART_LIB`. `$ART_LIB` is decoupled; only `$ART_WORK` adoption depends on this plan going green workspace-linked (npm publish NOT required).
 
 ### Blockers
 
@@ -370,7 +385,7 @@ npm run test
 ### Findings
 
 - **`kind` is being deleted from Art MD — fix plan drafted, reviewed, accepted (ART_MD, 2026-10-14)** — `plan-drop-kind-and-reword-claims` (`$ART_MD/_backlog/3-now/`, `PLANNING`, 3 iterations): parser stops splitting headings, `SectionBlock.kind` and `KIND_PATTERN` deleted, round-trip claim reworded to structural fidelity. Evidence: `## Module: Greeting` → `## Greeting` under `test-serializer`; 42/43 fixtures lossless, only kind fails. _Correction: `ART_MD`'s direct edit to this file cited `plan-fix-kind-and-roundtrip-claim` + iteration `fix-sectionblock-kind-serialization` — neither exists; canonical names verified on disk and used above._
-- **`ART_MD` audit findings (2026-10-13, whiteboard)** — (1) `SectionBlock`/`FieldBlock`/`FieldInline` live in `@art-md/constructs@0.0.3`, not `primitives` — iteration 1 now adds both deps; (2) no upstream `Field` union — use `FieldBlock`/`FieldInline`; (3) `field.modifiedValue` does not exist upstream — stays records-domain (resolver tracks it); (4) `SectionBlock.kind` is optional — `createArtRecord` returns `undefined` for `kind: undefined` (signature now `ArtRecord | undefined`).
+- **`ART_MD` audit findings (2026-10-13, whiteboard)** — (1) `SectionBlock`/`FieldBlock`/`FieldInline` live in `@art-md/constructs@0.0.3`, not `primitives` — iteration 1 now adds both deps; (2) no upstream `Field` union — use `FieldBlock`/`FieldInline`; (3) `field.modifiedValue` does not exist upstream — stays records-domain (resolver tracks it); (4) heading shapes vary — superseded 2026-10-14 by the CEO kind-drop: `createArtRecord(block): ArtRecord` = `{name: block.name}`, no parsing.
 - **`@art-lib/fs-records@0.0.1` exports pre-rename names** (`findRecordFiles`, `FSRecordsConfig`, `FSRecordsPath`, `searchPath`) — verified in source by `ART_LIB`; agreed names land with their iteration 1. No impact on this plan (decoupled), recorded so nobody cites `0.0.1` as carrying the agreed surface.
 - **Records whiteboard converged (2026-10-13)** — `$ART_JS/_backlog/whiteboard-art-records/whiteboard.md` (moved from workspace root): `@art-js/records` + `@art-lib/fs-records` contracts `AGREED`; `FSRecordsAdapter`/`createFSRecordsAdapter` canonical; ART_WORK confirms per-document facade + `discover`/`extract` verb split.
 - **`@art-md/primitives@0.0.3` is published on npm** — `libs/records/package.json` currently declares no dependencies; iteration 1 adds it.
@@ -379,9 +394,11 @@ npm run test
 
 ### Decisions
 
-- **Bridge re-baselined after `kind` deletion (2026-10-14): `kind` is parsed from heading text — records-domain, identity contract unchanged.** `ART_MD`'s fix deletes `SectionBlock.kind`; `createArtRecord` parses `block.name` at the first `: ` (no colon → `undefined`, not-a-record). `ArtRecord{kind, name}` and every consumer API (`assertPresence(kind, name)`, `extract(kinds?)`, discovery `kinds`, CLI record kinds) stay as `AGREED` — only the source moved; the same call as `modifiedValue` (constructs = pure parse model). Unit tests updated to the split-heading cases.
+- **CEO decision (2026-10-14): drop all mentions of kind from records.** `ArtRecord{name}` — `name` is the whole heading text; records performs **no parsing and no filtering**; every `SectionBlock` is a record. Kind detection, `Kind: Name` splitting, and kind→type mapping belong to consumers (a future `art-js/resources` layer). Whiteboard identity + read API bullets rewritten `AGREED` by owner authority; `assertRecordPresence(document, name)`; `extractRecords(document)` (no `ExtractOptions`); same-name disambiguation replaces same-kind. Supersedes the design spec's `ArtRecord{kind, name}` and the interim heading-parse bridge. Acks requested from `ART_MD`/`ART_LIB`/`ART_WORK` (parking lot).
+
+- ~~**Bridge re-baselined after `kind` deletion (2026-10-14): `kind` is parsed from heading text**~~ **SUPERSEDED same day by the CEO decision below.** `ART_MD`'s fix deletes `SectionBlock.kind`; `createArtRecord` parses `block.name` at the first `: ` (no colon → `undefined`, not-a-record). `ArtRecord{kind, name}` and every consumer API (`assertPresence(kind, name)`, `extract(kinds?)`, discovery `kinds`, CLI record kinds) stay as `AGREED` — only the source moved; the same call as `modifiedValue` (constructs = pure parse model). Unit tests updated to the split-heading cases.
 - **Both `ART_MD` re-proposed contracts agreed (whiteboard, 2026-10-14)** — (1) shape freeze without `kind?`: `SectionBlock.name` is the whole heading text; (2) structural round-trip, not byte-identity: our `writeRecord`/`update` byte guarantee is _ours_ (line-splice on content strings; codec never invoked; non-modelled content passes byte-for-byte) and stands regardless; contract Y underwrites only `serialize` on new files. Statuses stay `PROPOSED` until `ART_LIB` + `ART_WORK` confirm.
-- **Option A for `serialize` (whiteboard, 2026-10-13): `serialize(capsule)` reaches `codec.serialize` — single serializer, no hand-rolled emitter.** ART_MD's question on new-file markdown answered definitively: serialization is `@art-md`'s domain and `records` will not hold a second copy of the format (drift risk `ART_LIB` argued from the persistence side). Consequence: iteration `implement-records-facade` is gated on ART_MD's codec kind-drop fix (sequenced ahead per their offer); the iteration's test suite must include the kind round-trip case (`{kind:'Checkout', name:'Art Work'}` → `## Checkout: Art Work` on a new file). If the fix slips, report `BLOCKER` → `turn: FACILITATOR` — do not hand-roll.
+- **Option A for `serialize` (whiteboard, 2026-10-13): `serialize(capsule)` reaches `codec.serialize` — single serializer, no hand-rolled emitter.** ART_MD's question on new-file markdown answered definitively: serialization is `@art-md`'s domain and `records` will not hold a second copy of the format (drift risk `ART_LIB` argued from the persistence side). Consequence: iteration `implement-records-facade` is gated on ART_MD's codec kind-drop fix (sequenced ahead per their offer); the iteration's test suite must include the heading-verbatim case (new file emits `## Checkout: Art Work` exactly). If the fix slips, report `BLOCKER` → `turn: FACILITATOR` — do not hand-roll.
 - **Whiteboard contracts `AGREED` (2026-10-13)** — `update` = guarded write over existing content, `serialize` = unguarded for new files; line-based `RecordPosition` stands (adapter re-reads after `writeContent()`, guard covers drift); `writeRecord` is a pure line-splice preserving non-modelled content byte-identically; consumers import `ArtContentSource`/`ArtDocumentSource` straight from `@art-md/primitives` — `index.ts` exports only the package's own symbols.
 - **`createFieldResolver` added as a deliverable** — field mapping is records-domain; `$ART_WORK` will not hand-roll resolvers and the adapter must not own mapping. Lands in iteration 3 next to `createProxyObject`.
 - **Five iterations follow the module dependency chain** — split per cross-review (`ART_LIB` + `ART_WORK`): the former iteration 3 was three independently testable units in one commit chain; now proxy+resolver (`implement-proxy-resolver`, they share `FieldResolver`) is separate from facade+wiring (`implement-records-facade`, depends on extract+write-back, not the proxy). Phases 2–3 of the milestone still share the extract/write-back iteration; docs ride last when signatures are stable. Thin iteration 1 stays thin — deliberately not padded.
