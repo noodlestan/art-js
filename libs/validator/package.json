@@ -2,6 +2,11 @@
   "name": "@art-js/validator",
   "version": "0.0.1",
   "description": "Validates parsed modules against structural and semantic rules.",
+  "keywords": [
+    "art",
+    "validation",
+    "ast"
+  ],
   "author": "Noodlestan Collective",
   "license": "MIT",
   "private": false,

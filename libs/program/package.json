@@ -2,6 +2,11 @@
   "name": "@art-js/program",
   "version": "0.0.1",
   "description": "Executes parsed Art modules and manages program state.",
+  "keywords": [
+    "art",
+    "programs",
+    "execution"
+  ],
   "author": "Noodlestan Collective",
   "license": "MIT",
   "private": false,

@@ -2,6 +2,11 @@
   "name": "@art-js/watcher",
   "version": "0.0.1",
   "description": "Watches for changes in Art modules and triggers rebuilds.",
+  "keywords": [
+    "art",
+    "cli",
+    "file-watcher"
+  ],
   "author": "Noodlestan Collective",
   "license": "MIT",
   "private": false,

@@ -2,6 +2,11 @@
   "name": "@art-js/bin",
   "version": "0.0.1",
   "description": "CLI that exposes all core pipeline commands.",
+  "keywords": [
+    "art",
+    "cli",
+    "build"
+  ],
   "author": "Noodlestan Collective",
   "license": "MIT",
   "private": false,

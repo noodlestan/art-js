@@ -2,6 +2,15 @@
   "name": "noodlestan/art-js",
   "version": "0.0.1",
   "description": "Monorepo containing the Art JS roadmap and backlogs, knowledge, and library source code.",
+  "keywords": [
+    "art",
+    "markdown",
+    "ast",
+    "parser",
+    "validation",
+    "language-server",
+    "bundler"
+  ],
   "author": "Noodlestan",
   "license": "MIT",
   "private": true,

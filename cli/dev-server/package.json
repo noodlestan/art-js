@@ -2,6 +2,11 @@
   "name": "@art-js/dev-server",
   "version": "0.0.1",
   "description": "Local development server for testing Art modules.",
+  "keywords": [
+    "art",
+    "cli",
+    "dev-server"
+  ],
   "author": "Noodlestan Collective",
   "license": "MIT",
   "private": false,

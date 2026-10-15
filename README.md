@@ -4,6 +4,8 @@
 
 Libraries and tools for working with [Art MD](https://github.com/noodlestan/art-md) as a programming language, including records, resources, modules, programs, program builders, validators, projectors, language services, and related tooling.
 
+**Keywords:** art, markdown, ast, parser, validation, language-server, bundler.
+
 ## Packages
 
 | namespace | dir                    | package                   | description                                                      |

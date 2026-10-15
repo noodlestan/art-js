@@ -26,6 +26,16 @@
 - Package: Tools
 - Package: Watcher
 
+**Keywords:**
+
+- art
+- markdown
+- ast
+- parser
+- validation
+- language-server
+- bundler
+
 **Private:** `false`
 
 **Management:** Uses Workflow: Planning Work with one backlog per package, coordinating with Workflow: Roadmapping from one project-wide roadmap.
