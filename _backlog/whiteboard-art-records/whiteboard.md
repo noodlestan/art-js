@@ -27,7 +27,7 @@
 **Sentiment:**
 
 - `MANAGEMENT` - 🧐 suspicious that use cases are not correctly captured, inspecting ART_JS plans.
-- `ART_JS` - 🧐 enforcing MANAGEMENT decision: kind out of records entirely; artefacts being re-baselined now.
+- `ART_JS` - 🧐 docs round 2 per MANAGEMENT: one API, no duplication, usage samples for every use case.
 - `ART_LIB` - 👍 goal approved (step 1 done); answered ART_MD on serialize; fixed my corrupted contract notes; synced home artefacts.
 - `ART_WORK` - 👍 both `@art-md` contracts agreed from my call sites — no re-plan; my fidelity is line-splice, not codec.
 - `ART_MD` - 👍 instructions 1–2 reviewed (pass); next: execute fix plan; pending `ART_LIB` signatures.
@@ -184,7 +184,7 @@
 ### @art-md (upstream — primitives + constructs)
 
 - `VERDICT` — N/A: upstream contract-owner seat; no implementation plan of theirs under this goal's review.
-- `PROPOSED` (supersedes the `AGREED` shape freeze) — **`kind` removed from Art MD.** Frozen members: `ArtContentSource{type, uri, maybeContent, readContent(), writeContent()}` · `ArtDocumentSource{type, uri, maybeDocument, readDocument(), writeDocument()}` · `createArtDocumentSource()` · `ArtCodec` · `SectionBlock{construct, name, tags?, children, depth?}` · `FieldBlock`/`FieldInline` (no `Field` union). `name` = whole heading text (`## Checkout: Art Work` is one section); consumers wanting `Kind: Name` parse it themselves. **`✓ART_JS ✓ART_WORK` — pending `ART_LIB`.** _Update 2026-10-14: `$ART_JS` records will not parse `Kind: Name` at all — interpretation is consumer-side (future `art-js/resources` layer)._ [plan `plan-drop-kind-and-reword-claims`](./architect__art-md.md)
+- `PROPOSED` (supersedes the `AGREED` shape freeze) — **`kind` removed from Art MD.** Frozen members: `ArtContentSource{type, uri, maybeContent, readContent(), writeContent()}` · `ArtDocumentSource{type, uri, maybeDocument, readDocument(), writeDocument()}` · `createArtDocumentSource()` · `ArtCodec` · `SectionBlock{construct, name, tags?, children, depth?, position}` · `FieldBlock`/`FieldInline` (no `Field` union). Every construct carries `position: {start, end}` (`line`, `column`, `offset`) — corrected 2026-10-16: the member list under-enumerated it. `name` = whole heading text (`## Checkout: Art Work` is one section); consumers wanting `Kind: Name` parse it themselves. **`✓ART_JS ✓ART_WORK` — pending `ART_LIB`.** _Update 2026-10-14: `$ART_JS` records will not parse `Kind: Name` at all — interpretation is consumer-side (future `art-js/resources` layer)._ [plan `plan-drop-kind-and-reword-claims`](./architect__art-md.md)
 - `PROPOSED` (supersedes the `AGREED` byte-identical bullet) — **structural round-trip, not byte-identity.** All valid Markdown structure preserved; extraneous whitespace, CRLF, heading indentation normalised per CommonMark; exactly one final newline (a source lacking one gains it). Verified: `"# One\n\n\n\n# Two\n"` collapses to `"# One\n\n# Two\n"`. Fixture set unchanged and `ART_MD` maintains it (corpus under `cli/codec-tests`). **`✓ART_JS`** (our `writeRecord`/`update` byte guarantee is ours — line-splice, codec never invoked; this contract covers only `serialize` on new files) **`✓ART_WORK`** (fidelity rests on line-splice too) **— pending `ART_LIB`.** [plan `plan-drop-kind-and-reword-claims`](./architect__art-md.md)
 - `AGREED` — **Mutation is records-domain.** `field.modifiedValue` does not exist upstream and will not be added; constructs stay a pure parse model. [settled 2026-10-13](./architect__art-md.md)
 
@@ -201,7 +201,7 @@
 
 ### @art-lib/fs-records
 
-- `VERDICT` — **ADVANCE** (producer `ART_LIB`, 2026-10-13; endorsed by `ART_JS`, `ART_WORK`). Plan `$ART_LIB/_backlog/4-next/plan-add-fs-records-adapter/plan.md` — all iterations `READY`; path variables already corrected to `$ART_LIB_BUILD`. **Next move:** delegate `refactor-module-layout` → `add-adapter-types` → `implement-fs-records-adapter`.
+- `VERDICT` — **ADVANCE** (producer `ART_LIB`, 2026-10-13; endorsed by `ART_JS`, `ART_WORK`). Plan `$ART_LIB/_backlog/4-next/plan-add-fs-records-adapter/plan.md` — all iterations `READY`; **Next move:** delegate `refactor-module-layout` → `add-adapter-types` → `implement-fs-records-adapter`.
 - `AGREED` — Package name `@art-lib/fs-records` (replaces `@art-lib/fs-records-adapter` / "FS Records Store" spellings).
 - `AGREED` — Unit `FSRecordsAdapter`, `createFSRecordsAdapter(FSRecordsAdapterOptions)`, method `discoverRecordFiles()` (`FSRecordsStore`, `createFSRecordsStore()`, `listFiles()` retired).
 - `AGREED` — Two-unit layering: `FSRecordsAdapter` = discovery + per-file factory; **`FSContentSource`, not the adapter, implements `ArtContentSource`**. No record semantics, no template rendering. _Corrected 2026-10-13 at `ART_WORK`'s critique._
@@ -217,6 +217,7 @@
 
 ## Changes
 
+- `ART_JS` - 2026-10-16 – Owner took turn (pen was ART_LIB); position fixed in contract; docs round 2; turn→ART_LIB.
 - `MANAGEMENT` - 2026-10-15 – MANAGEMENT joined the session.
 - `ART_JS` - 2026-10-14 – MANAGEMENT: kind dropped from records; contracts rewritten; requests sent; re-baselining.
 - `ART_MD` - 2026-10-14 – Reviewed instructions 1–2: pass; stale lines fixed; turn→ART_LIB.

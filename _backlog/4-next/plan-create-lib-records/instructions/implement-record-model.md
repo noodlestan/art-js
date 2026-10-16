@@ -39,14 +39,13 @@ RULE: If at any point you are instructed to **REPORT A BLOCKER** or you encounte
 
 ## Goals
 
-Land the identity and transport foundation of `@art-js/records`: add the upstream dependencies and implement `src/record/` (identity + heading-text bridge) and `src/capsule/` (identity transport) with unit tests. Commit as `build(create-lib-records): Implement \`ArtRecord\` and \`ArtRecordCapsule\` with tests.`
+Land the identity, transport, and factory foundation of `@art-js/records`: add the upstream dependencies and implement `src/record/` (identity + synthetic section factory) and `src/capsule/` (capsule + injectable factory) with unit tests. Commit as `build(create-lib-records): Implement record identity, capsule, and factory with tests.`
 
 ## Mandatory Reading
 
 - plan: `$PROJECT/_backlog/4-next/plan-create-lib-records/plan.md` — this plan; Unit Tests section defines the suites.
-- spec: `$PROJECT/_backlog/1-done/plan-design-lib-records/plan__design.md` — package spec (§`src/record`, §`src/capsule`).
-- knowledge: `$PROJECT/knowledge/records.md` — the records model.
-- knowledge: `$PROJECT/knowledge/design/records.md` — design decisions in force (heading-text bridge, single serializer).
+- design: `$PROJECT/knowledge/design/records.md` — record model, synthetic sections, capsule factory injection.
+- overview: `$PROJECT/knowledge/overview-records.md` — responsibilities and use cases.
 - contracts: `$PROJECT/_backlog/whiteboard-art-records/whiteboard.md` (Contracts ▸ `@art-js/records`, `@art-md`) — binding agreements.
 
 - RULE: You MUST follow any links under `## Mandatory Reading` sections found in the listed files.
@@ -89,13 +88,14 @@ npm run test
 
 ## Changes
 
-- Step 1 / 3 — Add upstream dependencies to `package.json`.
-- Step 2 / 3 — Implement `src/record/` and `src/capsule/` with unit tests.
-- Step 3 / 3 — Commit `implement-record-model`.
+- Step 1 / 4 — Add upstream dependencies to `package.json`.
+- Step 2 / 4 — Implement `src/record/`.
+- Step 3 / 4 — Implement `src/capsule/` with unit tests.
+- Step 4 / 4 — Commit `implement-record-model`.
 
 ## Steps
 
-### Step `1 / 3` — Add upstream dependencies
+### Step `1 / 4` — Add upstream dependencies
 
 In `$PROJECT/libs/records/package.json` add:
 
@@ -104,7 +104,7 @@ In `$PROJECT/libs/records/package.json` add:
 
 RULE: do not add `@art-md/codec` or any other dependency. This package depends on contracts (`primitives`) and construct types (`constructs`) only.
 
-### Step `2 / 3` — Implement `src/record/` and `src/capsule/`
+### Step `2 / 4` — Implement `src/record/`
 
 **`src/record/types.ts`**
 
@@ -117,12 +117,24 @@ export interface ArtRecord {
 **`src/record/createArtRecord.ts`**
 
 ```ts
-export function createArtRecord(block: SectionBlock): ArtRecord;
+export type SectionInput = Partial<SectionBlock> & { name: string };
+
+export function createArtRecord(input: SectionInput): ArtRecord;
 ```
 
-- Return `{ name: block.name }` — the **whole heading text**, verbatim.
-- **No parsing, no filtering, no kind** (CEO decision 2026-10-14): every `SectionBlock` is a record; heading interpretation (kind detection, `Kind: Name` splitting, type mapping) belongs to consumers.
-- `block.name` must be the complete heading — which is why the GATE requires the kind-free constructs release (the old parser split headings and left `name` incomplete).
+- Returns the record identity `{ name: input.name }` — the **whole heading text**, verbatim.
+- `SectionInput` accepts any known or unknown section property (`depth`, `tags`, `children`, etc.); unknown properties pass through unchanged. This makes `createArtRecord` both the identity projection and the synthetic section factory.
+- **No parsing, no filtering, no kind** (CEO decision 2026-10-14): every `SectionBlock` is a record; heading interpretation belongs to consumers.
+- `input.name` must be the complete heading — which is why the GATE requires the kind-free constructs release (the old parser split headings and left `name` incomplete).
+
+**Unit tests** — per the plan's Unit Tests section:
+
+- identity: `name` present and equals the input name;
+- bridge: `## Checkout: Art Work` → `{name: 'Checkout: Art Work'}`; `## Greeting` → `{name: 'Greeting'}` — no section is filtered out;
+- synthetic: `createArtRecord({ name, depth: 2, tags: ['x'], children: [] })` carries all properties through;
+- pass-through: unknown section attributes survive unchanged.
+
+### Step `3 / 4` — Implement `src/capsule/`
 
 **`src/capsule/types.ts`**
 
@@ -148,15 +160,28 @@ export function createArtRecordCapsule<T extends ArtRecord>(
 - `_id` is always available (eager); `_maybeRecord`/`raw()` reflect hydration state (lazy).
 - `_source` is the `ArtDocumentSource` the capsule came from.
 
-**Unit tests** (in `src/`, files `*.test.ts`, co-located) — per the plan's Unit Tests section:
+**`src/capsule/createCapsuleFactory.ts`**
 
-- identity: `name` present;
-- bridge: `## Checkout: Art Work` → `{name: 'Checkout: Art Work'}`; `## Greeting` → `{name: 'Greeting'}` — no section is filtered out;
-- capsule: `_id` before hydration; `_maybeRecord`/`raw()` after; `_source` is the given source.
+```ts
+export type CapsuleFactory<T extends ArtRecord> = (record?: T) => ArtRecordCapsule<T>;
+
+export function createCapsuleFactory<T extends ArtRecord>(
+  source: ArtDocumentSource,
+  base?: CapsuleFactory<T>,
+): CapsuleFactory<T>;
+```
+
+- Produces `ArtRecordCapsule<T>` instances over the same source.
+- Accepts an optional `base` factory or unhydrated capsule prototype so variant flavours (plain / reactive) can share the same seam. Internal APIs work against the `CapsuleFactory` interface; external callers never see which flavour is in use.
+
+**Unit tests** — per the plan's Unit Tests section:
+
+- `_id` before hydration; `_maybeRecord`/`raw()` after; `_source` is the given source;
+- factory produces capsules; injected base factory is called when provided.
 
 Verify from `$PROJECT/libs/records/`: `npm run lint`, `npm run build`, `npm run test`.
 
-### Step `3 / 3` — Commit `implement-record-model`
+### Step `4 / 4` — Commit `implement-record-model`
 
 #### Commit: `implement-record-model`
 
@@ -165,7 +190,7 @@ Verify from `$PROJECT/libs/records/`: `npm run lint`, `npm run build`, `npm run 
 **Message:**
 
 ```text
-build(create-lib-records): Implement `ArtRecord` and `ArtRecordCapsule` with tests.
+build(create-lib-records): Implement record identity, capsule, and factory with tests.
 ```
 
 ---
@@ -173,7 +198,8 @@ build(create-lib-records): Implement `ArtRecord` and `ArtRecordCapsule` with tes
 ## Final Verification
 
 - Verify `package.json` depends only on `@art-md/primitives` and `@art-md/constructs` (kind-free release).
-- Verify `createArtRecord` performs no string manipulation — `name` equals `block.name` exactly.
+- Verify `createArtRecord` performs no string manipulation on `name` — `name` equals the input name exactly.
+- Verify `createArtRecord` passes through `depth`, `tags`, `children`, and unknown properties.
 - Verify `src/index.ts` is untouched — exports are wired in a later iteration.
 - Execute the **Verifying Completion** step above.
 - Report according to the "How to Report Back to the Delegator" instructions.

@@ -38,14 +38,12 @@ RULE: If at any point you are instructed to **REPORT A BLOCKER** or you encounte
 
 ## Goals
 
-Deliver the read and write halves of the API: presence assertion, extraction into capsules, and guarded line-splice write-back. Commit as `build(create-lib-records): Implement extraction and guarded write-back with tests.`
+Deliver the read and write halves used by the facade: presence assertion, extraction into capsules, and guarded field-level line-splice write-back. These modules are **internal** — not exported from `src/index.ts`. Commit as `build(create-lib-records): Implement extraction and guarded write-back with tests.`
 
 ## Mandatory Reading
 
 - plan: `$PROJECT/_backlog/4-next/plan-create-lib-records/plan.md` — this plan; Unit Tests section defines the suites.
-- spec: `$PROJECT/_backlog/1-done/plan-design-lib-records/plan__design.md` — package spec (§`src/extract`, §`src/write-back`).
-- knowledge: `$PROJECT/knowledge/records.md` — the records model and flow.
-- knowledge: `$PROJECT/knowledge/design/records.md` — design decisions in force (line-splice write-back, byte guarantee).
+- design: `$PROJECT/knowledge/design/records.md` — field-level line splicing, anchors, refresh-after-write.
 - contracts: `$PROJECT/_backlog/whiteboard-art-records/whiteboard.md` (Contracts ▸ `@art-js/records`) — the Write API and Anchor durability bullets are binding.
 
 - RULE: You MUST follow any links under `## Mandatory Reading` sections found in the listed files.
@@ -58,6 +56,8 @@ Deliver the read and write halves of the API: presence assertion, extraction int
 ### Setting Up
 
 **Instructions:** (From `$WORKSPACE/_guide.md`)
+
+Run from the `$WORKSPACE` root:
 
 ```bash
 npm ci
@@ -103,13 +103,16 @@ export function assertRecordPresence(document: ArtDocument, name: string): boole
 **`src/extract/extractRecords.ts`**
 
 ```ts
-export function extractRecords<T extends ArtRecord>(document: ArtDocument): ArtRecordCapsule<T>[];
+export function extractRecords<T extends ArtRecord>(
+  document: ArtDocument,
+  factory: CapsuleFactory<T>,
+): ArtRecordCapsule<T>[];
 ```
 
-One capsule per `SectionBlock` — no filtering; consumers select by name.
-
-- Map each `SectionBlock` through `createArtRecord`; skip blocks that return `undefined` (not records).
-- Wrap each record in `createArtRecordCapsule(document-source, record)`; hydrate fields and examples lazily per the spec.
+- One capsule per `SectionBlock` — no filtering; consumers select by name.
+- Map each `SectionBlock` through `createArtRecord`.
+- Wrap each record with the provided `factory` (from `src/capsule/`).
+- Hydration is lazy: capsules carry identity eagerly and pull the block on demand.
 
 ### Step `2 / 3` — Implement `src/write-back/`
 
@@ -117,8 +120,8 @@ One capsule per `SectionBlock` — no filtering; consumers select by name.
 
 ```ts
 export interface RecordPosition {
-  readonly startLine: number;
-  readonly endLine?: number;
+  readonly start: { line: number; column: number; offset: number };
+  readonly end: { line: number; column: number; offset: number };
 }
 
 export interface WriteBackOptions {
@@ -138,17 +141,20 @@ export function writeRecord(
 
 RULES (binding contracts):
 
-- **Pure line-splice on content strings.** Replace exactly the anchored record section; everything outside the anchors passes through **byte-identical** (tables, comments, ordering, blank lines, final newline). Never invoke the codec here.
+- **Pure field-level line-splice on content strings.** Edit only the lines a mutation owns: a field value line, a renamed label, a deleted field's lines, a new field appended at the section end, or a heading line when `depth` changed. Everything outside the changed lines passes through **byte-identical** (tables, comments, ordering, blank lines, interleaved content, final newline, sibling records). Never invoke the codec here.
 - **Guard is opt-in.** `guard: true` compares the capsule's content hash against `content` and refuses (throws a typed error) when content changed; default off = unsafe write proceeds.
-- Positioning comes from the capsule's anchors (`startLine`/`endLine`), computed against the content string passed in.
-- The filesystem is never touched — persistence belongs to the downstream content source.
+- **Positions come from the capsule's anchors**, captured from the parsed block's `position: {start, end}` (`line`, `column`, `offset`).
+- **Writes apply bottom-up** so earlier anchors stay valid during one update.
+- **Refresh after write.** The result is reparsed and the capsule refreshes in place (new anchors, same identity); the record's `name` is immutable, so it is always re-findable.
+- **The filesystem is never touched** — persistence belongs to the downstream content source.
 
 **Unit tests** — per the plan's Unit Tests section:
 
-- write-back lands at the anchors;
-- **same-name disambiguation:** a fixture with several sections sharing an identical heading text (model: `$ART_WORK/cli/work/_records/package.art`) writes back exactly **one** record; sibling records and all other content remain byte-identical;
+- write-back edits only the expected lines (value update, rename, add, delete, depth change);
+- same-name disambiguation: a fixture with several sections sharing an identical heading text writes back exactly **one** record; sibling records and all other content remain byte-identical;
 - hash guard: safe write refuses when content changed, unsafe write proceeds;
-- content outside anchors is byte-identical (assert with string equality on the untouched regions).
+- field order preserved; new fields appended at section end; interleaved arbitrary content preserved;
+- content outside the changed lines is byte-identical (assert with string equality on untouched regions).
 
 Verify from `$PROJECT/libs/records/`: `npm run lint`, `npm run build`, `npm run test`.
 
@@ -169,6 +175,7 @@ build(create-lib-records): Implement extraction and guarded write-back with test
 ## Final Verification
 
 - Verify `writeRecord` performs no I/O and imports no codec.
+- Verify `assertRecordPresence` and `extractRecords` are **not** exported from `src/index.ts`.
 - Verify the same-name disambiguation test exists and passes.
 - Verify `src/index.ts` is untouched — exports are wired in a later iteration.
 - Execute the **Verifying Completion** step above.

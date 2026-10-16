@@ -38,13 +38,12 @@ RULE: If at any point you are instructed to **REPORT A BLOCKER** or you encounte
 
 ## Goals
 
-Transparent field access: `FieldResolver`, the default `createFieldResolver` factory, and `createProxyObject`. Commit as `build(create-lib-records): Implement proxy access and field resolver with tests.`
+Transparent field access: `FieldResolver`, the default `createFieldResolver` factory, and `createProxyObject`. The proxy routes identity and section properties separately from fields; only field names reach the resolver. Commit as `build(create-lib-records): Implement proxy access and field resolver with tests.`
 
 ## Mandatory Reading
 
 - plan: `$PROJECT/_backlog/4-next/plan-create-lib-records/plan.md` — this plan; Unit Tests section defines the suites.
-- spec: `$PROJECT/_backlog/1-done/plan-design-lib-records/plan__design.md` — package spec (§`src/proxy`).
-- knowledge: `$PROJECT/knowledge/design/records.md` — design decisions in force (records-domain mutation, always-available proxy).
+- design: `$PROJECT/knowledge/design/records.md` — writing fields, section properties vs resolver.
 - contracts: `$PROJECT/_backlog/whiteboard-art-records/whiteboard.md` (Contracts ▸ `@art-js/records`) — the `createProxyObject`/`createFieldResolver` bullet is binding.
 
 - RULE: You MUST follow any links under `## Mandatory Reading` sections found in the listed files.
@@ -57,6 +56,8 @@ Transparent field access: `FieldResolver`, the default `createFieldResolver` fac
 ### Setting Up
 
 **Instructions:** (From `$WORKSPACE/_guide.md`)
+
+Run from the `$WORKSPACE` root:
 
 ```bash
 npm ci
@@ -99,6 +100,8 @@ npm run test
 export interface FieldResolver {
   resolveField(fieldName: string): unknown;
   setField(fieldName: string, value: unknown): void;
+  renameField(oldName: string, newName: string): void;
+  deleteField(fieldName: string): void;
 }
 ```
 
@@ -108,8 +111,11 @@ export interface FieldResolver {
 export function createFieldResolver<T extends ArtRecord>(record: T): FieldResolver;
 ```
 
-- Default field mapping for record fields (skip `name` — it comes from identity).
-- Reads pull the field's current value; writes route to `field.value` and track `field.modifiedValue`.
+- Default field mapping for record fields.
+- `resolveField(name)` reads the field's current value.
+- `setField(name, value)` writes `field.value` and tracks `field.modifiedValue`. Adding a new field appends it at the section end.
+- `renameField(old, new)` changes the field's label in place, preserving field order.
+- `deleteField(name)` removes the field.
 - RULE: `modifiedValue` is **records-domain tracking state** — it does not exist upstream in `@art-md/constructs`; this factory owns it.
 
 **`src/proxy/createProxyObject.ts`**
@@ -121,17 +127,23 @@ export function createProxyObject<T extends ArtRecord>(
 ): T;
 ```
 
-- The property defined on `T` (`name`) is returned from the record identity (`capsule._id`).
-- Every other access goes through `resolver.resolveField`.
-- Setters route to `resolver.setField` (which writes `field.value` and tracks `field.modifiedValue`).
+Routing rules:
+
+- `name` — returned from the record identity (`capsule._id`). **Read-only**: assignment has no effect (the capsule seals identity).
+- `depth`, `tags`, and other known section properties — read from/write to the hydrated block directly.
+- Every other property — routed through `resolver.resolveField` (get) or `resolver.setField` (set).
+- There is no allow-list: section properties are handled at the proxy level, so only field names reach the resolver.
 - The factory is always-available and explicit — callers opt in by calling it; there is no default-switching mode.
 
 **Unit tests** — per the plan's Unit Tests section:
 
-- `name` returned from record identity;
+- `name` returned from identity and read-only;
+- `depth` read from and written to the block;
 - unknown fields resolve through the resolver;
-- setters route to `field.value` and `track field.modifiedValue`;
-- `createFieldResolver`: reads current value, sets value + modified-value tracking.
+- setters route to `field.value` and track `field.modifiedValue`;
+- `renameField` preserves field order;
+- `deleteField` removes the field;
+- `createFieldResolver`: reads current value, sets value + modified-value tracking, renames, deletes.
 
 Verify from `$PROJECT/libs/records/`: `npm run lint`, `npm run build`, `npm run test`.
 
@@ -139,6 +151,7 @@ Verify from `$PROJECT/libs/records/`: `npm run lint`, `npm run build`, `npm run 
 
 - Confirm no import from `@art-md/codec` and no filesystem access.
 - Confirm `FieldResolver` has no other factory in the package (single source of field mapping).
+- Confirm the proxy does not pass section-property names to the resolver.
 
 ### Step `3 / 3` — Commit `implement-proxy-resolver`
 
@@ -156,7 +169,7 @@ build(create-lib-records): Implement proxy access and field resolver with tests.
 
 ## Final Verification
 
-- Verify `createFieldResolver` is exported from `src/proxy/` (public wiring happens in the facade iteration).
+- Verify `createFieldResolver` and `createProxyObject` are exported from `src/proxy/` (public wiring happens in the facade iteration).
 - Verify `src/index.ts` is untouched — exports are wired in the next iteration.
 - Execute the **Verifying Completion** step above.
 - Report according to the "How to Report Back to the Delegator" instructions.

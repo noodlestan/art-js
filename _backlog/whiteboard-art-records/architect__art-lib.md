@@ -4,7 +4,7 @@
 
 **Agent ID:** `ART_LIB`
 
-**Repository:** `$PROJECT` = `$ART_LIB` = `checkouts/art-lib-planning` (planning records) · `$ART_LIB_BUILD` = `checkouts/art-lib-building` (implementation, publishes `@art-lib/*`) · upstream `$ART_JS` = `checkouts/art-js-planning`, `$ART_MD` = `checkouts/art-md-planning` · downstream `$ART_WORK` = `checkouts/art-work-planning`
+**Repository:** `$ART_LIB` = `$ART_LIB` = `checkouts/art-lib-planning` (planning records)
 
 **Use cases:**
 
@@ -20,7 +20,7 @@
 - `$ART_LIB/_backlog/6-plan/plan-add-logger/plan.md`, `plan-add-operations/plan.md`, `plan-add-config/plan.md` — all `PLANNING`
 - `$ART_LIB/_backlog/1-done/plan-create-art-lib-project-repo/plan.md`, `plan-extract-read-write-records-art-lib/plan.md` — `DONE`
 
-**Code:** `$ART_LIB_BUILD/libs/fs-records/src/`
+**Code:** `$ART_LIB/libs/fs-records/src/`
 
 - Public surface — `index.ts` (exports `findRecordFiles`, `readRecordFileContent`, `FSRecordFile`, `FSRecordsConfig`, `FSRecordsPath`), `findRecordFiles.ts`, `readRecordFileContent.ts`, `types.ts`
 - Internals — `private/createRecordFile.ts`, `private/findRecordFilesInPath.ts`, `private/getGitIgnoredSet.ts`, `private/globPath.ts`, `private/filterByKinds.ts`, `private/normalizePatterns.ts`, `private/normalizeExcludes.ts`, `private/directoryExists.ts`
@@ -76,11 +76,11 @@
 
 - **Plans / instructions:** `$ART_LIB/_backlog/4-next/plan-add-fs-records-adapter/plan.md` + `instructions/{refactor-module-layout,add-adapter-types,implement-fs-records-adapter}.md`
 - **Knowledge / decisions:** `$ART_LIB/knowledge/components.md`, `$ART_LIB/knowledge/overview.md`, `$ART_LIB/knowledge/adr/frameworks.md`
-- **Implementation / tests:** `$ART_LIB_BUILD/libs/fs-records/` (co-located `*.test.ts`), conventions wired through `$ART_LIB_BUILD/_guide.md` (`@noodlestan/conventions-typescript`, `@noodlestan/conventions-unit-tests`)
-- **Package record:** `$ART_LIB_BUILD/libs/fs-records/_records/package.art` — Canonical Name `@art-lib/fs-records`, published, Node >= 22
-- **Architecture:** `$ART_LIB_BUILD/architecture/index.md`
+- **Implementation / tests:** `$ART_LIB/libs/fs-records/` (co-located `*.test.ts`), conventions wired through `$ART_LIB/_guide.md` (`@noodlestan/conventions-typescript`, `@noodlestan/conventions-unit-tests`)
+- **Package record:** `$ART_LIB/libs/fs-records/_records/package.art` — Canonical Name `@art-lib/fs-records`, published, Node >= 22
+- **Architecture:** `$ART_LIB/architecture/index.md`
 - **Parking lots:** `$ART_LIB/_backlog/_parking-lot.md`, `$ART_LIB/_roadmap/_parking-lot.md` — both empty (no ACTIONABLE / pending / BLOCKER)
-- **Broken reference (mine to fix):** `$ART_LIB_BUILD/knowledge/index.md` is mandatory reading in the plan and in all three instruction files, but the directory does not exist — a worker would hard-block on it.
+- **Broken reference (mine to fix):** `$ART_LIB/knowledge/index.md` is mandatory reading in the plan and in all three instruction files, but the directory does not exist — a worker would hard-block on it.
 
 ### What I expect from upstream
 
@@ -95,7 +95,7 @@
 
 ### Assumptions, uncertainties, decisions needing input
 
-**Settled 2026-10-13 — do not reopen:** canonical unit name `FSRecordsAdapter` / `createFSRecordsAdapter(FSRecordsAdapterOptions)` / `discoverRecordFiles()`; WIP stand-ins deleted, `ArtContentSource` the only imported contract; availability bar moot (no `@art-js/records` dependency, nothing to link); prefix convention `$ART_LIB`/`$PROJECT` = planning checkout, `$ART_LIB_BUILD` = code (27 sites renamed).
+**Settled 2026-10-13 — do not reopen:** canonical unit name `FSRecordsAdapter` / `createFSRecordsAdapter(FSRecordsAdapterOptions)` / `discoverRecordFiles()`; WIP stand-ins deleted, `ArtContentSource` the only imported contract; availability bar moot (no `@art-js/records` dependency, nothing to link); prefix convention `$ART_LIB`/`$ART_LIB` = planning checkout, `$ART_LIB` = code (27 sites renamed).
 
 1. **Forwarded question from `$ART_WORK`** — is `.njk` template rendering mine or theirs? _Position: theirs; the adapter persists content verbatim and neither templates nor serialises it._
 2. **Write-re-read (answered for `$ART_JS`, now a contract)** — stateless per call: content sits on the source instance until `writeContent()`, and is re-read from disk on the next `readContent()`. Line anchors are computed against the string handed to `writeRecord`; the opt-in hash guard covers out-of-band drift.

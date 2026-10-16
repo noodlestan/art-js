@@ -41,14 +41,12 @@ RULE: If at any point you are instructed to **REPORT A BLOCKER** or you encounte
 
 ## Goals
 
-Complete the public API — the `Records<T>` facade and the exported surface. Commit as `build(create-lib-records): Implement Records facade and public exports with tests.`
+Complete the public API — the `Records<T>` facade, the optional `capsuleFactory` injection, and the exported surface. Commit as `build(create-lib-records): Implement Records facade and public exports with tests.`
 
 ## Mandatory Reading
 
 - plan: `$PROJECT/_backlog/4-next/plan-create-lib-records/plan.md` — this plan; Unit Tests section defines the suites.
-- spec: `$PROJECT/_backlog/1-done/plan-design-lib-records/plan__design.md` — package spec (§`src/records`, §`src/index.ts`).
-- knowledge: `$PROJECT/knowledge/records.md` — the records model, safe/unsafe split.
-- knowledge: `$PROJECT/knowledge/design/records.md` — design decisions in force (single serializer).
+- design: `$PROJECT/knowledge/design/records.md` — single API, single serializer, capsule factory injection.
 - contracts: `$PROJECT/_backlog/whiteboard-art-records/whiteboard.md` (Contracts ▸ `@art-js/records`) — Read API, Split, and Import path bullets are binding.
 
 - RULE: You MUST follow any links under `## Mandatory Reading` sections found in the listed files.
@@ -61,6 +59,8 @@ Complete the public API — the `Records<T>` facade and the exported surface. Co
 ### Setting Up
 
 **Instructions:** (From `$WORKSPACE/_guide.md`)
+
+Run from the `$WORKSPACE` root:
 
 ```bash
 npm ci
@@ -111,24 +111,35 @@ export interface Records<T extends ArtRecord> {
 **`src/records/createRecords.ts`**
 
 ```ts
-export function createRecords<T extends ArtRecord>(source: ArtDocumentSource): Records<T>;
+export interface CreateRecordsOptions<T extends ArtRecord> {
+  capsuleFactory?: CapsuleFactory<T>;
+}
+
+export function createRecords<T extends ArtRecord>(
+  source: ArtDocumentSource,
+  options?: CreateRecordsOptions<T>,
+): Records<T>;
 ```
 
-- `assertPresence` / `extract` delegate to `src/extract/` per document (name-only, no filtering).
+- `assertPresence` / `extract` delegate to `src/extract/` per document (name-only, no filtering), using the capsule factory from options or the default factory.
 - **`update`** = guarded line-splice over existing content (`writeRecord` with `guard` available — the safe path).
 - **`serialize`** = content for a **new** file with no prior bytes — unguarded by definition. It builds the record's section as a `SectionBlock` whose `name` is the full heading text (`Checkout: Art Work`) and calls **`codec.serialize`**. RULE: no local string building of markdown; one serializer (whiteboard contract).
+- The injected `capsuleFactory` lets internal code work against one capsule interface while the external API stays variant-agnostic.
 
 **Unit tests** — per the plan's Unit Tests section:
 
 - facade round-trip: `extract` → mutate → `update`/`serialize` returns content with the change applied and untouched records preserved;
+- `createRecords` accepts an optional `capsuleFactory` and uses it for every extracted capsule;
 - **new-file heading round-trip:** `serialize` on a new file emits `## Checkout: Art Work` verbatim — the name IS the heading text.
 
 ### Step `2 / 3` — Wire `src/index.ts` and verify
 
-Export exactly the public surface specified in `$PROJECT/_backlog/1-done/plan-design-lib-records/plan__design.md` §`src/index.ts`, plus `createFieldResolver`:
+Export exactly the public surface:
 
-- types: `ArtRecord`, `ArtRecordCapsule`, `Records`, `ExtractOptions`, `RecordPosition`, `WriteBackOptions`, `FieldResolver`;
-- values: `createArtRecord`, `createArtRecordCapsule`, `createRecords`, `assertRecordPresence`, `extractRecords`, `writeRecord`, `createFieldResolver`, `createProxyObject`.
+- types: `ArtRecord`, `ArtRecordCapsule`, `Records`, `RecordPosition`, `WriteBackOptions`, `FieldResolver`;
+- values: `createRecords`, `createArtRecord`, `createFieldResolver`, `createProxyObject`.
+
+**Do not export:** `assertRecordPresence`, `extractRecords`, `writeRecord`, `createArtRecordCapsule`, `createCapsuleFactory` — they are internal building blocks.
 
 RULE (binding contract — import path): `src/index.ts` exports **only this package's own symbols**. `ArtContentSource`, `ArtDocumentSource`, `ArtCodec` are **not** re-exported; consumers import them from `@art-md/primitives` directly.
 
@@ -149,7 +160,7 @@ build(create-lib-records): Implement Records facade and public exports with test
 ## Final Verification
 
 - Verify `serialize` imports and calls `codec.serialize` — grep `src/` for hand-built markdown emitters and report any as a violation.
-- Verify `src/index.ts` exports no `@art-md` symbols.
+- Verify `src/index.ts` exports no `@art-md` symbols and no internal free functions.
 - Verify all six `src/` modules have passing test suites (no `passWithNoTests` escape — remove it from `vitest.config.ts` if still present).
 - Execute the **Verifying Completion** step above.
 - Report according to the "How to Report Back to the Delegator" instructions.

@@ -10,7 +10,7 @@
 
 **Purpose:** Implement the `@art-js/records` package from the approved design.
 
-**Description:** Implement, test, and document the records library per `plan__design.md`: the record model wrapping `SectionBlock`, extraction and presence-assertion, write-back with positioning anchors and an opt-in content-hash guard, optional `ProxyObject` field access, and the `Records` facade — in the scaffolded `$PROJECT/libs/records/`.
+**Description:** Implement, test, and document the records library per `knowledge/design/records.md`: a record IS a `SectionBlock`, extraction and presence-assertion, write-back with field-level positioning anchors and an opt-in content-hash guard, transparent field access through `createProxyObject`/`createFieldResolver`, injectable capsule factories, and the `Records` facade — in the scaffolded `$PROJECT/libs/records/`.
 
 ## Mandatory Reading
 
@@ -31,25 +31,25 @@
 
 ## Summary
 
-Implement the records package strictly from the design delivered by the DONE plan `design-lib-records` (spec: `$PROJECT/_backlog/1-done/plan-design-lib-records/plan__design.md`; knowledge: `$PROJECT/knowledge/records.md`). The module dependency chain dictates the sequence: `record` → `capsule` → `extract` + `write-back` → `proxy` + `records` facade → `src/index.ts` exports → documentation once the API is stable. Declare `@art-md/primitives` (published, `0.0.3`) as the package dependency for the contract types and `createArtDocumentSource`.
+Implement the records package from the current design (`$PROJECT/knowledge/design/records.md`) and overview (`$PROJECT/knowledge/overview-records.md`). The module dependency chain dictates the sequence: `record` → `capsule` (factory included) → `extract` + `write-back` → `proxy` → `records` facade → `src/index.ts` exports → documentation once the API is stable. Declare `@art-md/primitives` (published, `0.0.3`) as the package dependency for the contract types and `createArtDocumentSource`.
 
 Iterations 1–4 are delegated code work with self-contained instruction files; iteration 5 is a compact doc sweep carried inlined in this plan.
 
 ### Summary of Changes
 
-| File / Area                                  | Change                                                                                           |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `$PROJECT/libs/records/package.json`         | **Updated** — add `@art-md/primitives` and `@art-md/constructs` dependencies.                    |
-| `$PROJECT/libs/records/src/record/`          | **Created** — `ArtRecord` identity and the `SectionBlock` bridge.                                |
-| `$PROJECT/libs/records/src/capsule/`         | **Created** — `ArtRecordCapsule<T>` transporting identity and its `ArtDocumentSource`.           |
-| `$PROJECT/libs/records/src/extract/`         | **Created** — `assertRecordPresence`, `extractRecords` with options.                             |
-| `$PROJECT/libs/records/src/write-back/`      | **Created** — anchored `writeRecord` with opt-in content-hash guard.                             |
-| `$PROJECT/libs/records/src/proxy/`           | **Created** — `FieldResolver`, `createFieldResolver` (default factory), and `createProxyObject`. |
-| `$PROJECT/libs/records/src/records/`         | **Created** — `Records<T>` facade (`assertPresence`, `extract`, `update`, `serialize`).          |
-| `$PROJECT/libs/records/src/index.ts`         | **Updated** — public exports per spec (replaces placeholder).                                    |
-| `$PROJECT/libs/records/README.md`            | **Updated** — add Usage section shaped after the `esbuild-cli` README.                           |
-| `$PROJECT/libs/records/_guide.md`            | **Updated** — replace bundler-adapted prose with records-specific guide.                         |
-| `$PROJECT/knowledge/{components,records}.md` | **Updated** — Records status refresh; align records doc with the implementation.                 |
+| File / Area                                  | Change                                                                                                                                |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `$PROJECT/libs/records/package.json`         | **Updated** — add `@art-md/primitives` and `@art-md/constructs` dependencies.                                                         |
+| `$PROJECT/libs/records/src/record/`          | **Created** — `ArtRecord` identity and synthetic `SectionBlock` factory.                                                              |
+| `$PROJECT/libs/records/src/capsule/`         | **Created** — `ArtRecordCapsule<T>`, capsule factory, and injectable factory seam.                                                    |
+| `$PROJECT/libs/records/src/extract/`         | **Created** — `assertRecordPresence`, `extractRecords` (internal modules used by the facade).                                         |
+| `$PROJECT/libs/records/src/write-back/`      | **Created** — field-level `writeRecord` with opt-in content-hash guard.                                                               |
+| `$PROJECT/libs/records/src/proxy/`           | **Created** — `FieldResolver` (`resolveField`, `setField`, `renameField`, `deleteField`), `createFieldResolver`, `createProxyObject`. |
+| `$PROJECT/libs/records/src/records/`         | **Created** — `Records<T>` facade (`assertPresence`, `extract`, `update`, `serialize`) with optional `capsuleFactory`.                |
+| `$PROJECT/libs/records/src/index.ts`         | **Updated** — public exports per spec (replaces placeholder).                                                                         |
+| `$PROJECT/libs/records/README.md`            | **Updated** — add Usage section shaped after the `esbuild-cli` README.                                                                |
+| `$PROJECT/libs/records/_guide.md`            | **Updated** — replace bundler-adapted prose with records-specific guide.                                                              |
+| `$PROJECT/knowledge/{components,records}.md` | **Updated** — Records status refresh; align records doc with the implementation.                                                      |
 
 ## Context
 
@@ -75,9 +75,9 @@ Iterations 1–4 are delegated code work with self-contained instruction files; 
 
 ### Knowledge
 
-::READ `$PROJECT/_backlog/1-done/plan-design-lib-records/plan__design.md` — Full package spec: responsibilities, boundaries, layout tree, and files with type/factory signatures.
+::READ `$PROJECT/knowledge/design/records.md` — Full design: public API with examples, internal contracts, decomposition.
 
-::READ `$PROJECT/knowledge/records.md` — Records architecture doc: purpose, responsibilities, principles, dependencies.
+::READ `$PROJECT/knowledge/overview-records.md` — Records overview: purpose, use cases, responsibilities, dependencies.
 
 ::READ `$PROJECT/knowledge/components.md` — Components and relationships; Records status under Core Libraries.
 
@@ -85,15 +85,16 @@ Iterations 1–4 are delegated code work with self-contained instruction files; 
 
 ## Scope
 
-Implement `@art-js/records` in `$PROJECT/libs/records/` exactly as specified by `plan__design.md`:
+Implement `@art-js/records` in `$PROJECT/libs/records/` exactly as specified by `knowledge/design/records.md`:
 
-1. **Record model** — `ArtRecord{name}` (`name` = whole heading text; **no kind** — CEO decision 2026-10-14) and the `SectionBlock` bridge; `ArtRecordCapsule<T>` transporting identity and its `ArtDocumentSource`.
-2. **Extraction** — `assertRecordPresence` and `extractRecords` returning capsules with fields and examples.
-3. **Write-back** — anchored `writeRecord` on content strings with an opt-in content-hash guard (`WriteBackOptions.guard`).
-4. **Proxy and facade** — `createProxyObject` delegating unknown properties to `FieldResolver`, setters routing to `field.value` and tracking `field.modifiedValue`; default `createFieldResolver` factory (records own field mapping); `Records` facade (`assertPresence`, `extract`, `update` = guarded, `serialize` = unguarded).
-5. **Documentation** — README usage section, records-specific package guide, knowledge status/doc refresh.
+1. **Record model** — `ArtRecord{name}` (`name` = whole heading text; **no kind** — CEO decision 2026-10-14); `createArtRecord(input)` builds a `SectionBlock`-shaped record from a synthetic section (name, depth, tags, children, unknown properties pass through). A record IS the section.
+2. **Capsule** — `ArtRecordCapsule<T>` transporting identity and its `ArtDocumentSource`; an injectable `capsuleFactory` so internal APIs work against the capsule interface while external APIs stay variant-agnostic.
+3. **Extraction** — internal `assertRecordPresence` and `extractRecords` returning capsules with fields and examples; consumed by the facade.
+4. **Write-back** — internal field-level `writeRecord` on content strings with an opt-in content-hash guard (`WriteBackOptions.guard`); preserves field order, interleaved content, and section properties.
+5. **Proxy and facade** — `FieldResolver` (`resolveField`, `setField`, `renameField`, `deleteField`); `createProxyObject` routes `name` (read-only), section properties (`depth`, `tags`) directly to the block, and fields to the resolver; `Records` facade (`assertPresence`, `extract`, `update` = guarded, `serialize` = unguarded) accepts an optional `capsuleFactory`.
+6. **Documentation** — README usage section, records-specific package guide, knowledge status/doc refresh.
 
-The codec contracts consumed here (`ArtCodec`, `ArtContentSource`, `ArtDocumentSource`) are declared in `@art-md/primitives` upstream in `$ART_MD`; no codec implementation work happens in this plan. Downstream adoption stays in `$ART_WORK` (`plan-art-work-cli-global-install`); `$ART_LIB`'s adapter is decoupled from this package — it imports `ArtContentSource` from `@art-md/primitives` only (whiteboard verdict 2026-10-13).
+The codec contracts consumed here (`ArtCodec`, `ArtContentSource`, `ArtDocumentSource`) are declared in `@art-md/primitives` upstream in `$ART_MD`; no codec implementation work happens in this plan. Design authority is `$PROJECT/knowledge/design/records.md`; overview is `$PROJECT/knowledge/overview-records.md`. Downstream adoption stays in `$ART_WORK` (`plan-art-work-cli-global-install`); `$ART_LIB`'s adapter is decoupled from this package — it imports `ArtContentSource` from `@art-md/primitives` only (whiteboard verdict 2026-10-13).
 
 ## Execution Context
 
@@ -105,12 +106,12 @@ Implementation is performed in `$PROJECT` on branch `main` via delegation (self-
 
 Unit tests to create in `$PROJECT/libs/records/` (one suite per module):
 
-- `src/record/` — `ArtRecord{name}` identity: bridge copies `block.name` (whole heading text) verbatim — `## Checkout: Art Work` → `{name:'Checkout: Art Work'}`; no parsing, no filtering; every `SectionBlock` is a record.
-- `src/capsule/` — `ArtRecordCapsule`: exposes identity via `_id` before source hydration; exposes the record via `_maybeRecord`/`raw()` after hydration; `_source` is the `ArtDocumentSource`.
-- `src/extract/` — presence assertion returns true/false for records present/absent in content; extraction returns capsules with fields and examples.
-- `src/write-back/` — write-back lands at the positioning anchors; content-hash guard: safe write refuses when content changed, unsafe write proceeds; **same-name disambiguation: a file with several sections sharing an identical heading text (model: `$ART_WORK/cli/work/_records/package.art`) writes back exactly one record and leaves siblings byte-identical**.
-- `src/proxy/` — `ProxyObject`: `name` returned from record identity; unknown fields resolve through `FieldResolver`; setters route to `field.value` and track `field.modifiedValue`. `createFieldResolver`: resolves `field.value`, tracks `field.modifiedValue` on set.
-- `src/records/` — facade round-trip: `extract` → mutate → `update`/`serialize` returns content with the change applied and untouched records preserved. **New-file heading round-trip:** `serialize` on a new file emits `## Checkout: Art Work` verbatim via `codec.serialize` (Option A, no fallback emitter; gate = constructs release carrying `delete-kind-from-code`).
+- `src/record/` — `ArtRecord{name}` identity: `createArtRecord(block)` returns `{name: block.name}` (whole heading text) verbatim; `createArtRecord({name, depth, tags, children})` builds a `SectionBlock`-shaped record; unknown properties pass through.
+- `src/capsule/` — `ArtRecordCapsule`: exposes identity via `_id` before source hydration; exposes the record via `_maybeRecord`/`raw()` after hydration; `_source` is the `ArtDocumentSource`; capsule factory produces capsules and accepts an existing record.
+- `src/extract/` — presence assertion returns true/false for records present/absent in content; extraction returns one capsule per section, any depth, including field-less sections; no filtering.
+- `src/write-back/` — write-back edits only the lines a mutation owns; content-hash guard: safe write refuses when content changed, unsafe write proceeds; same-name disambiguation writes back exactly one record and leaves siblings byte-identical; field order, interleaved content, and section properties preserved; new fields appended at section end; `depth` mutation re-renders the heading line.
+- `src/proxy/` — `ProxyObject`: `name` returned from identity and is read-only; `depth`/`tags` read from/write to the block; fields resolve through `FieldResolver`; `setField` updates value and tracks `modifiedValue`; `renameField` preserves field order; `deleteField` removes lines. `createFieldResolver`: resolves current value, sets value + `modifiedValue`, renames, deletes.
+- `src/records/` — facade round-trip: `extract` → mutate → `update`/`serialize` returns content with the change applied and untouched records preserved; `createRecords` accepts an optional `capsuleFactory`; `serialize` on a new file emits `## Checkout: Art Work` verbatim via `codec.serialize` (Option A, no fallback emitter; gate = constructs release carrying `delete-kind-from-code`).
 
 ---
 
@@ -132,7 +133,7 @@ Unit tests to create in `$PROJECT/libs/records/` (one suite per module):
 
 **Purpose:** Land the identity and transport foundation every other module builds on.
 
-**Description:** Add the `@art-md/primitives` and `@art-md/constructs` dependencies; implement `src/record/` and `src/capsule/` with unit tests.
+**Description:** Add the `@art-md/primitives` and `@art-md/constructs` dependencies; implement `src/record/` (identity + synthetic factory) and `src/capsule/` (capsule + injectable factory) with unit tests.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
@@ -142,9 +143,10 @@ Unit tests to create in `$PROJECT/libs/records/` (one suite per module):
 
 - Add `@art-md/primitives@0.0.3` and `@art-md/constructs` to `$PROJECT/libs/records/package.json` dependencies — **constructs pin bumped to the release carrying `delete-kind-from-code`** (see Blockers; `SectionBlock`/`FieldBlock`/`FieldInline` live in constructs, not primitives — `ART_MD` audit finding 1).
 - Create `src/record/types.ts` — `ArtRecord{name: string}` (`name` = whole heading text).
-- Create `src/record/createArtRecord.ts` — `createArtRecord(block: SectionBlock): ArtRecord` = `{ name: block.name }`. **No parsing, no filtering, no kind** (CEO decision 2026-10-14): every `SectionBlock` is a record; heading interpretation belongs to consumers (future `art-js/resources`). The constructs release must still be the kind-free one — the old parser split headings, which would leave `block.name` incomplete (GATE in the instruction file).
+- Create `src/record/createArtRecord.ts` — `createArtRecord(input: SectionInput): ArtRecord` where `SectionInput` is the full section shape (`name` required; `depth`, `tags`, `children`, and unknown properties pass through). **No parsing, no filtering, no kind** (CEO decision 2026-10-14).
 - Create `src/capsule/types.ts` — `ArtRecordCapsule<T>` (`_source`, `_maybeRecord`, `_id`, `raw()`, index signature).
 - Create `src/capsule/createArtRecordCapsule.ts` — `createArtRecordCapsule<T>(source, maybeRecord?)`.
+- Create `src/capsule/createCapsuleFactory.ts` — `createCapsuleFactory(source, options?)` producing capsules; accepts an optional injected factory/unhydrated capsule for variant support (v0.0.1 requirement).
 - Unit tests for `src/record/` and `src/capsule/` per the Unit Tests section.
 - Verify from `$PROJECT/libs/records/`: `npm run lint`, `npm run build`, `npm run test`.
 
@@ -170,7 +172,7 @@ build(create-lib-records): Implement `ArtRecord` and `ArtRecordCapsule` with tes
 
 **Purpose:** Deliver the read and write halves of the API — presence assertion, extraction, and guarded write-back.
 
-**Description:** Implement `src/extract/` and `src/write-back/` with unit tests; consumes the record model from iteration 1.
+**Description:** Implement `src/extract/` and `src/write-back/` with unit tests; consumes the record model and capsule factory from iteration 1. These functions are internal building blocks of the facade and are **not exported** from `src/index.ts`.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
@@ -179,9 +181,9 @@ build(create-lib-records): Implement `ArtRecord` and `ArtRecordCapsule` with tes
 **Changes:**
 
 - Create `src/extract/assertRecordPresence.ts` — `assertRecordPresence(document, name)` (exact heading-text match).
-- Create `src/extract/extractRecords.ts` — `extractRecords(document)` returning one capsule per section, with fields and examples.
-- Create `src/write-back/types.ts` — `RecordPosition`, `WriteBackOptions` (`guard` opt-in).
-- Create `src/write-back/writeRecord.ts` — `writeRecord(content, capsule, options?)` on content strings, not the filesystem.
+- Create `src/extract/extractRecords.ts` — `extractRecords(document, factory)` returning one capsule per section, with fields and examples.
+- Create `src/write-back/types.ts` — `RecordPosition` (line/column/offset ranges), `WriteBackOptions` (`guard` opt-in).
+- Create `src/write-back/writeRecord.ts` — `writeRecord(content, capsule, options?)` on content strings, not the filesystem; field-level line splicing.
 - Unit tests for `src/extract/` and `src/write-back/` per the Unit Tests section.
 - Verify from `$PROJECT/libs/records/`: `npm run lint`, `npm run build`, `npm run test`.
 
@@ -215,9 +217,9 @@ build(create-lib-records): Implement extraction and guarded write-back with test
 
 **Changes:**
 
-- Create `src/proxy/types.ts` — `FieldResolver`.
+- Create `src/proxy/types.ts` — `FieldResolver` with `resolveField`, `setField`, `renameField`, `deleteField`.
 - Create `src/proxy/createFieldResolver.ts` — `createFieldResolver(record)` default factory mapping record fields (`field.value`, `field.modifiedValue`); consumers must not hand-roll resolvers (whiteboard contract). `modifiedValue` is records-domain tracking state (ART_MD audit finding 3 — does not exist upstream; mutation stays here).
-- Create `src/proxy/createProxyObject.ts` — properties defined on `T` returned from record identity, other accesses through `resolveField`, setters route to `field.value` and track `field.modifiedValue`.
+- Create `src/proxy/createProxyObject.ts` — `name` returned from identity (read-only); `depth`/`tags` read from/write to the block; all other accesses go through the resolver. The proxy is explicit — callers opt in by calling it.
 - Unit tests for `src/proxy/` per the Unit Tests section.
 - Verify from `$PROJECT/libs/records/`: `npm run lint`, `npm run build`, `npm run test`.
 
@@ -243,7 +245,7 @@ build(create-lib-records): Implement proxy access and field resolver with tests.
 
 **Purpose:** Complete the public API — the collection-level facade and the exported surface.
 
-**Description:** Implement `src/records/` on top of iteration 2, wire `src/index.ts` per the spec, and cover with unit tests. **Option A applies:** `serialize` reaches `codec.serialize` — no hand-rolled emitter, ever (see Decisions). Its new-file test asserts the heading survives verbatim (`## Checkout: Art Work`) — against the constructs release carrying `delete-kind-from-code` (shared plan-level gate, see Blockers). If that release has not landed when everything else is done, report `BLOCKER`; do not write a fallback serializer.
+**Description:** Implement `src/records/` on top of iteration 2, wire `src/index.ts` per the current design, and cover with unit tests. **Option A applies:** `serialize` reaches `codec.serialize` — no hand-rolled emitter, ever (see Decisions). Its new-file test asserts the heading survives verbatim (`## Checkout: Art Work`) — against the constructs release carrying `delete-kind-from-code` (shared plan-level gate, see Blockers). If that release has not landed when everything else is done, report `BLOCKER`; do not write a fallback serializer.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
@@ -252,8 +254,8 @@ build(create-lib-records): Implement proxy access and field resolver with tests.
 **Changes:**
 
 - Create `src/records/types.ts` — `Records<T>` (`assertPresence`, `extract`, `update`, `serialize`).
-- Create `src/records/createRecords.ts` — `createRecords<T>(source)`.
-- Update `src/index.ts` — public exports exactly as specified in `plan__design.md`, plus `createFieldResolver` (whiteboard addition; `$ART_JS` owns field mapping).
+- Create `src/records/createRecords.ts` — `createRecords<T>(source, options?: { capsuleFactory? })`.
+- Update `src/index.ts` — public exports: types (`ArtRecord`, `ArtRecordCapsule`, `Records`, `RecordPosition`, `WriteBackOptions`, `FieldResolver`) and factories (`createArtRecord`, `createRecords`, `createFieldResolver`, `createProxyObject`). **Do not export** `assertRecordPresence`, `extractRecords`, `writeRecord`, `createArtRecordCapsule`, or `createCapsuleFactory` — they are internal.
 - Unit tests for `src/records/` per the Unit Tests section.
 - Verify from `$PROJECT/libs/records/`: `npm run lint`, `npm run build`, `npm run test`.
 
@@ -287,7 +289,7 @@ build(create-lib-records): Implement Records facade and public exports with test
 
 ::switch `agent-worker` — switch to the agent-worker agent mode before you start changing files. Self-contained rule applies: everything you need is this iteration plus its knowledge links; if a link under Mandatory Reading (plan's Knowledge section) is unreadable, REPORT A BLOCKER and STOP. Report back terse: happy face + up to 3 bullet points; the trail lives in the commit.
 
-**Mandatory Reading:** `$PROJECT/_guide.md` · `$PROJECT/knowledge/records.md` · `$PROJECT/knowledge/design/records.md` · README shaped after `$WORKSPACE/checkouts/workspace-tooling/cli/esbuild-cli/README.md`.
+**Mandatory Reading:** `$PROJECT/_guide.md` · `$PROJECT/knowledge/overview-records.md` · `$PROJECT/knowledge/design/records.md` · README shaped after `$WORKSPACE/checkouts/workspace-tooling/cli/esbuild-cli/README.md`.
 
 **Gate:** run only after `implement-records-facade` is complete (the README snippet must match real exports).
 
@@ -296,7 +298,7 @@ build(create-lib-records): Implement Records facade and public exports with test
 - Update `$PROJECT/libs/records/README.md` — add a `## Usage` section: install; source/codec → `createRecords` → assert/extract/update/serialize examples; API notes — shaped after `$WORKSPACE/checkouts/workspace-tooling/cli/esbuild-cli/README.md` (rationale, Usage with subsections, examples against the real exports).
 - Update `$PROJECT/libs/records/_guide.md` — replace bundler-adapted prose with records-specific overview, layout, records management, and operating instructions.
 - Update `$PROJECT/knowledge/components.md` — refresh the Records `**Status:**` now that the implementation lands (decide target status when writing instructions; all packages currently read `SCAFFOLD`).
-- Update `$PROJECT/knowledge/records.md` — align with the implementation if signatures or module layout deviated from the design.
+- Update `$PROJECT/knowledge/overview-records.md` and `$PROJECT/knowledge/design/records.md` — align with the implementation if signatures or module layout deviated.
 - Verify from `$PROJECT/libs/records/`: `npm run lint`, `npm run build`, `npm run test`; confirm the README usage snippet matches the exports in `src/index.ts`.
 
 #### Commits:
@@ -319,7 +321,7 @@ docs(art-js): Records README usage, package guide, and architecture status.
 
 ### Next
 
-**Next:** **Instruction files written (2026-10-14):** 4 self-contained under `./instructions/` + the inline block for `document-records-usage`; all 5 iterations `READY`. **Posted on the whiteboard for review (goal steps 3–4):** `ART_MD` reviews instructions 1–2; `ART_LIB` + `ART_WORK` review instructions 2–4. After findings are addressed: delegate `implement-record-model` once the constructs release carrying `delete-kind-from-code` is available (GATE inside instruction 1). Board contracts: `AGREED` except `ART_MD`'s two re-proposals (`kind` removal; structural round-trip) — `✓ART_JS ✓ART_WORK`, pending `ART_LIB`. `$ART_LIB` is decoupled; only `$ART_WORK` adoption depends on this plan going green workspace-linked (npm publish NOT required).
+**Next:** Instruction files updated (2026-10-16) to match the single-API design: public surface is `createRecords`, `createArtRecord`, `createFieldResolver`, `createProxyObject`; `assertRecordPresence`/`extractRecords`/`writeRecord` are internal. Capsule factory injection is a v0.0.1 requirement. All 5 iterations `READY`. **Posted on the whiteboard for review (goal steps 3–4):** `ART_MD` reviews instructions 1–2; `ART_LIB` + `ART_WORK` review instructions 2–4. After findings are addressed: delegate `implement-record-model` once the constructs release carrying `delete-kind-from-code` is available (GATE inside instruction 1). Board contracts: `AGREED` except `ART_MD`'s two re-proposals (`kind` removal; structural round-trip) — `✓ART_JS ✓ART_WORK`, pending `ART_LIB`.
 
 ### Blockers
 
@@ -394,9 +396,9 @@ npm run test
 
 ### Decisions
 
-- **CEO decision (2026-10-14): drop all mentions of kind from records.** `ArtRecord{name}` — `name` is the whole heading text; records performs **no parsing and no filtering**; every `SectionBlock` is a record. Kind detection, `Kind: Name` splitting, and kind→type mapping belong to consumers (a future `art-js/resources` layer). Whiteboard identity + read API bullets rewritten `AGREED` by owner authority; `assertRecordPresence(document, name)`; `extractRecords(document)` (no `ExtractOptions`); same-name disambiguation replaces same-kind. Supersedes the design spec's `ArtRecord{kind, name}` and the interim heading-parse bridge. Acks requested from `ART_MD`/`ART_LIB`/`ART_WORK` (parking lot).
+- **CEO decision (2026-10-14): drop all mentions of kind from records.** `ArtRecord{name}` — `name` is the whole heading text; records performs **no parsing and no filtering**; every `SectionBlock` is a record. Kind detection, `Kind: Name` splitting, and kind→type mapping belong to consumers (a future `art-js/resources` layer). Whiteboard identity + read API bullets rewritten `AGREED` by owner authority. Acks requested from `ART_MD`/`ART_LIB`/`ART_WORK` (parking lot). Design refreshed 2026-10-16: a record IS the `SectionBlock`; `createArtRecord(input)` accepts the full section shape; the public surface is the `create...` factories (`createRecords`, `createArtRecord`, `createFieldResolver`, `createProxyObject`); `assertRecordPresence`/`extractRecords`/`writeRecord` are internal.
 
-- ~~**Bridge re-baselined after `kind` deletion (2026-10-14): `kind` is parsed from heading text**~~ **SUPERSEDED same day by the CEO decision below.** `ART_MD`'s fix deletes `SectionBlock.kind`; `createArtRecord` parses `block.name` at the first `: ` (no colon → `undefined`, not-a-record). `ArtRecord{kind, name}` and every consumer API (`assertPresence(kind, name)`, `extract(kinds?)`, discovery `kinds`, CLI record kinds) stay as `AGREED` — only the source moved; the same call as `modifiedValue` (constructs = pure parse model). Unit tests updated to the split-heading cases.
+- **API surface refined (2026-10-16): one `create...` surface.** `assertRecordPresence`, `extractRecords`, and `writeRecord` remain as internal modules used by the facade but are **not exported** from `src/index.ts`. This removes the facade/low-level duplication and matches MANAGEMENT's "one API" requirement. Capsule factory injection is a v0.0.1 requirement (`createRecords(source, { capsuleFactory? })`), keeping the reactive variant path hidden behind the same seam.
 - **Both `ART_MD` re-proposed contracts agreed (whiteboard, 2026-10-14)** — (1) shape freeze without `kind?`: `SectionBlock.name` is the whole heading text; (2) structural round-trip, not byte-identity: our `writeRecord`/`update` byte guarantee is _ours_ (line-splice on content strings; codec never invoked; non-modelled content passes byte-for-byte) and stands regardless; contract Y underwrites only `serialize` on new files. Statuses stay `PROPOSED` until `ART_LIB` + `ART_WORK` confirm.
 - **Option A for `serialize` (whiteboard, 2026-10-13): `serialize(capsule)` reaches `codec.serialize` — single serializer, no hand-rolled emitter.** ART_MD's question on new-file markdown answered definitively: serialization is `@art-md`'s domain and `records` will not hold a second copy of the format (drift risk `ART_LIB` argued from the persistence side). Consequence: iteration `implement-records-facade` is gated on ART_MD's codec kind-drop fix (sequenced ahead per their offer); the iteration's test suite must include the heading-verbatim case (new file emits `## Checkout: Art Work` exactly). If the fix slips, report `BLOCKER` → `turn: FACILITATOR` — do not hand-roll.
 - **Whiteboard contracts `AGREED` (2026-10-13)** — `update` = guarded write over existing content, `serialize` = unguarded for new files; line-based `RecordPosition` stands (adapter re-reads after `writeContent()`, guard covers drift); `writeRecord` is a pure line-splice preserving non-modelled content byte-identically; consumers import `ArtContentSource`/`ArtDocumentSource` straight from `@art-md/primitives` — `index.ts` exports only the package's own symbols.
@@ -408,8 +410,8 @@ npm run test
 
 ### Knowledge to Update
 
-- **`$PROJECT/knowledge/components.md`** — Records status refresh after implementation (iteration 4).
-- **`$PROJECT/knowledge/records.md`** — align with the implementation if the design deviated (iteration 4).
+- **`$PROJECT/knowledge/components.md`** — Records status refresh after implementation (iteration 5).
+- **`$PROJECT/knowledge/overview-records.md`** and **`$PROJECT/knowledge/design/records.md`** — align with the implementation if signatures or module layout deviated (iteration 5).
 
 ### Follow Ups
 
