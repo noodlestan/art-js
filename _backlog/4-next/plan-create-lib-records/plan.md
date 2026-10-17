@@ -2,7 +2,7 @@
 
 **ID:** `create-lib-records`
 
-**Status:** `BLOCKED`
+**Status:** `READY`
 
 **Template:** `$DOMAINS/plans/templates/plan.tart`
 
@@ -39,7 +39,7 @@ Iterations 1–4 are delegated code work with self-contained instruction files; 
 
 | File / Area                                  | Change                                                                                                                                |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `$PROJECT/libs/records/package.json`         | **Updated** — add `@art-md/primitives` and `@art-md/constructs` dependencies.                                                         |
+| `$PROJECT/libs/records/package.json`         | **Updated** — add `@art-md/primitives@0.0.3` and `@art-md/constructs@0.0.4` dependencies.                                             |
 | `$PROJECT/libs/records/src/record/`          | **Created** — `ArtRecord` identity and synthetic `SectionBlock` factory.                                                              |
 | `$PROJECT/libs/records/src/capsule/`         | **Created** — `ArtRecordCapsule<T>`, capsule factory, and injectable factory seam.                                                    |
 | `$PROJECT/libs/records/src/extract/`         | **Created** — `assertRecordPresence`, `extractRecords` (internal modules used by the facade).                                         |
@@ -141,7 +141,7 @@ Unit tests to create in `$PROJECT/libs/records/` (one suite per module):
 
 **Changes:**
 
-- Add `@art-md/primitives@0.0.3` and `@art-md/constructs` to `$PROJECT/libs/records/package.json` dependencies — **constructs pin bumped to the release carrying `delete-kind-from-code`** (see Blockers; `SectionBlock`/`FieldBlock`/`FieldInline` live in constructs, not primitives — `ART_MD` audit finding 1).
+- Add `@art-md/primitives@0.0.3` and `@art-md/constructs@0.0.4` to `$PROJECT/libs/records/package.json` dependencies — the kind-free release is now published (`ART_MD` delivered 2026-10-17). `SectionBlock`/`FieldBlock`/`FieldInline` live in constructs, not primitives — `ART_MD` audit finding 1.
 - Create `src/record/types.ts` — `ArtRecord{name: string}` (`name` = whole heading text).
 - Create `src/record/createArtRecord.ts` — `createArtRecord(input: SectionInput): ArtRecord` where `SectionInput` is the full section shape (`name` required; `depth`, `tags`, `children`, and unknown properties pass through). **No parsing, no filtering, no kind** (CEO decision 2026-10-14).
 - Create `src/capsule/types.ts` — `ArtRecordCapsule<T>` (`_source`, `_maybeRecord`, `_id`, `raw()`, index signature).
@@ -321,11 +321,11 @@ docs(art-js): Records README usage, package guide, and architecture status.
 
 ### Next
 
-**Next:** Instruction files updated (2026-10-16) to match the single-API design: public surface is `createRecords`, `createArtRecord`, `createFieldResolver`, `createProxyObject`; `assertRecordPresence`/`extractRecords`/`writeRecord` are internal. Capsule factory injection is a v0.0.1 requirement. All 5 iterations `READY`. **Posted on the whiteboard for review (goal steps 3–4):** `ART_MD` reviews instructions 1–2; `ART_LIB` + `ART_WORK` review instructions 2–4. After findings are addressed: delegate `implement-record-model` once the constructs release carrying `delete-kind-from-code` is available (GATE inside instruction 1). Board contracts: `AGREED` except `ART_MD`'s two re-proposals (`kind` removal; structural round-trip) — `✓ART_JS ✓ART_WORK`, pending `ART_LIB`.
+**Next:** `@art-md/constructs@0.0.4` delivered 2026-10-17; all whiteboard reviews complete; plan unblocked. **Delegate `implement-record-model`** (instruction file `./instructions/implement-record-model.md`). Remaining iterations stay `READY` in sequence.
 
 ### Blockers
 
-- **Delegation of `implement-record-model` gated on the constructs release carrying `delete-kind-from-code`** (owner `ART_MD`; fix plan `$ART_MD/_backlog/3-now/plan-drop-kind-and-reword-claims/plan.md`, `PLANNING`, 3 iterations, reviewed + accepted by us 2026-10-14). The fix **deletes** `SectionBlock.kind` (heading text is never split upstream), which dissolves this blocker's original cause — `serialize` cannot drop a field that no longer exists; Option A (`serialize` reaches `codec.serialize`) stands. **Gate:** against today's `@art-md/constructs@0.0.3` the bridge would see split names and fail, so iteration 1 waits for the release where `block.name` is the whole heading text. Unblock when: `delete-kind-from-code` lands + `cli/codec-tests` 43/43 `LOSSLESS ROUNDTRIP` + pin bumped to that release (one line in instruction 1). **Instruction writing is NOT gated** (specs decided 2026-10-14). _Disclosure: `ART_MD` edited this file's `Next`/`Blockers` directly on 2026-10-14 (working-agreement break, acknowledged upstream); their substance kept, but two references they cited don't exist — `plan-fix-kind-and-roundtrip-claim` and iteration `fix-sectionblock-kind-serialization` — corrected here to the canonical `plan-drop-kind-and-reword-claims` / `delete-kind-from-code` (verified in `$ART_MD/_backlog/3-now/`)._
+- None — `@art-md/constructs@0.0.4` is published, all contracts are `AGREED`, and the plan is `READY` for delegation.
 
 ---
 
@@ -386,11 +386,11 @@ npm run test
 
 ### Findings
 
-- **`kind` is being deleted from Art MD — fix plan drafted, reviewed, accepted (ART_MD, 2026-10-14)** — `plan-drop-kind-and-reword-claims` (`$ART_MD/_backlog/3-now/`, `PLANNING`, 3 iterations): parser stops splitting headings, `SectionBlock.kind` and `KIND_PATTERN` deleted, round-trip claim reworded to structural fidelity. Evidence: `## Module: Greeting` → `## Greeting` under `test-serializer`; 42/43 fixtures lossless, only kind fails. _Correction: `ART_MD`'s direct edit to this file cited `plan-fix-kind-and-roundtrip-claim` + iteration `fix-sectionblock-kind-serialization` — neither exists; canonical names verified on disk and used above._
+- **`kind` is deleted from Art MD — fix plan DONE (ART_MD, 2026-10-17)** — `plan-drop-kind-and-reword-claims` (`$ART_MD/_backlog/3-now/`, `DONE`, 3 iterations executed and integrated as `848781b`): parser stops splitting headings, `SectionBlock.kind` and `KIND_PATTERN` deleted, round-trip claim reworded to structural fidelity, `@art-md/constructs@0.0.4` published. Evidence: `cli/codec-tests` suite prints `CANONICAL ROUNDTRIP` at 43/43.
 - **`ART_MD` audit findings (2026-10-13, whiteboard)** — (1) `SectionBlock`/`FieldBlock`/`FieldInline` live in `@art-md/constructs@0.0.3`, not `primitives` — iteration 1 now adds both deps; (2) no upstream `Field` union — use `FieldBlock`/`FieldInline`; (3) `field.modifiedValue` does not exist upstream — stays records-domain (resolver tracks it); (4) heading shapes vary — superseded 2026-10-14 by the CEO kind-drop: `createArtRecord(block): ArtRecord` = `{name: block.name}`, no parsing.
 - **`@art-lib/fs-records@0.0.1` exports pre-rename names** (`findRecordFiles`, `FSRecordsConfig`, `FSRecordsPath`, `searchPath`) — verified in source by `ART_LIB`; agreed names land with their iteration 1. No impact on this plan (decoupled), recorded so nobody cites `0.0.1` as carrying the agreed surface.
 - **Records whiteboard converged (2026-10-13)** — `$ART_JS/_backlog/whiteboard-art-records/whiteboard.md` (moved from workspace root): `@art-js/records` + `@art-lib/fs-records` contracts `AGREED`; `FSRecordsAdapter`/`createFSRecordsAdapter` canonical; ART_WORK confirms per-document facade + `discover`/`extract` verb split.
-- **`@art-md/primitives@0.0.3` is published on npm** — `libs/records/package.json` currently declares no dependencies; iteration 1 adds it.
+- **`@art-md/primitives@0.0.3` and `@art-md/constructs@0.0.4` are published on npm** — `libs/records/package.json` currently declares no dependencies; iteration 1 adds both.
 - **Execution environment lessons (from the design plan)** — run `npm ci` inside `$PROJECT` if package CI fails (stale `node_modules` bit twice); pre-commit runs repo-wide Prettier, so run `npm run lint:fix` before committing.
 - **`libs/records` tests are vacuous today** — scaffold sets `passWithNoTests`; the first test suites here make CI meaningful.
 

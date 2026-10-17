@@ -10,16 +10,15 @@ WIP tracker, structured like the session parking lot: **ACTIONABLE** (in progres
 
 ## ACTIONABLE
 
-None.
+- **Delegate `implement-record-model`** — `@art-md/constructs@0.0.4` delivered 2026-10-17; plan `READY`; pin bumped in plan and instruction file; whiteboard goal archived.
 
 ## PENDING
 
-- **`@art-md` release** — waiting on the constructs release carrying `delete-kind-from-code`; then bump the pin in instruction 1 and delegate `implement-record-model`.
-- **Board maintenance, my next turn** — flip both `@art-md` contracts when `ART_LIB` signs; add `position` to their frozen-member list (the list under-enumerates it).
+- None.
 
 ## BLOCKERS
 
-- **`plan-create-lib-records`** — delegating `implement-record-model` waits on the `@art-md` release above (owner `ART_MD`). Writing and reviewing instructions is not gated.
+- None — `@art-md/constructs@0.0.4` is published, both `@art-md` contracts are `AGREED`, and the plan is unblocked.
 
 ---
 

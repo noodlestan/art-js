@@ -12,7 +12,7 @@ These are your instructions.
 
 RULE: If at any point you are instructed to **REPORT A BLOCKER** or you encounter a commit with `policy` set to `MANUAL` execute the instruction in the "## How to Report Back to the Delegator" section below and STOP processing any other instructions.
 
-**GATE — do not start if the gate has not lifted:** this iteration requires `@art-md/constructs` **without** `SectionBlock.kind` (the release carrying `delete-kind-from-code` from `$ART_MD/_backlog/3-now/plan-drop-kind-and-reword-claims/plan.md`). Check the pinned version's `SectionBlock` type: if `kind?` still exists, REPORT A BLOCKER with "constructs release with kind deletion not published yet" and STOP.
+**GATE — do not start if the gate has not lifted:** this iteration requires `@art-md/constructs@0.0.4` (the release carrying `delete-kind-from-code` from `$ART_MD/_backlog/3-now/plan-drop-kind-and-reword-claims/plan.md`). Verify the pin in `package.json` is at least `0.0.4` and the installed `SectionBlock` type has no `kind?`. If `kind?` still exists, REPORT A BLOCKER with "constructs release with kind deletion not installed" and STOP.
 
 ## How to Report Back to the Delegator
 
@@ -123,7 +123,7 @@ export function createArtRecord(input: SectionInput): ArtRecord;
 ```
 
 - Returns the record identity `{ name: input.name }` — the **whole heading text**, verbatim.
-- `SectionInput` accepts any known or unknown section property (`depth`, `tags`, `children`, etc.); unknown properties pass through unchanged. This makes `createArtRecord` both the identity projection and the synthetic section factory.
+- `SectionInput` accepts any known or unknown section property (`depth`, `children`, etc.); unknown properties pass through unchanged. This makes `createArtRecord` both the identity projection and the synthetic section factory.
 - **No parsing, no filtering, no kind** (CEO decision 2026-10-14): every `SectionBlock` is a record; heading interpretation belongs to consumers.
 - `input.name` must be the complete heading — which is why the GATE requires the kind-free constructs release (the old parser split headings and left `name` incomplete).
 
@@ -131,7 +131,7 @@ export function createArtRecord(input: SectionInput): ArtRecord;
 
 - identity: `name` present and equals the input name;
 - bridge: `## Checkout: Art Work` → `{name: 'Checkout: Art Work'}`; `## Greeting` → `{name: 'Greeting'}` — no section is filtered out;
-- synthetic: `createArtRecord({ name, depth: 2, tags: ['x'], children: [] })` carries all properties through;
+- synthetic: `createArtRecord({ name, depth: 2, children: [] })` carries all properties through;
 - pass-through: unknown section attributes survive unchanged.
 
 ### Step `3 / 4` — Implement `src/capsule/`
@@ -197,7 +197,7 @@ build(create-lib-records): Implement record identity, capsule, and factory with 
 
 ## Final Verification
 
-- Verify `package.json` depends only on `@art-md/primitives` and `@art-md/constructs` (kind-free release).
+- Verify `package.json` depends only on `@art-md/primitives@0.0.3` and `@art-md/constructs@0.0.4` (kind-free release).
 - Verify `createArtRecord` performs no string manipulation on `name` — `name` equals the input name exactly.
 - Verify `createArtRecord` passes through `depth`, `tags`, `children`, and unknown properties.
 - Verify `src/index.ts` is untouched — exports are wired in a later iteration.

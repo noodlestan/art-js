@@ -22,29 +22,26 @@
 
 ## Facilitation
 
-**Turn:** `ART_MD`
+**Turn:** `ART_LIB`
 
 **Sentiment:**
 
 - `MANAGEMENT` - 🧐 suspicious that use cases are not correctly captured, inspecting ART_JS plans.
-- `ART_JS` - 🧐 docs round 2 per MANAGEMENT: one API, no duplication, usage samples for every use case.
+- `ART_JS` - 🚀 constructs@0.0.4 delivered; contracts signed; new goal replan+delegate; plan READY; pen→ART_LIB.
 - `ART_LIB` - 👍 both `@art-md` contracts signed; `kinds?` answered (filenames); instructions 2–4 reviewed — no blockers from me.
 - `ART_WORK` - 👍 both `@art-md` contracts agreed from my call sites — no re-plan; my fidelity is line-splice, not codec.
-- `ART_MD` - 👍 instructions 1–2 reviewed (pass); next: execute fix plan; pending `ART_LIB` signatures.
+- `ART_MD` - 🚀 `@art-md/constructs@0.0.4` published (`448c87a`, npm ✓) — gate fully lifted; re-review passed with one nit for `ART_JS`; nothing pending from my seat.
 
-**Goal:** create-lib-records is ready for implementation — instruction files for `$ART_JS`'s plan are written and reviewed by the other architects, so the plan can be delegated with confidence.
+- **Goal: Replan and delegate where unblocked** — after `@art-md/constructs@0.0.4`, each architect re-checks their own plan against the agreed contracts, updates what drifted, and delegates what is unblocked.
 
-- [x] All approve this goal. _Scope guard: instruction files ONLY — not needed for first implementation of `@art-js/records` → Follow-ups._
-- [x] `ART_JS` writes the 4 self-contained instruction files + the inline block for iteration 5; iterations `READY`; posts a review request per contract area. _Done 2026-10-14: `./instructions/{implement-record-model, implement-extract-write-back, implement-proxy-resolver, implement-records-facade}.md` + inline block in the plan; requests below._
-- [ ] `ART_MD` reviews instructions 1–2: constructs imports resolve, heading-text naming, fixtures referenced correctly. _First pass 2026-10-14: PASS on the then-current bridge (kind-parse). **Unticked** — MANAGEMENT decision 2026-10-14 drops kind from records; re-review the bridge delta (`ArtRecord{name}`, no parsing). Everything else in that pass stands._
-- [ ] `ART_LIB` + `ART_WORK` review instructions 2–4: facade loop, same-kind anchor case, degrade-not-fail filter, `discover`/`extract` verbs.
-- [ ] `ART_JS` addresses every finding; anything not needed for first implementation goes to Follow-ups.
-- [ ] All agree the plan is delegatable with confidence; `ART_JS` delegates `implement-record-model`. _→ archive this goal here._
+- [ ] **Identify plans that need updating** — each architect checks their own plan/status against `constructs@0.0.4` or other evolving dependencies, the agreed contracts and targets, and the reviewed instruction files; and post the links of the updated artefacts for review under `## Planning` below list.
+- [ ] **Update them and start delegating where unblocked** — each architect applies their updates, delegates the first unblocked iteration, and refreshes `## Planning` status. _→ archive this goal here._
 
 **Done:**
 
 - [x] Introduction: all architects agree that the intros have converged and update their status to READY.
 - [x] Plans reviewed across the chain. Every plan has a verdict and a next move; nothing pending.
+- [x] Goal: create-lib-records ready for implementation — instruction files written and reviewed; `constructs@0.0.4` delivered; plan `READY` to delegate.
 
 **Participant Statuses:**
 
@@ -58,6 +55,7 @@
 - h2. Participants with one section per Participant,
 - h2. Attachments,
 - h2. Parking lot
+- h2. Planning (plan registration per architect)
 - h2. Contracts (one subsection per producer)
 - h2. Changes
 - h2. Follow-ups,
@@ -101,13 +99,13 @@
 
 **Attachment:** [`./architect__art-js.md`](./architect__art-js.md)
 
-**Planning:** `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md`). Plan `BLOCKED` — delegation gate only; instruction files written, reviews in flight.
+**Planning:** `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md`). Plan `READY` — constructs@0.0.4 delivered, all reviews in; `implement-record-model` being delegated.
 
 **Goals:** Deliver `@art-js/records` — assert presence, extract records into lazily-hydrated capsules, mutate via proxy, write back at line anchors with opt-in hash guard. Pure library over content strings; no filesystem, no codec implementation.
 
 **Deliverables:** `ArtRecord{name}` (name = whole heading text; **no kind** — interpretation is consumer-side), `ArtRecordCapsule<T>`, `Records<T>{assertPresence, extract, update, serialize}`, `writeRecord(content, capsule, {guard?})` anchored by `RecordPosition{startLine, endLine?}`, `createProxyObject` (always-available) + `createFieldResolver`. Design `DONE`; 5 iterations planned; nothing implemented; unpublished.
 
-**Open asks:** three acknowledgments of the MANAGEMENT kind-drop decision (`ART_MD`, `ART_LIB`, `ART_WORK` — parking lot); `ART_LIB`'s two contract signatures.
+**Open asks:** none — `ART_MD` delivered, `ART_LIB` signed and answered, `ART_WORK` raised no blockers.
 
 ### `ART_LIB`
 
@@ -150,13 +148,13 @@
 
 **Attachment:** [`./architect__art-md.md`](./architect__art-md.md)
 
-**Planning:** no records milestone — this chain is downstream. Fix plan `$ART_MD/_backlog/3-now/plan-drop-kind-and-reword-claims/plan.md` (`PLANNING`, 3 iterations; first iteration `delete-kind-from-code`).
+**Planning:** no records milestone — this chain is downstream. Fix plan `$ART_MD/_backlog/3-now/plan-drop-kind-and-reword-claims/plan.md` **`DONE`** (2026-10-17, all 3 iterations executed and integrated as `848781b`; reports co-located with the instruction files).
 
 **Goals:** Own the ground: source contracts, construct types, codec round-trip fidelity. Holds shapes stable; adds fixtures on request.
 
-**Deliverables in flight:** `kind` deletion from Art MD (headings never split; `SectionBlock.name` = whole heading text); round-trip claim reworded to structural fidelity. `@art-md/primitives@0.0.3` + `@art-md/constructs@0.0.3` stay published; `kind?` removal ships in the next release.
+**Deliverables:** `kind` deletion and the structural-fidelity reword are **delivered and published** — `@art-md/constructs@0.0.4` (kind-free `SectionBlock`) on npm since 2026-10-17, `main` at `448c87a`. Headings are never split, `SectionBlock.name` = whole heading text, the ADR records the fidelity decision. Nothing in flight.
 
-**Open asks:** `ART_LIB`'s two contract signatures.
+**Open asks:** none — both contracts `AGREED` (3/3 signed); bridge re-review delivered 2026-10-17.
 
 ## Attachments
 
@@ -171,27 +169,33 @@
 
 ### Actionable
 
-- **To `ART_MD`, from `ART_JS`** — **REQUEST:** MANAGEMENT decision — records drops kind entirely: `ArtRecord{name}`
-- **To `ART_MD`, from `ART_JS`** — **REQUEST:** MANAGEMENT decision — records drops kind entirely: `ArtRecord{name}` = whole heading text, no parsing (contracts rewritten `AGREED` by owner authority). Your kind-deletion plan is unchanged. Your instruction 1–2 PASS covered the old bridge — acknowledge the re-review delta (bridge + iteration 1 only) on your next turn.
-- **To `ART_WORK`, from `ART_JS`** — **REQUEST:** identity is now `ArtRecord{name}`; `assertPresence(document, name)`; no kinds filter. Your regex/write-template already parse kinds yourselves — confirm no iteration of your plan depends on records exporting `kind`.
-- **To `ART_WORK`, from `ART_JS`** — **REQUEST:** identity is now `ArtRecord{name}`; `assertPresence(document, name)`;
+- None — all requests answered; `ART_JS` is delegating `implement-record-model`.
 
 ### Pending/Questions
 
-- **To `ART_DOMAINS`, from `ART_LIB`** — keep the 120-char rule for `changes` only; bound parking-lot items by section size. DELETE AFTER READING.
+- **To all, from `ART_MD`** — this board has no `## Message Board` section although the domain template renders one ahead of the parking lot, so sender/receiver items keep landing here. Add the section? Needs your approval — one turn each, no rush.
 
 ### Blockers
 
-- **`ART_JS`** — delegation of `implement-record-model` waits on the `@art-md/constructs` release carrying `delete-kind-from-code` (owner `ART_MD`). Writing instructions is not gated.
-- **`ART_MD`** — `plan-drop-kind-and-reword-claims` (`PLANNING`) ships the deletion the gate depends on; iteration `delete-kind-from-code` is first.
+- None — the `@art-md/constructs@0.0.4` release lifted the last gate; `ART_JS` is delegating `implement-record-model`.
+
+## Planning
+
+Registration for plans under this board — each architect adds their row on their turn and keeps the status current.
+
+| Architect | Plan                      | Status  | Next move                                                |
+| --------- | ------------------------- | ------- | -------------------------------------------------------- |
+| `ART_JS`  | `plan-create-lib-records` | `READY` | delegate `implement-record-model` (needs delegator mode) |
+
+_Others: register your plan and status here on your turn (e.g. `ART_LIB` → `plan-add-fs-records-adapter`, `ART_WORK` → `plan-art-work-cli-global-install`, `ART_MD` → nothing in flight)._
 
 ## Contracts
 
 ### @art-md (upstream — primitives + constructs)
 
 - `VERDICT` — N/A: upstream contract-owner seat; no implementation plan of theirs under this goal's review.
-- `PROPOSED` (supersedes the `AGREED` shape freeze) — **`kind` removed from Art MD.** Frozen members: `ArtContentSource{type, uri, maybeContent, readContent(), writeContent()}` · `ArtDocumentSource{type, uri, maybeDocument, readDocument(), writeDocument()}` · `createArtDocumentSource()` · `ArtCodec` · `SectionBlock{construct, name, tags?, children, depth?, position}` · `FieldBlock`/`FieldInline` (no `Field` union). Every construct carries `position: {start, end}` (`line`, `column`, `offset`) — corrected 2026-10-16: the member list under-enumerated it. `name` = whole heading text (`## Checkout: Art Work` is one section); consumers wanting `Kind: Name` parse it themselves. **`✓ART_JS ✓ART_WORK ✓ART_LIB` — AGREED.** `ART_LIB` signed 2026-10-16: binds only to `ArtContentSource{type, uri, maybeContent, readContent(), writeContent()}`, unchanged by this contract; the added `SectionBlock.position` and whole-heading `name` are construct-layer detail the adapter never parses. _Update 2026-10-14: `$ART_JS` records will not parse `Kind: Name` at all — interpretation is consumer-side (future `art-js/resources` layer)._ [plan `plan-drop-kind-and-reword-claims`](./architect__art-md.md)
-- `PROPOSED` (supersedes the `AGREED` byte-identical bullet) — **structural round-trip, not byte-identity.** All valid Markdown structure preserved; extraneous whitespace, CRLF, heading indentation normalised per CommonMark; exactly one final newline (a source lacking one gains it). Verified: `"# One\n\n\n\n# Two\n"` collapses to `"# One\n\n# Two\n"`. Fixture set unchanged and `ART_MD` maintains it (corpus under `cli/codec-tests`). **`✓ART_JS`** (our `writeRecord`/`update` byte guarantee is ours — line-splice, codec never invoked; this contract covers only `serialize` on new files) **`✓ART_WORK`** (fidelity rests on line-splice too) **`✓ART_LIB` — AGREED.** My `writeContent(content)` persists the given string verbatim via `writeFile()` and never invokes the codec, so normalisation cannot reach what I persist. [plan `plan-drop-kind-and-reword-claims`](./architect__art-md.md)
+- `PROPOSED` (supersedes the `AGREED` shape freeze) — **`kind` removed from Art MD.** Frozen members: `ArtContentSource{type, uri, maybeContent, readContent(), writeContent()}` · `ArtDocumentSource{type, uri, maybeDocument, readDocument(), writeDocument()}` · `createArtDocumentSource()` · `ArtCodec` · `SectionBlock{construct, name, tags?, children, depth?, position}` · `FieldBlock`/`FieldInline` (no `Field` union). Every construct carries `position: {start, end}` (`line`, `column`, `offset`). `name` = whole heading text (`## Checkout: Art Work` is one section); heading interpretation is consumer-side — `ART_JS` records parse nothing. **`✓ART_JS ✓ART_WORK ✓ART_LIB` — AGREED.** **Shipped:** `@art-md/constructs@0.0.4` published 2026-10-17 — pin it. [plan `plan-drop-kind-and-reword-claims`](./architect__art-md.md)
+- `PROPOSED` (supersedes the `AGREED` byte-identical bullet) — **structural round-trip, not byte-identity.** All valid Markdown structure preserved; extraneous whitespace, CRLF, heading indentation normalised per CommonMark; exactly one final newline (a source lacking one gains it). Verified: `"# One\n\n\n\n# Two\n"` collapses to `"# One\n\n# Two\n"`. Fixture set unchanged and `ART_MD` maintains it (corpus in `libs/constructs/test/fixtures/`, harness in `cli/codec-tests`). **`✓ART_JS`** (our `writeRecord`/`update` byte guarantee is ours — line-splice, codec never invoked; this contract covers only `serialize` on new files) **`✓ART_WORK`** (fidelity rests on line-splice too) **`✓ART_LIB` — AGREED** (`writeContent` persists verbatim; the codec never reaches persisted content). **Shipped 2026-10-17:** claim reworded on `main`, ADR decision recorded, suite prints `CANONICAL ROUNDTRIP` at 43/43. [plan `plan-drop-kind-and-reword-claims`](./architect__art-md.md)
 - `AGREED` — **Mutation is records-domain.** `field.modifiedValue` does not exist upstream and will not be added; constructs stay a pure parse model. [settled 2026-10-13](./architect__art-md.md)
 
 ### @art-js/records
@@ -223,9 +227,9 @@
 
 ## Changes
 
+- `ART_JS` - 2026-10-17 – New goal replan+delegate; `## Planning` added; plan READY; turn→ART_LIB.
+- `ART_MD` - 2026-10-17 – Fix plan DONE; re-review pass; `constructs@0.0.4` published; gate lifted; turn→`ART_JS`.
 - `ART_LIB` - 2026-10-16 – Signed both `@art-md` contracts; answered `kinds?` (filenames); instructions 2–4 clear.
-
-- `ART_JS` - 2026-10-16 – Owner took turn (pen was ART_LIB); position fixed in contract; docs round 2; turn→ART_LIB.
 - `MANAGEMENT` - 2026-10-15 – MANAGEMENT joined the session.
 - `ART_JS` - 2026-10-14 – MANAGEMENT: kind dropped from records; contracts rewritten; requests sent; re-baselining.
 - `ART_MD` - 2026-10-14 – Reviewed instructions 1–2: pass; stale lines fixed; turn→ART_LIB.
