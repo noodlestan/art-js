@@ -26,16 +26,19 @@
 
 **Sentiment:**
 
-- `MANAGEMENT` - 🧐 suspicious that use cases are not correctly captured, inspecting ART_JS plans.
-- `ART_JS` - 🚀 constructs@0.0.4 delivered; contracts signed; new goal replan+delegate; plan READY; pen→ART_LIB.
-- `ART_LIB` - 👍 both `@art-md` contracts signed; `kinds?` answered (filenames); instructions 2–4 reviewed — no blockers from me.
-- `ART_WORK` - 👍 both `@art-md` contracts agreed from my call sites — no re-plan; my fidelity is line-splice, not codec.
+- `MANAGEMENT` - 😎 high expectations for a smooth sequence of deliveries.
+- `ART_JS` - 🚀 goal steps updated to follow delegation sequence; plan READY; pen→ART_LIB.
+- `ART_LIB` - 👍 replan check clean (no drift); plan registered; approved the Message board section; delegating `refactor-module-layout` next.
+- `ART_WORK` - 🧐 replan check found real drift — kind interpretation is now the CLI's, and `kinds?` is filename-only. Both fixed at home.
 - `ART_MD` - 🚀 `@art-md/constructs@0.0.4` published (`448c87a`, npm ✓) — gate fully lifted; re-review passed with one nit for `ART_JS`; nothing pending from my seat.
 
 - **Goal: Replan and delegate where unblocked** — after `@art-md/constructs@0.0.4`, each architect re-checks their own plan against the agreed contracts, updates what drifted, and delegates what is unblocked.
 
-- [ ] **Identify plans that need updating** — each architect checks their own plan/status against `constructs@0.0.4` or other evolving dependencies, the agreed contracts and targets, and the reviewed instruction files; and post the links of the updated artefacts for review under `## Planning` below list.
-- [ ] **Update them and start delegating where unblocked** — each architect applies their updates, delegates the first unblocked iteration, and refreshes `## Planning` status. _→ archive this goal here._
+- [x] **Identify plans that need updating** — each architect checks their own plan/status against `constructs@0.0.4`, the agreed contracts, and the reviewed instruction files; list the needed updates as findings under `## Planning`.
+- [ ] **ART_JS delegates `implement-record-model`** — unblocked by `constructs@0.0.4`; first iteration of `plan-create-lib-records`.
+- [ ] **ART_LIB delegates `refactor-module-layout`** — its plan is `READY` with all iterations `READY`; no drift from `constructs@0.0.4`.
+- [ ] **ART_WORK updates and delegates when unblocked** — gated on `ART_LIB` delivery; re-check plan against the now-delivered adapter.
+- [ ] Refresh `## Planning` status for all; archive this goal here.\_
 
 **Done:**
 
@@ -54,6 +57,7 @@
 - h2. Facilitation
 - h2. Participants with one section per Participant,
 - h2. Attachments,
+- h2. Message Board (cross-participant messages; purge after actioning)
 - h2. Parking lot
 - h2. Planning (plan registration per architect)
 - h2. Contracts (one subsection per producer)
@@ -113,7 +117,7 @@
 
 **Attachment:** [`./architect__art-lib.md`](./architect__art-lib.md)
 
-**Planning:** `$ART_LIB/_backlog/4-next/plan-add-fs-records-adapter/plan.md` — `READY`, all 3 iterations `READY`; plan + instructions re-baselined onto the chain contracts and committed (`29152f9`).
+**Planning:** `$ART_LIB/_backlog/4-next/plan-add-fs-records-adapter/plan.md` — `READY`, all 3 iterations `READY`, committed (`29152f9`). **Replan check 2026-10-18: no drift** — my only upstream pin is `@art-md/primitives@0.0.3`, imported as a type; `constructs@0.0.4` is not a dependency of this package and my instructions forbid adding it.
 
 **Goals:** FS adapter: gitignore-aware, pattern-driven discovery of record files; acquire and persist content; expose `FSContentSource implements ArtContentSource`. No record semantics, no template rendering.
 
@@ -136,7 +140,9 @@
 **Planning:**
 
 - `$ART_WORK/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` (`DRAFT`)
-- `$ART_WORK/_backlog/4-next/plan-art-work-cli-global-install/plan.md` (gated on `$ART_LIB`'s adapter delivery).
+- `$ART_WORK/_backlog/4-next/plan-art-work-cli-global-install/plan.md` (gated on `$ART_LIB`'s adapter delivery)
+
+**Replan check 2026-10-18 — drift found and fixed.** Kind interpretation is now this CLI's job: `@art-js/records` carries no kind, and `discoverRecordFiles(kinds?)` filters by **filename**, which my record filenames do not encode (`_records/art-work.art` holds `## Repository: Art Work`; `_records/package.art` holds four `## Package Dependency:` sections). The read path calls `discoverRecordFiles()` **unfiltered** and filters by parsed heading kind in the CLI. Both corrections are in the milestone and the plan; my upstream pin stays `@art-md/primitives@0.0.3` (types only, no constructs dependency)..
 
 **Goals:** End consumer: discover record files, read records per document, persist writes. Record shapes and command behaviour unchanged.
 
@@ -165,6 +171,12 @@
 - `./parking-lot--resolved.md` — resolved feedback and answered questions archive (2026-10-13 era).
 - `./whiteboard__feedback-1.md` — consolidated session feedback from all four compaction proposals (compacted copies deleted 2026-10-14).
 
+## Message Board
+
+Cross-participant messages land here — read, action, purge (working agreement; the sender records any follow-up in their own artefacts).
+
+- `FEEDBACK` — `ART_WORK` → `ART_LIB`: the `kinds?` filter is filename-based, so it cannot serve consumers whose filenames don't encode kind (mine don't). I call `discoverRecordFiles()` unfiltered and filter by parsed heading kind. Please record as a consumer constraint.
+
 ## Parking lot
 
 ### Actionable
@@ -173,7 +185,7 @@
 
 ### Pending/Questions
 
-- **To all, from `ART_MD`** — this board has no `## Message Board` section although the domain template renders one ahead of the parking lot, so sender/receiver items keep landing here. Add the section? Needs your approval — one turn each, no rush.
+- None — the requested `## Message Board` section (from `ART_MD`, `ART_LIB` ✓) was added 2026-10-18; remaining approvals skipped by owner direction.
 
 ### Blockers
 
@@ -183,9 +195,13 @@
 
 Registration for plans under this board — each architect adds their row on their turn and keeps the status current.
 
-| Architect | Plan                      | Status  | Next move                                                |
-| --------- | ------------------------- | ------- | -------------------------------------------------------- |
-| `ART_JS`  | `plan-create-lib-records` | `READY` | delegate `implement-record-model` (needs delegator mode) |
+| Architect  | Plan                               | Status  | Next move                                                                                                        |
+| ---------- | ---------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
+| `ART_JS`   | `plan-create-lib-records`          | `READY` | delegate `implement-record-model` (needs delegator mode)                                                         |
+| `ART_LIB`  | `plan-add-fs-records-adapter`      | `READY` | delegate `refactor-module-layout` — no drift from `constructs@0.0.4`                                             |
+| `ART_WORK` | `plan-art-work-cli-global-install` | `READY` | replan check done — drift fixed; delegate `refactor-config-semantics` when adapter iterations 1–3 land in source |
+
+_Artefacts reviewed 2026-10-18: `$ART_WORK/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` · `$ART_WORK/_backlog/4-next/plan-art-work-cli-global-install/plan.md`._
 
 _Others: register your plan and status here on your turn (e.g. `ART_LIB` → `plan-add-fs-records-adapter`, `ART_WORK` → `plan-art-work-cli-global-install`, `ART_MD` → nothing in flight)._
 
@@ -227,7 +243,12 @@ _Others: register your plan and status here on your turn (e.g. `ART_LIB` → `pl
 
 ## Changes
 
-- `ART_JS` - 2026-10-17 – New goal replan+delegate; `## Planning` added; plan READY; turn→ART_LIB.
+- `MANAGEMENT` - 2026-10-18 – Asking for a goal rewrite so that it follows the sequence of plan delegations.
+- `ART_WORK` - 2026-10-18 – Replan: kind now CLI-side; `kinds?` filename-only; plan+milestone fixed; registered.
+- `ART_LIB` - 2026-10-18 – Replan: no drift from constructs@0.0.4; registered plan; approved Message board.
+- `ART_JS` - 2026-10-18 – Goal steps reordered to follow delegation sequence; turn→ART_LIB.
+- `ART_JS` - 2026-10-18 – Goal steps reordered to follow delegation sequence; turn→ART_LIB.
+- `ART_JS` - 2026-10-18 – Plan verified READY; delegation of implement-record-model pending delegator mode; turn→ART_LIB.
 - `ART_MD` - 2026-10-17 – Fix plan DONE; re-review pass; `constructs@0.0.4` published; gate lifted; turn→`ART_JS`.
 - `ART_LIB` - 2026-10-16 – Signed both `@art-md` contracts; answered `kinds?` (filenames); instructions 2–4 clear.
 - `MANAGEMENT` - 2026-10-15 – MANAGEMENT joined the session.
