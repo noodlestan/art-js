@@ -20,9 +20,12 @@
 
 **Keywords:**
 
-- art
+- cli
 - lsp
 - language-server
+- art
+- markdown
+- ast
 
 **Deployment:** NPM Package Deployment: Language Server
 

@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "description": "Record identity, discovery, extraction, update and serialisation for Markdown documents.",
   "keywords": [
+    "library",
+    "records",
     "art",
     "markdown",
-    "records"
+    "ast"
   ],
   "author": "Noodlestan Collective",
   "license": "MIT",

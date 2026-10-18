@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "description": "Validates parsed modules against structural and semantic rules.",
   "keywords": [
-    "art",
+    "library",
     "validation",
+    "art",
+    "markdown",
     "ast"
   ],
   "author": "Noodlestan Collective",

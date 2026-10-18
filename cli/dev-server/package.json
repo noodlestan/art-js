@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "description": "Local development server for testing Art modules.",
   "keywords": [
-    "art",
     "cli",
-    "dev-server"
+    "dev-server",
+    "art",
+    "markdown",
+    "ast"
   ],
   "author": "Noodlestan Collective",
   "license": "MIT",

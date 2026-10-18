@@ -3,9 +3,12 @@
   "version": "0.0.1",
   "description": "Bundles Art modules for distribution.",
   "keywords": [
-    "art",
+    "library",
     "bundler",
-    "build"
+    "build",
+    "art",
+    "markdown",
+    "ast"
   ],
   "author": "Noodlestan Collective",
   "license": "MIT",

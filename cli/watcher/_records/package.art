@@ -20,9 +20,11 @@
 
 **Keywords:**
 
-- art
 - cli
 - file-watcher
+- art
+- markdown
+- ast
 
 **Deployment:** NPM Package Deployment: Watcher
 

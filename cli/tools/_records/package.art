@@ -20,9 +20,11 @@
 
 **Keywords:**
 
-- art
-- agent-tools
 - cli
+- agent-tools
+- art
+- markdown
+- ast
 
 **Deployment:** NPM Package Deployment: Tools
 

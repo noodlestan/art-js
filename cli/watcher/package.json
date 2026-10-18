@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "description": "Watches for changes in Art modules and triggers rebuilds.",
   "keywords": [
-    "art",
     "cli",
-    "file-watcher"
+    "file-watcher",
+    "art",
+    "markdown",
+    "ast"
   ],
   "author": "Noodlestan Collective",
   "license": "MIT",

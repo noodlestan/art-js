@@ -31,10 +31,6 @@
 - art
 - markdown
 - ast
-- parser
-- validation
-- language-server
-- bundler
 
 **Private:** `false`
 

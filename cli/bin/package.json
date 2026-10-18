@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "description": "CLI that exposes all core pipeline commands.",
   "keywords": [
-    "art",
     "cli",
-    "build"
+    "build",
+    "art",
+    "markdown",
+    "ast"
   ],
   "author": "Noodlestan Collective",
   "license": "MIT",

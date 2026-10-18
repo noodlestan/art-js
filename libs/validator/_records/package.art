@@ -20,8 +20,10 @@
 
 **Keywords:**
 
-- art
+- library
 - validation
+- art
+- markdown
 - ast
 
 **Deployment:** NPM Package Deployment: Validator

@@ -3,9 +3,12 @@
   "version": "0.0.1",
   "description": "Executes parsed Art modules and manages program state.",
   "keywords": [
-    "art",
+    "library",
     "programs",
-    "execution"
+    "execution",
+    "art",
+    "markdown",
+    "ast"
   ],
   "author": "Noodlestan Collective",
   "license": "MIT",

@@ -5,11 +5,7 @@
   "keywords": [
     "art",
     "markdown",
-    "ast",
-    "parser",
-    "validation",
-    "language-server",
-    "bundler"
+    "ast"
   ],
   "author": "Noodlestan",
   "license": "MIT",
