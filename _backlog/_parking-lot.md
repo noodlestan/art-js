@@ -4,21 +4,21 @@ WIP tracker, structured like the session parking lot: **ACTIONABLE** (in progres
 
 ## Ongoing
 
-- **Drive the Art Records Whiteboard (owned by `ART_JS`)** — board at `$PROJECT/_backlog/whiteboard-art-records/whiteboard.md`; this project is the highest priority.
+- **Deliver `@art-js/records` v0.0.1** — tracked in `$PROJECT/_backlog/3-now/plan-create-lib-records/plan.md`; implementation and fixture tests are green, with planning/alignment and release work remaining.
 
 ---
 
 ## ACTIONABLE
 
-- **Delegate `implement-record-model`** — `@art-md/constructs@0.0.4` delivered 2026-10-17; plan `READY`; pin bumped in plan and instruction file; whiteboard goal archived.
+- **Align use cases and fixtures** — execute the WIP list in `libs/records/knowledge/overview.md` as the next plan iteration.
 
 ## PENDING
 
-- None.
+- **Raise test coverage thresholds** — in the plan's Consolidate iteration, after integration fixtures and unit coverage settle.
 
 ## BLOCKERS
 
-- None — `@art-md/constructs@0.0.4` is published, both `@art-md` contracts are `AGREED`, and the plan is unblocked.
+- None. The records package and integration fixtures pass; remaining work is sequenced in the active plan.
 
 ---
 

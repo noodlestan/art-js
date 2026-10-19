@@ -2,15 +2,15 @@
 
 **ID:** `art-records`
 
-**Status:** `BLOCKED`
+**Status:** `WORKING`
 
 **Template:** `$DOMAINS/milestones/templates/milestone.tart`
 
 **Skill:** `write-milestone`
 
-**Purpose:** Provide an API to assert the presence of records in an art file's content, extract records from a source file (with fields, examples, etc.), and write them back — exposing `SectionBlock` children of type `FieldBlock`/`FieldInline` as direct fields of the resource.
+**Purpose:** Provide an API to assert the presence of records in a document, extract them as source-bound proxy handles (with fields and full section access), mutate them, and save their document through the record's own source.
 
-**Description:** Build a records library that wraps extracted records (representations of `SectionBlock` keeping as much of the art AST data as possible) in a consumer-facing API with accessors, positioning anchors for write-back, and an optional content-hash guard. Works on content strings, not the filesystem.
+**Description:** Build a records library over Art MD documents: extracted records keep as much of the art AST as possible and expose `FieldBlock`/`FieldInline` children as direct properties, with structural access through `record.section`. Records are proxies backed by an injectable capsule; `record.save()` serializes the containing document with the consumer-injected codec and persists it through the bound `ArtContentSource`. v0.0.1 fidelity is structural (whole-document serialization); granular writes and write guards are deferred (MANAGEMENT, 2026-10-19).
 
 ## Path Variables
 
@@ -21,7 +21,7 @@
 
 ## Summary
 
-Expose a constructor consumers use to wrap extracted records. The returned API encapsulates the extracted record (`raw()`) plus the metadata needed to write it back. Records are representations of `SectionBlock` that keep as much of the art AST data as possible, but expose the block children of type `FieldBlock` or `FieldInline` as direct fields of the resource. Consider a `ProxyObject` so the object also returns the record fields transparently, with setters routing data to the encapsulated `field.value` and tracking `field.modifiedValue` when modified. Everything carries positioning anchors enough to write back. The API works with content strings (not the filesystem) and returns a hash of the original file alongside the record so the write operation can check before attempting to write back into the file — this behaviour is opt-in (or opt-out), possibly split into separate safe vs unsafe functions.
+Consumers create a codec and a records provider, read a file into a per-document collection, extract proxy records, mutate fields and section properties, and save through the record or the collection. Records implement no I/O and no serialization of their own; file discovery and filesystem access live in `@art-lib/fs-records`, codec creation lives in the consumer.
 
 ## Source Tasks
 
@@ -31,18 +31,19 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 ## Phases
 
-| Index | Name                | Status     |
-| ----- | ------------------- | ---------- |
-| #1    | Define record model | `DONE`     |
-| #2    | Extraction API      | `PLANNING` |
-| #3    | Update Records      | `PLANNING` |
-| #4    | Proxy field access  | `PLANNING` |
+| Index | Name                   | Status    |
+| ----- | ---------------------- | --------- |
+| #1    | Define record model    | `DONE`    |
+| #2    | Extraction API         | `DONE`    |
+| #3    | Persist through source | `DONE`    |
+| #4    | Proxy field access     | `DONE`    |
+| #5    | Align, publish, adopt  | `WORKING` |
 
 ### Phase: 1 — Define record model
 
 **Goal:** Define the record representation wrapping `SectionBlock`.
 
-**Description:** Define how a record keeps as much of the art AST data as possible while exposing `FieldBlock`/`FieldInline` children as direct fields of the resource, plus the positioning anchors needed for write-back.
+**Description:** A record keeps as much of the art AST as possible while exposing `FieldBlock`/`FieldInline` children as direct properties. One unified `ArtRecord`; `name` is the whole heading text and carries no kind (CEO decision, 2026-10-14); the source is fixed at creation.
 
 **Status:** `DONE`
 
@@ -52,23 +53,23 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 ### Phase: 2 — Extraction API
 
-**Goal:** Provide the API to assert presence of and extract records from content.
+**Goal:** Provide the API to assert presence of and extract records from a document.
 
-**Description:** Provide functions to assert the presence of records in an art file's content and to extract records from a source file along with their fields, examples, etc. The returned records include both the record with its fields and the metadata needed to write back.
+**Description:** `createArtDocumentRecords({ codec, createContentSource })` returns a provider; `read(file)` returns a per-document collection with `assertPresence(name)` and `extract()`. Extraction returns one proxy handle per `SectionBlock`, at any depth, including field-less sections; consumers interpret headings.
 
-**Status:** `PLANNING`
+**Status:** `DONE`
 
 **Dependencies:**
 
 - None
 
-### Phase: 3 — Update Records
+### Phase: 3 — Persist through source
 
-**Goal:** Provide write-back with an optional content-hash guard.
+**Goal:** Save mutations through the record's bound source.
 
-**Description:** Return a hash of the original content alongside the record so the write operation can check before attempting to write back into the content. The guard is opt-in (or opt-out); consider separate safe vs unsafe functions. Works with content strings, not the filesystem.
+**Description:** `record.save()` and `DocumentRecords.save()` serialize the containing document with the injected codec and persist it through the bound `ArtContentSource` (`writeDocument()`). v0.0.1 fidelity is structural, not byte-identical; granular writes and write guards are deferred (MANAGEMENT, 2026-10-19).
 
-**Status:** `PLANNING`
+**Status:** `DONE`
 
 **Dependencies:**
 
@@ -76,34 +77,44 @@ Expose a constructor consumers use to wrap extracted records. The returned API e
 
 ### Phase: 4 — Proxy field access
 
-**Goal:** Provide transparent field access via a `ProxyObject`.
+**Goal:** Provide transparent field access via the record proxy.
 
-**Description:** Consider a `ProxyObject` so the object also returns the record fields transparently, with setters routing data to the encapsulated `field.value` and tracking `field.modifiedValue` when modified. Decided on the whiteboard (2026-10-13): `createProxyObject` is an explicit always-available factory — opt-in by construction; `createFieldResolver` ships from this package; `modifiedValue` is records-domain tracking state (does not exist upstream in `@art-md/constructs`).
+**Description:** Field properties resolve by exact field name against the section's field children; assignment appends missing fields, `renameField()` preserves position, `delete` removes. Section properties stay reachable through `record.section`. The capsule is the single mutation seam; both factories accept an injectable `capsuleFactory` from v0.0.1, reserving the reactive variant path (v1).
 
-**Status:** `PLANNING`
+**Status:** `DONE`
 
 **Dependencies:**
 
 - None
+
+### Phase: 5 — Align, publish, adopt
+
+**Goal:** Align use cases with fixtures, publish, and prove Art Work adoption.
+
+**Description:** Execute the remaining plan iterations: use-case/fixture alignment, npm publication, Art Work consumption, consolidation and coverage, knowledge refresh.
+
+**Status:** `WORKING`
+
+**Dependencies:**
+
+- Plan: `_backlog/3-now/plan-create-lib-records/plan.md`
 
 ## Items
 
 | Phase | Resource / Record                                                          | Status    |
 | ----- | -------------------------------------------------------------------------- | --------- |
 | 1     | Plan: Design Lib Records `_backlog/1-done/plan-design-lib-records/plan.md` | `DONE`    |
-| -     |                                                                            |           |
-| 2     | Plan: Create Lib Records `_backlog/4-next/plan-create-lib-records/plan.md` | `BLOCKED` |
-| -     |                                                                            |           |
+| 2–5   | Plan: Create Lib Records `_backlog/3-now/plan-create-lib-records/plan.md`  | `WORKING` |
 
 ## Work
 
 ### Next
 
-- **Instruction files written (2026-10-14)** — 4 self-contained under `$PROJECT/_backlog/4-next/plan-create-lib-records/instructions/` + inline block for `document-records-usage`; all 5 iterations `READY`. **On the whiteboard for review (goal steps 3–4):** `ART_MD` reviews instructions 1–2; `ART_LIB` + `ART_WORK` review instructions 2–4. Then address findings and **delegate `implement-record-model` once the constructs release carrying `delete-kind-from-code` lands** (GATE inside instruction 1). Plan `BLOCKED` = delegation gate only. Both `ART_MD` re-proposed contracts `✓ART_JS ✓ART_WORK`, pending `ART_LIB`. `$ART_LIB` decoupled; only `$ART_WORK` adoption depends on this plan going green workspace-linked (npm publish NOT required).
+- **Iteration `align-use-cases-and-fixtures`** of `_backlog/3-now/plan-create-lib-records/plan.md`: execute the WIP alignment list in `$PROJECT/libs/records/knowledge/overview.md`, un-skipping fixtures (`_05`, `_06`, `_09`, `_10`, `_11`) as their code lands. Then publish and adopt in Art Work.
 
 ### Blockers
 
-- **Delegation gated on the constructs release carrying `delete-kind-from-code`** (owner `ART_MD`, fix plan `plan-drop-kind-and-reword-claims` reviewed + accepted 2026-10-14; `delete-kind-from-code` lands + `cli/codec-tests` 43/43 + pin bump). Kind deletion dissolves the original cause (serialize cannot drop a non-existent field); Option A stands. Instruction writing NOT gated — specs re-baselined (bridge parses `Kind: Name` from heading text; identity contract unchanged). Agreements outstanding: `ART_LIB` + `ART_WORK` on `ART_MD`'s two re-proposed contracts (we agreed both).
+- None. The earlier delegation gate is void: v0.0.1 is implemented and CI-green; remaining work is tracked in the plan iterations.
 
 ## Operating Instructions
 
@@ -125,17 +136,13 @@ npm run ci # lint, test and build
 
 ### Verifying Step
 
-When making changes to parser, serializer, or constructs packages, execute from `cli/pipeline-tests/`:
+When making changes to the records package or its fixtures:
 
 ```bash
-npm run test # runs test-parser and test-serializer against stable fixtures
+npm run test --workspace @art-js/records # unit tests
+npm run test # from tests/records — fixture suite
 ```
-
-## Follow ups
-
-- ~~Decide safe vs unsafe write-back functions and the default for the hash guard.~~ Closed on the whiteboard (2026-10-13): `update` = guarded (safe), `serialize` = unguarded (new files).
-- ~~Decide whether `ProxyObject` field access is the default or opt-in.~~ Closed on the whiteboard (2026-10-13): `createProxyObject` is an explicit always-available factory — opt-in by construction, no default switching; consumer (`$ART_WORK`) never asked for opt-in.
 
 ## Feedback
 
-- **Records whiteboard (2026-10-13, `$WORKSPACE/whiteboard-art-records/whiteboard.md`)** — `@art-js/records` and `@art-lib/fs-records` contracts `AGREED`: line-based anchors stand (adapter stateless, re-reads after `writeContent()`); `writeRecord` is a pure line-splice preserving non-modelled content; canonical names `FSRecordsAdapter`/`createFSRecordsAdapter`; consumers import contracts from `@art-md/primitives` directly. New deliverable: `createFieldResolver` factory (iteration 3). Decoupling verdict (2026-10-13): `$ART_LIB`'s adapter imports only `@art-md/primitives` — its hold is released independently of this milestone; `$ART_WORK` adoption still depends on this plan going green in the workspace (publish not required).
+- **v0.0.1 fidelity decision (MANAGEMENT, 2026-10-19)** — first cut saves whole documents via codec serialization: structural fidelity, no granular writes, no write guards. Sufficient for Art Work's first consumption; the chain is informed on the records whiteboard.
