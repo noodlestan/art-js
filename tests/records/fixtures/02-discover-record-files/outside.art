@@ -1,0 +1,5 @@
+# Module
+
+## Outside: Records Tests
+
+**purpose:** This record sits outside `_records` and must not be discovered.

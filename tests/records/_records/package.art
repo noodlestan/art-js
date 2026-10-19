@@ -1,0 +1,52 @@
+# Module
+
+## Package: Records Tests
+
+**Purpose:** Integration tests for the record API through the codec and the FS records adapter.
+
+**Description:** Provides fixture-driven integration tests for record setup, discovery, reading, extraction, mutation, creation, and saving.
+
+**Owner:** Project: Art JS
+
+**Author:** Noodlestan Collective
+
+**Path:** `tests/records/`
+
+**Canonical Name:** `@art-js/test-records`
+
+**Published:** `false`
+
+**Private:** `false`
+
+**Keywords:**
+
+- cli
+- records
+- testing
+- art
+- markdown
+- ast
+
+**Deployment:** NPM Package Deployment: Records Tests
+
+**Files:**
+
+- `src`
+- `scripts`
+- `fixtures`
+- `LICENSE-MIT`
+- `README.md`
+
+**Language:** Typescript
+
+**Engines:**
+
+- Node: `>= 22`
+
+**PackageManager:** `npm@10.2.3`
+
+**PackageFile:** `package.json`
+
+**Dependencies:**
+
+**License:** License: Noodlestan 2026 MIT

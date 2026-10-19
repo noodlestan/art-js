@@ -1,0 +1,48 @@
+{
+  "name": "@art-js/test-records",
+  "version": "0.0.1",
+  "description": "Integration tests for the record API through the codec and the FS records adapter.",
+  "keywords": [
+    "cli",
+    "records",
+    "testing",
+    "art",
+    "markdown",
+    "ast"
+  ],
+  "author": "Noodlestan Collective",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noodlestan/art-js",
+    "directory": "tests/records"
+  },
+  "type": "module",
+  "files": [
+    "src",
+    "scripts",
+    "fixtures",
+    "LICENSE-MIT",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "esbuild-cli-watch",
+    "lint": "prettier . -c && eslint . && tsc --noEmit",
+    "lint:fix": "prettier . -c --write && eslint . --fix",
+    "build": "esbuild-cli",
+    "build:clean": "rm -rf dist",
+    "test-records": "npx tsx scripts/test-records.ts",
+    "test": "npm run test-records",
+    "ci": "npm run lint && npm run build && npm run test"
+  },
+  "dependencies": {
+    "@art-js/records": "*",
+    "@art-lib/fs-records": "0.0.2",
+    "@art-md/codec": "0.0.3",
+    "@art-md/primitives": "0.0.5"
+  },
+  "devDependencies": {
+    "tsx": "4.8.1"
+  }
+}
