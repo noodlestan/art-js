@@ -14,7 +14,8 @@
   "workspaces": [
     "libs/**",
     "cli/**",
-    "spec/**"
+    "spec/**",
+    "tests/**"
   ],
   "engines": {
     "node": ">=22"
