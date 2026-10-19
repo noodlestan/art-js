@@ -24,6 +24,7 @@ _roadmap/           — project roadmap and architect briefing
 knowledge/          — repository-level knowledge
 cli/                — CLI packages
 libs/               — library packages
+tests/              — integration test packages
 ```
 
 ## Projects
@@ -40,6 +41,7 @@ libs/               — library packages
 | Records         | `libs/records/_guide.md`        | `NONE`      |
 | Language Server | `cli/language-server/_guide.md` | `NONE`      |
 | Tools           | `cli/tools/_guide.md`           | `NONE`      |
+| Records Tests   | `tests/records/_guide.md`       | `NONE`      |
 
 ## Records Management
 
@@ -55,6 +57,7 @@ Records are co-located with the resources they describe in `_records/` directori
 This repository maintains knowledge references at:
 
 - `knowledge/index.md` — Repository-level knowledge.
+- `libs/records/knowledge/index.md` — Records package knowledge (overview and design).
 
 ## Conventions
 

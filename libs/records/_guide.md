@@ -13,6 +13,7 @@ Agents SHOULD scan these files for definitions and resource locations when faced
 
 ```
 _records/           — package records
+knowledge/          — package knowledge (overview and design)
 src/                — source code
 ```
 
@@ -25,7 +26,11 @@ Records are co-located with the resources they describe in `_records/` directori
 
 ## Knowledge References
 
-This package does not maintain a dedicated knowledge reference.
+This package maintains its knowledge locally:
+
+- `knowledge/index.md` — knowledge index for this package.
+- `knowledge/overview.md` — responsibilities, use cases (with fixture ids), flow, and dependencies.
+- `knowledge/design/records.md` — design: consumer API, usage recipes, contracts, fidelity, and limitations.
 
 ## Conventions
 
