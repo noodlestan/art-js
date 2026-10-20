@@ -9,7 +9,7 @@
 // through its string index signature.
 import { readFile } from 'node:fs/promises';
 
-import { createArtDocumentRecords } from '@art-js/records';
+import { createRecordsDocument } from '@art-js/records';
 import { type FSRecordFile, createFSRecordsAdapter } from '@art-lib/fs-records';
 import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
@@ -23,7 +23,7 @@ export async function runTest(): Promise<void> {
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
 	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const documentRecords = createArtDocumentRecords<FSRecordFile>({
+	const recordsDocument = createRecordsDocument<FSRecordFile>({
 		codec,
 		createContentSource: file => fsRecords.createContentSource(file),
 	});
@@ -37,7 +37,7 @@ export async function runTest(): Promise<void> {
 			.join(', ')}`,
 	);
 
-	const documents = await Promise.all(readableFiles.map(file => documentRecords.read(file)));
+	const documents = await Promise.all(readableFiles.map(file => recordsDocument.read(file)));
 	const recordGroups = await Promise.all(documents.map(document => document.extract()));
 	const allRecords = recordGroups.flat();
 	assert(

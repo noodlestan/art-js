@@ -8,7 +8,7 @@
 // `noPropertyAccessFromIndexSignature` and ArtRecord resolves unknown fields
 // through its string index signature. Each bracket access carries an
 // `eslint-disable-next-line dot-notation`, the one rule that contradicts it.
-import { createArtDocumentRecords } from '@art-js/records';
+import { createRecordsDocument } from '@art-js/records';
 import { type FSRecordFile, createFSRecordsAdapter } from '@art-lib/fs-records';
 import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
@@ -22,7 +22,7 @@ export async function runTest(): Promise<void> {
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
 	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const documentRecords = createArtDocumentRecords<FSRecordFile>({
+	const recordsDocument = createRecordsDocument<FSRecordFile>({
 		codec,
 		createContentSource: file => fsRecords.createContentSource(file),
 	});
@@ -31,7 +31,7 @@ export async function runTest(): Promise<void> {
 	const packageFile = files.find(file => file.path === '_records/package.art');
 	assert(packageFile !== undefined, '_records/package.art was not discovered');
 
-	const document = await documentRecords.read(packageFile);
+	const document = await recordsDocument.read(packageFile);
 	const records = await document.extract();
 	const record = records.find(candidate => candidate.name === 'Package: Records');
 	assert(record !== undefined, 'Package: Records was not extracted');

@@ -5,7 +5,7 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-import { createArtDocumentRecords } from '@art-js/records';
+import { createRecordsDocument } from '@art-js/records';
 import { type FSRecordFile, createFSRecordsAdapter } from '@art-lib/fs-records';
 import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
@@ -19,7 +19,7 @@ export async function runTest(): Promise<void> {
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
 	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const documentRecords = createArtDocumentRecords<FSRecordFile>({
+	const recordsDocument = createRecordsDocument<FSRecordFile>({
 		codec,
 		createContentSource: file => fsRecords.createContentSource(file),
 	});
@@ -28,7 +28,7 @@ export async function runTest(): Promise<void> {
 	const projectFile = files.find(file => file.path === '_records/project.art');
 	assert(projectFile !== undefined, '_records/project.art was not discovered');
 
-	const document = await documentRecords.read(projectFile);
+	const document = await recordsDocument.read(projectFile);
 	const records = await document.extract();
 	const project = records.find(record => record.name === 'Project: Art JS');
 	assert(project !== undefined, 'Project: Art JS was not extracted');

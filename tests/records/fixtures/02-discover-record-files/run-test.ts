@@ -5,7 +5,7 @@
 // that do not match `**/_records/**/*.art` must not be discovered.
 import { join } from 'node:path';
 
-import { createArtDocumentRecords } from '@art-js/records';
+import { createRecordsDocument } from '@art-js/records';
 import { type FSRecordFile, createFSRecordsAdapter } from '@art-lib/fs-records';
 import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
@@ -19,7 +19,7 @@ export async function runTest(): Promise<void> {
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
 	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const documentRecords = createArtDocumentRecords<FSRecordFile>({
+	const recordsDocument = createRecordsDocument<FSRecordFile>({
 		codec,
 		createContentSource: file => fsRecords.createContentSource(file),
 	});
@@ -45,6 +45,6 @@ export async function runTest(): Promise<void> {
 	);
 	assert(projectFile.basePath === workDir, `basePath mismatch: ${projectFile.basePath}`);
 
-	const document = await documentRecords.read(projectFile);
-	assert(await document.assertPresence('Project: Art JS'), 'Project: Art JS must be present');
+	const document = await recordsDocument.read(projectFile);
+	assert(await document.hasRecord('Project: Art JS'), 'Project: Art JS must be present');
 }

@@ -1,12 +1,12 @@
 // Case 09 — Creating a new record in a new destination file.
 //
 // Hardcoded use case from `libs/records/knowledge/design/records.md`:
-// documentRecords.create(file) creates an empty document collection, and
+// recordsDocument.create(file) creates an empty document collection, and
 // addRecord() appends a source-bound handle that can save the new file.
 import { access, mkdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 
-import { createArtDocumentRecords } from '@art-js/records';
+import { createRecordsDocument } from '@art-js/records';
 import { type FSRecordFile, createFSRecordsAdapter } from '@art-lib/fs-records';
 import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
@@ -36,11 +36,11 @@ export async function runTest(): Promise<void> {
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
 	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const documentRecords = createArtDocumentRecords<FSRecordFile>({
+	const recordsDocument = createRecordsDocument<FSRecordFile>({
 		codec,
 		createContentSource: file => fsRecords.createContentSource(file),
 	});
-	const document = await documentRecords.create(destinationFile);
+	const document = await recordsDocument.create(destinationFile);
 	const record = document.addRecord();
 
 	assert(record.name === '', `a new record starts with an empty name: ${record.name}`);

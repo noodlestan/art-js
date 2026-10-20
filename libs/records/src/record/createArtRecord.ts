@@ -1,11 +1,9 @@
 import type { SectionBlock } from '@art-md/constructs';
 import { createArtDocument, createArtDocumentSource } from '@art-md/primitives';
-import type { ArtDocument } from '@art-md/primitives';
+import type { ArtDocument, ConstructBase } from '@art-md/primitives';
 
-import { createRecordCapsule } from '../private/record/createRecordCapsule.js';
-import { createRecordProxy } from '../private/record/createRecordProxy.js';
-
-import type { ArtRecord, CreateArtRecordOptions } from './types.js';
+import type { ArtRecord, CreateArtRecordOptions, RecordContext } from './types.js';
+import { wrapSectionAsRecord } from './wrapSectionAsRecord.js';
 
 export function createArtRecord(options: CreateArtRecordOptions): ArtRecord {
 	const source = createArtDocumentSource(options.codec, options.contentSource);
@@ -16,15 +14,22 @@ export function createArtRecord(options: CreateArtRecordOptions): ArtRecord {
 	};
 
 	let document: ArtDocument | undefined;
-	const context = {
+	async function saveDocument(): Promise<void> {
+		if (document === undefined) {
+			const children: ConstructBase[] = [section];
+			const documentOptions = { children };
+			document = createArtDocument(documentOptions);
+		}
+		await source.writeDocument(document);
+	}
+
+	const context: RecordContext = {
 		section,
 		source,
-		document,
-		save: async () => {
-			document ??= createArtDocument({ children: [section] });
-			await source.writeDocument(document);
-		},
+		save: saveDocument,
 	};
-	const capsule = (options.capsuleFactory ?? createRecordCapsule)(context);
-	return createRecordProxy(capsule);
+
+	const record = wrapSectionAsRecord(context);
+
+	return record;
 }

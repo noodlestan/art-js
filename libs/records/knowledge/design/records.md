@@ -20,7 +20,7 @@ import {
   type FSRecordFile,
   type FSRecordsPattern,
 } from '@art-lib/fs-records';
-import { createArtDocumentRecords } from '@art-js/records';
+import { createRecordsDocument } from '@art-js/records';
 import { createArtCodec, type PartialArtCodecConfig } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
 
@@ -37,7 +37,7 @@ const patterns: FSRecordsPattern[] = [
 const fsRecords = createFSRecordsAdapter({ basePath: checkoutRoot, patterns });
 const codecOptions: PartialArtCodecConfig = {};
 const codec: ArtCodec = createArtCodec(codecOptions);
-const documentRecords = createArtDocumentRecords<FSRecordFile>({
+const documentRecords = createRecordsDocument<FSRecordFile>({
   codec,
   createContentSource: (file: FSRecordFile) => fsRecords.createContentSource(file),
 });
@@ -56,7 +56,7 @@ import {
   type FSRecordFile,
   type FSRecordsPattern,
 } from '@art-lib/fs-records';
-import { createArtDocumentRecords } from '@art-js/records';
+import { createRecordsDocument } from '@art-js/records';
 import { createArtCodec, type PartialArtCodecConfig } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
 
@@ -73,7 +73,7 @@ const patterns: FSRecordsPattern[] = [
 const fsRecords = createFSRecordsAdapter({ basePath: checkoutRoot, patterns });
 const codecOptions: PartialArtCodecConfig = {};
 const codec: ArtCodec = createArtCodec(codecOptions);
-const documentRecords = createArtDocumentRecords<FSRecordFile>({
+const documentRecords = createRecordsDocument<FSRecordFile>({
   codec,
   createContentSource: (file: FSRecordFile) => fsRecords.createContentSource(file),
 });
@@ -114,7 +114,7 @@ import {
   type FSRecordFile,
   type FSRecordsPattern,
 } from '@art-lib/fs-records';
-import { createArtDocumentRecords } from '@art-js/records';
+import { createRecordsDocument } from '@art-js/records';
 import { createArtCodec, type PartialArtCodecConfig } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
 
@@ -131,7 +131,7 @@ const patterns: FSRecordsPattern[] = [
 const fsRecords = createFSRecordsAdapter({ basePath: checkoutRoot, patterns });
 const codecOptions: PartialArtCodecConfig = {};
 const codec: ArtCodec = createArtCodec(codecOptions);
-const documentRecords = createArtDocumentRecords<FSRecordFile>({
+const documentRecords = createRecordsDocument<FSRecordFile>({
   codec,
   createContentSource: (file: FSRecordFile) => fsRecords.createContentSource(file),
 });
@@ -173,7 +173,7 @@ import {
   type FSRecordFile,
   type FSRecordsPattern,
 } from '@art-lib/fs-records';
-import { createArtDocumentRecords } from '@art-js/records';
+import { createRecordsDocument } from '@art-js/records';
 import { createArtCodec, type PartialArtCodecConfig } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
 
@@ -200,7 +200,7 @@ const patterns: FSRecordsPattern[] = [
 const fsRecords = createFSRecordsAdapter({ basePath: checkoutRoot, patterns });
 const codecOptions: PartialArtCodecConfig = {};
 const codec: ArtCodec = createArtCodec(codecOptions);
-const documentRecords = createArtDocumentRecords<FSRecordFile>({
+const documentRecords = createRecordsDocument<FSRecordFile>({
   codec,
   createContentSource: (file: FSRecordFile) => fsRecords.createContentSource(file),
 });
@@ -225,7 +225,7 @@ import {
   type FSRecordFile,
   type FSRecordsPattern,
 } from '@art-lib/fs-records';
-import { createArtDocumentRecords } from '@art-js/records';
+import { createRecordsDocument } from '@art-js/records';
 import { createArtCodec, type PartialArtCodecConfig } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
 
@@ -242,7 +242,7 @@ const patterns: FSRecordsPattern[] = [
 const fsRecords = createFSRecordsAdapter({ basePath: checkoutRoot, patterns });
 const codecOptions: PartialArtCodecConfig = {};
 const codec: ArtCodec = createArtCodec(codecOptions);
-const documentRecords = createArtDocumentRecords<FSRecordFile>({
+const documentRecords = createRecordsDocument<FSRecordFile>({
   codec,
   createContentSource: (file: FSRecordFile) => fsRecords.createContentSource(file),
 });
@@ -260,7 +260,7 @@ for (const record of allRecords) {
 await Promise.all(documents.map(document => document.save()));
 ```
 
-Saving each `DocumentRecords` collection once writes each document once — one write per file, regardless of how many of its records changed.
+Saving each `RecordsDocumentBase` collection once writes each document once — one write per file, regardless of how many of its records changed.
 
 ## Public API
 
@@ -308,27 +308,27 @@ export interface ArtRecordCapsule {
 
 export type ArtRecordCapsuleFactory = (context: ArtRecordCapsuleContext) => ArtRecordCapsule;
 
-export interface CreateArtDocumentRecordsOptions<TFile> {
+export interface CreateRecordsDocumentOptions<TFile> {
   codec: ArtCodec;
   createContentSource(file: TFile): ArtContentSource;
   capsuleFactory?: ArtRecordCapsuleFactory;
 }
 
-export interface ArtDocumentRecords<TFile> {
-  read(file: TFile): Promise<DocumentRecords>;
-  create(file: TFile): Promise<DocumentRecords>;
+export interface RecordsDocument<TFile> {
+  read(file: TFile): Promise<RecordsDocumentBase>;
+  create(file: TFile): Promise<RecordsDocumentBase>;
 }
 
-export interface DocumentRecords {
+export interface RecordsDocumentBase {
   assertPresence(name: string): Promise<boolean>;
   extract(): Promise<ArtRecord[]>;
   addRecord(): ArtRecord;
   save(): Promise<void>;
 }
 
-export function createArtDocumentRecords<TFile>(
-  options: CreateArtDocumentRecordsOptions<TFile>,
-): ArtDocumentRecords<TFile>;
+export function createRecordsDocument<TFile>(
+  options: CreateRecordsDocumentOptions<TFile>,
+): RecordsDocument<TFile>;
 ```
 
 ### Reserved names
@@ -351,13 +351,13 @@ A field property such as `record.owner` resolves by exact field name against the
 
 ## Persistence and Fidelity
 
-`record.save()` and `DocumentRecords.save()` both delegate to `ArtDocumentSource.writeDocument()`: the source serializes the whole document with the injected codec, then hands the resulting content to its `ArtContentSource`, which persists it. The records package contains no serialization or I/O implementation of its own and never returns a Markdown string to the consumer.
+`record.save()` and `RecordsDocumentBase.save()` both delegate to `ArtDocumentSource.writeDocument()`: the source serializes the whole document with the injected codec, then hands the resulting content to its `ArtContentSource`, which persists it. The records package contains no serialization or I/O implementation of its own and never returns a Markdown string to the consumer.
 
 The v0.0.1 fidelity contract is the Art MD codec contract: **structural round-trip, not byte identity.** All valid Markdown structure — sections, fields, nesting, order — is preserved; extraneous whitespace, CRLF line endings, heading indentation, and the final newline may be normalised per CommonMark. Granular (line-level) writes and write guards are not part of v0.0.1 (MANAGEMENT decision, 2026-10-19): saves are whole-document, and the source contract carries no revision token.
 
 ## Codec and Persistence Boundary
 
-Art Work creates the codec and injects it into `createArtDocumentRecords`. Records creates an `ArtDocumentSource` for each content source. That source uses the supplied codec for parsing and serialization and delegates persistence to its `ArtContentSource`.
+Art Work creates the codec and injects it into `createRecordsDocument`. Records creates an `ArtDocumentSource` for each content source. That source uses the supplied codec for parsing and serialization and delegates persistence to its `ArtContentSource`.
 
 `@art-js/records` imports the source, codec, and document contracts from `@art-md/primitives@0.0.5`, and construct types from `@art-md/constructs@0.0.5`. It does not import `@art-md/codec` at runtime or implement filesystem access. Art Work imports the runtime `createArtCodec` factory from `@art-md/codec`.
 
@@ -366,13 +366,13 @@ Art Work creates the codec and injects it into `createArtDocumentRecords`. Recor
 ```text
 libs/records/src/
 ├── index.ts
-├── document-records/                  # public provider and per-document collection
+├── records-document/                  # public provider and per-document collection
 │   ├── types.ts
-│   └── createArtDocumentRecords.ts
+│   └── createRecordsDocument.ts
 ├── record/                            # public record handle types
 │   └── types.ts
 └── private/
-    ├── document-records/              # per-file read, section extraction, addRecord
+    ├── records-document/              # per-file read, section extraction, addRecord
     ├── fields/                        # field lookup and AST mutation
     └── record/                        # capsule factory, proxy, new-record factory
 ```
@@ -390,12 +390,12 @@ Unit tests in `libs/records` stay minimal; behaviour is asserted through the fix
 ### Assumptions
 
 - One provider is configured once per consumer with a codec and a file-to-content-source factory; each `read(file)` or `create(file)` call returns a collection for exactly that document.
-- A `DocumentRecords` instance and all records extracted from it share one parsed document and one source; saving the collection writes that document once.
+- A `RecordsDocumentBase` instance and all records extracted from it share one parsed document and one source; saving the collection writes that document once.
 - The consumer interprets headings. Records carries no `kind` and no heading parsing (CEO decision, 2026-10-14).
 
 ### Decisions
 
-- Provider shape: `createArtDocumentRecords({ codec, createContentSource })` returns a provider; `read(file)` returns the collection for an existing document, `create(file)` for a new one. File discovery stays in `@art-lib/fs-records`.
+- Provider shape: `createRecordsDocument({ codec, createContentSource })` returns a provider; `read(file)` returns the collection for an existing document, `create(file)` for a new one. File discovery stays in `@art-lib/fs-records`.
 - One unified `ArtRecord`; source fixed at creation; `record.save()` is the persistence API. No string-returning `update`/`serialize` surface.
 - Codec is created by the consumer and injected; Records implements no I/O and instantiates no codec.
 - `addRecord()` is the only creation route; the new-record factory is internal (`src/private/`).
@@ -403,7 +403,7 @@ Unit tests in `libs/records` stay minimal; behaviour is asserted through the fix
 
 ### Limitations
 
-- Saving one `DocumentRecords` collection writes the whole document and may include other in-memory record mutations in that document.
+- Saving one `RecordsDocumentBase` collection writes the whole document and may include other in-memory record mutations in that document.
 - `create(file)` plus `addRecord()` targets new or empty files; adding a record to a populated document is not supported in v0.0.1.
 - A new record requires a non-empty name before save; the destination directory must exist.
 - Extracted record names are guarded immutable at runtime (silent in non-strict mode if reassigned); the public type stays writable so the new-record flow can assign it.

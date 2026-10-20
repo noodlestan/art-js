@@ -5,7 +5,7 @@
 // callback that creates one content source for each file.
 import { join } from 'node:path';
 
-import { createArtDocumentRecords } from '@art-js/records';
+import { createRecordsDocument } from '@art-js/records';
 import { type FSRecordFile, createFSRecordsAdapter } from '@art-lib/fs-records';
 import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
@@ -19,7 +19,7 @@ export async function runTest(): Promise<void> {
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
 	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const documentRecords = createArtDocumentRecords<FSRecordFile>({
+	const recordsDocument = createRecordsDocument<FSRecordFile>({
 		codec,
 		createContentSource: file => fsRecords.createContentSource(file),
 	});
@@ -38,8 +38,7 @@ export async function runTest(): Promise<void> {
 		`unexpected content source uri: ${contentSource.uri}`,
 	);
 
-	const document = await documentRecords.read(projectFile);
-	assert(typeof document.assertPresence === 'function', 'assertPresence must be a function');
+	const document = await recordsDocument.read(projectFile);
 	assert(typeof document.extract === 'function', 'extract must be a function');
 	assert(typeof document.save === 'function', 'save must be a function');
 }
