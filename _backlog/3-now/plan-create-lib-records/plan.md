@@ -27,8 +27,8 @@ Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/
 
 | Iteration                                     | Status    |
 | --------------------------------------------- | --------- |
-| Iteration: Prototype and Integration Tests    | `WORKING` |
-| Iteration: Apply Noodlestan Conventions       | `READY`   |
+| Iteration: Prototype and Integration Tests    | `DONE`    |
+| Iteration: Apply Noodlestan Conventions       | `WORKING` |
 | Iteration: Align Use Cases, API, and Fixtures | `READY`   |
 | Iteration: Publish and Consume in Art Work    | `READY`   |
 | Iteration: Consolidate                        | `READY`   |
@@ -38,7 +38,7 @@ Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/
 
 **ID:** `prototype-and-integration-tests`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Purpose:** Land the working records package and its integration fixture harness as the v0.0.1 baseline.
 
@@ -51,10 +51,10 @@ Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/
 
 #### Commits:
 
-| ID                  | Repository / Checkout / Branch | Policy   | Hash      | Status     |
-| ------------------- | ------------------------------ | -------- | --------- | ---------- |
-| `prototype`         | Art JS / `$PROJECT` / `main`   | `MANUAL` | `228e38a` | `AUTHORED` |
-| `integration-tests` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `260c5eb` | `AUTHORED` |
+| ID                  | Repository / Checkout / Branch | Policy   | Hash      | Status      |
+| ------------------- | ------------------------------ | -------- | --------- | ----------- |
+| `prototype`         | Art JS / `$PROJECT` / `main`   | `MANUAL` | `d79803d` | `COMMITTED` |
+| `integration-tests` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `1279c1d` | `COMMITTED` |
 
 ##### Commit: `prototype`
 
@@ -76,7 +76,7 @@ test(records): Add integration tests.
 
 **ID:** `apply-noodlestan-conventions`
 
-**Status:** `READY`
+**Status:** `WORKING`
 
 **Purpose:** Apply the repository's conventions to the records implementation and integration test package.
 
@@ -85,7 +85,30 @@ test(records): Add integration tests.
 **Instructions:**
 
 1. Apply the relevant Noodlestan conventions to `$PROJECT/libs/records` and `$PROJECT/tests/records`.
-2. Verify both packages with their lint, build, unit, and integration test commands; then commit.
+2. Verify both packages with their lint, build, unit, and integration test commands; commit each changeset per the blueprints below.
+
+#### Commits:
+
+| ID                             | Repository / Checkout / Branch | Policy   | Hash      | Status      |
+| ------------------------------ | ------------------------------ | -------- | --------- | ----------- |
+| `records-conventions`          | Art JS / `$PROJECT` / `main`   | `MANUAL` | `6efabf1` | `COMMITTED` |
+| `integration-test-conventions` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `(TBD)`   | `AUTHORED`  |
+
+##### Commit: `records-conventions`
+
+**Message:**
+
+```text
+conventions(typescript): Apply noodlestan conventions.
+```
+
+##### Commit: `integration-test-conventions`
+
+**Message:**
+
+```text
+conventions(typescript): Apply noodlestan conventions to integration tests.
+```
 
 ### Iteration: Align Use Cases, API, and Fixtures
 

@@ -10,7 +10,7 @@ WIP tracker, structured like the session parking lot: **ACTIONABLE** (in progres
 
 ## ACTIONABLE
 
-- **Align use cases and fixtures** — execute the WIP list in `libs/records/knowledge/overview.md` as the next plan iteration.
+- **Align use cases, API, and fixtures** — execute the WIP list in `libs/records/knowledge/overview.md` as the next plan iteration.
 
 ## PENDING
 

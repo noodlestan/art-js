@@ -1,7 +1,15 @@
 export { assert } from './assert.js';
-export { fieldNames } from './fields.js';
-export { RECORDS_PATTERNS, RUN_TEST_FILENAME, copyFixtureCase, fixtureDirOf } from './fixtures.js';
+export { copyFixtureCase } from './copyFixtureCase.js';
+export { findRecordByName } from './findRecordByName.js';
+export { findRecordFileByPath } from './findRecordFileByPath.js';
+export { getFieldNames } from './getFieldNames.js';
+export { getFixtureDirectory } from './getFixtureDirectory.js';
+export { recordsPatterns, RUN_TEST_FILENAME } from './constants.js';
 export { printFixtureTestReport } from './printFixtureTestReport.js';
-export { runFixtureTests } from './runFixtureTests.js';
-export type { RunFixtureTestsOptions } from './runFixtureTests.js';
-export type { FixtureTestOutcome, FixtureTestReport, RunTest } from './types.js';
+export { runFixtureTests } from './runFixtureTests/runFixtureTests.js';
+export type {
+	FixtureTestOutcome,
+	FixtureTestReport,
+	RunFixtureTestsOptions,
+	RunTest,
+} from './types.js';

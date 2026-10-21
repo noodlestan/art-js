@@ -15,39 +15,45 @@ import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
 
 import { assert } from '../../src/assert.js';
-import { RECORDS_PATTERNS, copyFixtureCase, fixtureDirOf } from '../../src/fixtures.js';
+import { recordsPatterns } from '../../src/constants.js';
+import { copyFixtureCase } from '../../src/copyFixtureCase.js';
+import { findRecordByName } from '../../src/findRecordByName.js';
+import { findRecordFileByPath } from '../../src/findRecordFileByPath.js';
+import { getFixtureDirectory } from '../../src/getFixtureDirectory.js';
 
 export async function runTest(): Promise<void> {
-	const workDir = await copyFixtureCase(fixtureDirOf(import.meta.url));
+	const workingDirectory = await copyFixtureCase(getFixtureDirectory(import.meta.url));
 
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
-	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const recordsDocument = createRecordsDocument<FSRecordFile>({
-		codec,
-		createContentSource: file => fsRecords.createContentSource(file),
-	});
+	const filesystemRecordsOptions = { basePath: workingDirectory, patterns: recordsPatterns };
+	const filesystemRecords = createFSRecordsAdapter(filesystemRecordsOptions);
+	function createContentSource(file: FSRecordFile) {
+		return filesystemRecords.createContentSource(file);
+	}
+	const recordsDocumentOptions = { codec, createContentSource };
+	const recordsDocument = createRecordsDocument<FSRecordFile>(recordsDocumentOptions);
 
-	const files = await fsRecords.discoverRecordFiles();
-	const projectFile = files.find(file => file.path === '_records/project.art');
-	assert(projectFile !== undefined, '_records/project.art was not discovered');
+	const files = await filesystemRecords.discoverRecordFiles();
+	const artistFile = findRecordFileByPath(files, '_records/artist.art');
+	assert(artistFile !== undefined, '_records/artist.art was not discovered');
 
-	const document = await recordsDocument.read(projectFile);
+	const document = await recordsDocument.read(artistFile);
 	const records = await document.extract();
-	const project = records.find(record => record.name === 'Project: Art JS');
-	const repository = records.find(record => record.name === 'Repository: Art JS');
-	assert(project !== undefined, 'Project: Art JS was not extracted');
-	assert(repository !== undefined, 'Repository: Art JS was not extracted');
+	const artist = findRecordByName(records, 'Artist: Nina Simone');
+	const song = findRecordByName(records, 'Song: Feeling Good');
+	assert(artist !== undefined, 'Artist: Nina Simone was not extracted');
+	assert(song !== undefined, 'Song: Feeling Good was not extracted');
 
 	// eslint-disable-next-line dot-notation
-	project['maintainer'] = 'foo';
+	artist['Years active'] = '1954–2003';
 	// eslint-disable-next-line dot-notation
-	repository['maintainer'] = 'bar';
+	song['Artist'] = 'Nina Simone';
 
 	// One save for the whole document collection.
 	await document.save();
 
-	const content = await readFile(projectFile.filename, 'utf-8');
-	assert(/maintainer[^\n]*foo/.test(content), 'the first in-memory mutation must be saved');
-	assert(/maintainer[^\n]*bar/.test(content), 'the second in-memory mutation must be saved');
+	const content = await readFile(artistFile.filename, 'utf-8');
+	assert(content.includes('**Years active:** 1954–2003'), 'the Artist field must be saved');
+	assert(content.includes('**Artist:** Nina Simone'), 'the Song field must be saved');
 }

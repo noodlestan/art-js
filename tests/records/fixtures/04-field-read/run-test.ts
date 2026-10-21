@@ -1,7 +1,7 @@
 // Case 04 — Field reads resolve by exact field name.
 //
 // Hardcoded use case from `knowledge/design/records.md`: a field property such
-// as `record.owner` resolves by exact field name against the section's
+// as `record.Artist` resolves by exact field name against the section's
 // FieldInline or FieldBlock children.
 //
 // Fields are read with brackets because this repository's tsconfig sets
@@ -14,53 +14,61 @@ import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
 
 import { assert } from '../../src/assert.js';
-import { RECORDS_PATTERNS, copyFixtureCase, fixtureDirOf } from '../../src/fixtures.js';
+import { recordsPatterns } from '../../src/constants.js';
+import { copyFixtureCase } from '../../src/copyFixtureCase.js';
+import { findRecordByName } from '../../src/findRecordByName.js';
+import { findRecordFileByPath } from '../../src/findRecordFileByPath.js';
+import { getFieldNames } from '../../src/getFieldNames.js';
+import { getFixtureDirectory } from '../../src/getFixtureDirectory.js';
 
 export async function runTest(): Promise<void> {
-	const workDir = await copyFixtureCase(fixtureDirOf(import.meta.url));
+	const workingDirectory = await copyFixtureCase(getFixtureDirectory(import.meta.url));
 
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
-	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const recordsDocument = createRecordsDocument<FSRecordFile>({
-		codec,
-		createContentSource: file => fsRecords.createContentSource(file),
-	});
+	const filesystemRecordsOptions = { basePath: workingDirectory, patterns: recordsPatterns };
+	const filesystemRecords = createFSRecordsAdapter(filesystemRecordsOptions);
+	function createContentSource(file: FSRecordFile) {
+		return filesystemRecords.createContentSource(file);
+	}
+	const recordsDocumentOptions = { codec, createContentSource };
+	const recordsDocument = createRecordsDocument<FSRecordFile>(recordsDocumentOptions);
 
-	const files = await fsRecords.discoverRecordFiles();
-	const packageFile = files.find(file => file.path === '_records/package.art');
-	assert(packageFile !== undefined, '_records/package.art was not discovered');
+	const files = await filesystemRecords.discoverRecordFiles();
+	const songFile = findRecordFileByPath(files, '_records/song.art');
+	assert(songFile !== undefined, '_records/song.art was not discovered');
 
-	const document = await recordsDocument.read(packageFile);
+	const document = await recordsDocument.read(songFile);
 	const records = await document.extract();
-	const record = records.find(candidate => candidate.name === 'Package: Records');
-	assert(record !== undefined, 'Package: Records was not extracted');
+	const song = findRecordByName(records, 'Song: Feeling Good');
+	assert(song !== undefined, 'Song: Feeling Good was not extracted');
 
 	// eslint-disable-next-line dot-notation
-	const owner = record['owner'];
-	assert(owner === 'Project: Art JS', `inline field read returned: ${JSON.stringify(owner)}`);
+	const artist = song['Artist'];
+	assert(artist === 'Nina Simone', `Artist field read returned: ${JSON.stringify(artist)}`);
 	assert(
 		// eslint-disable-next-line dot-notation
-		record['Owner'] === undefined,
+		song['artist'] === undefined,
 		'field lookup must match the field name exactly, including case',
 	);
 
 	// eslint-disable-next-line dot-notation
-	const purpose = record['purpose'];
-	assert(
-		typeof purpose === 'string' && purpose.length > 0,
-		`block field read returned: ${JSON.stringify(purpose)}`,
-	);
+	const released = song['Released'];
+	assert(released === 'June 1965', `Released field read returned: ${JSON.stringify(released)}`);
 
 	// eslint-disable-next-line dot-notation
-	const keywords = record['keywords'];
+	const fieldNames = getFieldNames(song);
+	assert(fieldNames.join(',') === 'Artist,Released', `unexpected fields: ${fieldNames.join(', ')}`);
+	const sectionContent = JSON.stringify(song.__section);
 	assert(
-		typeof keywords === 'string' && keywords.includes('art'),
-		`list field read returned: ${JSON.stringify(keywords)}`,
+		sectionContent.includes('Writter(s):'),
+		'section must preserve the supplied Writter(s) label',
 	);
+	assert(sectionContent.includes('Leslie Bricusse'), 'section must preserve Leslie Bricusse');
+	assert(sectionContent.includes('Anthony Newley'), 'section must preserve Anthony Newley');
 
 	// eslint-disable-next-line dot-notation
-	assert(record['missing'] === undefined, 'an unknown field must read as undefined');
-	assert('owner' in record, "'owner' must resolve through the section fields");
-	assert(!('missing' in record), "'missing' must not resolve through the section fields");
+	assert(song['missing'] === undefined, 'an unknown field must read as undefined');
+	assert('Artist' in song, "'Artist' must resolve through the section fields");
+	assert(!('missing' in song), "'missing' must not resolve through the section fields");
 }

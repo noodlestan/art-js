@@ -4,10 +4,12 @@ import { resolve } from 'node:path';
 
 import { printFixtureTestReport, runFixtureTests } from '../src/index.js';
 
-const packageDir = resolve(import.meta.dirname, '..');
+const packageDirectory = resolve(import.meta.dirname, '..');
 const filter = process.argv[2];
 
-const report = await runFixtureTests({ fixturesDir: resolve(packageDir, 'fixtures'), filter });
+const fixturesDirectory = resolve(packageDirectory, 'fixtures');
+const runnerOptions = { fixturesDirectory, filter };
+const report = await runFixtureTests(runnerOptions);
 printFixtureTestReport(report);
 
 process.exit(report.failed === 0 ? 0 : 2);

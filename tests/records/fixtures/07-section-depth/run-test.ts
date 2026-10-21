@@ -11,40 +11,49 @@ import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
 
 import { assert } from '../../src/assert.js';
-import { RECORDS_PATTERNS, copyFixtureCase, fixtureDirOf } from '../../src/fixtures.js';
+import { recordsPatterns } from '../../src/constants.js';
+import { copyFixtureCase } from '../../src/copyFixtureCase.js';
+import { findRecordByName } from '../../src/findRecordByName.js';
+import { findRecordFileByPath } from '../../src/findRecordFileByPath.js';
+import { getFixtureDirectory } from '../../src/getFixtureDirectory.js';
 
 export async function runTest(): Promise<void> {
-	const workDir = await copyFixtureCase(fixtureDirOf(import.meta.url));
+	const workingDirectory = await copyFixtureCase(getFixtureDirectory(import.meta.url));
 
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
-	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const recordsDocument = createRecordsDocument<FSRecordFile>({
-		codec,
-		createContentSource: file => fsRecords.createContentSource(file),
-	});
+	const filesystemRecordsOptions = { basePath: workingDirectory, patterns: recordsPatterns };
+	const filesystemRecords = createFSRecordsAdapter(filesystemRecordsOptions);
+	function createContentSource(file: FSRecordFile) {
+		return filesystemRecords.createContentSource(file);
+	}
+	const recordsDocumentOptions = { codec, createContentSource };
+	const recordsDocument = createRecordsDocument<FSRecordFile>(recordsDocumentOptions);
 
-	const files = await fsRecords.discoverRecordFiles();
-	const projectFile = files.find(file => file.path === '_records/project.art');
-	assert(projectFile !== undefined, '_records/project.art was not discovered');
+	const files = await filesystemRecords.discoverRecordFiles();
+	const artistFile = findRecordFileByPath(files, '_records/artist.art');
+	assert(artistFile !== undefined, '_records/artist.art was not discovered');
 
-	const document = await recordsDocument.read(projectFile);
+	const document = await recordsDocument.read(artistFile);
 	const records = await document.extract();
-	const project = records.find(record => record.name === 'Project: Art JS');
-	assert(project !== undefined, 'Project: Art JS was not extracted');
+	const artist = findRecordByName(records, 'Artist: Nina Simone');
+	assert(artist !== undefined, 'Artist: Nina Simone was not extracted');
 
 	assert(
-		project.__section.construct === 'SectionBlock',
-		`record.__section must be a SectionBlock: ${project.__section.construct}`,
+		artist.__section.construct === 'SectionBlock',
+		`record.__section must be a SectionBlock: ${artist.__section.construct}`,
 	);
 
-	project.__section.depth = 3;
-	await project.save();
+	artist.__section.depth = 3;
+	await artist.save();
 
-	const content = await readFile(join(workDir, '_records', 'project.art'), 'utf-8');
-	assert(/^### Project: Art JS$/m.test(content), 'saved heading must be written at depth 3 (###)');
+	const content = await readFile(join(workingDirectory, '_records', 'artist.art'), 'utf-8');
 	assert(
-		!/^## Project: Art JS$/m.test(content),
+		/^### Artist: Nina Simone$/m.test(content),
+		'saved heading must be written at depth 3 (###)',
+	);
+	assert(
+		!/^## Artist: Nina Simone$/m.test(content),
 		'saved heading must no longer be written at depth 2 (##)',
 	);
 }

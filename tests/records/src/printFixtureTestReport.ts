@@ -1,4 +1,4 @@
-import type { FixtureTestReport } from './types.js';
+import type { FixtureTestOutcome, FixtureTestReport } from './types.js';
 
 export function printFixtureTestReport(report: FixtureTestReport): void {
 	console.info(`Discovered ${report.discovered} fixture test director(ies).`);
@@ -9,7 +9,13 @@ export function printFixtureTestReport(report: FixtureTestReport): void {
 	}
 	console.info('');
 
-	const width = Math.max(6, ...report.outcomes.map(outcome => `${outcome.durationMs}ms`.length));
+	function getDurationWidth(outcome: FixtureTestOutcome): number {
+		return `${outcome.durationMs}ms`.length;
+	}
+
+	const durationWidths = report.outcomes.map(getDurationWidth);
+	const maximumDurationWidth = Math.max(...durationWidths);
+	const width = Math.max(6, maximumDurationWidth);
 	for (const outcome of report.outcomes) {
 		const duration = `${outcome.durationMs}ms`.padEnd(width);
 		console.info(`${outcome.status.padEnd(4)} ${duration} ${outcome.caseName}`);

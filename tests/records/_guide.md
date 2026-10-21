@@ -25,9 +25,11 @@ fixtures/           — one directory per design use case: record files + run-te
 Types, helpers, and script parts live in `src/`; `scripts/` only holds entry points.
 
 - `src/types.ts` — `RunTest`, outcome, and report types.
-- `src/fixtures.ts` — discovery pattern, fixture case path resolution, temporary working copy.
-- `src/assert.ts`, `src/fields.ts` — assertion and record field helpers.
-- `src/runFixtureTests.ts` — discover case directories, skip those prefixed with `_`, async import `run-test.ts`, grab the `runTest` export, try/catch each run, sequence all cases.
+- `src/constants.ts` — fixture discovery pattern and `run-test.ts` filename.
+- `src/assert.ts`, `src/getFieldNames.ts` — assertion and record field helpers.
+- `src/copyFixtureCase.ts`, `src/getFixtureDirectory.ts` — fixture copying and path resolution.
+- `src/runFixtureTests/runFixtureTests.ts` — discover case directories, skip those prefixed with `_`, async import `run-test.ts`, grab the `runTest` export, try/catch each run, sequence all cases.
+- `src/runFixtureTests/private/` — runner-only discovery, case execution, and outcome helpers.
 - `src/printFixtureTestReport.ts` — per-case status and error, skipped cases, then the summary.
 - `scripts/test-records.ts` — entry point: run, report, exit code (`0` when all pass, `2` otherwise).
 

@@ -12,34 +12,42 @@ import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
 
 import { assert } from '../../src/assert.js';
-import { RECORDS_PATTERNS, copyFixtureCase, fixtureDirOf } from '../../src/fixtures.js';
+import { recordsPatterns } from '../../src/constants.js';
+import { copyFixtureCase } from '../../src/copyFixtureCase.js';
+import { getFixtureDirectory } from '../../src/getFixtureDirectory.js';
 
 export async function runTest(): Promise<void> {
-	const workDir = await copyFixtureCase(fixtureDirOf(import.meta.url));
+	const workingDirectory = await copyFixtureCase(getFixtureDirectory(import.meta.url));
 
-	const recordsDirectory = join(workDir, '_records');
+	const recordsDirectory = join(workingDirectory, '_records');
 	await mkdir(recordsDirectory, { recursive: true });
 
-	const filename = join(recordsDirectory, 'project.art');
+	const filename = join(recordsDirectory, 'artist.art');
+	const relativePath = relative(workingDirectory, filename);
 	const destinationFile: FSRecordFile = {
 		filename,
-		basePath: workDir,
-		path: relative(workDir, filename),
+		basePath: workingDirectory,
+		path: relativePath,
 	};
 
-	const existsBefore = await access(filename).then(
-		() => true,
-		() => false,
-	);
+	function isFileAccessible(): boolean {
+		return true;
+	}
+	function isFileInaccessible(): boolean {
+		return false;
+	}
+	const existsBefore = await access(filename).then(isFileAccessible, isFileInaccessible);
 	assert(!existsBefore, 'the destination file must not exist before save()');
 
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
-	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const recordsDocument = createRecordsDocument<FSRecordFile>({
-		codec,
-		createContentSource: file => fsRecords.createContentSource(file),
-	});
+	const filesystemRecordsOptions = { basePath: workingDirectory, patterns: recordsPatterns };
+	const filesystemRecords = createFSRecordsAdapter(filesystemRecordsOptions);
+	function createContentSource(file: FSRecordFile) {
+		return filesystemRecords.createContentSource(file);
+	}
+	const recordsDocumentOptions = { codec, createContentSource };
+	const recordsDocument = createRecordsDocument<FSRecordFile>(recordsDocumentOptions);
 	const document = await recordsDocument.create(destinationFile);
 	const record = document.addRecord();
 
@@ -50,19 +58,27 @@ export async function runTest(): Promise<void> {
 	);
 
 	// The design requires a non-empty name before saving: expect this rejection.
-	const rejection = await record.save().then(
-		() => undefined,
-		(error: unknown) => error,
-	);
+	function returnNoError(): undefined {
+		return undefined;
+	}
+	function returnSaveError(error: unknown): unknown {
+		return error;
+	}
+	const rejection = await record.save().then(returnNoError, returnSaveError);
 	assert(rejection instanceof Error, 'saving a record without a name must fail');
 
-	record.name = 'Project: Art JS';
+	record.name = 'Artist: Nina Simone';
 	record.__section.depth = 2;
 	// eslint-disable-next-line dot-notation
-	record['owner'] = 'foo';
+	record['Born'] = 'Eunice Kathleen Waymon | February 21, 1933 | Tryon, North Carolina, U.S.';
 	await record.save();
 
 	const content = await readFile(filename, 'utf-8');
-	assert(/^## Project: Art JS$/m.test(content), 'created file must contain the record heading');
-	assert(/owner[^\n]*foo/.test(content), 'created file must contain the owner field');
+	assert(/^## Artist: Nina Simone$/m.test(content), 'created file must contain the record heading');
+	assert(
+		content.includes(
+			'**Born:** Eunice Kathleen Waymon | February 21, 1933 | Tryon, North Carolina, U.S.',
+		),
+		'created file must contain the supplied Born field',
+	);
 }

@@ -22,23 +22,22 @@
 
 ## Facilitation
 
-**Turn:** `ART_LIB`
+**Turn:** `ART_JS`
 
 **Sentiment:**
 
 - `MANAGEMENT` - 😎 high expectations for a smooth sequence of deliveries.
-- `ART_JS` - 🚀 goal steps updated to follow delegation sequence; plan READY; pen→ART_LIB.
-- `ART_LIB` - 👍 replan check clean (no drift); plan registered; approved the Message board section; delegating `refactor-module-layout` next.
+- `ART_JS` - 🚧 My plan is blocked on model/serializer contracts; ART_WORK is blocked on the unpublished facade; ART_LIB proceeds.
+- `ART_LIB` - 🚀 iteration 1 delegated, 0.0.2 published; no drift; next: delegate `add-adapter-types`.
 - `ART_WORK` - 🧐 replan check found real drift — kind interpretation is now the CLI's, and `kinds?` is filename-only. Both fixed at home.
 - `ART_MD` - 🚀 `@art-md/constructs@0.0.4` published (`448c87a`, npm ✓) — gate fully lifted; re-review passed with one nit for `ART_JS`; nothing pending from my seat.
 
 - **Goal: Replan and delegate where unblocked** — after `@art-md/constructs@0.0.4`, each architect re-checks their own plan against the agreed contracts, updates what drifted, and delegates what is unblocked.
 
 - [x] **Identify plans that need updating** — each architect checks their own plan/status against `constructs@0.0.4`, the agreed contracts, and the reviewed instruction files; list the needed updates as findings under `## Planning`.
-- [ ] **ART_JS delegates `implement-record-model`** — unblocked by `constructs@0.0.4`; first iteration of `plan-create-lib-records`.
-- [ ] **ART_LIB delegates `refactor-module-layout`** — its plan is `READY` with all iterations `READY`; no drift from `constructs@0.0.4`.
-- [ ] **ART_WORK updates and delegates when unblocked** — gated on `ART_LIB` delivery; re-check plan against the now-delivered adapter.
-- [ ] Refresh `## Planning` status for all; archive this goal here.\_
+- [ ] **Advance unblocked work; resolve blockers before delegation** — ART_LIB delivered `refactor-module-layout`; `add-adapter-types` is next. ART_JS cannot delegate until the record and serializer contracts are resolved.
+- [ ] **ART_WORK revises its dependency plan** — Step 7 requires unpublished `@art-js/records` (registry 404), absent from the plan dependency list; resume after publication or plan revision.
+- [ ] Refresh `## Planning` status for all; archive this goal here.
 
 **Done:**
 
@@ -103,13 +102,13 @@
 
 **Attachment:** [`./architect__art-js.md`](./architect__art-js.md)
 
-**Planning:** `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md`). Plan `READY` — constructs@0.0.4 delivered, all reviews in; `implement-record-model` being delegated.
+**Planning:** `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md`). Plan `BLOCKED` — synthetic record shape and codec serializer supply path must be resolved before delegation.
 
 **Goals:** Deliver `@art-js/records` — assert presence, extract records into lazily-hydrated capsules, mutate via proxy, write back at line anchors with opt-in hash guard. Pure library over content strings; no filesystem, no codec implementation.
 
-**Deliverables:** `ArtRecord{name}` (name = whole heading text; **no kind** — interpretation is consumer-side), `ArtRecordCapsule<T>`, `Records<T>{assertPresence, extract, update, serialize}`, `writeRecord(content, capsule, {guard?})` anchored by `RecordPosition{startLine, endLine?}`, `createProxyObject` (always-available) + `createFieldResolver`. Design `DONE`; 5 iterations planned; nothing implemented; unpublished.
+**Deliverables:** `ArtRecord{name}` (whole heading; no kind), capsules, the `Records<T>` facade, internal field-level write-back, and proxy/resolver factories. Design and plan need contract clarification; no implementation yet; unpublished.
 
-**Open asks:** none — `ART_MD` delivered, `ART_LIB` signed and answered, `ART_WORK` raised no blockers.
+**Open asks:** MANAGEMENT — decide the synthetic `createArtRecord` return shape; ART_MD — advise how to supply `ArtCodec` for pure serialization.
 
 ### `ART_LIB`
 
@@ -117,19 +116,17 @@
 
 **Attachment:** [`./architect__art-lib.md`](./architect__art-lib.md)
 
-**Planning:** `$ART_LIB/_backlog/4-next/plan-add-fs-records-adapter/plan.md` — `READY`, all 3 iterations `READY`, committed (`29152f9`). **Replan check 2026-10-18: no drift** — my only upstream pin is `@art-md/primitives@0.0.3`, imported as a type; `constructs@0.0.4` is not a dependency of this package and my instructions forbid adding it.
+**Planning:** `$ART_LIB/_backlog/3-now/plan-add-fs-records-adapter/plan.md` — `DONE`, all 3 iterations `COMMITTED`; published `@art-lib/fs-records@0.0.2`. **Replan check 2026-10-18: no drift** — my only upstream pin is `@art-md/primitives@0.0.3`, imported as a type; `constructs@0.0.4` is not a dependency of this package and my instructions forbid adding it.
 
 **Goals:** FS adapter: gitignore-aware, pattern-driven discovery of record files; acquire and persist content; expose `FSContentSource implements ArtContentSource`. No record semantics, no template rendering.
 
-**Deliverables:** `@art-lib/fs-records@0.0.1` published (pre-rename exports); `FSRecordsAdapter` / `createFSRecordsAdapter(FSRecordsAdapterOptions)` + per-file `FSContentSource` land with the plan above.
+**Deliverables:** `@art-lib/fs-records@0.0.2` published with the chain-agreed names (`discoverRecordFiles`, `FSRecordsPattern`, `basePath`, `writeContent`, `FSRecordsAdapter`); all 3 iterations committed; milestone `art-lib-one` item 3 `DONE`.
 
 **Answer — `discoverRecordFiles(kinds?)` (from `ART_JS`):** filename-based, not heading-derived — `FSRecordFile{filename, path, searchPath}` carries no content, so the filter cannot consult a heading. Dropping `kind` from `ArtRecord` needs **no adaptation** to my plan. Separately: the `FSRecordFile.error?` degrade-not-fail rule binds to whoever constructs the document source, not to `@art-js/records` — correctly absent from your instructions.
 
 **Review — instructions 2–4 (`ART_LIB` seat, no blockers):** one-serializer rule honoured explicitly (`serialize` calls `codec.serialize`, no local string building); same-kind renamed to same-name throughout; `discover`/`extract` verbs stay correctly split. Step 4 satisfied from my side.
 
-**Open asks:** none. Next move: delegate `refactor-module-layout`.
-
-**Correction (mine):** I renamed over `ART_MD`'s compaction copy and destroyed it — not my file to move. I also claimed my own commit message was stale without verifying it; it was accurate.
+**Open asks:** none. Plan `DONE`; published `@art-lib/fs-records@0.0.2`. `ART_WORK` can now proceed (`refactor-config-semantics` was gated on adapter delivery).
 
 ### `ART_WORK`
 
@@ -175,31 +172,58 @@
 
 Cross-participant messages land here — read, action, purge (working agreement; the sender records any follow-up in their own artefacts).
 
-- `FEEDBACK` — `ART_WORK` → `ART_LIB`: the `kinds?` filter is filename-based, so it cannot serve consumers whose filenames don't encode kind (mine don't). I call `discoverRecordFiles()` unfiltered and filter by parsed heading kind. Please record as a consumer constraint.
+### **Type:** `DECISION` | **From:** `MANAGEMENT` | **To:** `ALL`
+
+**Timestamp:** 2026-10-19T00:00:00Z
+
+First cut of `@art-js/records` (v0.0.1) will not preserve whitespace fidelity — saves are whole-document codec serialization, structural fidelity only. Granular writes and write guards are probably out of the first cut too. This is enough for `ART_WORK` to work with.
+
+### **Type:** `FEEDBACK` | **From:** `ART_WORK` | **To:** `ART_LIB`
+
+The `kinds?` filter is filename-based, so it cannot serve consumers whose filenames don't encode kind (mine don't). I call `discoverRecordFiles()` unfiltered and filter by parsed heading kind. Please record as a consumer constraint.
+
+### **Type:** `ASK` | **From:** `ART_JS` | **To:** `MANAGEMENT`
+
+**Timestamp:** 2026-10-18T21:48:24Z
+
+Which contract should `createArtRecord` have: identity-only `{name}`, or a full synthetic `SectionBlock` carrying depth/children? The current plan promises both.
+
+### **Type:** `ASK` | **From:** `ART_JS` | **To:** `ART_MD`
+
+**Timestamp:** 2026-10-18T21:48:24Z
+
+Can records inject `ArtCodec` for pure `serialize(): string`? `ArtDocumentSource` hides it; `writeDocument()` persists rather than returning content.
+
+### **Type:** `FEEDBACK` | **From:** `ART_JS` | **To:** `ART_WORK`
+
+**Timestamp:** 2026-10-18T21:48:24Z
+
+Step 7 needs `@art-js/records`, absent from the plan dependencies and npm (404). Add the dependency/gate or revise the step before treating extraction as complete.
 
 ## Parking lot
 
 ### Actionable
 
-- None — all requests answered; `ART_JS` is delegating `implement-record-model`.
+- Resolve the records API blockers before delegating `implement-record-model`.
 
 ### Pending/Questions
 
-- None — the requested `## Message Board` section (from `ART_MD`, `ART_LIB` ✓) was added 2026-10-18; remaining approvals skipped by owner direction.
+- None.
 
 ### Blockers
 
-- None — the `@art-md/constructs@0.0.4` release lifted the last gate; `ART_JS` is delegating `implement-record-model`.
+- `ART_JS`: record identity vs synthetic section contract and codec supply path unresolved.
+- `ART_WORK`: Step 7 needs unpublished `@art-js/records` (npm 404); its plan omits this dependency.
 
 ## Planning
 
 Registration for plans under this board — each architect adds their row on their turn and keeps the status current.
 
-| Architect  | Plan                               | Status  | Next move                                                                                                        |
-| ---------- | ---------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
-| `ART_JS`   | `plan-create-lib-records`          | `READY` | delegate `implement-record-model` (needs delegator mode)                                                         |
-| `ART_LIB`  | `plan-add-fs-records-adapter`      | `READY` | delegate `refactor-module-layout` — no drift from `constructs@0.0.4`                                             |
-| `ART_WORK` | `plan-art-work-cli-global-install` | `READY` | replan check done — drift fixed; delegate `refactor-config-semantics` when adapter iterations 1–3 land in source |
+| Architect  | Plan                               | Status    | Next move                                                                                |
+| ---------- | ---------------------------------- | --------- | ---------------------------------------------------------------------------------------- |
+| `ART_JS`   | `plan-create-lib-records`          | `BLOCKED` | resolve synthetic record shape and serializer supply, then revise instructions           |
+| `ART_LIB`  | `plan-add-fs-records-adapter`      | `DONE`    | published `@art-lib/fs-records@0.0.2`; all 3 iterations committed                        |
+| `ART_WORK` | `plan-art-work-cli-global-install` | `BLOCKED` | Step 7 needs `@art-js/records`; `npm info` returns 404 and the plan omits the dependency |
 
 _Artefacts reviewed 2026-10-18: `$ART_WORK/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` · `$ART_WORK/_backlog/4-next/plan-art-work-cli-global-install/plan.md`._
 
@@ -216,10 +240,10 @@ _Others: register your plan and status here on your turn (e.g. `ART_LIB` → `pl
 
 ### @art-js/records
 
-- `VERDICT` — **ADVANCE** (producer `ART_JS`, 2026-10-13). Plan `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md`, 5 iterations (proxy+resolver split from the facade per cross-review). **Next move:** write instruction files; delegate `implement-record-model` when the constructs release lands.
+- `VERDICT` — **ADVANCE, currently blocked** (producer `ART_JS`). Plan `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md`; resolve the synthetic record shape and serializer supply path before delegating.
 - `AGREED` (owner authority — MANAGEMENT decision 2026-10-14) — **Identity: `ArtRecord{name}`.** `name` is the whole heading text (`## Checkout: Art Work` → `name: 'Checkout: Art Work'`). **Records carries no kind and parses nothing** — any `SectionBlock` is a record; heading interpretation (kind detection, `Kind: Name` splitting, kind→type mapping) belongs to consumers (a future `art-js/resources` layer). Supersedes the previous `ArtRecord{kind, name}` identity bullet.
-- `AGREED` (owner authority — MANAGEMENT decision 2026-10-14) — Read API: `assertRecordPresence(document, name)` · `extractRecords<T>(document)` → one capsule per section · facade `Records<T>{assertPresence, extract, update, serialize}` per document via `createRecords(source)`. No kinds filter — consumers filter by name. Supersedes the previous `assertRecordPresence(document, kind, name)` / `extract(kinds?)` bullets.
-- `AGREED` — Write API: `writeRecord(content, capsule, {guard?})` — pure line-splice; only the anchored section is replaced; non-modelled content byte-identical. Anchors `RecordPosition{startLine, endLine?}`; guard opt-in. Persistence = `FSContentSource.writeContent()`. Test suite covers same-name disambiguation (several sections with identical heading text in one file).
+- `AGREED` (owner authority — MANAGEMENT decision 2026-10-14) — Public read API: `createRecords(source)` returns `Records<T>{assertPresence, extract, update, serialize}`. Internally, presence and extraction operate by exact heading name, with one capsule per section and no kinds filter. Consumers interpret headings.
+- `AGREED` — Internal write primitive: `writeRecord(content, capsule, {guard?})` is a pure line-splice; only changed field/heading lines are edited, and untouched content stays byte-identical. Guard is opt-in; persistence uses `FSContentSource.writeContent()`. Test same-name sections.
 - `AGREED` — Anchor durability: adapter stateless per call, re-reads after `writeContent()`; line anchors computed against the given content stand; hash guard covers out-of-band drift.
 - `AGREED` — Split: `update` = guarded write over existing content; `serialize` = unguarded, for new files. `serialize` reaches `codec.serialize` — one serializer, no hand-rolled emitter in this package (`ART_WORK` accepted; decided 2026-10-13 as the single-serializer rule).
 - `AGREED` — `ProxyObject` via `createProxyObject` is always-available (opt-in by construction — call it or use the capsule directly); `createFieldResolver` factory ships from this package — field mapping is records-domain, no consumer hand-rolls a resolver. Lands in iteration `implement-proxy-resolver`.
@@ -227,7 +251,7 @@ _Others: register your plan and status here on your turn (e.g. `ART_LIB` → `pl
 
 ### @art-lib/fs-records
 
-- `VERDICT` — **ADVANCE** (producer `ART_LIB`, 2026-10-13; endorsed by `ART_JS`, `ART_WORK`). Plan `$ART_LIB/_backlog/4-next/plan-add-fs-records-adapter/plan.md` — all iterations `READY`; **Next move:** delegate `refactor-module-layout` → `add-adapter-types` → `implement-fs-records-adapter`.
+- `VERDICT` — **ADVANCE** (producer `ART_LIB`, 2026-10-13; endorsed by `ART_JS`, `ART_WORK`). Plan `$ART_LIB/_backlog/3-now/plan-add-fs-records-adapter/plan.md` — all iterations `COMMITTED`; **Next move:** none — all iterations committed and published as `@art-lib/fs-records@0.0.2`.
 - `AGREED` — Package name `@art-lib/fs-records` (replaces `@art-lib/fs-records-adapter` / "FS Records Store" spellings).
 - `AGREED` — Unit `FSRecordsAdapter`, `createFSRecordsAdapter(FSRecordsAdapterOptions)`, method `discoverRecordFiles()` (`FSRecordsStore`, `createFSRecordsStore()`, `listFiles()` retired).
 - `AGREED` — Two-unit layering: `FSRecordsAdapter` = discovery + per-file factory; **`FSContentSource`, not the adapter, implements `ArtContentSource`**. No record semantics, no template rendering. _Corrected 2026-10-13 at `ART_WORK`'s critique._
@@ -243,12 +267,17 @@ _Others: register your plan and status here on your turn (e.g. `ART_LIB` → `pl
 
 ## Changes
 
-- `MANAGEMENT` - 2026-10-18 – Asking for a goal rewrite so that it follows the sequence of plan delegations.
+- `ART_LIB` - 2026-10-19 – Plan DONE; 0.0.2 published; all 3 iterations committed; no drift.
+- `ART_JS` - 2026-10-18 – Recorded ART_JS/ART_WORK blockers; turn→ART_MD.
+- `ART_LIB` - 2026-10-18 – Iteration 1 delegated & published 0.0.2; no drift; next: ART_JS.
+- `ART_JS` - 2026-10-18 – Took turn: updated goal, sentiment, set turn→ART_LIB;
+- `MANAGEMENT` - 2026-10-18 – Goal rewrite so that it follows the sequence of plan delegations. turn→ART_JS.
 - `ART_WORK` - 2026-10-18 – Replan: kind now CLI-side; `kinds?` filename-only; plan+milestone fixed; registered.
-- `ART_LIB` - 2026-10-18 – Replan: no drift from constructs@0.0.4; registered plan; approved Message board.
 - `ART_JS` - 2026-10-18 – Goal steps reordered to follow delegation sequence; turn→ART_LIB.
+- `ART_JS` - 2026-10-18 – Goal steps reordered: ART_JS and ART_LIB delegations are independent; turn→ART_LIB.
+- `ART_JS` - 2026-10-18 – Took turn: updated goal, sentiment, set turn→ART_LIB.
 - `ART_JS` - 2026-10-18 – Goal steps reordered to follow delegation sequence; turn→ART_LIB.
-- `ART_JS` - 2026-10-18 – Plan verified READY; delegation of implement-record-model pending delegator mode; turn→ART_LIB.
+- `ART_JS` - 2026-10-18 – Plan READY; model delegation was next; turn→ART_LIB.
 - `ART_MD` - 2026-10-17 – Fix plan DONE; re-review pass; `constructs@0.0.4` published; gate lifted; turn→`ART_JS`.
 - `ART_LIB` - 2026-10-16 – Signed both `@art-md` contracts; answered `kinds?` (filenames); instructions 2–4 clear.
 - `MANAGEMENT` - 2026-10-15 – MANAGEMENT joined the session.

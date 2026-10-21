@@ -16,48 +16,58 @@ import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
 
 import { assert } from '../../src/assert.js';
-import { fieldNames } from '../../src/fields.js';
-import { RECORDS_PATTERNS, copyFixtureCase, fixtureDirOf } from '../../src/fixtures.js';
+import { recordsPatterns } from '../../src/constants.js';
+import { copyFixtureCase } from '../../src/copyFixtureCase.js';
+import { findRecordByName } from '../../src/findRecordByName.js';
+import { findRecordFileByPath } from '../../src/findRecordFileByPath.js';
+import { getFieldNames } from '../../src/getFieldNames.js';
+import { getFixtureDirectory } from '../../src/getFixtureDirectory.js';
 
 export async function runTest(): Promise<void> {
-	const workDir = await copyFixtureCase(fixtureDirOf(import.meta.url));
+	const workingDirectory = await copyFixtureCase(getFixtureDirectory(import.meta.url));
 
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
-	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const recordsDocument = createRecordsDocument<FSRecordFile>({
-		codec,
-		createContentSource: file => fsRecords.createContentSource(file),
-	});
+	const filesystemRecordsOptions = { basePath: workingDirectory, patterns: recordsPatterns };
+	const filesystemRecords = createFSRecordsAdapter(filesystemRecordsOptions);
+	function createContentSource(file: FSRecordFile) {
+		return filesystemRecords.createContentSource(file);
+	}
+	const recordsDocumentOptions = { codec, createContentSource };
+	const recordsDocument = createRecordsDocument<FSRecordFile>(recordsDocumentOptions);
 
-	const files = await fsRecords.discoverRecordFiles();
-	const projectFile = files.find(file => file.path === '_records/project.art');
-	assert(projectFile !== undefined, '_records/project.art was not discovered');
+	const files = await filesystemRecords.discoverRecordFiles();
+	const artistFile = findRecordFileByPath(files, '_records/artist.art');
+	assert(artistFile !== undefined, '_records/artist.art was not discovered');
 
-	const document = await recordsDocument.read(projectFile);
+	const document = await recordsDocument.read(artistFile);
 	const records = await document.extract();
-	const project = records.find(record => record.name === 'Project: Art JS');
-	assert(project !== undefined, 'Project: Art JS was not extracted');
+	const artist = findRecordByName(records, 'Artist: Nina Simone');
+	assert(artist !== undefined, 'Artist: Nina Simone was not extracted');
 
 	assert(
-		fieldNames(project).join(',') === 'purpose',
-		`fixture must start with purpose only: ${fieldNames(project).join(', ')}`,
+		getFieldNames(artist).join(',') === 'Born,Years active',
+		`fixture must start with Born and Years active: ${getFieldNames(artist).join(', ')}`,
 	);
 	// eslint-disable-next-line dot-notation
-	assert(project['owner'] === undefined, 'fixture must start without an owner field');
+	assert(artist['Artist'] === undefined, 'fixture must start without an Artist field');
 
 	// eslint-disable-next-line dot-notation
-	project['owner'] = 'foo';
-	// eslint-disable-next-line dot-notation
-	assert(project['owner'] === 'foo', `field did not read back: ${String(project['owner'])}`);
-	const names = fieldNames(project);
+	artist['Artist'] = 'Nina Simone';
 	assert(
-		names[names.length - 1] === 'owner',
+		// eslint-disable-next-line dot-notation
+		artist['Artist'] === 'Nina Simone',
+		// eslint-disable-next-line dot-notation
+		`field did not read back: ${String(artist['Artist'])}`,
+	);
+	const names = getFieldNames(artist);
+	assert(
+		names[names.length - 1] === 'Artist',
 		`a missing field must be appended last: ${names.join(', ')}`,
 	);
 
-	await project.save();
+	await artist.save();
 
-	const content = await readFile(join(workDir, '_records', 'project.art'), 'utf-8');
-	assert(/owner[^\n]*foo/.test(content), 'saved file must contain an owner field set to foo');
+	const content = await readFile(join(workingDirectory, '_records', 'artist.art'), 'utf-8');
+	assert(content.includes('**Artist:** Nina Simone'), 'saved file must contain the Artist field');
 }

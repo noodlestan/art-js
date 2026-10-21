@@ -110,7 +110,7 @@ Consumers create a codec and a records provider, read a file into a per-document
 
 ### Next
 
-- **Iteration `align-use-cases-and-fixtures`** of `_backlog/3-now/plan-create-lib-records/plan.md`: execute the WIP alignment list in `$PROJECT/libs/records/knowledge/overview.md`, un-skipping fixtures (`_05`, `_06`, `_09`, `_10`, `_11`) as their code lands. Then publish and adopt in Art Work.
+- **Iteration `align-use-cases-api-and-fixtures`** of `_backlog/3-now/plan-create-lib-records/plan.md`: align use cases, public API, design recipes, and integration fixtures. Then publish and adopt in Art Work.
 
 ### Blockers
 

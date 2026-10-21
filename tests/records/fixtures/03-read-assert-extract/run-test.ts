@@ -1,55 +1,77 @@
 // Case 03 — Reading and extracting: hasRecord() and extract().
 //
 // Hardcoded use case from `knowledge/design/records.md`: extract() returns one
-// proxy handle per SectionBlock, at any depth, including field-less sections.
+// proxy handle for each Artist and nested Song SectionBlock.
 // The heading name is the complete heading text.
 import { createRecordsDocument } from '@art-js/records';
+import type { ArtRecord } from '@art-js/records';
 import { type FSRecordFile, createFSRecordsAdapter } from '@art-lib/fs-records';
 import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
 
 import { assert } from '../../src/assert.js';
-import { fieldNames } from '../../src/fields.js';
-import { RECORDS_PATTERNS, copyFixtureCase, fixtureDirOf } from '../../src/fixtures.js';
+import { recordsPatterns } from '../../src/constants.js';
+import { copyFixtureCase } from '../../src/copyFixtureCase.js';
+import { findRecordByName } from '../../src/findRecordByName.js';
+import { findRecordFileByPath } from '../../src/findRecordFileByPath.js';
+import { getFieldNames } from '../../src/getFieldNames.js';
+import { getFixtureDirectory } from '../../src/getFixtureDirectory.js';
 
 export async function runTest(): Promise<void> {
-	const workDir = await copyFixtureCase(fixtureDirOf(import.meta.url));
+	const workingDirectory = await copyFixtureCase(getFixtureDirectory(import.meta.url));
 
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
-	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const recordsDocument = createRecordsDocument<FSRecordFile>({
-		codec,
-		createContentSource: file => fsRecords.createContentSource(file),
-	});
+	const filesystemRecordsOptions = { basePath: workingDirectory, patterns: recordsPatterns };
+	const filesystemRecords = createFSRecordsAdapter(filesystemRecordsOptions);
+	function createContentSource(file: FSRecordFile) {
+		return filesystemRecords.createContentSource(file);
+	}
+	const recordsDocumentOptions = { codec, createContentSource };
+	const recordsDocument = createRecordsDocument<FSRecordFile>(recordsDocumentOptions);
 
-	const files = await fsRecords.discoverRecordFiles();
-	const projectFile = files.find(file => file.path === '_records/project.art');
-	assert(projectFile !== undefined, '_records/project.art was not discovered');
+	const files = await filesystemRecords.discoverRecordFiles();
+	const artistFile = findRecordFileByPath(files, '_records/artist.art');
+	assert(artistFile !== undefined, '_records/artist.art was not discovered');
 
-	const document = await recordsDocument.read(projectFile);
-	assert(await document.hasRecord('Project: Art JS'), 'Project: Art JS must be present');
-	assert(!(await document.hasRecord('Project: Missing')), 'Project: Missing must not be present');
+	const document = await recordsDocument.read(artistFile);
+	assert(await document.hasRecord('Artist: Nina Simone'), 'Artist: Nina Simone must be present');
+	assert(await document.hasRecord('Song: Feeling Good'), 'Song: Feeling Good must be present');
+	assert(!(await document.hasRecord('Artist: Missing')), 'Artist: Missing must not be present');
 
 	const records = await document.extract();
-	const names = records.map(record => record.name);
+	function getRecordName(record: ArtRecord): string {
+		return record.name;
+	}
+	const names = records.map(getRecordName);
 	assert(names.length === 3, `expected 3 records, got ${names.length}: ${names.join(', ')}`);
 	assert(
 		names[0] === 'Module',
-		`the field-less Module section must be extracted: ${names.join(', ')}`,
+		`the field-less Module section must be extracted first: ${names.join(', ')}`,
 	);
-	assert(names.includes('Project: Art JS'), `missing Project: Art JS in: ${names.join(', ')}`);
 	assert(
-		names.includes('Package: Records'),
-		`nested sections must be extracted: ${names.join(', ')}`,
+		names.includes('Artist: Nina Simone'),
+		`missing Artist: Nina Simone in: ${names.join(', ')}`,
+	);
+	assert(
+		names.includes('Song: Feeling Good'),
+		`missing Song: Feeling Good in: ${names.join(', ')}`,
 	);
 
-	const moduleRecord = records.find(record => record.name === 'Module');
+	const moduleRecord = findRecordByName(records, 'Module');
+	const artistRecord = findRecordByName(records, 'Artist: Nina Simone');
+	const songRecord = findRecordByName(records, 'Song: Feeling Good');
 	assert(moduleRecord !== undefined, 'Module record was not extracted');
+	assert(artistRecord !== undefined, 'Artist: Nina Simone was not extracted');
+	assert(songRecord !== undefined, 'Song: Feeling Good was not extracted');
+	const artistDepth = artistRecord.__section.depth;
+	const songDepth = songRecord.__section.depth;
+	assert(artistDepth !== undefined && songDepth !== undefined, 'section depths must be present');
 	assert(
-		fieldNames(moduleRecord).length === 0,
-		`the Module section must be field-less: ${fieldNames(moduleRecord).join(', ')}`,
+		getFieldNames(moduleRecord).length === 0,
+		`the Module section must be field-less: ${getFieldNames(moduleRecord).join(', ')}`,
 	);
+	assert(songDepth > artistDepth, 'the Song section must be nested');
 
 	for (const record of records) {
 		assert(

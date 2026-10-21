@@ -8,6 +8,7 @@
 
 ## Design Documents
 
-| Document                               | Purpose                                                                                    |
-| -------------------------------------- | ------------------------------------------------------------------------------------------ |
-| [design/records.md](design/records.md) | Records design: consumer API, complete usage recipes, contracts, fidelity, and limitations |
+| Document                                                   | Purpose                                                                                          |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| [design/records.md](design/records.md)                     | Records design: consumer API, complete usage recipes, contracts, fidelity, and limitations       |
+| [design/integration-tests.md](design/integration-tests.md) | Fixture-driven integration-test suite: case anatomy, runner behavior, and operating instructions |

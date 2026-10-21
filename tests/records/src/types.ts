@@ -2,14 +2,14 @@
 // case, assert, and throw on failure. The runner owns the try/catch.
 export type RunTest = () => Promise<void>;
 
-export interface FixtureTestOutcome {
+export type FixtureTestOutcome = {
 	readonly caseName: string;
 	readonly status: 'PASS' | 'FAIL';
 	readonly durationMs: number;
 	readonly error?: string;
-}
+};
 
-export interface FixtureTestReport {
+export type FixtureTestReport = {
 	readonly discovered: number;
 	// Case directory names prefixed with `_`: known failures kept out of the run.
 	readonly skippedCases: readonly string[];
@@ -18,4 +18,9 @@ export interface FixtureTestReport {
 	readonly failed: number;
 	readonly totalTimeMs: number;
 	readonly outcomes: readonly FixtureTestOutcome[];
-}
+};
+
+export type RunFixtureTestsOptions = {
+	readonly fixturesDirectory: string;
+	readonly filter?: string;
+};

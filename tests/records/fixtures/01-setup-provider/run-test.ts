@@ -11,34 +11,40 @@ import { type PartialArtCodecConfig, createArtCodec } from '@art-md/codec';
 import type { ArtCodec } from '@art-md/primitives';
 
 import { assert } from '../../src/assert.js';
-import { RECORDS_PATTERNS, copyFixtureCase, fixtureDirOf } from '../../src/fixtures.js';
+import { recordsPatterns } from '../../src/constants.js';
+import { copyFixtureCase } from '../../src/copyFixtureCase.js';
+import { getFixtureDirectory } from '../../src/getFixtureDirectory.js';
 
 export async function runTest(): Promise<void> {
-	const workDir = await copyFixtureCase(fixtureDirOf(import.meta.url));
+	const workingDirectory = await copyFixtureCase(getFixtureDirectory(import.meta.url));
 
 	const codecOptions: PartialArtCodecConfig = {};
 	const codec: ArtCodec = createArtCodec(codecOptions);
-	const fsRecords = createFSRecordsAdapter({ basePath: workDir, patterns: RECORDS_PATTERNS });
-	const recordsDocument = createRecordsDocument<FSRecordFile>({
-		codec,
-		createContentSource: file => fsRecords.createContentSource(file),
-	});
+	const filesystemRecordsOptions = { basePath: workingDirectory, patterns: recordsPatterns };
+	const filesystemRecords = createFSRecordsAdapter(filesystemRecordsOptions);
+	function createContentSource(file: FSRecordFile) {
+		return filesystemRecords.createContentSource(file);
+	}
+	const recordsDocumentOptions = { codec, createContentSource };
+	const recordsDocument = createRecordsDocument<FSRecordFile>(recordsDocumentOptions);
 
-	const files = await fsRecords.discoverRecordFiles();
-	const projectFile = files.find(
-		file => file.filename === join(workDir, '_records', 'project.art'),
-	);
-	assert(projectFile !== undefined, 'discovery did not return _records/project.art');
-	assert(projectFile.error === undefined, `discovery error: ${String(projectFile.error)}`);
+	const files = await filesystemRecords.discoverRecordFiles();
+	function isArtistRecordFile(file: FSRecordFile): boolean {
+		const artistFilename = join(workingDirectory, '_records', 'artist.art');
+		return file.filename === artistFilename;
+	}
+	const artistFile = files.find(isArtistRecordFile);
+	assert(artistFile !== undefined, 'discovery did not return _records/artist.art');
+	assert(artistFile.error === undefined, `discovery error: ${String(artistFile.error)}`);
 
-	const contentSource = fsRecords.createContentSource(projectFile);
+	const contentSource = filesystemRecords.createContentSource(artistFile);
 	assert(contentSource.type === 'fs', 'the content source must be filesystem backed');
 	assert(
-		contentSource.uri.endsWith('/_records/project.art'),
+		contentSource.uri.endsWith('/_records/artist.art'),
 		`unexpected content source uri: ${contentSource.uri}`,
 	);
 
-	const document = await recordsDocument.read(projectFile);
+	const document = await recordsDocument.read(artistFile);
 	assert(typeof document.extract === 'function', 'extract must be a function');
 	assert(typeof document.save === 'function', 'save must be a function');
 }
