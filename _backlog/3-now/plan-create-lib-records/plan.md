@@ -10,7 +10,7 @@
 
 **Purpose:** Deliver `@art-js/records` v0.0.1 — source-bound record proxies over Art MD documents — through implementation, integration tests, publication, and downstream adoption in Art Work.
 
-**Description:** The package is implemented in `$PROJECT/libs/records` (provider `createArtDocumentRecords({ codec, createContentSource })` with `read(file) → { assertPresence, extract, save }`, and `createArtRecord({ codec, contentSource })`; records are proxies whose `save()` writes their document through the bound source) and exercised end to end by the fixture harness in `$PROJECT/tests/records`. Remaining work: align use cases with fixtures, publish, adopt in Art Work, consolidate coverage, and refresh knowledge.
+**Description:** The package is implemented in `$PROJECT/libs/records` (provider `createArtDocumentRecords({ codec, createContentSource })` with `read(file) → { assertPresence, extract, save }`, and `createArtRecord({ codec, contentSource })`; records are proxies whose `save()` writes their document through the bound source) and exercised end to end by the fixture harness in `$PROJECT/tests/records`. Remaining work: finish the Vitest fixture migration, publish, adopt in Art Work, consolidate coverage, and refresh knowledge.
 
 Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/design/records.md` and `$PROJECT/libs/records/knowledge/overview.md` (the overview carries the use-case-to-fixture table and its WIP alignment list). Do not re-plan from this document's prose alone — the knowledge docs hold the contracts, shapes, and recipes.
 
@@ -28,8 +28,9 @@ Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/
 | Iteration                                     | Status    |
 | --------------------------------------------- | --------- |
 | Iteration: Prototype and Integration Tests    | `DONE`    |
-| Iteration: Apply Noodlestan Conventions       | `WORKING` |
-| Iteration: Align Use Cases, API, and Fixtures | `READY`   |
+| Iteration: Apply Noodlestan Conventions       | `DONE`    |
+| Iteration: Align Use Cases, API, and Fixtures | `DONE`    |
+| Iteration: Convert Fixture Tests to Vitest    | `WORKING` |
 | Iteration: Publish and Consume in Art Work    | `READY`   |
 | Iteration: Consolidate                        | `READY`   |
 | Iteration: Publish and Update Knowledge       | `READY`   |
@@ -76,7 +77,7 @@ test(records): Add integration tests.
 
 **ID:** `apply-noodlestan-conventions`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Purpose:** Apply the repository's conventions to the records implementation and integration test package.
 
@@ -114,7 +115,7 @@ conventions(typescript): Apply noodlestan conventions to integration tests.
 
 **ID:** `align-use-cases-api-and-fixtures`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Align the use cases, public API, design recipes, and integration fixtures.
 
@@ -124,6 +125,53 @@ conventions(typescript): Apply noodlestan conventions to integration tests.
 
 1. Execute the WIP alignment list in `$PROJECT/libs/records/knowledge/overview.md`; ensure fixtures, API routes, and design recipes agree with the implemented exports.
 2. Verify: the intended fixture set passes and the design matches `src/index.ts`; then commit.
+
+#### Commits:
+
+| ID      | Repository / Checkout / Branch | Policy   | Hash      | Status      |
+| ------- | ------------------------------ | -------- | --------- | ----------- |
+| `align` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `b309967` | `COMMITTED` |
+
+##### Commit: `align`
+
+**Message:**
+
+```text
+build(records): Align Use Cases, API, and Fixtures.
+```
+
+### Iteration: Convert Fixture Tests to Vitest
+
+**ID:** `convert-fixture-tests-to-vitest`
+
+**Status:** `WORKING`
+
+**Purpose:** Replace the bespoke fixture runner with Vitest, one case at a time, until every fixture case is a Vitest test.
+
+**Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
+
+**Instructions:**
+
+1. Port the remaining `run-test.ts` cases to `integration-test.ts` Vitest cases; once no case uses the script runner, remove `scripts/test-records.ts`, the `test-records` script, and the dual-runner wording from the knowledge docs.
+2. Verify: `npm run test-vitest` covers every fixture case green; then commit.
+
+#### Commits:
+
+| ID                     | Repository / Checkout / Branch | Policy   | Hash    | Status     |
+| ---------------------- | ------------------------------ | -------- | ------- | ---------- |
+| `fixture-tests-vitest` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `(TBD)` | `AUTHORED` |
+
+##### Commit: `fixture-tests-vitest`
+
+**Message:**
+
+```text
+test(records): Convert fixture tests to vitest.
+
+- Add `vitest.config.ts` and split `test`, `test-vitest`, and `test-records` scripts.
+- Port `05-write-field` and `08-rename-field-in-place`; extract temp-dir and discovery helpers.
+- Update integration-test design and use-case overview for the two-runner migration.
+```
 
 ### Iteration: Publish and Consume in Art Work
 
