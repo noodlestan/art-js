@@ -1,2 +1,2 @@
 export { createRecordsDocument } from '../records-document/createRecordsDocument.js';
-export { createArtRecord } from '../record/createArtRecord.js';
+export { createRecord } from '../record/createRecord.js';

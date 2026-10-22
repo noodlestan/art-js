@@ -9,7 +9,7 @@
 - Check record presence and extract every section from one document.
 - Expose field access on the record handle and structural access through `record.__section`.
 - Save mutations through the source associated with the document.
-- Accept an injected capsule factory from the first version; the default capsule is plain, and later variants can be reactive.
+- Delegate field access and saving from the record proxy to an internal capsule, so a reactive variant can replace it without changing the public handle.
 - Leave file discovery and the implementation of reading/writing to source providers such as `@art-lib/fs-records`.
 - Accept a consumer-created codec and per-file content-source factory; Records builds the document source for each file.
 
@@ -17,37 +17,40 @@
 
 Each use case is exercised by an integration fixture: a directory under `tests/records/fixtures/` (package `@art-js/test-records`) whose id is listed in the Fixture column. The runner discovers fixture directories, imports each `run-test.ts`, and reports pass/fail.
 
-| Use case                                                         | Target | Route                                                    | Fixture                                           |
-| ---------------------------------------------------------------- | ------ | -------------------------------------------------------- | ------------------------------------------------- |
-| Set up the records provider (codec, adapter, provider)           | v0.0.1 | `createRecordsDocument({ codec, createContentSource })`  | `01-setup-provider`                               |
-| Discover record files                                            | v0.0.1 | `@art-lib/fs-records` adapter                            | `02-discover-record-files`                        |
-| Check that a record exists                                       | v0.0.1 | `recordsDocument.hasRecord(name)`                        | `03-read-assert-extract`                          |
-| Extract document sections                                        | v0.0.1 | `await recordsDocument.extract()`                        | `03-read-assert-extract`                          |
-| Read fields                                                      | v0.0.1 | `record['Artist']` or `record.__section`                 | `04-field-read`                                   |
-| Add or remove a field                                            | v0.0.1 | `record['Artist']` or `delete record['Born']`            | `05-set-missing-field`, `08-delete-field`         |
-| Rename a field and mutate its value; keep record name immutable  | v0.0.1 | `record.renameField()` and field assignment              | `06-rename-field-in-place`                        |
-| Read fields reactively                                           | v1     | reactive proxy                                           | — (v1)                                            |
-| Inspect section, fields, and interleaved content                 | v0.0.1 | `record.__section`                                       | `07-section-depth`                                |
-| Mutate fields with reactive propagation                          | v1     | reactive proxy                                           | — (v1)                                            |
-| Mutate a record reactively                                       | v1     | reactive proxy                                           | — (v1)                                            |
-| Persist changes with field order and section structure preserved | v0.0.1 | `await record.save()`                                    | `07-section-depth`, `11-save-document-collection` |
-| Create a new record in a new file                                | v0.0.1 | `await recordsDocument.create(file)`, then `addRecord()` | `09-create-new-record`                            |
-| Add a record to an existing document                             | v1     | `recordsDocument.read(file)`, then `addRecord()`         | — (v1)                                            |
-| Batch save across documents                                      | v0.0.1 | per-document `save()` via `Promise.all`                  | `10-batch-save`                                   |
+| Use case                                                              | Target | Route                                                                   | Fixture                                                                             |
+| --------------------------------------------------------------------- | ------ | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Set up the records provider (codec, adapter, provider)                | v0.0.1 | `createRecordsDocument({ codec, createContentSource })`                 | `01-setup-provider`                                                                 |
+| Discover record files                                                 | v0.0.1 | `@art-lib/fs-records` adapter                                           | `02-discover-record-files`                                                          |
+| Check that a record exists                                            | v0.0.1 | `recordsDocument.hasRecord(name)`                                       | `03-read-assert-extract`                                                            |
+| Extract document sections                                             | v0.0.1 | `await recordsDocument.extract()`                                       | `03-read-assert-extract`                                                            |
+| Read fields                                                           | v0.0.1 | `record['Artist']` or `record.__section`                                | `04-field-read`                                                                     |
+| Write fields                                                          | v0.0.1 | `record['Artist'] = value`                                              | `05-write-field`                                                                    |
+| Add a field                                                           | v0.0.1 | `record['Artist'] = value`                                              | `06-add-field`                                                                      |
+| Remove a field                                                        | v0.0.1 | `delete record['Born']`                                                 | `07-remove-field`                                                                   |
+| Rename a field and write its value; keep the record heading immutable | v0.0.1 | `record.renameField()` and field assignment                             | `08-rename-field-in-place`                                                          |
+| Read fields reactively                                                | v1     | reactive proxy                                                          | — (v1)                                                                              |
+| Inspect section structure and depth                                   | v0.0.1 | `record.__section`                                                      | `09-section-depth`                                                                  |
+| Mutate fields with reactive propagation                               | v1     | reactive proxy                                                          | — (v1)                                                                              |
+| Mutate a record reactively                                            | v1     | reactive proxy                                                          | — (v1)                                                                              |
+| Persist changes with field order and section structure preserved      | v0.0.1 | `await record.save()`                                                   | `09-section-depth`, `10-save-document-collection`                                   |
+| Create a new record in a new file                                     | v0.0.1 | `await recordsDocument.create(file)`, then `addRecord()`                | `11-create-new-record`                                                              |
+| Add a record to an existing document                                  | v0.0.1 | `recordsDocument.read(file)`, then `addRecord()`                        | `12-add-record-to-existing-document`                                                |
+| Insert a record before or after a sibling record                      | v0.0.1 | `addRecord({ before: record })` or `addRecord({ after: record })`       | `13-add-sibling-record`, `14-add-sibling-record-throws-on-foreign-anchor`           |
+| Append or prepend a record under a parent record                      | v0.0.1 | `addRecord({ appendTo: record })` or `addRecord({ prependTo: record })` | `15-add-record-under-parent`, `16-add-record-under-parent-throws-on-foreign-anchor` |
+| Batch save across documents                                           | v0.0.1 | per-document `save()` via `Promise.all`                                 | `17-batch-save`                                                                     |
+| Delete a record from a document                                       | v0.0.1 | `deleteRecord()`                                                        | —                                                                                   |
 
 ### WIP: use-case and fixture alignment
 
-- The fixture for "Inspect section, fields, and interleaved content" (`07-section-depth`) asserts section construct/depth mutation and save, not interleaved-content inspection; either extend the fixture or split "mutate section properties" into its own use case.
 - "Set up the records provider" is a recipe rather than a consumer outcome; if MANAGEMENT rejects it as a use case, reclassify `01-setup-provider` as a supporting fixture for the read-path use cases.
 - The reactive use cases have no fixtures until the reactive capsule variant lands (v1).
-- The current provider returns `RecordsDocumentBase` from `read(file)` and `NewRecordsDocument` from `create(file)`; only the latter exposes `addRecord()`. Consider unifying these collection types so an existing document can accept records. Define insertion position and section-depth behavior before implementation.
 
 ## Flow
 
 1. The adapter discovers files and creates one content source per file.
 2. The consumer creates a codec and binds it with the content source in an `ArtDocumentSource`.
-3. `createRecordsDocument({ codec, createContentSource })` returns a provider; `read(file)` returns a `RecordsDocumentBase`, while `create(file)` returns a `NewRecordsDocument`.
-4. A caller extracts and mutates records from a read collection, or adds records to a newly created document; section properties are accessible through `record.__section`.
+3. `createRecordsDocument({ codec, createContentSource })` returns a provider; both `read(file)` and `create(file)` return a `RecordsDocumentCollection`.
+4. A caller extracts and mutates records from a collection returned by `read(file)`, or adds records — with optional placement — to a collection returned by either `read(file)` or `create(file)`; section properties are accessible through `record.__section`, with `depth` read-only.
 5. `record.save()` and collection `save()` delegate serialization and persistence to the document source.
 
 ## Dependencies
@@ -61,3 +64,5 @@ Each use case is exercised by an integration fixture: a directory under `tests/r
 
 - `record.save()` is a source-bound operation, not a `string`-returning use case; serialization happens inside the injected `ArtDocumentSource`.
 - v0.0.1 fidelity is whole-document codec serialization with structural (not byte) identity: whitespace, CRLF, and the final newline may be normalised. Granular writes and write guards are deferred (MANAGEMENT decision, 2026-10-19). See the design document's "Persistence and Fidelity" section.
+
+## Pending

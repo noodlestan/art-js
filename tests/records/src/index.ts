@@ -1,4 +1,5 @@
 export { assert } from './assert.js';
+export { captureThrownMessage } from './captureThrownMessage.js';
 export { copyFixtureCase } from './copyFixtureCase.js';
 export { findRecordByName } from './findRecordByName.js';
 export { findRecordFileByPath } from './findRecordFileByPath.js';

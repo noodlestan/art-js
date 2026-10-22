@@ -1,56 +1,54 @@
 import { createArtDocument, createArtDocumentSource } from '@art-md/primitives';
-import type { ConstructBase } from '@art-md/primitives';
+import type { ArtDocument, ArtDocumentSource, ConstructBase } from '@art-md/primitives';
 
-import { createNewRecordsDocument } from './private/createNewRecordsDocument.js';
-import { createRecordsDocumentBase } from './private/createRecordsDocumentBase.js';
-import type { RecordsDocumentContext } from './private/types.js';
-import type { CreateRecordsDocumentOptions, RecordsDocument } from './types.js';
+import { createRecordsCollection } from './private/createRecordsCollection.js';
+import type { RecordsCollectionContext } from './private/types.js';
+import type {
+	RecordsDocument,
+	RecordsDocumentCollection,
+	RecordsDocumentContext,
+} from './types.js';
 
 export function createRecordsDocument<RecordFile>(
-	options: CreateRecordsDocumentOptions<RecordFile>,
+	context: RecordsDocumentContext<RecordFile>,
 ): RecordsDocument<RecordFile> {
-	async function read(file: RecordFile) {
-		const contentSource = options.createContentSource(file);
-		const source = createArtDocumentSource(options.codec, contentSource);
+	function createDocumentSource(file: RecordFile): ArtDocumentSource {
+		const contentSource = context.createContentSource(file);
+		return createArtDocumentSource(context.codec, contentSource);
+	}
+
+	function createDocumentCollection(
+		document: ArtDocument,
+		source: ArtDocumentSource,
+	): RecordsDocumentCollection {
+		async function saveDocument(): Promise<void> {
+			await source.writeDocument(document);
+		}
+		const collectionContext: RecordsCollectionContext = {
+			document,
+			source,
+			save: saveDocument,
+		};
+		return createRecordsCollection(collectionContext);
+	}
+
+	async function read(file: RecordFile): Promise<RecordsDocumentCollection> {
+		const source = createDocumentSource(file);
 		const document = await source.readDocument();
-
-		async function saveDocument(): Promise<void> {
-			await source.writeDocument(document);
-		}
-
-		const context: RecordsDocumentContext = {
-			document,
-			source,
-			save: saveDocument,
-		};
-		const records = createRecordsDocumentBase(context);
-
-		return records;
+		return createDocumentCollection(document, source);
 	}
 
-	async function create(file: RecordFile) {
-		const contentSource = options.createContentSource(file);
-		const source = createArtDocumentSource(options.codec, contentSource);
+	async function create(file: RecordFile): Promise<RecordsDocumentCollection> {
+		const source = createDocumentSource(file);
 		const children: ConstructBase[] = [];
-		const documentData = { children };
-		const document = createArtDocument(documentData);
-
-		async function saveDocument(): Promise<void> {
-			await source.writeDocument(document);
-		}
-
-		const context: RecordsDocumentContext = {
-			document,
-			source,
-			save: saveDocument,
-		};
-		const records = createNewRecordsDocument(context);
-
-		return records;
+		const documentOptions = { children };
+		const document = createArtDocument(documentOptions);
+		return createDocumentCollection(document, source);
 	}
 
-	return {
+	const recordsDocument: RecordsDocument<RecordFile> = {
 		read,
 		create,
 	};
+	return recordsDocument;
 }

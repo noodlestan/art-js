@@ -37,39 +37,65 @@ $PROJECT/tests/records/fixtures/
     run-test.ts
     _records/song.art
 
-  05-set-missing-field/
+  05-write-field/
     run-test.ts
     _records/artist.art
 
-  06-rename-field-in-place/
+  06-add-field/
     run-test.ts
     _records/artist.art
 
-  07-section-depth/
+  07-remove-field/
     run-test.ts
     _records/artist.art
 
-  08-delete-field/
+  08-rename-field-in-place/
     run-test.ts
     _records/artist.art
 
-  09-create-new-record/
+  09-section-depth/
+    run-test.ts
+    _records/artist.art
+
+  10-save-document-collection/
+    run-test.ts
+    _records/artist.art            ← Artist and Song sections in one document
+
+  11-create-new-record/
     run-test.ts
     _records/                       ← created by the test in its working copy
 
-  10-batch-save/
+  12-add-record-to-existing-document/
+    run-test.ts
+    _records/artist.art
+
+  13-add-sibling-record/
+    run-test.ts
+    _records/song.art
+
+  14-add-sibling-record-throws-on-foreign-anchor/
     run-test.ts
     _records/artist.art
     _records/song.art
 
-  11-save-document-collection/
+  15-add-record-under-parent/
     run-test.ts
-    _records/artist.art              ← Artist and Song sections in one document
+    _records/artist.art
+
+  16-add-record-under-parent-throws-on-foreign-anchor/
+    run-test.ts
+    _records/artist.art
+    _records/song.art
+
+  17-batch-save/
+    run-test.ts
+    _records/artist.art
+    _records/song.art
 ```
 
 `run-test.ts` exports `runTest(): Promise<void>`. It uses the fixture path derived from its own module URL, copies that case to a temporary directory, configures the codec and filesystem adapter, runs the scenario, and asserts outcomes. Fixture tests throw on failure; the runner owns the per-case `try/catch`.
 
-The checked-in records use the Artist and Song domain. Case 03 uses the supplied Module/Artist/nested Song content to cover nested extraction and a field-less section. Case 09 creates its destination record file in the temporary directory.
+The checked-in records use the Artist and Song domain. Case 03 uses the supplied Module/Artist/nested Song content to cover nested extraction and a field-less section. Case 11 creates its destination record file in the temporary directory.
 
 Directory names beginning with `_` are skipped by the runner and reported as skipped. Use that prefix only to hold a known failing case out of the active run; remove it when the case is ready to run.
 
@@ -79,7 +105,7 @@ Run from `$PROJECT/tests/records/`:
 
 ```bash
 npm run test                  # run all fixture cases
-npm run test -- 07            # run cases whose directory name contains "07"
+npm run test -- 17            # run cases whose directory name contains "17"
 npm run lint                  # Prettier, ESLint, and TypeScript checks
 npm run build                 # build the test package
 npm run ci                    # lint, build, and test
@@ -127,23 +153,23 @@ Agents may create forward-looking fixture cases before the corresponding impleme
 For example, rename:
 
 ```text
-fixtures/12-add-album/
+fixtures/18-add-album/
 ```
 
 to:
 
 ```text
-fixtures/_12-add-album/
+fixtures/_18-add-album/
 ```
 
 The runner reports the skipped case and does not import its `run-test.ts`:
 
 ```text
-Discovered 12 fixture test director(ies).
-Skipped 1 case(s) prefixed with "_": _12-add-album.
+Discovered 18 fixture test director(ies).
+Skipped 1 case(s) prefixed with "_": _18-add-album.
 
-Results:    11 test(s) run
-Passed:     11
+Results:    17 test(s) run
+Passed:     17
 Failed:     0
 Skipped:    1
 ```

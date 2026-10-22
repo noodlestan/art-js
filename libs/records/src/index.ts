@@ -1,8 +1,8 @@
-export type { ArtRecord, CreateArtRecordOptions } from './record/types.js';
+export type { ArtRecord, RecordContext, RecordSection } from './record/types.js';
 export type {
-	CreateRecordsDocumentOptions,
-	NewRecordsDocument,
+	AddRecordPosition,
 	RecordsDocument,
-	RecordsDocumentBase,
+	RecordsDocumentCollection,
+	RecordsDocumentContext,
 } from './records-document/types.js';
 export * from './api/index.js';

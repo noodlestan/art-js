@@ -1,13 +1,18 @@
+import type { RecordHandleContext } from '../types.js';
+
 import { deleteSectionField } from './deleteSectionField.js';
 import { getSectionField } from './getSectionField.js';
 import { listSectionFieldNames } from './listSectionFieldNames.js';
+import { makeSectionDepthReadOnly } from './makeSectionDepthReadOnly.js';
 import { makeSectionNameReadOnly } from './makeSectionNameReadOnly.js';
 import { renameSectionField } from './renameSectionField.js';
 import { setSectionField } from './setSectionField.js';
-import type { ArtRecordCapsule, ArtRecordCapsuleContext } from './types.js';
+import type { ArtRecordCapsule } from './types.js';
 
-export function createRecordCapsule(context: ArtRecordCapsuleContext): ArtRecordCapsule {
-	let nameIsMutable = context.document === undefined;
+export function createRecordCapsule(context: RecordHandleContext): ArtRecordCapsule {
+	makeSectionDepthReadOnly(context.section);
+
+	let nameIsMutable = context.nameIsMutable;
 	if (!nameIsMutable) {
 		makeSectionNameReadOnly(context.section);
 	}

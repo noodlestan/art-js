@@ -1,16 +1,7 @@
-import type { RecordState } from './types.js';
+import type { SectionBlock } from '@art-md/constructs';
 
-export function makeSectionNameReadOnly(section: RecordState['section']): void {
-	const descriptor = Object.getOwnPropertyDescriptor(section, 'name');
-	if (descriptor?.configurable === false) {
-		return;
-	}
-	const name = section.name;
-	const nameDescriptor = {
-		configurable: false,
-		enumerable: true,
-		writable: false,
-		value: name,
-	};
-	Object.defineProperty(section, 'name', nameDescriptor);
+import { defineReadOnlyProperty } from './defineReadOnlyProperty.js';
+
+export function makeSectionNameReadOnly(section: SectionBlock): void {
+	defineReadOnlyProperty(section, 'name', section.name);
 }

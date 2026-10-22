@@ -92,7 +92,7 @@ test(records): Add integration tests.
 | ID                             | Repository / Checkout / Branch | Policy   | Hash      | Status      |
 | ------------------------------ | ------------------------------ | -------- | --------- | ----------- |
 | `records-conventions`          | Art JS / `$PROJECT` / `main`   | `MANUAL` | `6efabf1` | `COMMITTED` |
-| `integration-test-conventions` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `(TBD)`   | `AUTHORED`  |
+| `integration-test-conventions` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `5588fec` | `COMMITTED` |
 
 ##### Commit: `records-conventions`
 
