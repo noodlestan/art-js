@@ -8,11 +8,19 @@
 
 **Skill:** `write-plan`
 
-**Purpose:** Deliver `@art-js/records` v0.0.1 — source-bound record proxies over Art MD documents — through implementation, integration tests, publication, and downstream adoption in Art Work.
+**Purpose:** Deliver `@art-js/records` v0.0.1 — source-bound record proxies over Art MD documents — through implementation, integration tests, publication, and downstream adoption in Art Works.
 
-**Description:** The package is implemented in `$PROJECT/libs/records` (provider `createArtDocumentRecords({ codec, createContentSource })` with `read(file) → { assertPresence, extract, save }`, and `createArtRecord({ codec, contentSource })`; records are proxies whose `save()` writes their document through the bound source) and exercised end to end by the fixture harness in `$PROJECT/tests/records`. Remaining work: land the in-package integration suite, convert the external fixtures to Vitest, publish, adopt in Art Work, consolidate coverage, and refresh knowledge.
+**Description:** The package is implemented in `$PROJECT/libs/records` (provider `createArtDocumentRecords({ codec, createContentSource })` with `read(file) → { assertPresence, extract, save }`, and `createArtRecord({ codec, contentSource })`; records are proxies whose `save()` writes their document through the bound source) and exercised end to end by the fixture harness in `$PROJECT/tests/records`. Remaining work: land the in-package integration suite, convert the external fixtures to Vitest, publish, adopt in Art Works, consolidate coverage, and refresh knowledge.
 
 Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/design/records.md` and `$PROJECT/libs/records/knowledge/overview.md` (the overview carries the use-case-to-fixture table and its WIP alignment list). Do not re-plan from this document's prose alone — the knowledge docs hold the contracts, shapes, and recipes.
+
+## Path Variables
+
+| Variable     | Resolved Path             | Purpose                                   |
+| ------------ | ------------------------- | ----------------------------------------- |
+| `$WORKSPACE` | Current working directory | Workspace root directory                  |
+| `$PROJECT`   | Provided with prompt      | Art JS                                    |
+| `$ART_WORKS` | `checkouts/art-works`     | Repository: Art Works checkout (consumer) |
 
 ## Summary
 
@@ -21,7 +29,7 @@ Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/
 | Records package (provider, record handle, capsule) | `$PROJECT/libs/records`                                                                            |
 | Integration fixtures (one directory per use case)  | `$PROJECT/tests/records/fixtures`                                                                  |
 | Design + overview (API, recipes, use-case map)     | `$PROJECT/libs/records/knowledge/design/records.md`, `$PROJECT/libs/records/knowledge/overview.md` |
-| Published package for Art Work                     | npm `@art-js/records`                                                                              |
+| Published package for Art Works                    | npm `@art-js/records`                                                                              |
 
 ## Items
 
@@ -30,8 +38,8 @@ Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/
 | Iteration: Prototype and Integration Tests                      | `DONE`    |
 | Iteration: Apply Noodlestan Conventions                         | `DONE`    |
 | Iteration: Align Use Cases, API, and Fixtures                   | `DONE`    |
-| Iteration: Add Integration Tests and Convert Fixtures to Vitest | `WORKING` |
-| Iteration: Publish and Consume in Art Work                      | `READY`   |
+| Iteration: Add Integration Tests and Convert Fixtures to Vitest | `DONE`    |
+| Iteration: Publish and Consume in Art Works                     | `WORKING` |
 | Iteration: Consolidate                                          | `READY`   |
 | Iteration: Publish and Update Knowledge                         | `READY`   |
 
@@ -52,10 +60,10 @@ Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/
 
 #### Commits:
 
-| ID                  | Repository / Checkout / Branch | Policy   | Hash      | Status      |
-| ------------------- | ------------------------------ | -------- | --------- | ----------- |
-| `prototype`         | Art JS / `$PROJECT` / `main`   | `MANUAL` | `d79803d` | `COMMITTED` |
-| `integration-tests` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `1279c1d` | `COMMITTED` |
+| ID                  | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `prototype`         | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `d79803d` | `COMMITTED` |
+| `integration-tests` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `1279c1d` | `COMMITTED` |
 
 ##### Commit: `prototype`
 
@@ -90,10 +98,10 @@ test(records): Add integration tests.
 
 #### Commits:
 
-| ID                             | Repository / Checkout / Branch | Policy   | Hash      | Status      |
-| ------------------------------ | ------------------------------ | -------- | --------- | ----------- |
-| `records-conventions`          | Art JS / `$PROJECT` / `main`   | `MANUAL` | `6efabf1` | `COMMITTED` |
-| `integration-test-conventions` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `5588fec` | `COMMITTED` |
+| ID                             | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ------------------------------ | -------------------------------- | -------- | --------- | ----------- |
+| `records-conventions`          | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `6efabf1` | `COMMITTED` |
+| `integration-test-conventions` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `5588fec` | `COMMITTED` |
 
 ##### Commit: `records-conventions`
 
@@ -128,9 +136,9 @@ conventions(typescript): Apply noodlestan conventions to integration tests.
 
 #### Commits:
 
-| ID      | Repository / Checkout / Branch | Policy   | Hash      | Status      |
-| ------- | ------------------------------ | -------- | --------- | ----------- |
-| `align` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `b309967` | `COMMITTED` |
+| ID      | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ------- | -------------------------------- | -------- | --------- | ----------- |
+| `align` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `b309967` | `COMMITTED` |
 
 ##### Commit: `align`
 
@@ -144,7 +152,7 @@ build(records): Align Use Cases, API, and Fixtures.
 
 **ID:** `add-integration-tests-and-convert-fixtures-to-vitest`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Purpose:** Bring the integration suite into `$PROJECT/libs/records` as scenario-style Vitest cases with reusable helpers, then convert the external `$PROJECT/tests/records` fixture cases to Vitest, merging the duplicated cases and simplifying the remaining harness.
 
@@ -158,10 +166,10 @@ build(records): Align Use Cases, API, and Fixtures.
 
 #### Commits:
 
-| ID                          | Repository / Checkout / Branch | Policy   | Hash    | Status     |
-| --------------------------- | ------------------------------ | -------- | ------- | ---------- |
-| `package-integration-tests` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `(TBD)` | `AUTHORED` |
-| `fixture-tests-vitest`      | Art JS / `$PROJECT` / `main`   | `MANUAL` | `(TBD)` | `AUTHORED` |
+| ID                          | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| --------------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `package-integration-tests` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `7bada38` | `COMMITTED` |
+| `fixture-tests-vitest`      | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `f631fbe` | `COMMITTED` |
 
 ##### Commit: `package-integration-tests`
 
@@ -189,20 +197,47 @@ test(records): Convert integration tests to Vitest.
 - Update dependencies, design and use-case documentation.
 ```
 
-### Iteration: Publish and Consume in Art Work
+### Iteration: Publish and Consume in Art Works
 
 **ID:** `publish-and-consume-in-art-work`
 
 **Status:** `READY`
 
-**Purpose:** Make `@art-js/records` installable and prove the Art Work consumption path.
+**Purpose:** Make `@art-js/records` installable and prove the Art Works consumption path.
 
 **Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
 
 **Instructions:**
 
 1. Publish `@art-js/records@0.0.1` to npm following the workspace publish operation, then confirm `$ART_WORK` can install it and that its Step 7 record-extraction dependency resolves (unblocks `plan-art-work-cli-global-install`).
-2. Verify: `npm info @art-js/records` resolves; record the publication and any Art Work findings in this plan; then commit.
+2. Verify: `npm info @art-js/records` resolves; record the publication and any Art Works findings in this plan; then commit.
+
+#### Commits:
+
+| ID                      | Repository / Checkout / Branch     | Policy   | Hash      | Status      |
+| ----------------------- | ---------------------------------- | -------- | --------- | ----------- |
+| `release-first-version` | `$PROJECT` / `$PROJECT` / `main`   | `MANUAL` | `7bada38` | `COMMITTED` |
+| `install-in-art-works`  | `$ART_WORKS` / `$PROJECT` / `main` | `MANUAL` | TBD       | `AUTHORED`  |
+
+##### Commit: `release-first-version`
+
+**Message:**
+
+```text
+release(records): 0.0.1
+```
+
+##### Commit: `install-in-art-works`
+
+**Message:**
+
+```text
+refactor(fs-records): Install fs-records 0.0.1
+
+- Replace local implementation by fs-records adapter.
+- Update tests.
+- Update knowledge.
+```
 
 ### Iteration: Consolidate
 
@@ -216,7 +251,7 @@ test(records): Convert integration tests to Vitest.
 
 **Instructions:**
 
-1. Apply fixes and changes surfaced by alignment and Art Work adoption; raise the `libs/records` vitest coverage thresholds back up to the package convention once the fixture and unit suites cover the consolidated behaviour.
+1. Apply fixes and changes surfaced by alignment and Art Works adoption; raise the `libs/records` vitest coverage thresholds back up to the package convention once the fixture and unit suites cover the consolidated behaviour.
 2. Verify: `npm run lint`, `npm run build`, `npm run test` green with the raised thresholds; then commit.
 
 ### Iteration: Publish and Update Knowledge
