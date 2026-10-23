@@ -238,6 +238,8 @@ refactor(fs-records): Install fs-records 0.0.1
 - Update tests.
 - Update knowledge.
 ```
+1. Publish `@art-js/records@0.0.1` to npm following the workspace publish operation, then confirm `$ART_WORKS` can install it and that its Step 7 record-extraction dependency resolves (unblocks `plan-art-work-cli-global-install`).
+2. Verify: `npm info @art-js/records` resolves; record the publication and any Art Work findings in this plan; then commit.
 
 ### Iteration: Consolidate
 
@@ -277,7 +279,7 @@ refactor(fs-records): Install fs-records 0.0.1
 
 - **Reactive record variants** — v1; the `capsuleFactory` seam is the reserved path.
 - **Granular writes and write guards** — deferred (MANAGEMENT, 2026-10-19); whole-document serialization is the v0.0.1 contract.
-- **CLI command implementation** — belongs to `$ART_WORK` plan `plan-art-work-cli-global-install`.
+- **CLI command implementation** — belongs to `$ART_WORKS` plan `plan-art-work-cli-global-install`.
 - **FS discovery/content implementation** — belongs to `$ART_LIB` (delivered: `@art-lib/fs-records@0.0.2`).
 
 ```

@@ -64,11 +64,11 @@ Not applicable in the usual direction — this chain has no upstream beyond npm/
 ### What downstream consumers can expect from me
 
 - **`$ART_JS` — shape freeze (precise member lists, verified):** `ArtContentSource { type, uri, maybeContent, readContent(), writeContent() }` · `ArtDocumentSource { type, uri, maybeDocument, readDocument(), writeDocument() }` · `SectionBlock { construct: 'SectionBlock', name, tags?, children, depth?, position }` — `name` is the whole heading text, no `kind`. Kind-free shape shipped: pin `@art-md/constructs@0.0.4` (published 2026-10-17; `0.0.3` is the last kind-bearing version).
-- **`$ART_JS` / `$ART_LIB` — round-trip:** serialising an untouched `ArtDocument` reproduces the source with structural fidelity; `ArtCodec` is real and exported. `$ART_WORK`'s fidelity expectation (tables, comments, ordering survive) rides the same contract — and it is only as strong as its fixtures: **name the tricky cases and I will add fixtures**; cheap on my side.
+- **`$ART_JS` / `$ART_LIB` — round-trip:** serialising an untouched `ArtDocument` reproduces the source with structural fidelity; `ArtCodec` is real and exported. `$ART_WORKS`'s fidelity expectation (tables, comments, ordering survive) rides the same contract — and it is only as strong as its fixtures: **name the tricky cases and I will add fixtures**; cheap on my side.
 - **`$ART_LIB`:** conforming as an `ArtContentSource` (`type`/`uri`/`maybeContent`/`readContent()`/`writeContent()`) is confirmed as the sanctioned pattern — your proposal matches my contract exactly.
 - **Offer (not scope, only on request):** if the anchor question ever needs it, the codec can add position re-derivation on edit as an additive deliverable — asked, not assumed.
 
 ### Assumptions, uncertainties, decisions needing input
 
 1. **Freeze discipline** — "no breaking changes to the listed shapes; additive symbols ship as minor bumps with a note here". Flag it if insufficient for plans pinned at `*` intra-workspace.
-2. Nothing else open — joining approved 3/3 (2026-10-13), `modifiedValue` settled records-domain, fixture wish-list received and confirmed (`$ART_WORK` corpus + `$ART_JS`'s three synthetic cases); I maintain the set under `cli/codec-tests`.
+2. Nothing else open — joining approved 3/3 (2026-10-13), `modifiedValue` settled records-domain, fixture wish-list received and confirmed (`$ART_WORKS` corpus + `$ART_JS`'s three synthetic cases); I maintain the set under `cli/codec-tests`.

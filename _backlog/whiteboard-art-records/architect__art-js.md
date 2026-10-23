@@ -28,7 +28,7 @@
 
 **My scope:** I own `@art-js/records` — record identity (`ArtRecord`), extraction/presence assertion, anchored write-back with optional hash guard, transparent proxy field access, and the `Records` facade. It is a pure core library over content strings; it never touches the filesystem.
 
-**Not my scope:** FS discovery and persistence (that is `$ART_LIB`'s adapter) and CLI orchestration (that is `$ART_WORK`). I consume `$ART_MD` contracts (`@art-md/primitives`) and never re-implement the codec.
+**Not my scope:** FS discovery and persistence (that is `$ART_LIB`'s adapter) and CLI orchestration (that is `$ART_WORKS`). I consume `$ART_MD` contracts (`@art-md/primitives`) and never re-implement the codec.
 
 ### Goals and existing decisions
 
@@ -73,14 +73,14 @@
 ### What downstream consumers will need from me
 
 - **`$ART_LIB` adapter:** `ArtRecord` replaces its WIP `BaseRecordStructure`; `RecordPosition` replaces its duplicate `FSRecordPosition`; it implements `ArtContentSource` and calls `extractRecords`/`writeRecord`. ~~Re-read behaviour asked~~ Answered on the whiteboard: stateless per call, re-read after `writeContent()` — line anchors stand.
-- **`$ART_WORK` CLI:** `Records<T>` facade per document (`assertPresence`, `extract`, `update`, `serialize`) for workspace-record discovery/reading/updating; record kinds `checkout`, `repository`, `namespace`, `package`, `project`, `npm-deployment`, `static-app-deployment`.
+- **`$ART_WORKS` CLI:** `Records<T>` facade per document (`assertPresence`, `extract`, `update`, `serialize`) for workspace-record discovery/reading/updating; record kinds `checkout`, `repository`, `namespace`, `package`, `project`, `npm-deployment`, `static-app-deployment`.
 - **Publishing:** consumers can only import `@art-js/records` after the workspace publish operation — not part of this plan.
 
 ### Assumptions, uncertainties, decisions needing input
 
-1. **`serialize` vs `update`** — ~~resolved on the whiteboard (2026-10-13):~~ `update` = guarded write over existing content (safe), `serialize` = unguarded, for newly created record files. Accepted by `$ART_WORK`.
+1. **`serialize` vs `update`** — ~~resolved on the whiteboard (2026-10-13):~~ `update` = guarded write over existing content (safe), `serialize` = unguarded, for newly created record files. Accepted by `$ART_WORKS`.
 2. **Line-based `RecordPosition`** (`startLine`/`endLine?`) — ~~resolved on the whiteboard (2026-10-13):~~ adapter is stateless per call and re-reads after `writeContent()`, so line anchors computed against the given content survive; the opt-in hash guard covers out-of-band drift. `AGREED`.
-3. **Granularity of `Records<T>`** — ~~resolved on the whiteboard (2026-10-13):~~ per-document facade confirmed by `$ART_WORK`; they loop over files; no multi-document collection needed.
+3. **Granularity of `Records<T>`** — ~~resolved on the whiteboard (2026-10-13):~~ per-document facade confirmed by `$ART_WORKS`; they loop over files; no multi-document collection needed.
 4. **Capsule typing** — `ArtRecordCapsule<T>` carries `[fieldName: string]: unknown`, so arbitrary field access is untyped. _Proposal:_ keep as-is for v1 (fields surface via proxy). _Confirm_ consumers don't need `Record<string, Field>` field maps at the type level.
 5. **`FieldResolver` has no factory** — ~~resolved on the whiteboard (2026-10-13):~~ `createFieldResolver` ships from `@art-js/records` — field mapping is records-domain, neither consumer hand-rolls a resolver. **New deliverable, absorbed into iteration 3.**
 6. **Mixed abstraction levels** — `assertRecordPresence(document: ArtDocument, ...)` and `extractRecords(document, ...)` take a document, while `createRecords(source: ArtDocumentSource)` takes a source and `writeRecord(content: string, ...)` takes content. _Question:_ should the facade hide `ArtDocument`, or is holding all three acceptable?

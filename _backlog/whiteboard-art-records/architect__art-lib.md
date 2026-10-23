@@ -35,19 +35,19 @@
         ↓
 @art-lib/fs-records (FS discovery + content acquisition) — ME, published 0.0.1
         ↓
-@art-work/cli (product use cases)                        — $ART_WORK
+@art-work/cli (product use cases)                        — $ART_WORKS
 ```
 
-**Not my scope:** the codec (`@art-md/codec`), the record model and facade (`@art-js/records`), product use-case orchestration and record-kind semantics (`$ART_WORK`), and any scheduling of Art JS work — there I only state release conditions.
+**Not my scope:** the codec (`@art-md/codec`), the record model and facade (`@art-js/records`), product use-case orchestration and record-kind semantics (`$ART_WORKS`), and any scheduling of Art JS work — there I only state release conditions.
 
 ### Goals and existing decisions
 
 **Canonical naming (producer authority, 2026-10-13):**
 
 - **Package:** `@art-lib/fs-records` — forever. The spellings `@art-lib/fs-records-adapter` and "Plan: Add FS Records Store" are retired; no artefact may use them again.
-- **Unit:** `FSRecordsAdapter`, created by `createFSRecordsAdapter(options)`, options type `FSRecordsAdapterOptions`. The `FSRecordsStore` / `createFSRecordsStore()` spelling in `$ART_WORK` captures is stale and must be corrected there.
+- **Unit:** `FSRecordsAdapter`, created by `createFSRecordsAdapter(options)`, options type `FSRecordsAdapterOptions`. The `FSRecordsStore` / `createFSRecordsStore()` spelling in `$ART_WORKS` captures is stale and must be corrected there.
 - **Method:** the adapter exposes `discoverRecordFiles()` (not `listFiles()`), matching the underlying function and the consumer capture.
-- **Persistence:** exposed as `writeContent(content)` per `ArtContentSource`; the record-level `writeRecord(file, record, recordWrite)` in the plan and in `$ART_WORK`'s capture is retired — serialisation is the facade's job, persistence is mine.
+- **Persistence:** exposed as `writeContent(content)` per `ArtContentSource`; the record-level `writeRecord(file, record, recordWrite)` in the plan and in `$ART_WORKS`'s capture is retired — serialisation is the facade's job, persistence is mine.
 
 **Existing decisions** (do not relitigate):
 
@@ -90,18 +90,18 @@
 
 ### What downstream consumers will need from me
 
-- **`$ART_WORK`:** the settled symbol set — factory, options, `FSRecordsPattern`, `FSRecordFile.basePath`, async `discoverRecordFiles()`, and the content contract (`readContent()`/`writeContent()` as `ArtContentSource`, record-level `writeRecord` retired) — plus the canonical package name `@art-lib/fs-records`, which answers their reconciliation question.
+- **`$ART_WORKS`:** the settled symbol set — factory, options, `FSRecordsPattern`, `FSRecordFile.basePath`, async `discoverRecordFiles()`, and the content contract (`readContent()`/`writeContent()` as `ArtContentSource`, record-level `writeRecord` retired) — plus the canonical package name `@art-lib/fs-records`, which answers their reconciliation question.
 - `FSRecordsPattern` defaults and gitignore semantics stable enough for `normalizeRecordPaths`-style config normalisation.
 
 ### Assumptions, uncertainties, decisions needing input
 
 **Settled 2026-10-13 — do not reopen:** canonical unit name `FSRecordsAdapter` / `createFSRecordsAdapter(FSRecordsAdapterOptions)` / `discoverRecordFiles()`; WIP stand-ins deleted, `ArtContentSource` the only imported contract; availability bar moot (no `@art-js/records` dependency, nothing to link); prefix convention `$ART_LIB`/`$ART_LIB` = planning checkout, `$ART_LIB` = code (27 sites renamed).
 
-1. **Forwarded question from `$ART_WORK`** — is `.njk` template rendering mine or theirs? _Position: theirs; the adapter persists content verbatim and neither templates nor serialises it._
+1. **Forwarded question from `$ART_WORKS`** — is `.njk` template rendering mine or theirs? _Position: theirs; the adapter persists content verbatim and neither templates nor serialises it._
 2. **Write-re-read (answered for `$ART_JS`, now a contract)** — stateless per call: content sits on the source instance until `writeContent()`, and is re-read from disk on the next `readContent()`. Line anchors are computed against the string handed to `writeRecord`; the opt-in hash guard covers out-of-band drift.
 
 ### Attachment: report on the blocked plan `add-fs-records-adapter` (resolved)
 
 > ⚠️ **HISTORICAL — hold lifted 2026-10-13.** The chain confirmed the adapter is decoupled from `@art-js/records`; the plan and all three iterations are `READY` and the instruction files are regenerated. The analysis that justified the hold is dropped: its premise — a two-hop dependency on an upstream package that had not started — was itself the error, and the parallel WIP types it warned about are deleted.
 
-**Still true and retained:** iteration 1 moves modules into `src/files/`, `src/discover/`, `src/test/helpers/`, renames `FSRecordsPath` → `FSRecordsPattern`, drops `FSRecordsConfig`, renames `findRecordFiles` → `discoverRecordFiles(basePath, patterns, kinds?)` and `searchPath` → `basePath`; iterations 2–3 add `src/adapter/{types.ts, createFSRecordsAdapter.ts}` plus tests. `$ART_WORK` sits on the published `0.0.1`, so their instructions must not verify exports against it until iteration 1 lands.
+**Still true and retained:** iteration 1 moves modules into `src/files/`, `src/discover/`, `src/test/helpers/`, renames `FSRecordsPath` → `FSRecordsPattern`, drops `FSRecordsConfig`, renames `findRecordFiles` → `discoverRecordFiles(basePath, patterns, kinds?)` and `searchPath` → `basePath`; iterations 2–3 add `src/adapter/{types.ts, createFSRecordsAdapter.ts}` plus tests. `$ART_WORKS` sits on the published `0.0.1`, so their instructions must not verify exports against it until iteration 1 lands.

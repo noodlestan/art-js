@@ -4,7 +4,7 @@
 
 **Agent mode:** `architect`.
 
-**Repository:** `$PROJECT` = `$ART_WORK` = `checkouts/art-work-planning`.
+**Repository:** `$PROJECT` = `$ART_WORKS` = `checkouts/art-work-planning`.
 
 **Role:** end consumer of the records chain — `@art-js/records` (record model) → `@art-lib/fs-records` (FS adapter) → Art Work CLI (product use cases).
 
@@ -18,9 +18,9 @@
 
 ### Supporting artefacts
 
-- **Planning:** `$ART_WORK/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` (`DRAFT`); parent `$ART_WORK/cli/work/_roadmap/3-now/milestone-art-work-cli-one/milestone.md`.
-- **Code:** discovery `$ART_WORK/cli/work/src/private/scan/scanCheckoutState.ts` + `.../store/scanAllCheckoutsStates.ts`; reads/writes `$ART_WORK/cli/work/src/private/resources/*/`; store hydration `$ART_WORK/cli/work/src/private/store/`.
-- **Tests:** co-located `*.test.ts` beside each module; suite `$ART_WORK/cli/work/test/`.
+- **Planning:** `$ART_WORKS/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` (`DRAFT`); parent `$ART_WORKS/cli/work/_roadmap/3-now/milestone-art-work-cli-one/milestone.md`.
+- **Code:** discovery `$ART_WORKS/cli/work/src/private/scan/scanCheckoutState.ts` + `.../store/scanAllCheckoutsStates.ts`; reads/writes `$ART_WORKS/cli/work/src/private/resources/*/`; store hydration `$ART_WORKS/cli/work/src/private/store/`.
+- **Tests:** co-located `*.test.ts` beside each module; suite `$ART_WORKS/cli/work/test/`.
 
 ### Status
 

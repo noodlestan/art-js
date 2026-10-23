@@ -18,7 +18,7 @@
 | `$MANAGEMENT` | `$WORKSPACE/checkouts/management`        | Steering and coordination.                                                   |
 | `$ART_MD`     | `$WORKSPACE/checkouts/art-md-planning`   | Upstream codec and source contracts (`@art-md/primitives`).                  |
 | `$ART_LIB`    | `$WORKSPACE/checkouts/art-lib-planning`  | Chain neighbour — FS records adapter (decoupled; no import of this package). |
-| `$ART_WORK`   | `$WORKSPACE/checkouts/art-work-planning` | Downstream consumer — CLI records usage.                                     |
+| `$ART_WORKS`  | `$WORKSPACE/checkouts/art-work-planning` | Downstream consumer — CLI records usage.                                     |
 
 ## Facilitation
 
@@ -136,8 +136,8 @@
 
 **Planning:**
 
-- `$ART_WORK/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` (`DRAFT`)
-- `$ART_WORK/_backlog/4-next/plan-art-work-cli-global-install/plan.md` (gated on `$ART_LIB`'s adapter delivery)
+- `$ART_WORKS/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` (`DRAFT`)
+- `$ART_WORKS/_backlog/4-next/plan-art-work-cli-global-install/plan.md` (gated on `$ART_LIB`'s adapter delivery)
 
 **Replan check 2026-10-18 — drift found and fixed.** Kind interpretation is now this CLI's job: `@art-js/records` carries no kind, and `discoverRecordFiles(kinds?)` filters by **filename**, which my record filenames do not encode (`_records/art-work.art` holds `## Repository: Art Work`; `_records/package.art` holds four `## Package Dependency:` sections). The read path calls `discoverRecordFiles()` **unfiltered** and filters by parsed heading kind in the CLI. Both corrections are in the milestone and the plan; my upstream pin stays `@art-md/primitives@0.0.3` (types only, no constructs dependency)..
 
@@ -225,7 +225,7 @@ Registration for plans under this board — each architect adds their row on the
 | `ART_LIB`  | `plan-add-fs-records-adapter`      | `DONE`    | published `@art-lib/fs-records@0.0.2`; all 3 iterations committed                        |
 | `ART_WORK` | `plan-art-work-cli-global-install` | `BLOCKED` | Step 7 needs `@art-js/records`; `npm info` returns 404 and the plan omits the dependency |
 
-_Artefacts reviewed 2026-10-18: `$ART_WORK/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` · `$ART_WORK/_backlog/4-next/plan-art-work-cli-global-install/plan.md`._
+_Artefacts reviewed 2026-10-18: `$ART_WORKS/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` · `$ART_WORKS/_backlog/4-next/plan-art-work-cli-global-install/plan.md`._
 
 _Others: register your plan and status here on your turn (e.g. `ART_LIB` → `plan-add-fs-records-adapter`, `ART_WORK` → `plan-art-work-cli-global-install`, `ART_MD` → nothing in flight)._
 
@@ -263,7 +263,7 @@ _Others: register your plan and status here on your turn (e.g. `ART_LIB` → `pl
 
 ### @art-work (consumer — Art Work CLI)
 
-- `VERDICT` — **ADVANCE** (producer `ART_WORK`, 2026-10-13). Plan `$ART_WORK/_backlog/4-next/plan-art-work-cli-global-install/plan.md` — 4 iterations `READY`. **Next move:** delegate `refactor-config-semantics` when `$ART_LIB`'s adapter iterations land (Step 1/8 verifies the two-unit source, never `0.0.1`); iterations 2–4 depend on it.
+- `VERDICT` — **ADVANCE** (producer `ART_WORK`, 2026-10-13). Plan `$ART_WORKS/_backlog/4-next/plan-art-work-cli-global-install/plan.md` — 4 iterations `READY`. **Next move:** delegate `refactor-config-semantics` when `$ART_LIB`'s adapter iterations land (Step 1/8 verifies the two-unit source, never `0.0.1`); iterations 2–4 depend on it.
 
 ## Changes
 
