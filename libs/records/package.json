@@ -34,13 +34,16 @@
     "build": "esbuild-cli",
     "build:clean": "rm -rf dist",
     "test": "vitest run",
-    "test:ci": "vitest run --coverage",
+    "test:unit": "vitest run --coverage --dir src",
+    "test:integration": "vitest run --coverage --dir tests",
     "test:watch": "vitest",
-    "ci": "npm run lint && npm run build && npm run test:ci"
+    "ci": "npm run lint && npm run build && npm run test:unit && npm run test:integration"
   },
   "dependencies": {
     "@art-md/constructs": "0.0.5",
     "@art-md/primitives": "0.0.5"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "vitest": "4.1.8"
+  }
 }
