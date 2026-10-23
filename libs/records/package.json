@@ -22,10 +22,20 @@
   },
   "type": "module",
   "sideEffects": false,
-  "main": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs"
+    },
+    "./test-helpers/*": {
+      "import": "./src/test/helpers/*"
+    }
+  },
   "files": [
     "src",
-    "LICENSE-MIT"
+    "dist",
+    "LICENSE-MIT",
+    "README.md"
   ],
   "scripts": {
     "dev": "esbuild-cli-watch",
@@ -34,8 +44,8 @@
     "build": "esbuild-cli",
     "build:clean": "rm -rf dist",
     "test": "vitest run",
-    "test:unit": "vitest run --coverage --dir src",
-    "test:integration": "vitest run --coverage --dir tests",
+    "test:unit": "vitest run --dir src",
+    "test:integration": "vitest run --dir tests",
     "test:watch": "vitest",
     "ci": "npm run lint && npm run build && npm run test:unit && npm run test:integration"
   },
