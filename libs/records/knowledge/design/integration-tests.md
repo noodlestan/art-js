@@ -1,187 +1,145 @@
 # Records - Integration Tests
 
-**Purpose:** Describe the fixture suite that exercises the `@art-js/records` API through the codec and filesystem-records adapter.
+**Purpose:** Describe the end-to-end fixture suite that exercises the `@art-js/records` API through the codec and the `@art-lib/fs-records` adapter (package `@art-js/test-records`).
 
 ## Overview
 
-The integration-test package runs one `run-test.ts` per fixture case. Each test uses its case's record files, exercises a Records API use case, and asserts the result:
+Each fixture case is a directory under `$ROOT/tests/records/fixtures/` holding one Vitest file and the record files its scenario needs:
 
-```
-fixture case directory → run-test.ts → Records API → assertions
-                         _records/*.art ─┘
-```
-
-The runner discovers case directories under `$PROJECT/tests/records/fixtures/`, orders them by name, imports each `runTest()`, and runs them sequentially. It catches failures per case, reports each result and duration, then continues with the next case.
-
-Each case is copied to a temporary working directory before it runs. Tests may mutate and save records there without changing the checked-in fixture files.
-
-## Fixture Anatomy
-
-```
-$PROJECT/tests/records/fixtures/
-  01-setup-provider/
-    run-test.ts
+```text
+$ROOT/tests/records/fixtures/
+  02-field-operations/
+    integration.test.ts
     _records/artist.art
-
-  02-discover-record-files/
-    run-test.ts
-    _records/artist.art
-    _records/song.art
-    outside.art                    ← not under _records/, must not be discovered
-
-  03-read-assert-extract/
-    run-test.ts
-    _records/artist.art            ← Module, Artist, and nested Song sections
-
-  04-field-read/
-    run-test.ts
-    _records/song.art
-
-  05-write-field/
-    run-test.ts
-    _records/artist.art
-
-  06-add-field/
-    run-test.ts
-    _records/artist.art
-
-  07-remove-field/
-    run-test.ts
-    _records/artist.art
-
-  08-rename-field-in-place/
-    run-test.ts
-    _records/artist.art
-
-  09-section-depth/
-    run-test.ts
-    _records/artist.art
-
-  10-save-document-collection/
-    run-test.ts
-    _records/artist.art            ← Artist and Song sections in one document
-
-  11-create-new-record/
-    run-test.ts
-    _records/                       ← created by the test in its working copy
-
-  12-add-record-to-existing-document/
-    run-test.ts
-    _records/artist.art
-
-  13-add-sibling-record/
-    run-test.ts
-    _records/song.art
-
-  14-add-sibling-record-throws-on-foreign-anchor/
-    run-test.ts
-    _records/artist.art
-    _records/song.art
-
-  15-add-record-under-parent/
-    run-test.ts
-    _records/artist.art
-
-  16-add-record-under-parent-throws-on-foreign-anchor/
-    run-test.ts
-    _records/artist.art
-    _records/song.art
-
-  17-batch-save/
-    run-test.ts
-    _records/artist.art
-    _records/song.art
 ```
 
-`run-test.ts` exports `runTest(): Promise<void>`. It uses the fixture path derived from its own module URL, copies that case to a temporary directory, configures the codec and filesystem adapter, runs the scenario, and asserts outcomes. Fixture tests throw on failure; the runner owns the per-case `try/catch`.
+The test copies its case to a temporary working directory, configures the codec and the filesystem adapter against that copy, exercises the Records API, and asserts the result. The checked-in fixture files are never modified.
 
-The checked-in records use the Artist and Song domain. Case 03 uses the supplied Module/Artist/nested Song content to cover nested extraction and a field-less section. Case 11 creates its destination record file in the temporary directory.
+Vitest discovers cases with the `fixtures/**/integration.test.ts` pattern. Every case runs independently; a failure in one does not stop the others.
 
-Directory names beginning with `_` are skipped by the runner and reported as skipped. Use that prefix only to hold a known failing case out of the active run; remove it when the case is ready to run.
+## Scenario Design
+
+Cases are scenarios, not one assertion per API call:
+
+- Start with a read-only case that sets up the provider, discovers files, locates a record, and reads it.
+- Group compatible mutations in one fixture, save once, and assert the final file. Avoid manipulating the same field twice.
+- Keep assertions on function returns only when they localise a likely failure; the final file state is the acceptance criterion.
+- Keep filesystem-specific unhappy paths in this suite: missing files, removed directories, discovery filters. API-level throws belong to the in-package suite under `$ROOT/libs/records/tests`, which uses an in-memory adapter.
+
+## Test Anatomy
+
+Tests read as a scenario:
+
+- `describe('Case NN — ...')` names the case.
+- `describe('GIVEN ...')` establishes the state and creates the helpers for that state.
+- `describe('WHEN ...')` performs the action under test.
+- `it('SHOULD ...')` asserts the expected outcome.
+
+Setup runs in `beforeEach`; temporary directories are tracked in a module-level array and removed in `afterEach`, so a failing test still cleans up.
+
+```ts
+const tempDirs: string[] = [];
+
+afterEach(async () => {
+  await removeTempDirs(tempDirs);
+});
+
+describe('Case 02 — Renaming, adding, and deleting fields in one save', () => {
+  let filename: string;
+  let filesystemRecords: ReturnType<typeof createFSRecordsAdapter>;
+  let recordsDocument: ReturnType<typeof createRecordsDocument<FSRecordFile>>;
+
+  beforeEach(async () => {
+    const fixtureDir = getFixtureDirectory(import.meta.url);
+    const tempDir = makeTempDir(tempDirs);
+    const workingDirectory = await copyFixtureCase(fixtureDir, tempDir);
+    filename = join(workingDirectory, '_records', 'artist.art');
+
+    const codec = createArtCodec({});
+    filesystemRecords = createFSRecordsAdapter({
+      basePath: workingDirectory,
+      patterns: recordsPatterns,
+    });
+
+    function createContentSource(file: FSRecordFile) {
+      return filesystemRecords.createContentSource(file);
+    }
+
+    recordsDocument = createRecordsDocument<FSRecordFile>({ codec, createContentSource });
+  });
+
+  describe('GIVEN the Artist: Nina Simone record', () => {
+    let artist: ArtRecord;
+
+    beforeEach(async () => {
+      const files = await filesystemRecords.discoverRecordFiles();
+      const artistFile = findRecordFileByPath(files, '_records/artist.art');
+
+      if (artistFile === undefined) {
+        throw new Error('_records/artist.art was not discovered');
+      }
+
+      const document = await recordsDocument.read(artistFile);
+      const records = await document.extract();
+      artist = findRecordByName(records, 'Artist: Nina Simone') as ArtRecord;
+    });
+
+    describe('WHEN renaming Born, adding Artist, and deleting Years active, then saving', () => {
+      let content: string;
+
+      beforeEach(async () => {
+        artist.renameField('Born', 'Birth name');
+        artist['Artist'] = 'Nina Simone';
+        delete artist['Years active'];
+
+        await artist.save();
+        content = await readFile(filename, 'utf-8');
+      });
+
+      it('SHOULD persist the renamed field with its original value', () => {
+        expect(content).toContain('**Birth name:** Eunice Kathleen Waymon');
+        expect(content).not.toContain('**Born:**');
+      });
+
+      it('SHOULD persist the added field and remove the deleted one', () => {
+        expect(content).toContain('**Artist:** Nina Simone');
+        expect(content).not.toContain('**Years active:**');
+      });
+    });
+  });
+});
+```
+
+Assertions are the acceptance criteria: there are no snapshots.
 
 ## CLI
 
-Run from `$PROJECT/tests/records/`:
+Run from `$ROOT/tests/records/`:
 
 ```bash
-npm run test                  # run all fixture cases
-npm run test -- 17            # run cases whose directory name contains "17"
-npm run lint                  # Prettier, ESLint, and TypeScript checks
-npm run build                 # build the test package
-npm run ci                    # lint, build, and test
+npm run test        # run the Vitest suite
+npm run test -- 02  # run cases whose path contains "02"
+npm run lint        # Prettier, ESLint, and TypeScript checks
+npm run build       # build the test package
+npm run ci          # lint, build, and tests
 ```
 
-The optional test argument is a substring filter on the fixture-case directory name. There are no parser snapshots: the fixture test's assertions are the acceptance criteria.
+The legacy script runner (`npm run test:script`) is still wired, but no case uses it and it discovers nothing.
 
 ## Use Cases
 
 ### Add a fixture case
 
-1. Create `$PROJECT/tests/records/fixtures/$CASE/run-test.ts`, where `$CASE` is the fixture-case directory name.
-2. Add only the record files needed by the scenario under that case's `_records/` directory.
-3. Export `runTest(): Promise<void>` from `run-test.ts`; configure the codec and filesystem adapter against that case's temporary working copy.
-4. Exercise the API and assert the expected behavior. Let assertion failures throw for the runner to report; do not catch them in the fixture.
-5. Run the case and the full suite.
-
-```bash
-npm run test -- $CASE
-npm run test
-```
+1. Create `$ROOT/tests/records/fixtures/$CASE/integration.test.ts`.
+2. Add only the record files the scenario needs under that case's `_records/`.
+3. Copy the case to a temporary directory and configure the codec and adapter against it.
+4. Exercise the API, save once, and assert the final file state.
+5. Run `npm run test -- $CASE`, then the full suite.
 
 ### Update a fixture or scenario
 
-1. Change the case's `.art` records or its `run-test.ts` assertions.
-2. Run that fixture with the substring filter and check the reported result.
-3. Run the full test suite to detect regressions in other cases.
+Change the case's `.art` files or its assertions, then run that case and the full suite. Because tests run on a temporary copy, saving inside a test never updates the checked-in fixture; change the fixture itself when the accepted starting state should change.
 
-Because each case runs on a temporary copy, tests that save records do not update the checked-in fixture. Change the fixture itself when the accepted starting state should change.
+### Skip a case
 
-### Diagnose a failing case
-
-Run only that case:
-
-```bash
-npm run test -- 05
-```
-
-The report identifies the case, duration, and thrown error. If one case fails, the runner continues and reports the outcomes of the remaining cases.
-
-### Temporarily skip a fixture
-
-Agents may create forward-looking fixture cases before the corresponding implementation is complete. The test can describe the expected behavior while the implementation is in progress; prefix the fixture-case directory with `_` to commit it as skipped until it is ready to run.
-
-For example, rename:
-
-```text
-fixtures/18-add-album/
-```
-
-to:
-
-```text
-fixtures/_18-add-album/
-```
-
-The runner reports the skipped case and does not import its `run-test.ts`:
-
-```text
-Discovered 18 fixture test director(ies).
-Skipped 1 case(s) prefixed with "_": _18-add-album.
-
-Results:    17 test(s) run
-Passed:     17
-Failed:     0
-Skipped:    1
-```
-
-Remove the prefix when the implementation is ready. An agent may also prefix a previously passing fixture temporarily during refactoring, but **must not commit that skip**: restore the fixture name and resolve all issues before committing.
-
-### Run full suite
-
-```bash
-npm run ci
-```
-
-The lint, build, and test stages must all complete successfully.
-
-The test summary must report zero failures.
+Prefixing a directory with `_` only excludes its files from the legacy script runner; Vitest still discovers `fixtures/**/integration.test.ts`. Use `describe.skip` or `it.skip` when a case must stay out of the run, and remove it before committing.

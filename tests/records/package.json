@@ -32,9 +32,11 @@
     "lint:fix": "prettier . -c --write && eslint . --fix",
     "build": "esbuild-cli",
     "build:clean": "rm -rf dist",
-    "test-records": "npx tsx scripts/test-records.ts",
-    "test": "npm run test-records",
-    "ci": "npm run lint && npm run build && npm run test"
+    "test": "vitest run",
+    "test:script": "npx tsx scripts/test-records.ts",
+    "test:integration": "vitest run",
+    "test:ci": "npm run test:script && npm run test:integration",
+    "ci": "npm run lint && npm run build && npm run test:ci"
   },
   "dependencies": {
     "@art-js/records": "*",
@@ -43,6 +45,7 @@
     "@art-md/primitives": "0.0.5"
   },
   "devDependencies": {
-    "tsx": "4.8.1"
+    "tsx": "4.8.1",
+    "vitest": "4.1.8"
   }
 }

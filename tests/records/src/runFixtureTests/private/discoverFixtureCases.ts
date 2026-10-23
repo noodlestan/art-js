@@ -1,7 +1,11 @@
 import type { Dirent } from 'node:fs';
-import { readdir } from 'node:fs/promises';
+import { access, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 
+import { RUN_TEST_FILENAME } from '../../constants.js';
+
+// A case directory without `run-test.ts` belongs to the Vitest suite, so the
+// script runner leaves it alone.
 export async function discoverFixtureCases(fixturesDirectory: string): Promise<string[]> {
 	const entries = await readdir(fixturesDirectory, { withFileTypes: true });
 
@@ -13,7 +17,21 @@ export async function discoverFixtureCases(fixturesDirectory: string): Promise<s
 		return join(fixturesDirectory, entry.name);
 	}
 
-	const directories = entries.filter(isDirectory);
-	const caseDirectories = directories.map(getDirectoryPath);
-	return caseDirectories.sort();
+	async function hasRunTestFile(caseDirectory: string): Promise<boolean> {
+		return await access(join(caseDirectory, RUN_TEST_FILENAME)).then(
+			() => true,
+			() => false,
+		);
+	}
+
+	const caseDirectories = entries.filter(isDirectory).map(getDirectoryPath).sort();
+
+	const discoveredCases: string[] = [];
+	for (const caseDirectory of caseDirectories) {
+		const runnable = await hasRunTestFile(caseDirectory);
+		if (runnable) {
+			discoveredCases.push(caseDirectory);
+		}
+	}
+	return discoveredCases;
 }
