@@ -10,7 +10,7 @@
 
 **Purpose:** Deliver `@art-js/records` v0.0.1 — source-bound record proxies over Art MD documents — through implementation, integration tests, publication, and downstream adoption in Art Work.
 
-**Description:** The package is implemented in `$PROJECT/libs/records` (provider `createArtDocumentRecords({ codec, createContentSource })` with `read(file) → { assertPresence, extract, save }`, and `createArtRecord({ codec, contentSource })`; records are proxies whose `save()` writes their document through the bound source) and exercised end to end by the fixture harness in `$PROJECT/tests/records`. Remaining work: finish the Vitest fixture migration, publish, adopt in Art Work, consolidate coverage, and refresh knowledge.
+**Description:** The package is implemented in `$PROJECT/libs/records` (provider `createArtDocumentRecords({ codec, createContentSource })` with `read(file) → { assertPresence, extract, save }`, and `createArtRecord({ codec, contentSource })`; records are proxies whose `save()` writes their document through the bound source) and exercised end to end by the fixture harness in `$PROJECT/tests/records`. Remaining work: land the in-package integration suite, convert the external fixtures to Vitest, publish, adopt in Art Work, consolidate coverage, and refresh knowledge.
 
 Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/design/records.md` and `$PROJECT/libs/records/knowledge/overview.md` (the overview carries the use-case-to-fixture table and its WIP alignment list). Do not re-plan from this document's prose alone — the knowledge docs hold the contracts, shapes, and recipes.
 
@@ -25,15 +25,15 @@ Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/
 
 ## Items
 
-| Iteration                                     | Status    |
-| --------------------------------------------- | --------- |
-| Iteration: Prototype and Integration Tests    | `DONE`    |
-| Iteration: Apply Noodlestan Conventions       | `DONE`    |
-| Iteration: Align Use Cases, API, and Fixtures | `DONE`    |
-| Iteration: Convert Fixture Tests to Vitest    | `WORKING` |
-| Iteration: Publish and Consume in Art Work    | `READY`   |
-| Iteration: Consolidate                        | `READY`   |
-| Iteration: Publish and Update Knowledge       | `READY`   |
+| Iteration                                                       | Status    |
+| --------------------------------------------------------------- | --------- |
+| Iteration: Prototype and Integration Tests                      | `DONE`    |
+| Iteration: Apply Noodlestan Conventions                         | `DONE`    |
+| Iteration: Align Use Cases, API, and Fixtures                   | `DONE`    |
+| Iteration: Add Integration Tests and Convert Fixtures to Vitest | `WORKING` |
+| Iteration: Publish and Consume in Art Work                      | `READY`   |
+| Iteration: Consolidate                                          | `READY`   |
+| Iteration: Publish and Update Knowledge                         | `READY`   |
 
 ### Iteration: Prototype and Integration Tests
 
@@ -140,37 +140,53 @@ conventions(typescript): Apply noodlestan conventions to integration tests.
 build(records): Align Use Cases, API, and Fixtures.
 ```
 
-### Iteration: Convert Fixture Tests to Vitest
+### Iteration: Add Integration Tests and Convert Fixtures to Vitest
 
-**ID:** `convert-fixture-tests-to-vitest`
+**ID:** `add-integration-tests-and-convert-fixtures-to-vitest`
 
 **Status:** `WORKING`
 
-**Purpose:** Replace the bespoke fixture runner with Vitest, one case at a time, until every fixture case is a Vitest test.
+**Purpose:** Bring the integration suite into `$PROJECT/libs/records` as scenario-style Vitest cases with reusable helpers, then convert the external `$PROJECT/tests/records` fixture cases to Vitest, merging the duplicated cases and simplifying the remaining harness.
 
 **Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
 
 **Instructions:**
 
-1. Port the remaining `run-test.ts` cases to `integration-test.ts` Vitest cases; once no case uses the script runner, remove `scripts/test-records.ts`, the `test-records` script, and the dual-runner wording from the knowledge docs.
-2. Verify: `npm run test-vitest` covers every fixture case green; then commit.
+1. Add the in-package integration suite: 17 fixture cases under `libs/records/tests/fixtures`, reusable helpers (`adapter` mock, `fixtures`, `records`, `tempDirs`), and the `GIVEN`/`WHEN`/`SHOULD` scenario anatomy; wire the unit and integration scripts, tsconfig, and Vitest coverage, and rewrite the integration-tests design around the in-package suite.
+2. Convert `tests/records` to Vitest: replace every `run-test.ts` script-runner case with an `integration.test.ts` case, merge the duplicated fixture cases, simplify the shared helpers, and rework the scripts and knowledge docs for the merged suite.
+3. Verify both packages with lint, build, unit, and integration commands; then commit per the blueprints below.
 
 #### Commits:
 
-| ID                     | Repository / Checkout / Branch | Policy   | Hash    | Status     |
-| ---------------------- | ------------------------------ | -------- | ------- | ---------- |
-| `fixture-tests-vitest` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `(TBD)` | `AUTHORED` |
+| ID                          | Repository / Checkout / Branch | Policy   | Hash    | Status     |
+| --------------------------- | ------------------------------ | -------- | ------- | ---------- |
+| `package-integration-tests` | Art JS / `$PROJECT` / `main`   | `MANUAL` | `(TBD)` | `AUTHORED` |
+| `fixture-tests-vitest`      | Art JS / `$PROJECT` / `main`   | `MANUAL` | `(TBD)` | `AUTHORED` |
+
+##### Commit: `package-integration-tests`
+
+**Message:**
+
+```text
+test(records): Add fixture-based integration tests.
+
+- Add integration tests per use case.
+- Add reusable filesystem mock, fixture and cleanup helpers.
+- Split unit and integration tests entry-points.
+- Rewrite the integration test design doc.
+```
 
 ##### Commit: `fixture-tests-vitest`
 
 **Message:**
 
 ```text
-test(records): Convert fixture tests to vitest.
+test(records): Convert integration tests to Vitest.
 
-- Add `vitest.config.ts` and split `test`, `test-vitest`, and `test-records` scripts.
-- Port `05-write-field` and `08-rename-field-in-place`; extract temp-dir and discovery helpers.
-- Update integration-test design and use-case overview for the two-runner migration.
+- Replace script-runner cases with Vitest integration tests.
+- Merge overlapping cases and simplify setup, helpers and discovery.
+- Add test, test, test and test scripts.
+- Update dependencies, design and use-case documentation.
 ```
 
 ### Iteration: Publish and Consume in Art Work
