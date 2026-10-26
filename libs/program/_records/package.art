@@ -14,7 +14,7 @@
 
 **Canonical Name:** `@art-js/program`
 
-**Published:** `true`
+**Published:** `false`
 
 **Private:** `false`
 
@@ -31,9 +31,10 @@
 
 **Files:**
 
-- `dist`
-- `LICENSE-MIT`
+- `src`
 - `README.md`
+- `LICENSE-MIT`
+- `CHANGELOG.md`
 
 **Language:** Typescript
 

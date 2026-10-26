@@ -14,7 +14,7 @@
 
 **Canonical Name:** `@art-js/validator`
 
-**Published:** `true`
+**Published:** `false`
 
 **Private:** `false`
 
@@ -31,8 +31,9 @@
 **Files:**
 
 - `dist`
-- `LICENSE-MIT`
 - `README.md`
+- `LICENSE-MIT`
+- `CHANGELOG.md`
 
 **Language:** Typescript
 

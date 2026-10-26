@@ -11,14 +11,23 @@
   ],
   "author": "Noodlestan Collective",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noodlestan/art-js.git",
+    "directory": "libs/records"
+  },
   "private": false,
   "publishConfig": {
     "access": "public"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/noodlestan/art-js",
-    "directory": "libs/records/"
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE-MIT",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=22"
   },
   "type": "module",
   "sideEffects": false,
@@ -26,17 +35,8 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs"
-    },
-    "./test-helpers/*": {
-      "import": "./src/test/helpers/*"
     }
   },
-  "files": [
-    "src",
-    "dist",
-    "LICENSE-MIT",
-    "README.md"
-  ],
   "scripts": {
     "dev": "esbuild-cli-watch",
     "lint": "prettier . -c && eslint . && tsc --noEmit",
@@ -50,10 +50,10 @@
     "ci": "npm run lint && npm run build && npm run test:unit && npm run test:integration"
   },
   "dependencies": {
-    "@art-md/constructs": "0.0.5",
-    "@art-md/primitives": "0.0.5"
+    "@art-md/constructs": "0.0.6",
+    "@art-md/primitives": "0.0.6"
   },
   "devDependencies": {
-    "vitest": "4.1.8"
+    "vitest": "5.0.5"
   }
 }

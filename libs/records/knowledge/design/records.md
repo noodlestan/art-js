@@ -298,10 +298,7 @@ export type ArtRecord = {
 };
 
 export type AddRecordPosition =
-  | { before: ArtRecord }
-  | { after: ArtRecord }
-  | { appendTo: ArtRecord }
-  | { prependTo: ArtRecord };
+  { before: ArtRecord } | { after: ArtRecord } | { appendTo: ArtRecord } | { prependTo: ArtRecord };
 
 export type RecordContext = {
   codec: ArtCodec;

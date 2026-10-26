@@ -238,6 +238,7 @@ refactor(fs-records): Install fs-records 0.0.1
 - Update tests.
 - Update knowledge.
 ```
+
 1. Publish `@art-js/records@0.0.1` to npm following the workspace publish operation, then confirm `$ART_WORKS` can install it and that its Step 7 record-extraction dependency resolves (unblocks `plan-art-work-cli-global-install`).
 2. Verify: `npm info @art-js/records` resolves; record the publication and any Art Work findings in this plan; then commit.
 

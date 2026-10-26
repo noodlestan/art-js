@@ -11,24 +11,32 @@
   ],
   "author": "Noodlestan Collective",
   "license": "MIT",
-  "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/noodlestan/art-js",
-    "directory": "cli/watcher/"
+    "url": "https://github.com/noodlestan/art-js.git",
+    "directory": "cli/watcher"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE-MIT",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=22"
   },
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs"
     }
   },
-  "files": [
-    "dist",
-    "LICENSE-MIT",
-    "README.md"
-  ],
   "scripts": {
     "dev": "esbuild-cli-watch",
     "lint": "prettier . -c && eslint . && tsc --noEmit",
