@@ -10,7 +10,7 @@
 
 **Purpose:** Deliver `@art-js/records` v0.0.1 — source-bound record proxies over Art MD documents — through implementation, integration tests, publication, and downstream adoption in Art Works.
 
-**Description:** The package is implemented in `$PROJECT/libs/records` (provider `createArtDocumentRecords({ codec, createContentSource })` with `read(file) → { assertPresence, extract, save }`, and `createArtRecord({ codec, contentSource })`; records are proxies whose `save()` writes their document through the bound source) and exercised end to end by the fixture harness in `$PROJECT/tests/records`. Remaining work: land the in-package integration suite, convert the external fixtures to Vitest, publish, adopt in Art Works, consolidate coverage, and refresh knowledge.
+**Description:** The package is implemented in `$PROJECT/libs/records` (provider `createArtDocumentRecords({ codec, createContentSource })` with `read(file) → { assertPresence, extract, save }`, and `createArtRecord({ codec, contentSource })`; records are proxies whose `save()` writes their document through the bound source) and exercised end to end by the fixture harness in `$PROJECT/tests/records`. Remaining work: adopt the published package in Art Works, consolidate fixes and coverage, then publish the consolidated version and refresh knowledge.
 
 Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/design/records.md` and `$PROJECT/libs/records/knowledge/overview.md` (the overview carries the use-case-to-fixture table and its WIP alignment list). Do not re-plan from this document's prose alone — the knowledge docs hold the contracts, shapes, and recipes.
 
@@ -101,7 +101,7 @@ test(records): Add integration tests.
 | ID                             | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
 | ------------------------------ | -------------------------------- | -------- | --------- | ----------- |
 | `records-conventions`          | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `6efabf1` | `COMMITTED` |
-| `integration-test-conventions` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `5588fec` | `COMMITTED` |
+| `integration-test-conventions` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `038af1b` | `COMMITTED` |
 
 ##### Commit: `records-conventions`
 
@@ -118,6 +118,8 @@ conventions(typescript): Apply noodlestan conventions.
 ```text
 conventions(typescript): Apply noodlestan conventions to integration tests.
 ```
+
+**History note:** The changeset landed as `623f185` (fixtures and knowledge) and `038af1b` (overview) after the rebase.
 
 ### Iteration: Align Use Cases, API, and Fixtures
 
@@ -138,7 +140,7 @@ conventions(typescript): Apply noodlestan conventions to integration tests.
 
 | ID      | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
 | ------- | -------------------------------- | -------- | --------- | ----------- |
-| `align` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `b309967` | `COMMITTED` |
+| `align` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `b7cf39c` | `COMMITTED` |
 
 ##### Commit: `align`
 
@@ -168,8 +170,8 @@ build(records): Align Use Cases, API, and Fixtures.
 
 | ID                          | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
 | --------------------------- | -------------------------------- | -------- | --------- | ----------- |
-| `package-integration-tests` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `7bada38` | `COMMITTED` |
-| `fixture-tests-vitest`      | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `f631fbe` | `COMMITTED` |
+| `package-integration-tests` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `59f1b67` | `COMMITTED` |
+| `fixture-tests-vitest`      | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `0bfd4e6` | `COMMITTED` |
 
 ##### Commit: `package-integration-tests`
 
@@ -201,7 +203,7 @@ test(records): Convert integration tests to Vitest.
 
 **ID:** `publish-and-consume-in-art-work`
 
-**Status:** `READY`
+**Status:** `WORKING`
 
 **Purpose:** Make `@art-js/records` installable and prove the Art Works consumption path.
 
@@ -209,15 +211,15 @@ test(records): Convert integration tests to Vitest.
 
 **Instructions:**
 
-1. Publish `@art-js/records@0.0.1` to npm following the workspace publish operation, then confirm `$ART_WORK` can install it and that its Step 7 record-extraction dependency resolves (unblocks `plan-art-work-cli-global-install`).
+1. Publish `@art-js/records@0.0.1` to npm following the workspace publish operation, then confirm `$ART_WORKS` can install it and that its Step 7 record-extraction dependency resolves (unblocks `plan-art-work-cli-global-install`).
 2. Verify: `npm info @art-js/records` resolves; record the publication and any Art Works findings in this plan; then commit.
 
 #### Commits:
 
-| ID                      | Repository / Checkout / Branch     | Policy   | Hash      | Status      |
-| ----------------------- | ---------------------------------- | -------- | --------- | ----------- |
-| `release-first-version` | `$PROJECT` / `$PROJECT` / `main`   | `MANUAL` | `7bada38` | `COMMITTED` |
-| `install-in-art-works`  | `$ART_WORKS` / `$PROJECT` / `main` | `MANUAL` | TBD       | `AUTHORED`  |
+| ID                      | Repository / Checkout / Branch       | Policy   | Hash      | Status      |
+| ----------------------- | ------------------------------------ | -------- | --------- | ----------- |
+| `release-first-version` | `$PROJECT` / `$PROJECT` / `main`     | `MANUAL` | `65cdd54` | `COMMITTED` |
+| `install-in-art-works`  | `$ART_WORKS` / `$ART_WORKS` / `main` | `MANUAL` | TBD       | `AUTHORED`  |
 
 ##### Commit: `release-first-version`
 
@@ -232,11 +234,11 @@ release(records): 0.0.1
 **Message:**
 
 ```text
-refactor(fs-records): Install fs-records 0.0.1
+refactor(records): Install @art-js/records 0.0.1.
 
-- Replace local implementation by fs-records adapter.
-- Update tests.
-- Update knowledge.
+- Add `@art-js/records@0.0.1` to the CLI dependencies.
+- Route Step 7 record extraction through the published API.
+- Update tests and knowledge.
 ```
 
 1. Publish `@art-js/records@0.0.1` to npm following the workspace publish operation, then confirm `$ART_WORKS` can install it and that its Step 7 record-extraction dependency resolves (unblocks `plan-art-work-cli-global-install`).
@@ -255,7 +257,25 @@ refactor(fs-records): Install fs-records 0.0.1
 **Instructions:**
 
 1. Apply fixes and changes surfaced by alignment and Art Works adoption; raise the `libs/records` vitest coverage thresholds back up to the package convention once the fixture and unit suites cover the consolidated behaviour.
-2. Verify: `npm run lint`, `npm run build`, `npm run test` green with the raised thresholds; then commit.
+2. Verify: `npm run lint`, `npm run build`, `npm run test` green with the raised thresholds; then commit per the blueprint below.
+
+#### Commits:
+
+| ID            | Repository / Checkout / Branch   | Policy   | Hash    | Status     |
+| ------------- | -------------------------------- | -------- | ------- | ---------- |
+| `consolidate` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `(TBD)` | `AUTHORED` |
+
+##### Commit: `consolidate`
+
+**Message:**
+
+```text
+fix(records): Consolidate delivered surface and restore coverage.
+
+- Apply the fixes surfaced by Art Works adoption and use-case alignment.
+- Restore the package vitest coverage thresholds.
+- Tidy fixtures, helpers, and scripts left over from the runner conversion.
+```
 
 ### Iteration: Publish and Update Knowledge
 
@@ -270,7 +290,45 @@ refactor(fs-records): Install fs-records 0.0.1
 **Instructions:**
 
 1. Publish the consolidated version of `@art-js/records` to npm, then refresh `$PROJECT/libs/records/knowledge/design/records.md`, `$PROJECT/libs/records/knowledge/overview.md`, and `$PROJECT/knowledge/components.md` so statuses, fixture ids, and API reflect what shipped; clear the WIP alignment list items that are done.
-2. Verify: docs match `src/index.ts` exports and the fixture set; then commit.
+2. Verify: docs match `src/index.ts` exports and the fixture set; then commit per the blueprints below.
+
+#### Commits:
+
+| ID                     | Repository / Checkout / Branch   | Policy   | Hash    | Status     |
+| ---------------------- | -------------------------------- | -------- | ------- | ---------- |
+| `release-consolidated` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `(TBD)` | `AUTHORED` |
+| `update-knowledge`     | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `(TBD)` | `AUTHORED` |
+
+##### Commit: `release-consolidated`
+
+**Message:**
+
+```text
+release(records): Publish consolidated version.
+
+- Version and publish `@art-js/records` with the consolidated fixes.
+```
+
+##### Commit: `update-knowledge`
+
+**Message:**
+
+```text
+docs(records): Update knowledge for the published release.
+
+- Align design, overview, and components with the shipped API and fixture set.
+- Clear the completed WIP alignment items.
+```
+
+## Work
+
+### Next
+
+Install `@art-js/records@0.0.1` in `$ART_WORKS`, verify the Step 7 record-extraction dependency, and commit `install-in-art-works`.
+
+### Blockers
+
+- None.
 
 ---
 
@@ -282,7 +340,3 @@ refactor(fs-records): Install fs-records 0.0.1
 - **Granular writes and write guards** — deferred (MANAGEMENT, 2026-10-19); whole-document serialization is the v0.0.1 contract.
 - **CLI command implementation** — belongs to `$ART_WORKS` plan `plan-art-work-cli-global-install`.
 - **FS discovery/content implementation** — belongs to `$ART_LIB` (delivered: `@art-lib/fs-records@0.0.2`).
-
-```
-
-```
