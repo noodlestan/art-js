@@ -101,10 +101,11 @@ Consumers create a codec and a records provider, read a file into a per-document
 
 ## Items
 
-| Phase | Resource / Record                                                          | Status    |
-| ----- | -------------------------------------------------------------------------- | --------- |
-| 1     | Plan: Design Lib Records `_backlog/1-done/plan-design-lib-records/plan.md` | `DONE`    |
-| 2–5   | Plan: Create Lib Records `_backlog/3-now/plan-create-lib-records/plan.md`  | `WORKING` |
+| Phase | Resource / Record                                                                             | Status    |
+| ----- | --------------------------------------------------------------------------------------------- | --------- |
+| 1     | Plan: Design Lib Records `_backlog/1-done/plan-design-lib-records/plan.md`                    | `DONE`    |
+| 2–5   | Plan: Create Lib Records `_backlog/3-now/plan-create-lib-records/plan.md`                     | `WORKING` |
+| 5     | Plan: Canonical Record Field Names `_backlog/3-now/plan-canonical-record-field-names/plan.md` | `WORKING` |
 
 ## Work
 
