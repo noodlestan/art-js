@@ -37,6 +37,13 @@ This section lists the path variables used throughout the plan file and its down
 
 Change `@art-js/records` so record fields resolve through lowercase camelCase field names — `**Canonical Name:**` reads and writes as `record.canonicalName` — keeping `record.name` as the complete heading, preserving loaded labels on save, and applying the same rule to the package's tests and documentation, in scope `$PROJECT`, `$PACKAGE`, `$PACKAGE/_records/npm-deployment.art`, and `$PROJECT/tests/records`, driven by the still-open `Plan: Create Lib Records` and the Art JS parking lot.
 
+## Attachments
+
+This section lists the files attached to this plan.
+
+- `./plan__pseudo.md` (Pseudo) — Pseudo Code: define-field-name-contract.
+- `./plan__tests.md` (Tests) — Test Scenarios: define-field-name-contract.
+
 ## Scope
 
 Changes are confined to one package and one release; no consumer code changes here. The field name contract is fixed first, then the proxy together with label preservation and every dependent test, then edge cases, then documentation, then the `0.1.0` release preparation for the user to publish. Each iteration lands with the tests it breaks, so every commit is green.
@@ -197,7 +204,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 | Iteration                                        | Status     |
 | ------------------------------------------------ | ---------- |
-| Iteration: Define Field Name Contract            | `PLANNING` |
+| Iteration: Define Field Name Contract            | `READY`    |
 | Iteration: Index Property Access and Labels      | `PLANNING` |
 | Iteration: Handle Collisions and Reserved Labels | `PLANNING` |
 | Iteration: Document Field Name Access            | `PLANNING` |
@@ -207,13 +214,15 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 **Id:** `define-field-name-contract`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Pin the field name grammar, the two converters, and the reservation predicate as pure, unit-tested functions, so every later behaviour change references one definition.
 
 **Description:** Adds `isCanonicalFieldName`, `labelToName`, and `nameToLabel` under `$PACKAGE/src/record/private`, extends `isReservedFieldName` to the full reserved set, pins the canonical field name grammar as a single regexp, and covers all four with unit tests. The next iteration routes the proxy through them. No proxy or serialization change.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/define-field-name-contract.md`
 
 **Changes:**
 
@@ -460,6 +469,8 @@ docs(records): Document field name access.
 
 **Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
 
+**Pending Instructions:** — not yet rendered. This iteration carries `Purpose`, `Description`, and `Changes` only. Before it is dequeued, run `write-instructions` in inline mode to populate `**Instructions:**` from `$DOMAINS/plans/templates/instructions.tart`. Do not delegate this iteration until that field holds content.
+
 **Changes:**
 
 - Set the `$PACKAGE/package.json` version to `0.1.0` and write the `$PACKAGE/CHANGELOG.md` `0.1.0` section: breaking field access, canonical field names, label preservation, collision and reserved-label rules, migration note.
@@ -490,11 +501,11 @@ release(records): 0.1.0.
 
 ### Next
 
-Write the instruction file for `define-field-name-contract`, then delegate the four self-contained iterations in order; `index-property-access-and-labels` owns the whole write path and must not be split across agent sessions. `prepare-0-1-0-release` is delegated with its inlined instructions. Then commit the release preparation for the user to publish.
+Delegate `define-field-name-contract` (instructions written, iteration `READY`), then write the instruction files for `index-property-access-and-labels`, `handle-collisions-and-reserved-labels`, and `document-field-name-access` as each is dequeued. `index-property-access-and-labels` owns the whole write path and must not be split across agent sessions. `prepare-0-1-0-release` is delegated with its inlined instructions. Then commit the release preparation for the user to publish.
 
 ### Blockers
 
-- **Missing instruction files** — four iterations are `INSTRUCTIONS_SELF_CONTAINED_FILE` with no `instructions/{iteration.id}.md`; delegation is impossible until they exist. Scope, grammar, index, and rename semantics are fully settled.
+- **Missing instruction files** — `index-property-access-and-labels`, `handle-collisions-and-reserved-labels`, and `document-field-name-access` are `INSTRUCTIONS_SELF_CONTAINED_FILE` with no `instructions/{iteration.id}.md` yet; `define-field-name-contract` is written and `READY`. `prepare-0-1-0-release` is inlined and still `PLANNING`. Scope, grammar, index, and rename semantics are fully settled.
 
 ---
 
