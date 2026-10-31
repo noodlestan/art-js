@@ -2,6 +2,8 @@ import type { FieldBlock, FieldInline } from '@art-md/constructs';
 
 import type { RecordSection } from '../types.js';
 
+export type FieldName = string;
+
 export type ArtRecordCapsule = {
 	readonly section: RecordSection;
 	getName(): string;
