@@ -3,10 +3,7 @@ import type { ArtCodec, ArtContentSource } from '@art-md/primitives';
 import type { ArtRecord } from '../record/types.js';
 
 export type AddRecordPosition =
-	| { before: ArtRecord }
-	| { after: ArtRecord }
-	| { appendTo: ArtRecord }
-	| { prependTo: ArtRecord };
+	{ before: ArtRecord } | { after: ArtRecord } | { appendTo: ArtRecord } | { prependTo: ArtRecord };
 
 export type RecordsDocumentCollection = {
 	hasRecord(name: string): Promise<boolean>;

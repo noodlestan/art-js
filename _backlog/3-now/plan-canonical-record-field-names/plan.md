@@ -204,7 +204,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 | Iteration                                        | Status     |
 | ------------------------------------------------ | ---------- |
-| Iteration: Define Field Name Contract            | `READY`    |
+| Iteration: Define Field Name Contract            | `DONE`     |
 | Iteration: Index Property Access and Labels      | `PLANNING` |
 | Iteration: Handle Collisions and Reserved Labels | `PLANNING` |
 | Iteration: Document Field Name Access            | `PLANNING` |
@@ -214,7 +214,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 **Id:** `define-field-name-contract`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Pin the field name grammar, the two converters, and the reservation predicate as pure, unit-tested functions, so every later behaviour change references one definition.
 
@@ -223,6 +223,8 @@ This section lists the downstream work items produced, coordinated, or advanced 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
 **Instructions:** `./instructions/define-field-name-contract.md`
+
+**Report:** `./instructions/define-field-name-contract__report.md`
 
 **Changes:**
 
@@ -272,9 +274,9 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 #### Commits:
 
-| ID                       | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
-| ------------------------ | -------------------------------- | -------- | ----- | ---------- |
-| `add-field-name-helpers` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+| ID                       | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ------------------------ | -------------------------------- | -------- | --------- | ----------- |
+| `add-field-name-helpers` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `224deb6` | `COMMITTED` |
 
 ##### Commit: `add-field-name-helpers`
 
@@ -501,11 +503,11 @@ release(records): 0.1.0.
 
 ### Next
 
-Delegate `define-field-name-contract` (instructions written, iteration `READY`), then write the instruction files for `index-property-access-and-labels`, `handle-collisions-and-reserved-labels`, and `document-field-name-access` as each is dequeued. `index-property-access-and-labels` owns the whole write path and must not be split across agent sessions. `prepare-0-1-0-release` is delegated with its inlined instructions. Then commit the release preparation for the user to publish.
+Iteration `define-field-name-contract` is `DONE` — commit `224deb6` (not pushed), delegation report recorded. Write the instruction files for `index-property-access-and-labels`, `handle-collisions-and-reserved-labels`, and `document-field-name-access` as each is dequeued. `index-property-access-and-labels` owns the whole write path and must not be split across agent sessions. `prepare-0-1-0-release` is delegated with its inlined instructions — remember to populate the `**Instructions:**` field first (see Feedback). Then commit the release preparation for the user to publish.
 
 ### Blockers
 
-- **Missing instruction files** — `index-property-access-and-labels`, `handle-collisions-and-reserved-labels`, and `document-field-name-access` are `INSTRUCTIONS_SELF_CONTAINED_FILE` with no `instructions/{iteration.id}.md` yet; `define-field-name-contract` is written and `READY`. `prepare-0-1-0-release` is inlined and still `PLANNING`. Scope, grammar, index, and rename semantics are fully settled.
+- **Missing instruction files** — `index-property-access-and-labels`, `handle-collisions-and-reserved-labels`, and `document-field-name-access` are `INSTRUCTIONS_SELF_CONTAINED_FILE` with no `instructions/{iteration.id}.md` yet; `prepare-0-1-0-release` is inlined and still `PLANNING`. Scope, grammar, index, and rename semantics are fully settled.
 
 ---
 
@@ -683,4 +685,7 @@ The following decisions are tactical and scoped to this plan only.
 
 ### Feedback
 
-- None.
+- **Delegation: `define-field-name-contract` (2026-10-31)** — worker deviation, semantics unchanged: `@typescript-eslint/no-use-before-define` rejects declarations after `return` or before use, so the instruction snippets' ordering (`capitalize`, helper closures) must place declarations first in later iterations' instructions too.
+- **Delegation: `define-field-name-contract` (2026-10-31)** — the mandated repo-wide `lint:fix` normalized pre-existing prettier violations in `$PACKAGE/knowledge/design/records.md` and `$PACKAGE/src/records-document/types.ts`; they stay uncommitted, to be picked up by the next commit that touches them.
+- **Delegation validation (2026-10-31)** — `prepare-0-1-0-release` is `INSTRUCTIONS_INLINED_IN_ITERATION` but carries no `**Instructions:**` field; populate the inlined block before that iteration is dequeued.
+- **Delegation validation (2026-10-31)** — the `define-field-name-contract` instructions' Mandatory Reading omits `$PACKAGE/knowledge/overview.md`; not needed for the helpers iteration, fold in on next edit.
