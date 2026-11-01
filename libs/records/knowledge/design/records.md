@@ -152,13 +152,13 @@ if (project === undefined) {
   throw new Error('Project: Art JS section not found');
 }
 
-project.owner = 'foo';
-project.renameField('owner', 'maintainer');
+project.repository = 'art-js';
+project.renameField('repository', 'checkout');
 project.maintainer = 'foo';
 await project.save();
 ```
 
-Setting a missing field appends it to the section. Renaming a field changes its label in place. Deleting a field (`delete record.owner`) removes it. The record heading is identity and cannot be renamed after extraction. Section depth is read-only: placement fixes it at creation (see Creating New Records) and the heading level written on save always matches it. `save()` writes the containing document once through the record's bound source; other in-memory edits to that document are included in the same write.
+Setting a name that is not in the record's index appends a new inline field at the end of `section.children`. `renameField(fromName, toName)` renames by name: it relabels the field bound to `fromName` to `nameToLabel(toName)` in place, preserving its position, and forgets the old spelling. Deleting a field (`delete record.repository`) removes the construct bound to that name. All three operations address fields by name (see Field Names). The record heading is identity and cannot be renamed after extraction. Section depth is read-only: placement fixes it at creation (see Creating New Records) and the heading level written on save always matches it. `save()` writes the containing document once through the record's bound source; other in-memory edits to that document are included in the same write.
 
 ### Creating New Records
 
@@ -207,7 +207,7 @@ const documentRecords = createRecordsDocument<FSRecordFile>({
 const projectDocument = await documentRecords.create(destinationFile);
 const record = projectDocument.addRecord();
 record.name = 'Project: Art JS';
-record.owner = 'foo';
+record.repository = 'art-js';
 await record.save();
 ```
 
@@ -268,7 +268,7 @@ const recordGroups = await Promise.all(documents.map(document => document.extrac
 const allRecords = recordGroups.flat();
 
 for (const record of allRecords) {
-  record.owner = 'foo';
+  record.repository = 'art-js';
 }
 
 await Promise.all(documents.map(document => document.save()));
@@ -331,7 +331,85 @@ export function createRecord(options: RecordContext): ArtRecord;
 
 ### Reserved names
 
-Handle members (`name`, `__section`, `save`, `renameField`) are reserved on the record proxy; a field must not carry one of those names. The `__` prefix is reserved for handle members: no field may be named `__*`. This keeps every handle accessor collision-free against dynamic field properties. `record.name` is typed writable and guarded at runtime for extracted and saved records. `record.__section.name` and `record.__section.depth` are typed readonly and guarded at runtime.
+Handle members (`name`, `__section`, `save`, `renameField`) are reserved on the record proxy, and every `__`-prefixed name is reserved for the API. Addressing a field by a reserved name throws a `TypeError` on read, write, and delete, and a document field label that resolves to a reserved name aborts extraction. This keeps every handle accessor collision-free against dynamic field properties. `record.name` is typed writable and guarded at runtime for extracted and saved records. `record.__section.name` and `record.__section.depth` are typed readonly and guarded at runtime. The reachable reserved set, the exact extraction error, and the distinction between reserved **names** and `__`-prefixed **labels** are specified in [Field Names](#field-names).
+
+## Field Names
+
+Records address fields by **field name**, never by the label written in the document. A field name is either derived from the stored label at extraction (`labelToName`) or supplied by the consumer through the API. The stored label itself is never rewritten by a value update.
+
+### Canonical grammar
+
+A canonical field name matches `/^[a-z][a-zA-Z0-9]*$/` — a leading lowercase letter followed by letters and digits (`userId`, `a333`, `repo2Branch`). The grammar is a syntax gate on names **supplied through the API only**: creating a field whose name is not in the index, and renaming to a new name, must pass it. Names derived from document labels are never gated by the grammar — `labelToName` legitimately yields `3A33` or `ação`, and extraction keeps them as-is. The grammar is a syntax test and nothing more: `name`, `save`, and `renameField` are syntactically valid; reservation is a separate predicate (see [Reserved names](#reserved-names)).
+
+### The two guarantees
+
+- **API-created fields always carry a canonical name.** A name that passes the grammar gate is written with the label `nameToLabel(name)`.
+- **Extracted fields carry whatever `labelToName` yields.** Extraction never rejects a field because its derived name is not canonical, and never rewrites a stored label retrospectively.
+
+The guarantees are never conflated: a value update through an existing name touches the value only — the stored label, whatever it is, stays in the document.
+
+### labelToName and nameToLabel
+
+`labelToName` (direction A, document → API) is a single left-to-right pass over the label's Unicode code points: every non-word character (`[^\p{L}\p{M}\p{N}]`) is a separator, a lower→upper boundary starts a new word, and an uppercase run stays inside its word; the first word is lowercased and later words are capitalised. A label with no word characters (empty, whitespace, separator-only) throws `TypeError: Field label must contain at least one word character`. It is **not idempotent and never fed its own output**: it maps labels, not names, so `labelToName(labelToName(x))` is undefined behaviour for a label and is never asserted. It is deterministic and pure — no state, no locale sensitivity.
+
+| Input            | Words before join   | Result          | Rule exercised                                         |
+| ---------------- | ------------------- | --------------- | ------------------------------------------------------ |
+| `Canonical Name` | `Canonical`, `Name` | `canonicalName` | separator + lower→upper                                |
+| `aB-a`           | `a`, `B`, `a`       | `aBA`           | lower→upper, then separator, first word lowercased     |
+| `aBC`            | `a`, `BC`           | `aBc`           | uppercase run stays one word, rest lowercased          |
+| `IDField`        | `IDField`           | `idfield`       | `IDF` never splits; single word lowercased             |
+| `NPM Package`    | `NPM`, `Package`    | `npmPackage`    | acronym run kept whole; later word capitalised         |
+| `3A33`           | `3`, `A33`          | `3A33`          | digit→upper boundary; first word lowercased is a no-op |
+| `0-1-0`          | `0`, `1`, `0`       | `010`           | digits are word characters; separators collapse        |
+| `Ação`           | `Ação`              | `ação`          | non-ASCII letters are word characters; single word     |
+| `a[b]c`          | `a`, `b`, `c`       | `aBC`           | brackets are separators; three words                   |
+
+`nameToLabel` (direction B, API → document) splits before **every** uppercase letter — unlike `labelToName`, an uppercase run yields one word per letter — and space-joins the words with the first character upper-cased and the remainder **as-is** (`repo2Branch` keeps `epo2` unchanged inside `Repo2`). No validation and no guard: callers pass a name that already passed the grammar.
+
+| Input         | Words             | Result         |
+| ------------- | ----------------- | -------------- |
+| `userId`      | `user`, `Id`      | `User Id`      |
+| `aBC`         | `a`, `B`, `C`     | `A B C`        |
+| `repo2Branch` | `repo2`, `Branch` | `Repo2 Branch` |
+| `brandNew`    | `brand`, `New`    | `Brand New`    |
+
+**The round trip that must hold** is `labelToName(nameToLabel(name)) === name` for every canonical name: `userId` → `User Id` → `userId`. A **stored label does not round-trip, by design**: `labelToName('IDField')` is `idfield`, `nameToLabel('idfield')` is `Idfield`, and the document still reads `IDField:` because nothing ever rewrote it. Direction A is correct as-is and is never tested as if it round-tripped.
+
+### Reserved names
+
+`isReservedFieldName(name)` is true for any name with a `__` prefix and for the handle-member names `name`, `save`, `renameField`, and `__section`. The two predicates compose rather than overlap: `name` is canonical (syntax) and reserved (collision), and the guard rejects it because it is both.
+
+Only three collisions are reachable from a document: labels `Name`, `Save`, and `Rename Field` resolve to `name`, `save`, and `renameField` and abort extraction with:
+
+```text
+TypeError: Field label "Name" resolves to reserved name "name"
+```
+
+A `__`-prefixed **name** is reserved for the API gate and never enters the index. A `__`-prefixed **label** is not: `labelToName` treats `_` as a separator, so `__ Owner` converts to the non-reserved name `owner` and loads normally. `labelToName` never emits a `__` prefix, which is why `__section` is unreachable from any label.
+
+### The name → field index
+
+Extraction builds one `name → field` index per record, in document order, mapping `labelToName(label)` to the field construct; the first occurrence of a name wins and later duplicates stay in the section, shadowed. Every access trap is an index lookup — no trap scans section fields or converts a label at access time. Removing the indexed field — by `delete`, or by a `renameField` that vacates the name — promotes the next duplicate, and the promoted field keeps its own stored label (`**Purpose:** Second` promotes under `purpose:` unchanged).
+
+Mutation guards follow the name classes:
+
+- Reserved names throw on read, write, and delete through the proxy.
+- The canonical regexp gates creation only: writing a name already in the index updates its value without re-validating the name.
+- The delete cells for handle members and for names not in the index report not-removed, surfaced as a `TypeError` by a strict-mode `delete`.
+
+### Derived labels
+
+A new field created through the API is labelled `nameToLabel(name)`: `brandNew` → `Brand New`, `npmPackageDeployment` → `Npm Package Deployment`. The derived label may not match how a consumer would spell the label by hand — a stated limitation of the one-way converter, not a bug.
+
+### Codec constraint
+
+Documents parsed by the Art MD codec only ever carry letter-led labels (`/^[A-Za-z][A-Za-z ]*:(?:\s|$)/`). Arbitrary labels — digit-led, bracketed, non-ASCII-led — exist only in hand-built sections; the converters still handle them and the index still indexes them.
+
+### Decisions
+
+- Canonical field names — grammar, guarantees, converters, and label policy ([`adr/canonical-field-names.art`](../adr/canonical-field-names.art)).
+- The `name → field` index — one index at extraction, first-wins, promotion on removal ([`adr/field-name-index.art`](../adr/field-name-index.art)).
+- Rename by name — validation order, relabelling, and the forgotten spelling ([`adr/rename-field-by-name.art`](../adr/rename-field-by-name.art)).
 
 ## Record Model
 
@@ -343,7 +421,7 @@ Records produced by a collection — through `extract()` or `addRecord()` — sh
 
 ## Field and Section Behaviour
 
-A field property such as `record.owner` resolves by exact field name against the section's `FieldInline` or `FieldBlock` children. Setting a missing field appends a new inline field at the end of `section.children`. `renameField()` changes the field label in place and preserves its position. `delete record.owner` removes the construct.
+A field property such as `record.repository` resolves by field name against the `name → field` index built from the section's `FieldInline` or `FieldBlock` children (see Field Names). Reading a name that is not in the index returns `undefined`. Writing a name that is not in the index appends a new inline field at the end of `section.children`, gated by the canonical grammar and labelled `nameToLabel(name)`; writing a name that is in the index replaces its value in place. `renameField(fromName, toName)` relabels the field bound to `fromName` with `nameToLabel(toName)` and preserves its position; the old spelling is forgotten. `delete record.repository` removes the construct bound to that name.
 
 `record.__section` exposes the complete `SectionBlock`, including its properties (`depth`, `tags`) and ordered children. `record.__section.depth` is read-only: placement fixes it at creation and the heading level written on save always matches it. Field values read back as their natural text representation; fixtures assert inline and block field reads round-trip through the codec.
 

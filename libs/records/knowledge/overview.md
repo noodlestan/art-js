@@ -15,36 +15,34 @@
 
 ## Use Cases
 
-Each use case is exercised by an integration fixture: a directory under `$ROOT/tests/records/fixtures/` (package `@art-js/test-records`) whose id is listed in the Fixture column. Vitest discovers cases with `fixtures/**/integration.test.ts`; a fixture may cover several related routes and asserts the final file state after one save.
+Each use case is exercised by a fixture directory under `$PACKAGE/tests/fixtures/` whose id is listed in the Fixture column. Vitest discovers cases with `fixtures/**/integration.test.ts`; a fixture may cover several related routes and asserts the final file state after one save.
 
-| Use case                                                         | Target | Route                                                                   | Fixture                                      |
-| ---------------------------------------------------------------- | ------ | ----------------------------------------------------------------------- | -------------------------------------------- |
-| Set up the records provider (codec, adapter, provider)           | v0.0.1 | `createRecordsDocument({ codec, createContentSource })`                 | `01-read-document`                           |
-| Discover record files                                            | v0.0.1 | `@art-lib/fs-records` adapter                                           | `01-read-document`, `07-discovery-patterns`  |
-| Check that a record exists                                       | v0.0.1 | `recordsDocument.hasRecord(name)`                                       | `01-read-document`                           |
-| Extract document sections                                        | v0.0.1 | `await recordsDocument.extract()`                                       | `01-read-document`                           |
-| Read fields                                                      | v0.0.1 | `record['Artist']` or `record.__section`                                | `01-read-document`                           |
-| Write fields                                                     | v0.0.1 | `record['Artist'] = value`                                              | `02-field-operations`                        |
-| Add a field                                                      | v0.0.1 | `record['Artist'] = value`                                              | `02-field-operations`                        |
-| Remove a field                                                   | v0.0.1 | `delete record['Born']`                                                 | `02-field-operations`                        |
-| Rename a field and write its value                               | v0.0.1 | `record.renameField()` and field assignment                             | `02-field-operations`                        |
-| Read fields reactively                                           | v1     | reactive proxy                                                          | — (v1)                                       |
-| Inspect section structure and depth                              | v0.0.1 | `record.__section`                                                      | `01-read-document`, `02-field-operations`    |
-| Mutate fields with reactive propagation                          | v1     | reactive proxy                                                          | — (v1)                                       |
-| Mutate a record reactively                                       | v1     | reactive proxy                                                          | — (v1)                                       |
-| Persist changes with field order and section structure preserved | v0.0.1 | `await record.save()`                                                   | `02-field-operations`, `03-compose-document` |
-| Create a new record in a new file                                | v0.0.1 | `await recordsDocument.create(file)`, then `addRecord()`                | `04-create-document`                         |
-| Add a record to an existing document                             | v0.0.1 | `recordsDocument.read(file)`, then `addRecord()`                        | `03-compose-document`                        |
-| Insert a record before or after a sibling record                 | v0.0.1 | `addRecord({ before: record })` or `addRecord({ after: record })`       | `03-compose-document`                        |
-| Append or prepend a record under a parent record                 | v0.0.1 | `addRecord({ appendTo: record })` or `addRecord({ prependTo: record })` | `03-compose-document`                        |
-| Batch save across documents                                      | v0.0.1 | per-document `save()` via `Promise.all`                                 | `05-batch-save`                              |
-| Reject missing reads and saves into removed directories          | v0.0.1 | filesystem content-source errors                                        | `06-fs-boundaries`                           |
-| Filter discovery by pattern, exclusion, and record kind          | v0.0.1 | adapter `patterns` and `discoverRecordFiles(kinds)`                     | `07-discovery-patterns`                      |
-| Delete a record from a document                                  | v0.0.1 | `deleteRecord()`                                                        | —                                            |
+| Use case                                                      | Target | Route                                                                               | Fixture                                               |
+| ------------------------------------------------------------- | ------ | ----------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| Set up the records provider (codec, adapter, provider)        | v0.0.1 | `createRecordsDocument({ codec, createContentSource })`                             | `01-setup-provider`                                   |
+| Discover record files                                         | v0.0.1 | `@art-lib/fs-records` adapter                                                       | `02-discover-record-files`                            |
+| Check that a record exists and extract its sections           | v0.0.1 | `recordsDocument.hasRecord(name)`, `await recordsDocument.extract()`                | `03-read-assert-extract`                              |
+| Read fields by canonical field name                           | v0.0.1 | `record['artist']` resolves the `Artist` label; the label itself is `undefined`     | `04-field-read`                                       |
+| Write an existing field                                       | v0.0.1 | `record['born'] = value` replaces the value in place                                | `05-write-field`                                      |
+| Add a field                                                   | v0.0.1 | `record['artist'] = value` appends a field labelled `Artist`                        | `06-add-field`                                        |
+| Remove a field                                                | v0.0.1 | `delete record['born']`                                                             | `07-remove-field`                                     |
+| Rename a field by name                                        | v0.0.1 | `record.renameField('born', 'artist')`                                              | `08-rename-field-in-place`                            |
+| Inspect section structure and depth                           | v0.0.1 | `record.__section`                                                                  | `09-section-depth`                                    |
+| Persist every in-memory record of a document with one save    | v0.0.1 | `await record.save()` / collection `save()`                                         | `10-save-document-collection`                         |
+| Create a new record in a new file                             | v0.0.1 | `await recordsDocument.create(file)`, then `addRecord()`                            | `11-create-new-record`                                |
+| Add a record to an existing, populated document               | v0.0.1 | `recordsDocument.read(file)`, then `addRecord()`                                    | `12-add-record-to-existing-document`                  |
+| Insert a record before or after a sibling record              | v0.0.1 | `addRecord({ before: record })` / `addRecord({ after: record })`                    | `13-add-sibling-record`                               |
+| Reject sibling placement with a foreign anchor                | v0.0.1 | `addRecord({ before: foreign })` throws and inserts nothing                         | `14-add-sibling-record-throws-on-foreign-anchor`      |
+| Append or prepend a record under a parent record              | v0.0.1 | `addRecord({ appendTo: record })` / `addRecord({ prependTo: record })`              | `15-add-record-under-parent`                          |
+| Reject parent placement with a foreign anchor                 | v0.0.1 | `addRecord({ appendTo: foreign })` throws and inserts nothing                       | `16-add-record-under-parent-throws-on-foreign-anchor` |
+| Batch save across documents                                   | v0.0.1 | per-document `save()` via `Promise.all`                                             | `17-batch-save`                                       |
+| Update by canonical name, keeping the loaded label            | v0.0.1 | `record['canonicalName'] = value` writes back under `Canonical Name:`               | `18-canonical-name-round-trip`                        |
+| Resolve duplicate field names: first wins, promote on removal | v0.0.1 | `record['purpose']`, then `delete record['purpose']` promotes the duplicate         | `19-duplicate-field-names`                            |
+| Abort extraction when a label resolves to a reserved name     | v0.0.1 | `extract()` throws `TypeError: Field label "Name" resolves to reserved name "name"` | `20-reserved-label-throws`                            |
 
 ### WIP: use-case and fixture alignment
 
-- "Set up the records provider" is a recipe rather than a consumer outcome; every fixture performs it, and `01-read-document` covers it end to end.
+- "Set up the records provider" is a recipe rather than a consumer outcome; every fixture performs it, and `01-setup-provider` covers it end to end.
 - The reactive use cases have no fixtures until the reactive capsule variant lands (v1).
 
 ## Flow

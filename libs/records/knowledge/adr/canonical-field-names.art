@@ -1,0 +1,13 @@
+# Records - Canonical Field Names
+
+**Purpose:** Decisions about field naming in `@art-js/records` — the canonical grammar, the two guarantees, and the label policy.
+
+## Decision: Canonical Field Names
+
+**Status:** Adopted
+
+**Context:** Record fields were addressed by the exact document label (`record['Canonical Name']`, `record.Repository`), so consumers carried label spelling into code, `renameField()` changed labels in place, and a document spelling change silently changed the API surface. `0.1.0` needs one access model with a defined relationship between document labels and API names.
+
+**Decision:** Fields are addressed by **field name**. A canonical field name matches `/^[a-z][a-zA-Z0-9]*$/` and is the only shape the API accepts for names it supplies: API-created fields always carry a canonical name and are written with the label `nameToLabel(name)`. Extracted fields carry whatever `labelToName` yields from the stored label — never rejected for a non-canonical derived name, and their label is never rewritten by a value update. There is no label fallback and no dual mode: one address space, the field name. There is no label escape hatch — `record.__section` is the only route to non-addressable fields.
+
+**Consequences:** Consumers migrate `record.Repository` → `record.repository` and `record['Canonical Name']` → `record.canonicalName`; the single consumer (`checkouts/art-works`) migrates in a follow-up of Plan: Canonical Record Field Names. Derived labels are a stated limitation, not a bug: a new field is labelled `nameToLabel(name)` (`brandNew` → `Brand New`). Stored labels do not round-trip by design (`IDField` stays `IDField` in the document while its name is `idfield`); the required invariant is only `labelToName(nameToLabel(name)) === name`.

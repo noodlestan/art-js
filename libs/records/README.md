@@ -6,6 +6,39 @@ Record identity, discovery, extraction, update and serialisation for Markdown do
 
 This package is part of the [Art JS toolkit](../../README.md) toolkit.
 
+## Usage
+
+Fields are addressed by **canonical field names** — `/^[a-z][a-zA-Z0-9]*$/` — derived once from the stored document label at extraction. A value update never rewrites the label; new fields and renames write labels derived with `nameToLabel`.
+
+Given a provider created with `createRecordsDocument({ codec, createContentSource })` (see the [design document](knowledge/design/records.md)):
+
+```ts
+const document = await documentRecords.read(packageFile);
+const records = await document.extract();
+const packageRecord = records.find(record => record.name === 'Package: Records');
+
+if (packageRecord === undefined) {
+  throw new Error('Package: Records section not found');
+}
+
+packageRecord.purpose; // reads the `**Purpose:**` field by name
+packageRecord.canonicalName; // reads `**Canonical Name:** @art-js/records` by name
+packageRecord.__section; // the complete SectionBlock
+
+packageRecord.repository = 'art-js'; // appends `**Repository:** art-js`
+packageRecord.renameField('repository', 'checkout'); // relabels it `**Checkout:** art-js`
+await packageRecord.save(); // writes the document once
+```
+
+A field label that resolves to a reserved name (`Name`, `Save`, `Rename Field`) aborts `extract()` with a `TypeError`; `record.name`, `record.__section`, `record.save()`, and `record.renameField()` stay handle members.
+
+## Migrating from 0.0.x
+
+- `record.Repository` → `record.repository` — fields resolve by canonical field name, never by the stored label.
+- `record['Canonical Name']` → `record.canonicalName` — labels are converted once with `labelToName`.
+- `renameField` now takes names: `record.renameField('repository', 'checkout')` relabels the field via `nameToLabel(toName)` and forgets the old spelling.
+- New fields derive their label from their name: `record.brandNew = 'x'` writes `**Brand New:** x`.
+
 ## Development
 
 Make sure you read the [Art JS README](../../README.md) first.
