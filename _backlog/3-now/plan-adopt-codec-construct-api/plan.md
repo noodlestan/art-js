@@ -107,20 +107,23 @@ deps(records): Pin art-md packages.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
+**Instructions:** `./instructions/create-constructs-through-codec.md`
+
 **Changes:**
 
 - Delete `$PACKAGE/src/record/private/createTextBlock.ts`, `$PACKAGE/src/record/private/createTextExpression.ts`, and `$PACKAGE/src/record/private/readText.ts`.
 - Change `$PACKAGE/src/record/private/setSectionField.ts` to `setSectionField(codec, field, value)`, where `field` is the `SectionField` its caller already resolved. Create the expression with `codec.create<NaturalExpression>('NaturalExpression', { type: 'text', value: text })` and the block with `codec.create<NaturalBlock>('NaturalBlock', { value: text, children: [] })`. Keep the `const text = String(value)` coercion and the existing inline/block branch.
 - Change `$PACKAGE/src/record/private/getSectionField.ts` to `getSectionField(codec, field)`, returning `codec.toText(field)`.
 - Change `$PACKAGE/src/record/private/appendSectionField.ts` to `appendSectionField(codec, section, name, value)` and create its expression through the codec. Its `FieldInline` wrapper stays an object literal — this plan replaces the three helpers, not every construct literal in the package.
-- In `$PACKAGE/src/record/private/createRecordCapsule.ts`, pass `context.codec` at the three call sites: the `getField` read, the `setField` update, and the `setField` append. No new plumbing: `RecordHandleContext` already declares `codec: ArtCodec`.
-- Update the tests that construct a capsule context: `$PACKAGE/src/record/createRecord.test.ts` passes `codec: {} as never`, which the new path dereferences — supply a real `createArtCodec()` or a stub exposing `create` and `toText`. The integration fixtures under `$PACKAGE/tests/fixtures` already build a real codec and need no change.
+- In `$PACKAGE/src/record/private/createRecordCapsule.ts`, pass `context.codec` at the three call sites: the `getField` read, the `setField` update, and the `setField` append. The codec is not yet on the internal contexts: `RecordHandleContext` and `RecordsCollectionContext` must each gain `readonly codec: ArtCodec`, populated in `createRecord.ts`, `createRecordsDocument.ts`, and `createRecordsCollection.ts`. `RecordContext` and `RecordsDocumentContext` already carry it; no public type changes.
+- Update the tests that construct a capsule context: `$PACKAGE/src/record/createRecord.test.ts` and `$PACKAGE/src/record/private/createRecordProxy.test.ts` pass `codec: {} as never`, which the new path dereferences — supply a real `createArtCodec()` or a stub exposing `create` and `toText`. The `$PACKAGE/tests/helpers/records/createSectionRecord.ts` helper builds a handle context too and needs a codec. The integration fixtures under `$PACKAGE/tests/fixtures` already build a real codec and need no change.
 - Remove imports the deletions orphan, and keep `NaturalBlock` and `NaturalExpression` as type-only imports in the field helpers.
 - Verify `npm run ci` from `$PACKAGE`, then `npm run ci` from `$PROJECT`.
 
 **Dependencies:**
 
-- None blocking. `Plan: Canonical Record Field Names` iteration `index-property-access-and-labels` rewired `createRecordCapsule` and the field helpers before this iteration was written, landing as `05a7a88`; this iteration is written against that result.
+- Iteration: Pin Art MD Dependencies — this iteration compiles against `@art-md/codec@0.0.5` and `@art-md/primitives@0.0.7`, and the codec is not yet a declared dependency of `$PACKAGE`. Do not delegate until `pin-art-md-dependencies` is committed.
+- `Plan: Canonical Record Field Names` iteration `index-property-access-and-labels` rewired `createRecordCapsule` and the field helpers before this iteration was written, landing as `05a7a88`; this iteration is written against that result.
 
 #### Commits:
 
@@ -145,7 +148,7 @@ refactor(records): Create constructs through the codec.
 
 ### Next
 
-`pin-art-md-dependencies` is `READY` with its instruction file and can be delegated now: it touches only the two manifests and the lock, so it cannot collide with the records source. Then write the instruction file for `create-constructs-through-codec` against the post-`05a7a88` helpers — `setSectionField(field, value)`, `getSectionField(field)`, and `appendSectionField(section, name, value)` — and delegate it once the pin commit has landed.
+`pin-art-md-dependencies` is `READY` with its instruction file and can be delegated now: it touches only the two manifests and the lock, so it cannot collide with the records source. `create-constructs-through-codec` is `PLANNING` with its instruction file authored against the post-`05a7a88` helpers — `setSectionField(field, value)`, `getSectionField(field)`, and `appendSectionField(section, name, value)` — and the internal handles the codec still has to reach; delegate it once the pin commit has landed.
 
 ### Blockers
 
