@@ -1,6 +1,5 @@
+import { UPPERCASE_LETTER_PATTERN } from './constants.js';
 import type { FieldName } from './types.js';
-
-const UPPERCASE_LETTER_PATTERN = /\p{Lu}/u;
 
 export function nameToLabel(name: FieldName): string {
 	const words: string[] = [];

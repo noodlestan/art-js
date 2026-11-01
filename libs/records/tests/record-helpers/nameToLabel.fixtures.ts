@@ -12,6 +12,11 @@ export const nameLabelCases: ReadonlyArray<readonly [string, string]> = [
 	['333A', '333 A'],
 ] as const;
 
+// Exhaustive direction B enumeration space: every string up to EXHAUSTIVE_MAX_LENGTH over
+// EXHAUSTIVE_ALPHABET, filtered through isCanonicalFieldName so only grammar-valid names assert.
+export const EXHAUSTIVE_ALPHABET: readonly string[] = ['a', 'B', '1'];
+export const EXHAUSTIVE_MAX_LENGTH = 5;
+
 // Direction B — names whose generated label must extract back to the same name.
 export const directionBNameCases: ReadonlyArray<readonly [string]> = [
 	['userId'],

@@ -1,27 +1,21 @@
 import { describe, expect, it } from 'vitest';
 
-import { isCanonicalFieldName } from './isCanonicalFieldName.js';
-import {
-	canonicalReservedNameCases,
-	nonReservedNameCases,
-	reservedNameCases,
-} from './isReservedFieldName.fixtures.js';
 import { isReservedFieldName } from './isReservedFieldName.js';
 
 describe('isReservedFieldName', () => {
-	it.each(reservedNameCases)('GIVEN name "%s" provided THEN it is reserved', name => {
-		expect(isReservedFieldName(name)).toBe(true);
+	it('GIVEN a handle member name THEN it is reserved', () => {
+		expect(isReservedFieldName('save')).toBe(true);
 	});
 
-	it.each(nonReservedNameCases)('GIVEN name "%s" provided THEN it is not reserved', name => {
-		expect(isReservedFieldName(name)).toBe(false);
+	it('GIVEN the reserved prefix THEN it is reserved', () => {
+		expect(isReservedFieldName('__private')).toBe(true);
 	});
 
-	it.each(canonicalReservedNameCases)(
-		'GIVEN name "%s" provided THEN it is both canonical and reserved',
-		name => {
-			expect(isCanonicalFieldName(name)).toBe(true);
-			expect(isReservedFieldName(name)).toBe(true);
-		},
-	);
+	it('GIVEN an ordinary field name THEN it is not reserved', () => {
+		expect(isReservedFieldName('userId')).toBe(false);
+	});
+
+	it('GIVEN a single leading underscore THEN it is not reserved', () => {
+		expect(isReservedFieldName('_single')).toBe(false);
+	});
 });

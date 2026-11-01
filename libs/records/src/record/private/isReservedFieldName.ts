@@ -1,7 +1,6 @@
+import { RESERVED_FIELD_NAMES, RESERVED_FIELD_NAME_PREFIX } from './constants.js';
 import type { FieldName } from './types.js';
 
-const RESERVED_FIELD_NAMES: readonly string[] = ['name', 'save', 'renameField', '__section'];
-
 export function isReservedFieldName(name: FieldName): boolean {
-	return name.startsWith('__') || RESERVED_FIELD_NAMES.includes(name);
+	return name.startsWith(RESERVED_FIELD_NAME_PREFIX) || RESERVED_FIELD_NAMES.includes(name);
 }
