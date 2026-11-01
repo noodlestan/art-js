@@ -205,7 +205,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | Iteration                                        | Status     |
 | ------------------------------------------------ | ---------- |
 | Iteration: Define Field Name Contract            | `DONE`     |
-| Iteration: Index Property Access and Labels      | `PLANNING` |
+| Iteration: Index Property Access and Labels      | `READY`    |
 | Iteration: Handle Collisions and Reserved Labels | `PLANNING` |
 | Iteration: Document Field Name Access            | `PLANNING` |
 | Iteration: Prepare 0.1.0 Release                 | `PLANNING` |
@@ -296,13 +296,15 @@ build(records): Add field name helpers.
 
 **Id:** `index-property-access-and-labels`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Move every proxy trap onto one name space backed by an index, and keep every loaded label intact, in one behaviour change that leaves the package and every fixture green.
 
 **Description:** Rewires `createRecordProxy` onto a proxy-managed `name → field` index built once at extraction, routes reads, writes and enumeration through it, generates a label only for a new field, converts `renameField` into a name-to-name operation, and lands every dependent test update with the source. No property access scans section fields or converts a label.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/index-property-access-and-labels.md`
 
 **Changes:**
 
@@ -503,11 +505,11 @@ release(records): 0.1.0.
 
 ### Next
 
-Iteration `define-field-name-contract` is `DONE` — commit `224deb6` (not pushed), delegation report recorded. Write the instruction files for `index-property-access-and-labels`, `handle-collisions-and-reserved-labels`, and `document-field-name-access` as each is dequeued. `index-property-access-and-labels` owns the whole write path and must not be split across agent sessions. `prepare-0-1-0-release` is delegated with its inlined instructions — remember to populate the `**Instructions:**` field first (see Feedback). Then commit the release preparation for the user to publish.
+Iteration `define-field-name-contract` is `DONE` — commit `224deb6`, delegation report recorded. `index-property-access-and-labels` is `READY` with its instruction file written — delegate it as one session: it owns the whole write path and must not be split. Then write the instruction files for `handle-collisions-and-reserved-labels` and `document-field-name-access` as each is dequeued. `prepare-0-1-0-release` is delegated with its inlined instructions — remember to populate the `**Instructions:**` field first (see Feedback). Then commit the release preparation for the user to publish.
 
 ### Blockers
 
-- **Missing instruction files** — `index-property-access-and-labels`, `handle-collisions-and-reserved-labels`, and `document-field-name-access` are `INSTRUCTIONS_SELF_CONTAINED_FILE` with no `instructions/{iteration.id}.md` yet; `prepare-0-1-0-release` is inlined and still `PLANNING`. Scope, grammar, index, and rename semantics are fully settled.
+- **Missing instruction files** — `handle-collisions-and-reserved-labels` and `document-field-name-access` are `INSTRUCTIONS_SELF_CONTAINED_FILE` with no `instructions/{iteration.id}.md` yet; `prepare-0-1-0-release` is inlined and still `PLANNING`. Scope, grammar, index, and rename semantics are fully settled.
 
 ---
 
@@ -685,6 +687,8 @@ The following decisions are tactical and scoped to this plan only.
 
 ### Feedback
 
+- **Test layout moved after delegation (commit `298fd12`)** — fixture-driven tables now live in `$PACKAGE/tests/record-helpers/` (sibling `.fixtures.ts`, data only) with slim representative tests co-located in `src/record/private/`, and shared regexes extracted to `src/record/private/constants.ts`; `../plan__tests.md` section 1 is superseded. The `index-property-access-and-labels` instructions state the current layout; fold it back into the attachment and the Decisions section when the plan is next edited.
+- **Fixture numbering** — iteration `index-property-access-and-labels` takes `18-canonical-name-round-trip`; `handle-collisions-and-reserved-labels` therefore uses `19-duplicate-field-names` and `20-reserved-label-throws`, not `18`/`19`.
 - **Delegation: `define-field-name-contract` (2026-10-31)** — worker deviation, semantics unchanged: `@typescript-eslint/no-use-before-define` rejects declarations after `return` or before use, so the instruction snippets' ordering (`capitalize`, helper closures) must place declarations first in later iterations' instructions too.
 - **Delegation: `define-field-name-contract` (2026-10-31)** — the mandated repo-wide `lint:fix` normalized pre-existing prettier violations in `$PACKAGE/knowledge/design/records.md` and `$PACKAGE/src/records-document/types.ts`; they stay uncommitted, to be picked up by the next commit that touches them.
 - **Delegation validation (2026-10-31)** — `prepare-0-1-0-release` is `INSTRUCTIONS_INLINED_IN_ITERATION` but carries no `**Instructions:**` field; populate the inlined block before that iteration is dequeued.
