@@ -206,7 +206,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | ------------------------------------------------ | ------- |
 | Iteration: Define Field Name Contract            | `DONE`  |
 | Iteration: Index Property Access and Labels      | `DONE`  |
-| Iteration: Handle Collisions and Reserved Labels | `READY` |
+| Iteration: Handle Collisions and Reserved Labels | `DONE`  |
 | Iteration: Document Field Name Access            | `READY` |
 | Iteration: Prepare 0.1.0 Release                 | `READY` |
 
@@ -385,7 +385,7 @@ refactor(records): Resolve record fields through a name index.
 
 **Id:** `handle-collisions-and-reserved-labels`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Make duplicate-name and reserved-label records fail deterministically instead of silently shadowing each other or a handle member.
 
@@ -394,6 +394,8 @@ refactor(records): Resolve record fields through a name index.
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
 **Instructions:** `./instructions/handle-collisions-and-reserved-labels.md`
+
+**Report:** `./instructions/handle-collisions-and-reserved-labels__report.md`
 
 **Changes:**
 
@@ -406,9 +408,9 @@ refactor(records): Resolve record fields through a name index.
 
 #### Commits:
 
-| ID                        | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
-| ------------------------- | -------------------------------- | -------- | ----- | ---------- |
-| `collisions-and-reserved` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+| ID                        | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ------------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `collisions-and-reserved` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `84dadcb` | `COMMITTED` |
 
 ##### Commit: `collisions-and-reserved`
 
@@ -523,7 +525,7 @@ release(records): 0.1.0.
 
 ### Next
 
-Both delivered iterations are `DONE` (`224deb6`, `05a7a88`); the remaining three are `READY` — `handle-collisions-and-reserved-labels` and `document-field-name-access` have instruction files, `prepare-0-1-0-release` carries inlined `**Instructions:**`. Delegate them in order: collisions first, then docs, then the release preparation — which stops before publishing: the user reviews the release commit, publishes, and records confirmation. Draft any follow-up instruction against the Feedback notes (delete-cell wording, codec field pattern, `dist` rebuild).
+Three iterations are `DONE` (`224deb6`, `05a7a88`, `84dadcb`; delegation reports recorded); two remain `READY` — delegate `document-field-name-access` next (instruction file written), then `prepare-0-1-0-release` (inlined instructions), which stops before publishing: the user reviews the release commit, publishes, and records confirmation. Draft any follow-up instruction against the Feedback notes (delete-cell wording, codec field pattern, `dist` rebuild).
 
 ### Blockers
 
@@ -562,6 +564,7 @@ This section lists the operating instructions relevant to this work item.
 
 ### Evidence
 
+- **Commit `84dadcb` (`NOPUSH`)** — reserved-label abort at index construction with the exact `Field label "{label}" resolves to reserved name "{name}"` message, first-wins/promotion/guards pinned from the extraction path, fixtures `19`/`20`; `$PACKAGE` 38 files / 515 tests green, root `npm run ci` 8/8 inside the hook. Report `./instructions/handle-collisions-and-reserved-labels__report.md`.
 - **Commit `05a7a88` (`NOPUSH`)** — every trap resolves through the extraction-time `name → field` index; `18-canonical-name-round-trip` proves byte-identical label-preserving saves; `$PACKAGE` 479 tests and `$PROJECT/tests/records` 34 tests green, root `npm run ci` 8/8 inside the hook. Report `./instructions/index-property-access-and-labels__report.md`.
 - **Canonical read** — `record.canonicalName` and `record.purpose` return the values of `**Canonical Name:**` and `**Purpose:**` from a real `package.art` fixture.
 - **Label preservation** — load, mutate one field, save a real package-record document and diff the output: every untouched label and the structure are identical.
