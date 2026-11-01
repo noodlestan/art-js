@@ -2,7 +2,7 @@
 
 **ID:** `canonical-record-field-names`
 
-**Status:** `WORKING`
+**Status:** `DELIVERED`
 
 **Template:** `$DOMAINS/plans/templates/plan.tart`
 
@@ -202,13 +202,13 @@ Execution occurs from `$WORKSPACE/`; package work is performed in `$PROJECT` on 
 
 This section lists the downstream work items produced, coordinated, or advanced by the plan, identifying blocking dependencies across resources of different owners.
 
-| Iteration                                        | Status  |
-| ------------------------------------------------ | ------- |
-| Iteration: Define Field Name Contract            | `DONE`  |
-| Iteration: Index Property Access and Labels      | `DONE`  |
-| Iteration: Handle Collisions and Reserved Labels | `DONE`  |
-| Iteration: Document Field Name Access            | `DONE`  |
-| Iteration: Prepare 0.1.0 Release                 | `READY` |
+| Iteration                                        | Status |
+| ------------------------------------------------ | ------ |
+| Iteration: Define Field Name Contract            | `DONE` |
+| Iteration: Index Property Access and Labels      | `DONE` |
+| Iteration: Handle Collisions and Reserved Labels | `DONE` |
+| Iteration: Document Field Name Access            | `DONE` |
+| Iteration: Prepare 0.1.0 Release                 | `DONE` |
 
 ### Iteration: Define Field Name Contract
 
@@ -475,7 +475,7 @@ docs(records): Document field name access.
 
 **Id:** `prepare-0-1-0-release`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Hand the user a reviewed, verified `0.1.0` release candidate — version and CHANGELOG already changed — without publishing. This is the first of two planned `@art-js/records` releases; the consolidated `0.1.1` ships later from `Plan: Create Lib Records`.
 
@@ -507,9 +507,9 @@ Inlined instructions carry no separate report file — report the outcome in cha
 
 #### Commits:
 
-| ID              | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
-| --------------- | -------------------------------- | -------- | ----- | ---------- |
-| `release-0-1-0` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+| ID              | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| --------------- | -------------------------------- | -------- | --------- | ----------- |
+| `release-0-1-0` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `2c560c9` | `COMMITTED` |
 
 ##### Commit: `release-0-1-0`
 
@@ -528,11 +528,11 @@ release(records): 0.1.0.
 
 ### Next
 
-Four iterations are `DONE` (`224deb6`, `05a7a88`, `b970627`, `1a370b9`; delegation reports recorded); only `prepare-0-1-0-release` remains `READY` — delegate it next; it stops before publishing: the user reviews the release commit, publishes, and records confirmation. The release order is fixed: this plan publishes `0.1.0` first, and `Plan: Create Lib Records` publishes the consolidated `0.1.1` after its `Consolidate` iteration. Draft any follow-up instruction against the Feedback notes (delete-cell wording, codec field pattern, `dist` rebuild).
+All five iterations are `DONE` (`224deb6`, `05a7a88`, `b970627`, `1a370b9`, `2c560c9`); the plan is `DELIVERED`. The user reviews release commit `2c560c9`, publishes `@art-js/records@0.1.0`, and records `npm info @art-js/records version` in the `Confirm publication` follow-up — then the plan can be archived. The release order stands: this plan publishes `0.1.0` first, and `Plan: Create Lib Records` publishes the consolidated `0.1.1` after its `Consolidate` iteration. Leftover feedback (delete-cell wording, codec field pattern, `dist` rebuild, `v0.0.1` doc references) feeds the follow-up plan.
 
 ### Blockers
 
-- **Missing instruction files** — none: only `prepare-0-1-0-release` remains, carrying inlined `**Instructions:**`. Scope, grammar, index, and rename semantics are fully settled.
+- **Missing instruction files** — none; all five iterations are `DONE`. Publishing is the user's step, not a blocker (see Next).
 
 ---
 
@@ -567,6 +567,8 @@ This section lists the operating instructions relevant to this work item.
 - **Consolidated release `0.1.1`** — the second of the two planned `@art-js/records` releases belongs to `Plan: Create Lib Records`: `Consolidate` lands the fixes, `Publish and Update Knowledge` versions and publishes `0.1.1`. This plan stops at `0.1.0`.
 
 ### Evidence
+
+- **Commit `2c560c9` (`NOPUSH`)** — release preparation: `package.json` `0.0.1` → `0.1.0` and the `0.1.0` CHANGELOG section (breaking field access, label preservation, collision/reserved rules, migration note); `$PACKAGE` lint/build/415 tests, root `npm run ci` 8/8, workspace `npm run ci` all green in the hook; STOP honored — nothing published. Reported in chat (inlined instructions, no report file).
 
 - **Commit `1a370b9` (`NOPUSH`)** — design Field Names section with all exact-label wording removed, three ADRs under `knowledge/adr/`, overview fixture map over `tests/fixtures/` 01–20, README migration notes; `CHANGELOG.md` untouched, no `src/` or `tests/` file in the commit; 515 tests + root `npm run ci` 8/8 green inside the hook. Report `./instructions/document-field-name-access__report.md`.
 - **Commit `b970627` (`NOPUSH`)** — reserved-label abort at index construction with the exact `Field label "{label}" resolves to reserved name "{name}"` message, first-wins/promotion/guards pinned from the extraction path, fixtures `19`/`20`; `$PACKAGE` 38 files / 515 tests green, root `npm run ci` 8/8 inside the hook. Report `./instructions/handle-collisions-and-reserved-labels__report.md`.
@@ -713,6 +715,8 @@ The following decisions are tactical and scoped to this plan only.
 - **Confirm publication** — after the user publishes, check `npm info @art-js/records version` and record the outcome in this plan.
 
 ### Feedback
+
+- **Release run (`prepare-0-1-0-release`, 2026-11-02)** — no doc alignment needed; pre-existing `v0.0.1` references in `knowledge/design/records.md` (Status) and `knowledge/overview.md` (Target column) predate this plan and were left as-is — refresh them with the `0.1.1` consolidated release.
 
 - **Delegation: `index-property-access-and-labels` (2026-11-01)** — COMPLETED as `05a7a88` (`NOPUSH`): every trap resolves through the extraction-time index, promotion and name-to-name rename landed; `$PACKAGE` 35 files / 479 tests + external 7 files / 34 tests green, root `npm run ci` 8/8 inside the hook. Structural deviations, semantics unchanged: mutations rebuild the full index (`createFieldIndex(section)`) rather than a targeted scan, and `getExposedFieldNames` takes the `FieldIndex` directly.
 - **Name-class table delete cells** — `delete rec[name] = false` (handle row and canonical-miss row) cannot surface as `false`: a Proxy `deleteProperty` trap returning falsish throws `TypeError` (verified Node 24); the traps return `false` per the rules text and tests pin the observable `TypeError`. Reword those cells as "reports not-removed (surfaced as `TypeError`)" on the next plan edit.
