@@ -205,7 +205,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | Iteration                                        | Status     |
 | ------------------------------------------------ | ---------- |
 | Iteration: Define Field Name Contract            | `DONE`     |
-| Iteration: Index Property Access and Labels      | `READY`    |
+| Iteration: Index Property Access and Labels      | `DONE`     |
 | Iteration: Handle Collisions and Reserved Labels | `PLANNING` |
 | Iteration: Document Field Name Access            | `PLANNING` |
 | Iteration: Prepare 0.1.0 Release                 | `PLANNING` |
@@ -296,7 +296,7 @@ build(records): Add field name helpers.
 
 **Id:** `index-property-access-and-labels`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Move every proxy trap onto one name space backed by an index, and keep every loaded label intact, in one behaviour change that leaves the package and every fixture green.
 
@@ -305,6 +305,8 @@ build(records): Add field name helpers.
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
 **Instructions:** `./instructions/index-property-access-and-labels.md`
+
+**Report:** `./instructions/index-property-access-and-labels__report.md`
 
 **Changes:**
 
@@ -359,9 +361,9 @@ Impact: label-based code stops resolving instead of matching by accident or appe
 
 #### Commits:
 
-| ID                                 | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
-| ---------------------------------- | -------------------------------- | -------- | ----- | ---------- |
-| `index-property-access-and-labels` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+| ID                                 | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ---------------------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `index-property-access-and-labels` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `05a7a88` | `COMMITTED` |
 
 ##### Commit: `index-property-access-and-labels`
 
@@ -505,7 +507,7 @@ release(records): 0.1.0.
 
 ### Next
 
-Iteration `define-field-name-contract` is `DONE` — commit `224deb6`, delegation report recorded. `index-property-access-and-labels` is `READY` with its instruction file written — delegate it as one session: it owns the whole write path and must not be split. Then write the instruction files for `handle-collisions-and-reserved-labels` and `document-field-name-access` as each is dequeued. `prepare-0-1-0-release` is delegated with its inlined instructions — remember to populate the `**Instructions:**` field first (see Feedback). Then commit the release preparation for the user to publish.
+Iterations `define-field-name-contract` and `index-property-access-and-labels` are `DONE` (`224deb6`, `05a7a88`; delegation reports recorded). Write the instruction files for `handle-collisions-and-reserved-labels` and `document-field-name-access` as each is dequeued — draft them against the Feedback notes (delete-cell wording, codec field pattern, `dist` rebuild for the external package). `prepare-0-1-0-release` is delegated with its inlined instructions — populate the `**Instructions:**` field first (see Feedback). Then commit the release preparation for the user to publish.
 
 ### Blockers
 
@@ -544,6 +546,7 @@ This section lists the operating instructions relevant to this work item.
 
 ### Evidence
 
+- **Commit `05a7a88` (`NOPUSH`)** — every trap resolves through the extraction-time `name → field` index; `18-canonical-name-round-trip` proves byte-identical label-preserving saves; `$PACKAGE` 479 tests and `$PROJECT/tests/records` 34 tests green, root `npm run ci` 8/8 inside the hook. Report `./instructions/index-property-access-and-labels__report.md`.
 - **Canonical read** — `record.canonicalName` and `record.purpose` return the values of `**Canonical Name:**` and `**Purpose:**` from a real `package.art` fixture.
 - **Label preservation** — load, mutate one field, save a real package-record document and diff the output: every untouched label and the structure are identical.
 - **Index, not scan** — reading, writing, enumerating, and membership all resolve through the proxy-owned `name → field` index; no trap scans section fields or converts a label.
@@ -687,7 +690,10 @@ The following decisions are tactical and scoped to this plan only.
 
 ### Feedback
 
-- **Delegation blocker #1, `index-property-access-and-labels` (2026-11-01)** — the Step 6 audit claim "`09` … neither changes" was wrong: 09's `**owner:** foo` assertion pins the generated label of a canonical-miss write, which Step 2 turns into `**Owner:** foo`. Worker stopped pre-change (correctly). Resolved as option A — 09 joins the modify list for that one assertion (applied by the worker in its commit, not before); `03` stays untouched. Blocked-run report: `./instructions/index-property-access-and-labels__report.md`.
+- **Delegation: `index-property-access-and-labels` (2026-11-01)** — COMPLETED as `05a7a88` (`NOPUSH`): every trap resolves through the extraction-time index, promotion and name-to-name rename landed; `$PACKAGE` 35 files / 479 tests + external 7 files / 34 tests green, root `npm run ci` 8/8 inside the hook. Structural deviations, semantics unchanged: mutations rebuild the full index (`createFieldIndex(section)`) rather than a targeted scan, and `getExposedFieldNames` takes the `FieldIndex` directly.
+- **Name-class table delete cells** — `delete rec[name] = false` (handle row and canonical-miss row) cannot surface as `false`: a Proxy `deleteProperty` trap returning falsish throws `TypeError` (verified Node 24); the traps return `false` per the rules text and tests pin the observable `TypeError`. Reword those cells as "reports not-removed (surfaced as `TypeError`)" on the next plan edit.
+- **Codec field pattern** — the Art MD codec only parses `/^[A-Za-z][A-Za-z ]*:(?:\s|$)/`, so `**3A33:**` and `**Ação:**` never parse as fields from Markdown; digit-led/non-ASCII conversion coverage uses hand-built sections (`createSectionRecord` helper). Do not assume those labels round-trip through the codec in later iterations. Also: `$PROJECT/tests/records` resolves `@art-js/records` through `dist` — run `npm run build` in `$PACKAGE` before its tests.
+- **Delegation blocker #1, `index-property-access-and-labels` (2026-11-01)** — the Step 6 audit claim "`09` … neither changes" was wrong: 09's `**owner:** foo` assertion pins the generated label of a canonical-miss write, which Step 2 turns into `**Owner:** foo`. Worker stopped pre-change (correctly). Resolved as option A — 09 joins the modify list for that one assertion (applied by the worker in `05a7a88`); `03` stays untouched. Blocked-run report superseded by the successful run at the same path.
 - **Test layout moved after delegation (commit `298fd12`)** — fixture-driven tables now live in `$PACKAGE/tests/record-helpers/` (sibling `.fixtures.ts`, data only) with slim representative tests co-located in `src/record/private/`, and shared regexes extracted to `src/record/private/constants.ts`; `../plan__tests.md` section 1 is superseded. The `index-property-access-and-labels` instructions state the current layout; fold it back into the attachment and the Decisions section when the plan is next edited.
 - **Fixture numbering** — iteration `index-property-access-and-labels` takes `18-canonical-name-round-trip`; `handle-collisions-and-reserved-labels` therefore uses `19-duplicate-field-names` and `20-reserved-label-throws`, not `18`/`19`.
 - **Delegation: `define-field-name-contract` (2026-10-31)** — worker deviation, semantics unchanged: `@typescript-eslint/no-use-before-define` rejects declarations after `return` or before use, so the instruction snippets' ordering (`capitalize`, helper closures) must place declarations first in later iterations' instructions too.
