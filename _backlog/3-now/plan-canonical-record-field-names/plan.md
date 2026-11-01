@@ -475,9 +475,9 @@ docs(records): Document field name access.
 
 **Status:** `READY`
 
-**Purpose:** Hand the user a reviewed, verified `0.1.0` release candidate — version and CHANGELOG already changed — without publishing.
+**Purpose:** Hand the user a reviewed, verified `0.1.0` release candidate — version and CHANGELOG already changed — without publishing. This is the first of two planned `@art-js/records` releases; the consolidated `0.1.1` ships later from `Plan: Create Lib Records`.
 
-**Description:** Bumps the version, writes the `0.1.0` CHANGELOG section, verifies `$PACKAGE` and `$WORKSPACE`, and commits the release preparation; publishing is the user's manual step after review.
+**Description:** Bumps the version, writes the `0.1.0` CHANGELOG section, verifies `$PACKAGE` and `$WORKSPACE`, and commits the release preparation; publishing is the user's manual step after review. The release stops at `0.1.0` — bumping further belongs to the consolidated `0.1.1` in `Plan: Create Lib Records`.
 
 **Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
 
@@ -500,6 +500,7 @@ Inlined instructions carry no separate report file — report the outcome in cha
 - Set the `$PACKAGE/package.json` version to `0.1.0` and write the `$PACKAGE/CHANGELOG.md` `0.1.0` section: breaking field access, canonical field names, label preservation, collision and reserved-label rules, migration note.
 - Verify from `$PACKAGE`: `npm run lint`, `npm run build`, `npm run test:unit`, and `npm run test:integration`; then verify from `$PROJECT`: `npm run ci` (prettier plus `turbo run ci`), and from `$WORKSPACE`: `npm run ci` (workspace-wide prettier).
 - Commit the version, CHANGELOG, and any leftover doc alignment, and confirm the branch is clean.
+- Bump nothing beyond `0.1.0`. This plan ships the canonical field-name contract only; the consolidated release `0.1.1` is owned by `Plan: Create Lib Records` iteration `Publish and Update Knowledge`, after its `Consolidate` iteration.
 - STOP: do not publish; report the release commit to the user for review and publishing.
 
 #### Commits:
@@ -525,7 +526,7 @@ release(records): 0.1.0.
 
 ### Next
 
-Three iterations are `DONE` (`224deb6`, `05a7a88`, `84dadcb`; delegation reports recorded); two remain `READY` — delegate `document-field-name-access` next (instruction file written), then `prepare-0-1-0-release` (inlined instructions), which stops before publishing: the user reviews the release commit, publishes, and records confirmation. Draft any follow-up instruction against the Feedback notes (delete-cell wording, codec field pattern, `dist` rebuild).
+Three iterations are `DONE` (`224deb6`, `05a7a88`, `84dadcb`; delegation reports recorded); two remain `READY` — delegate `document-field-name-access` next (instruction file written), then `prepare-0-1-0-release` (inlined instructions), which stops before publishing: the user reviews the release commit, publishes, and records confirmation. The release order is fixed: this plan publishes `0.1.0` first, and `Plan: Create Lib Records` publishes the consolidated `0.1.1` after its `Consolidate` iteration. Draft any follow-up instruction against the Feedback notes (delete-cell wording, codec field pattern, `dist` rebuild).
 
 ### Blockers
 
@@ -561,6 +562,7 @@ This section lists the operating instructions relevant to this work item.
 - **Custom labels for new fields** — a new field's label is always `nameToLabel(name)`, so `brandNew` yields `Brand New`.
 - **Byte-identical serialization** — the codec's structural fidelity contract is unchanged.
 - **Publishing** — the agent never publishes; it prepares the version and CHANGELOG, and the user publishes after review.
+- **Consolidated release `0.1.1`** — the second of the two planned `@art-js/records` releases belongs to `Plan: Create Lib Records`: `Consolidate` lands the fixes, `Publish and Update Knowledge` versions and publishes `0.1.1`. This plan stops at `0.1.0`.
 
 ### Evidence
 

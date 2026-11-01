@@ -10,7 +10,7 @@
 
 **Purpose:** Deliver `@art-js/records` v0.0.1 — source-bound record proxies over Art MD documents — through implementation, integration tests, publication, and downstream adoption in Art Works.
 
-**Description:** The package is implemented in `$PROJECT/libs/records` (provider `createArtDocumentRecords({ codec, createContentSource })` with `read(file) → { assertPresence, extract, save }`, and `createArtRecord({ codec, contentSource })`; records are proxies whose `save()` writes their document through the bound source) and exercised end to end by the fixture harness in `$PROJECT/tests/records`. Remaining work: adopt the published package in Art Works, consolidate fixes and coverage, then publish the consolidated version and refresh knowledge.
+**Description:** The package is implemented in `$PROJECT/libs/records` (provider `createArtDocumentRecords({ codec, createContentSource })` with `read(file) → { assertPresence, extract, save }`, and `createArtRecord({ codec, contentSource })`; records are proxies whose `save()` writes their document through the bound source) and exercised end to end by the fixture harness in `$PROJECT/tests/records`. Remaining work: adopt the published package in Art Works, consolidate fixes and coverage, then publish the consolidated `0.1.1` and refresh knowledge.
 
 Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/design/records.md` and `$PROJECT/libs/records/knowledge/overview.md` (the overview carries the use-case-to-fixture table and its WIP alignment list). Do not re-plan from this document's prose alone — the knowledge docs hold the contracts, shapes, and recipes.
 
@@ -256,7 +256,7 @@ refactor(records): Install @art-js/records 0.0.1.
 
 **Instructions:**
 
-1. Apply fixes and changes surfaced by alignment and Art Works adoption; raise the `libs/records` vitest coverage thresholds back up to the package convention once the fixture and unit suites cover the consolidated behaviour.
+1. Apply fixes and changes surfaced by alignment and Art Works adoption; raise the `libs/records` vitest coverage thresholds back up to the package convention once the fixture and unit suites cover the consolidated behaviour. This lands after `Plan: Canonical Record Field Names` ships `0.1.0`; do not bump the version here — `publish-and-update-knowledge` owns the `0.1.1` bump.
 2. Verify: `npm run lint`, `npm run build`, `npm run test` green with the raised thresholds; then commit per the blueprint below.
 
 #### Commits:
@@ -283,14 +283,14 @@ fix(records): Consolidate delivered surface and restore coverage.
 
 **Status:** `READY`
 
-**Purpose:** Ship the consolidated package and leave the knowledge docs describing the shipped state.
+**Purpose:** Ship `@art-js/records@0.1.1` and leave the knowledge docs describing the shipped state.
 
 **Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
 
 **Instructions:**
 
-1. Publish the consolidated version of `@art-js/records` to npm, then refresh `$PROJECT/libs/records/knowledge/design/records.md`, `$PROJECT/libs/records/knowledge/overview.md`, and `$PROJECT/knowledge/components.md` so statuses, fixture ids, and API reflect what shipped; clear the WIP alignment list items that are done.
-2. Verify: docs match `src/index.ts` exports and the fixture set; then commit per the blueprints below.
+1. Publish `@art-js/records@0.1.1` to npm — the second of two planned releases, after `Plan: Canonical Record Field Names` publishes `0.1.0` — then refresh `$PROJECT/libs/records/knowledge/design/records.md`, `$PROJECT/libs/records/knowledge/overview.md`, and `$PROJECT/knowledge/components.md` so statuses, fixture ids, and API reflect what shipped; clear the WIP alignment list items that are done.
+2. Verify: `npm info @art-js/records version` reports `0.1.1`, docs match `src/index.ts` exports and the fixture set; then commit per the blueprints below.
 
 #### Commits:
 
@@ -304,9 +304,9 @@ fix(records): Consolidate delivered surface and restore coverage.
 **Message:**
 
 ```text
-release(records): Publish consolidated version.
+release(records): 0.1.1.
 
-- Version and publish `@art-js/records` with the consolidated fixes.
+- Version and publish the consolidated fixes on top of `0.1.0`.
 ```
 
 ##### Commit: `update-knowledge`
@@ -324,7 +324,7 @@ docs(records): Update knowledge for the published release.
 
 ### Next
 
-Install `@art-js/records@0.0.1` in `$ART_WORKS`, verify the Step 7 record-extraction dependency, and commit `install-in-art-works`.
+Install `@art-js/records@0.0.1` in `$ART_WORKS`, verify the Step 7 record-extraction dependency, and commit `install-in-art-works`. The tail of the plan then runs in order: `consolidate` (source only, no version bump), then `publish-and-update-knowledge` as the deliberate second release `0.1.1`, after `Plan: Canonical Record Field Names` publishes `0.1.0`.
 
 ### Blockers
 

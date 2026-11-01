@@ -2,7 +2,7 @@
 
 **ID:** `adopt-codec-construct-api`
 
-**Status:** `PLANNING`
+**Status:** `WORKING`
 
 **Template:** `$DOMAINS/plans/templates/plan.tart`
 
@@ -44,7 +44,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 | Iteration                                  | Status     |
 | ------------------------------------------ | ---------- |
-| Iteration: Pin Art MD Dependencies         | `PLANNING` |
+| Iteration: Pin Art MD Dependencies         | `READY`    |
 | Iteration: Create Constructs Through Codec | `PLANNING` |
 
 ### Iteration: Pin Art MD Dependencies
@@ -77,9 +77,9 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 #### Commits:
 
-| ID                        | Repository / Checkout / Branch   | Policy   | Hash  | Status  |
-| ------------------------- | -------------------------------- | -------- | ----- | ------- |
-| `pin-art-md-dependencies` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `READY` |
+| ID                        | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
+| ------------------------- | -------------------------------- | -------- | ----- | ---------- |
+| `pin-art-md-dependencies` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
 
 ##### Commit: `pin-art-md-dependencies`
 
