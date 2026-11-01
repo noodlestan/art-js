@@ -76,30 +76,30 @@ describe('Case 06 — Setting a missing field appends it to the section', () => 
 			artist = extractedArtist;
 		});
 
-		it('SHOULD start with Born and Years active', () => {
-			expect(getFieldNames(artist)).toEqual(['Born', 'Years active']);
+		it('SHOULD start with born and yearsActive', () => {
+			expect(getFieldNames(artist)).toEqual(['born', 'yearsActive']);
 		});
 
-		it('SHOULD not initially contain Artist', () => {
+		it('SHOULD not initially contain artist', () => {
 			// eslint-disable-next-line dot-notation
-			expect(artist['Artist']).toBeUndefined();
+			expect(artist['artist']).toBeUndefined();
 		});
 
-		describe('WHEN setting Artist to Nina Simone', () => {
+		describe('WHEN setting artist to Nina Simone', () => {
 			beforeEach(() => {
 				// eslint-disable-next-line dot-notation
-				artist['Artist'] = 'Nina Simone';
+				artist['artist'] = 'Nina Simone';
 			});
 
 			it('SHOULD read back the new value', () => {
 				// eslint-disable-next-line dot-notation
-				expect(artist['Artist']).toBe('Nina Simone');
+				expect(artist['artist']).toBe('Nina Simone');
 			});
 
-			it('SHOULD append Artist to the field list', () => {
+			it('SHOULD append artist to the field list', () => {
 				const fieldNames = getFieldNames(artist);
 
-				expect(fieldNames[fieldNames.length - 1]).toBe('Artist');
+				expect(fieldNames[fieldNames.length - 1]).toBe('artist');
 			});
 
 			describe('WHEN saving the artist record', () => {

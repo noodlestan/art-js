@@ -78,7 +78,7 @@ describe('Case 13 — Inserting sibling records before and after an existing rec
 			const artist = document.addRecord({ before: anchor });
 			artist.name = 'Artist: Nina Simone';
 			// eslint-disable-next-line dot-notation
-			artist['Born'] = 'Eunice Kathleen Waymon | February 21, 1933 | Tryon, North Carolina, U.S.';
+			artist['born'] = 'Eunice Kathleen Waymon | February 21, 1933 | Tryon, North Carolina, U.S.';
 			return artist;
 		}
 

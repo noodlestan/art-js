@@ -77,9 +77,9 @@ describe('Case 12 — Adding a record to an existing, populated document', () =>
 				record = document.addRecord();
 				record.name = 'Song: Feeling Good';
 				// eslint-disable-next-line dot-notation
-				record['Artist'] = 'Nina Simone';
+				record['artist'] = 'Nina Simone';
 				// eslint-disable-next-line dot-notation
-				record['Released'] = 'June 1965';
+				record['released'] = 'June 1965';
 			});
 
 			it('SHOULD default the new record section depth to 1', () => {

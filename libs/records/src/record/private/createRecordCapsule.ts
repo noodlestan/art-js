@@ -1,13 +1,18 @@
 import type { RecordHandleContext } from '../types.js';
 
+import { appendSectionField } from './appendSectionField.js';
+import { assertFieldName } from './assertFieldName.js';
+import { createFieldIndex } from './createFieldIndex.js';
 import { deleteSectionField } from './deleteSectionField.js';
 import { getSectionField } from './getSectionField.js';
+import { isCanonicalFieldName } from './isCanonicalFieldName.js';
+import { isReservedFieldName } from './isReservedFieldName.js';
 import { listSectionFieldNames } from './listSectionFieldNames.js';
 import { makeSectionDepthReadOnly } from './makeSectionDepthReadOnly.js';
 import { makeSectionNameReadOnly } from './makeSectionNameReadOnly.js';
-import { renameSectionField } from './renameSectionField.js';
+import { nameToLabel } from './nameToLabel.js';
 import { setSectionField } from './setSectionField.js';
-import type { ArtRecordCapsule } from './types.js';
+import type { ArtRecordCapsule, FieldIndex, FieldName } from './types.js';
 
 export function createRecordCapsule(context: RecordHandleContext): ArtRecordCapsule {
 	makeSectionDepthReadOnly(context.section);
@@ -15,6 +20,12 @@ export function createRecordCapsule(context: RecordHandleContext): ArtRecordCaps
 	let nameIsMutable = context.nameIsMutable;
 	if (!nameIsMutable) {
 		makeSectionNameReadOnly(context.section);
+	}
+
+	let fieldIndex: FieldIndex = createFieldIndex(context.section);
+
+	function rebuildFieldIndex(): void {
+		fieldIndex = createFieldIndex(context.section);
 	}
 
 	function getName(): string {
@@ -31,20 +42,60 @@ export function createRecordCapsule(context: RecordHandleContext): ArtRecordCaps
 		context.section.name = name;
 	}
 
-	function getField(name: string): string | undefined {
-		return getSectionField(context.section, name);
+	function getField(name: FieldName): string | undefined {
+		const field = fieldIndex.get(name);
+		if (field === undefined) {
+			return undefined;
+		}
+
+		return getSectionField(field);
 	}
 
-	function setField(name: string, value: unknown): void {
-		setSectionField(context.section, name, value);
+	function setField(name: FieldName, value: unknown): void {
+		const field = fieldIndex.get(name);
+		if (field !== undefined) {
+			setSectionField(field, value);
+			return;
+		}
+
+		assertFieldName(name);
+		appendSectionField(context.section, name, value);
+		rebuildFieldIndex();
 	}
 
-	function renameField(oldName: string, newName: string): void {
-		renameSectionField(context.section, oldName, newName);
+	function renameField(oldName: FieldName, newName: FieldName): void {
+		if (isReservedFieldName(oldName)) {
+			throw new TypeError(`Reserved record field name: "${oldName}"`);
+		}
+		if (isReservedFieldName(newName)) {
+			throw new TypeError(`Reserved record field name: "${newName}"`);
+		}
+
+		const field = fieldIndex.get(oldName);
+		if (field === undefined) {
+			throw new Error(`Field not found: ${oldName}`);
+		}
+		if (!isCanonicalFieldName(newName)) {
+			throw new TypeError(`Invalid record field name: "${newName}"`);
+		}
+		if (fieldIndex.has(newName)) {
+			throw new TypeError(`Field name already exists: "${newName}"`);
+		}
+
+		field.name = nameToLabel(newName);
+		rebuildFieldIndex();
 	}
 
-	function deleteField(name: string): boolean {
-		return deleteSectionField(context.section, name);
+	function deleteField(name: FieldName): boolean {
+		const field = fieldIndex.get(name);
+		if (field === undefined) {
+			assertFieldName(name);
+			return false;
+		}
+
+		deleteSectionField(context.section, field);
+		rebuildFieldIndex();
+		return true;
 	}
 
 	function getFieldNames(): string[] {
@@ -63,6 +114,9 @@ export function createRecordCapsule(context: RecordHandleContext): ArtRecordCaps
 	const capsule: ArtRecordCapsule = {
 		get section(): ArtRecordCapsule['section'] {
 			return context.section as ArtRecordCapsule['section'];
+		},
+		get fields(): ArtRecordCapsule['fields'] {
+			return fieldIndex;
 		},
 		getName,
 		setName,

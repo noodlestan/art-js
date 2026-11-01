@@ -76,37 +76,37 @@ describe('Case 08 — renameField() changes the label in place and preserves pos
 			artist = extractedArtist;
 		});
 
-		it('SHOULD start with Born and Years active', () => {
-			expect(getFieldNames(artist)).toEqual(['Born', 'Years active']);
+		it('SHOULD start with born and yearsActive', () => {
+			expect(getFieldNames(artist)).toEqual(['born', 'yearsActive']);
 		});
 
-		describe('WHEN renaming Born to Artist', () => {
+		describe('WHEN renaming born to artist', () => {
 			beforeEach(() => {
-				artist.renameField('Born', 'Artist');
+				artist.renameField('born', 'artist');
 			});
 
 			it('SHOULD preserve the field position', () => {
-				expect(getFieldNames(artist)).toEqual(['Artist', 'Years active']);
+				expect(getFieldNames(artist)).toEqual(['artist', 'yearsActive']);
 			});
 
 			it('SHOULD preserve the original value', () => {
 				// eslint-disable-next-line dot-notation
-				expect(artist['Artist']).toBe(
+				expect(artist['artist']).toBe(
 					'Eunice Kathleen Waymon | February 21, 1933 | Tryon, North Carolina, U.S.',
 				);
 			});
 
 			it('SHOULD remove the old field name', () => {
 				// eslint-disable-next-line dot-notation
-				expect(artist['Born']).toBeUndefined();
+				expect(artist['born']).toBeUndefined();
 			});
 
-			describe('WHEN setting Artist to Nina Simone and saving', () => {
+			describe('WHEN setting artist to Nina Simone and saving', () => {
 				let content: string;
 
 				beforeEach(async () => {
 					// eslint-disable-next-line dot-notation
-					artist['Artist'] = 'Nina Simone';
+					artist['artist'] = 'Nina Simone';
 					await artist.save();
 
 					const savedContent = filesystemRecords.getFileContent('_records/artist.art');

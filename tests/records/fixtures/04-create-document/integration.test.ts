@@ -69,7 +69,7 @@ describe('Case 04 — Creating a new record file', () => {
 
 				record.name = 'Album: I Put a Spell on You';
 				// eslint-disable-next-line dot-notation
-				record['Artist'] = 'Nina Simone';
+				record['artist'] = 'Nina Simone';
 
 				await record.save();
 

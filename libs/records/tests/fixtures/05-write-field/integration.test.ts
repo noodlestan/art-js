@@ -91,23 +91,24 @@ describe('Case 05 — Writing an existing field replaces its value in place', ()
 				expect(artist.name).toBe('Artist: Nina Simone');
 			});
 
-			it('SHOULD start with Born and Years active in that order', () => {
-				expect(getFieldNames(artist)).toEqual(['Born', 'Years active']);
+			it('SHOULD start with born and yearsActive in that order', () => {
+				expect(getFieldNames(artist)).toEqual(['born', 'yearsActive']);
 			});
 
-			describe('WHEN replacing Born with Eunice Kathleen Waymon', () => {
+			describe('WHEN replacing born with Eunice Kathleen Waymon', () => {
 				beforeEach(() => {
 					// eslint-disable-next-line dot-notation
-					artist['Born'] = 'Eunice Kathleen Waymon';
+					artist['born'] = 'Eunice Kathleen Waymon';
 				});
 
 				it('SHOULD read back the replacement value', () => {
 					// eslint-disable-next-line dot-notation
-					expect(artist['Born']).toBe('Eunice Kathleen Waymon');
+					expect(artist['born']).toBe('Eunice Kathleen Waymon');
 				});
 
-				it('SHOULD preserve the field order', () => {
-					expect(getFieldNames(artist)).toEqual(['Born', 'Years active']);
+				it('SHOULD preserve the field order and the loaded label', () => {
+					expect(getFieldNames(artist)).toEqual(['born', 'yearsActive']);
+					expect(JSON.stringify(artist.__section)).toContain('"name":"Born"');
 				});
 
 				describe('WHEN saving the artist record', () => {

@@ -82,7 +82,7 @@ describe('Case 03 — Composing a document with siblings and nested children', (
 				const album = document.addRecord({ before: anchor });
 				album.name = 'Album: I Put a Spell on You';
 				// eslint-disable-next-line dot-notation
-				album['Artist'] = 'Nina Simone';
+				album['artist'] = 'Nina Simone';
 
 				const moduleRecord = document.addRecord({ after: anchor });
 				moduleRecord.name = 'Module';
@@ -90,7 +90,7 @@ describe('Case 03 — Composing a document with siblings and nested children', (
 				const song = document.addRecord({ appendTo: anchor });
 				song.name = 'Song: Feeling Good';
 				// eslint-disable-next-line dot-notation
-				song['Released'] = 'June 1965';
+				song['released'] = 'June 1965';
 
 				const notes = document.addRecord({ prependTo: anchor });
 				notes.name = 'Notes';

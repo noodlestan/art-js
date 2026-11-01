@@ -129,15 +129,25 @@ describe('Case 01 — Discovering, locating, and reading record files', () => {
 			song = extractedSong;
 		});
 
-		it('SHOULD read field names case-sensitively', () => {
+		it('SHOULD resolve field names and ignore loaded labels', () => {
 			// eslint-disable-next-line dot-notation
-			expect(song['Artist']).toBe('Nina Simone');
+			expect(song['artist']).toBe('Nina Simone');
 			// eslint-disable-next-line dot-notation
-			expect(song['artist']).toBeUndefined();
+			expect(song['Artist']).toBeUndefined();
 		});
 
-		it('SHOULD list the fields in file order', () => {
-			expect(getFieldNames(song)).toEqual(['Artist', 'Released']);
+		it('SHOULD list the extracted names in file order', () => {
+			expect(getFieldNames(song)).toEqual(['artist', 'released']);
+		});
+
+		it('SHOULD reject a label-based write and append nothing', () => {
+			const fieldNamesBefore = getFieldNames(song);
+
+			expect(() => {
+				// eslint-disable-next-line dot-notation
+				song['Artist'] = 'Nina Simone';
+			}).toThrow(TypeError);
+			expect(getFieldNames(song)).toEqual(fieldNamesBefore);
 		});
 
 		it('SHOULD preserve the Writter(s) label and list values', () => {

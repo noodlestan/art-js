@@ -96,11 +96,11 @@ describe('Case 05 — Batch saving mutations across documents', () => {
 				const song = findRequiredRecord(await songDocument.extract(), 'Song: Feeling Good');
 
 				// eslint-disable-next-line dot-notation
-				artist['Active'] = '1954–2003';
+				artist['active'] = '1954–2003';
 				// eslint-disable-next-line dot-notation
-				songInArtist['Album'] = 'I Put a Spell on You';
+				songInArtist['album'] = 'I Put a Spell on You';
 				// eslint-disable-next-line dot-notation
-				song['Producer'] = 'Hal Mooney';
+				song['producer'] = 'Hal Mooney';
 
 				await Promise.all([artistDocument.save(), songDocument.save()]);
 

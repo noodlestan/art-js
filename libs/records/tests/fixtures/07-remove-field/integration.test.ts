@@ -76,29 +76,29 @@ describe('Case 07 — Deleting a field removes it from the section', () => {
 			artist = extractedArtist;
 		});
 
-		it('SHOULD start with Born and Years active', () => {
-			expect(getFieldNames(artist)).toEqual(['Born', 'Years active']);
+		it('SHOULD start with born and yearsActive', () => {
+			expect(getFieldNames(artist)).toEqual(['born', 'yearsActive']);
 		});
 
-		describe('WHEN deleting Born', () => {
+		describe('WHEN deleting born', () => {
 			let removed: boolean;
 
 			beforeEach(() => {
 				// eslint-disable-next-line dot-notation
-				removed = delete artist['Born'];
+				removed = delete artist['born'];
 			});
 
 			it('SHOULD report successful deletion', () => {
 				expect(removed).toBe(true);
 			});
 
-			it('SHOULD no longer expose Born', () => {
+			it('SHOULD no longer expose born', () => {
 				// eslint-disable-next-line dot-notation
-				expect(artist['Born']).toBeUndefined();
+				expect(artist['born']).toBeUndefined();
 			});
 
-			it('SHOULD retain only Years active', () => {
-				expect(getFieldNames(artist)).toEqual(['Years active']);
+			it('SHOULD retain only yearsActive', () => {
+				expect(getFieldNames(artist)).toEqual(['yearsActive']);
 			});
 
 			describe('WHEN saving the artist record', () => {

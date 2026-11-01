@@ -103,7 +103,7 @@ describe('Case 09 — record.__section exposes the complete SectionBlock and its
 			});
 
 			it('SHOULD persist the added field', () => {
-				expect(content).toContain('**owner:** foo');
+				expect(content).toContain('**Owner:** foo');
 			});
 
 			it('SHOULD preserve the existing section fields', () => {

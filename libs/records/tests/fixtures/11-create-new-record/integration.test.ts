@@ -84,7 +84,7 @@ describe('Case 11 — Creating a new record in a new destination file', () => {
 				beforeEach(async () => {
 					record.name = 'Artist: Nina Simone';
 					// eslint-disable-next-line dot-notation
-					record['Born'] =
+					record['born'] =
 						'Eunice Kathleen Waymon | February 21, 1933 | Tryon, North Carolina, U.S.';
 					await record.save();
 

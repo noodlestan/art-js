@@ -97,7 +97,7 @@ describe('Case 06 — Filesystem boundary failures', () => {
 			}
 
 			// eslint-disable-next-line dot-notation
-			artist['Artist'] = 'Nina Simone';
+			artist['artist'] = 'Nina Simone';
 
 			await rm(join(workingDirectory, '_records'), { recursive: true, force: true });
 		});

@@ -1,0 +1,11 @@
+## Package: Records
+
+**Purpose:** Record identity, discovery, extraction, update and serialisation for Markdown documents.
+
+**Canonical Name:** `@art-js/records`
+
+**Keywords:**
+
+- library
+- records
+- markdown

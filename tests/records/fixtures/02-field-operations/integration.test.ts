@@ -71,18 +71,19 @@ describe('Case 02 — Renaming, adding, and deleting fields in one save', () => 
 			artist = extractedArtist;
 		});
 
-		it('SHOULD start with Born and Years active', () => {
-			expect(getFieldNames(artist)).toEqual(['Born', 'Years active']);
+		it('SHOULD start with born and yearsActive', () => {
+			expect(getFieldNames(artist)).toEqual(['born', 'yearsActive']);
 		});
 
-		describe('WHEN renaming Born, adding Artist, and deleting Years active, then saving', () => {
+		describe('WHEN renaming born, adding artist, and deleting yearsActive, then saving', () => {
 			let content: string;
 
 			beforeEach(async () => {
-				artist.renameField('Born', 'Birth name');
+				artist.renameField('born', 'birthName');
 				// eslint-disable-next-line dot-notation
-				artist['Artist'] = 'Nina Simone';
-				delete artist['Years active'];
+				artist['artist'] = 'Nina Simone';
+				// eslint-disable-next-line dot-notation
+				delete artist['yearsActive'];
 
 				await artist.save();
 
@@ -91,7 +92,7 @@ describe('Case 02 — Renaming, adding, and deleting fields in one save', () => 
 
 			it('SHOULD persist the renamed field with its original value', () => {
 				expect(content).toContain(
-					'**Birth name:** Eunice Kathleen Waymon | February 21, 1933 | Tryon, North Carolina, U.S.',
+					'**Birth Name:** Eunice Kathleen Waymon | February 21, 1933 | Tryon, North Carolina, U.S.',
 				);
 				expect(content).not.toContain('**Born:**');
 			});
@@ -106,7 +107,7 @@ describe('Case 02 — Renaming, adding, and deleting fields in one save', () => 
 
 			it('SHOULD preserve the heading and the field order', () => {
 				expect(content).toMatch(/^## Artist: Nina Simone$/m);
-				expect(content.indexOf('**Birth name:**')).toBeLessThan(content.indexOf('**Artist:**'));
+				expect(content.indexOf('**Birth Name:**')).toBeLessThan(content.indexOf('**Artist:**'));
 			});
 		});
 	});

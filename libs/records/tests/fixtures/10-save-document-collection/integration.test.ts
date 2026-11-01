@@ -96,9 +96,9 @@ describe('Case 10 — One save writes every in-memory record of a document', () 
 
 			beforeEach(async () => {
 				// eslint-disable-next-line dot-notation
-				findRecord('Artist: Nina Simone')['Years active'] = '1954–2003';
+				findRecord('Artist: Nina Simone')['yearsActive'] = '1954–2003';
 				// eslint-disable-next-line dot-notation
-				findRecord('Song: Feeling Good')['Artist'] = 'Nina Simone';
+				findRecord('Song: Feeling Good')['artist'] = 'Nina Simone';
 
 				await document.save();
 

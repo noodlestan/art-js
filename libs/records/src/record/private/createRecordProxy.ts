@@ -1,6 +1,6 @@
 import type { ArtRecord } from '../types.js';
 
-import { assertFieldName } from './assertFieldName.js';
+import { assertNotReservedFieldName } from './assertNotReservedFieldName.js';
 import { getExposedFieldNames } from './getExposedFieldNames.js';
 import type { ArtRecordCapsule } from './types.js';
 
@@ -67,14 +67,14 @@ export function createRecordProxy(capsule: ArtRecordCapsule): ArtRecord {
 			if (typeof property !== 'string' || Reflect.has(object, property)) {
 				return Reflect.get(object, property, receiver);
 			}
-			assertFieldName(property);
+			assertNotReservedFieldName(property);
 			return capsule.getField(property);
 		},
 		set(object, property, value, receiver) {
 			if (typeof property !== 'string' || Reflect.has(object, property)) {
 				return Reflect.set(object, property, value, receiver);
 			}
-			assertFieldName(property);
+			assertNotReservedFieldName(property);
 			capsule.setField(property, value);
 			return true;
 		},
@@ -82,7 +82,7 @@ export function createRecordProxy(capsule: ArtRecordCapsule): ArtRecord {
 			if (typeof property !== 'string' || Reflect.has(object, property)) {
 				return false;
 			}
-			assertFieldName(property);
+			assertNotReservedFieldName(property);
 			return capsule.deleteField(property);
 		},
 		has(object, property) {
@@ -92,12 +92,12 @@ export function createRecordProxy(capsule: ArtRecordCapsule): ArtRecord {
 			if (typeof property !== 'string') {
 				return false;
 			}
-			const exposedFieldNames = getExposedFieldNames(capsule);
+			const exposedFieldNames = getExposedFieldNames(capsule.fields);
 			return exposedFieldNames.includes(property);
 		},
 		ownKeys(object) {
 			const objectKeys = Reflect.ownKeys(object);
-			const exposedFieldNames = getExposedFieldNames(capsule);
+			const exposedFieldNames = getExposedFieldNames(capsule.fields);
 			const allKeys = [...objectKeys, ...exposedFieldNames];
 			const uniqueKeys = new Set(allKeys);
 			return [...uniqueKeys];
@@ -110,7 +110,7 @@ export function createRecordProxy(capsule: ArtRecordCapsule): ArtRecord {
 			if (typeof property !== 'string') {
 				return undefined;
 			}
-			const exposedFieldNames = getExposedFieldNames(capsule);
+			const exposedFieldNames = getExposedFieldNames(capsule.fields);
 			if (!exposedFieldNames.includes(property)) {
 				return undefined;
 			}

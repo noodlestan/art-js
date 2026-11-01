@@ -1,10 +1,10 @@
 import { isReservedFieldName } from './isReservedFieldName.js';
-import type { ArtRecordCapsule } from './types.js';
+import type { FieldIndex, FieldName } from './types.js';
 
-export function getExposedFieldNames(capsule: ArtRecordCapsule): string[] {
-	function isExposedFieldName(name: string): boolean {
+export function getExposedFieldNames(fields: FieldIndex): FieldName[] {
+	function isExposedFieldName(name: FieldName): boolean {
 		return !isReservedFieldName(name);
 	}
 
-	return capsule.fieldNames().filter(isExposedFieldName);
+	return [...fields.keys()].filter(isExposedFieldName);
 }

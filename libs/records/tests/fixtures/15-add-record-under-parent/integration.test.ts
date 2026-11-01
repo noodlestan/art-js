@@ -81,9 +81,9 @@ describe('Case 15 — Appending and prepending records under an existing parent 
 			const appendedSong = document.addRecord({ appendTo: parent });
 			appendedSong.name = 'Song: Feeling Good';
 			// eslint-disable-next-line dot-notation
-			appendedSong['Artist'] = 'Nina Simone';
+			appendedSong['artist'] = 'Nina Simone';
 			// eslint-disable-next-line dot-notation
-			appendedSong['Released'] = 'June 1965';
+			appendedSong['released'] = 'June 1965';
 			return appendedSong;
 		}
 

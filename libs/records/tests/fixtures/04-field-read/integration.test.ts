@@ -24,7 +24,7 @@ afterEach(async () => {
 	await removeTempDirs(tempDirs);
 });
 
-describe('Case 04 — Field reads resolve by exact field name', () => {
+describe('Case 04 — Field reads resolve by field name', () => {
 	let workingDirectory: string;
 	let filesystemRecords: AdapterMock;
 	let recordsDocument: ReturnType<typeof createRecordsDocument<AdapterMockFile>>;
@@ -73,28 +73,28 @@ describe('Case 04 — Field reads resolve by exact field name', () => {
 			song = extractedSong;
 		});
 
-		describe('WHEN reading Artist', () => {
-			it('SHOULD return the exact field value', () => {
+		describe('WHEN reading artist', () => {
+			it('SHOULD resolve the field name to the loaded label value', () => {
 				// eslint-disable-next-line dot-notation
-				expect(song['Artist']).toBe('Nina Simone');
+				expect(song['artist']).toBe('Nina Simone');
 			});
 
-			it('SHOULD match field names case-sensitively', () => {
+			it('SHOULD not resolve the loaded label itself', () => {
 				// eslint-disable-next-line dot-notation
-				expect(song['artist']).toBeUndefined();
+				expect(song['Artist']).toBeUndefined();
 			});
 		});
 
-		describe('WHEN reading Released', () => {
+		describe('WHEN reading released', () => {
 			it('SHOULD return the release date', () => {
 				// eslint-disable-next-line dot-notation
-				expect(song['Released']).toBe('June 1965');
+				expect(song['released']).toBe('June 1965');
 			});
 		});
 
 		describe('WHEN listing field names', () => {
-			it('SHOULD preserve field order', () => {
-				expect(getFieldNames(song)).toEqual(['Artist', 'Released']);
+			it('SHOULD preserve field order and return the extracted names', () => {
+				expect(getFieldNames(song)).toEqual(['artist', 'released']);
 			});
 		});
 
@@ -119,8 +119,12 @@ describe('Case 04 — Field reads resolve by exact field name', () => {
 		});
 
 		describe('WHEN checking field membership', () => {
-			it('SHOULD recognise an existing field', () => {
-				expect('Artist' in song).toBe(true);
+			it('SHOULD recognise an existing field name', () => {
+				expect('artist' in song).toBe(true);
+			});
+
+			it('SHOULD reject the loaded label', () => {
+				expect('Artist' in song).toBe(false);
 			});
 
 			it('SHOULD reject an unknown field', () => {

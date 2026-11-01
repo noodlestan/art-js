@@ -117,9 +117,9 @@ describe('Case 17 — Batch saving across files, one save per document', () => {
 				}
 
 				// eslint-disable-next-line dot-notation
-				artist['Born'] = 'Eunice Kathleen Waymon';
+				artist['born'] = 'Eunice Kathleen Waymon';
 				// eslint-disable-next-line dot-notation
-				song['Artist'] = 'Nina Simone';
+				song['artist'] = 'Nina Simone';
 
 				await Promise.all([artistDocument.save(), songDocument.save()]);
 

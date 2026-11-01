@@ -1,14 +1,9 @@
 import type { SectionBlock } from '@art-md/constructs';
-import type { ConstructBase } from '@art-md/primitives';
 
-import { isSectionField } from './isSectionField.js';
+import type { SectionField } from './types.js';
 
-export function deleteSectionField(section: SectionBlock, name: string): boolean {
-	function isMatchingSectionField(construct: ConstructBase): boolean {
-		return isSectionField(construct) && construct.name === name;
-	}
-
-	const fieldIndex = section.children.findIndex(isMatchingSectionField);
+export function deleteSectionField(section: SectionBlock, field: SectionField): boolean {
+	const fieldIndex = section.children.indexOf(field);
 	if (fieldIndex === -1) {
 		return false;
 	}
