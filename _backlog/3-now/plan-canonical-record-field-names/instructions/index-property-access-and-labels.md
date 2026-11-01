@@ -288,7 +288,8 @@ Then, and only then: set the underlying Markdown field's `name` to `nameToLabel(
 
 **Files:**
 
-- MODIFY the 11 in-package fixtures under `$PACKAGE/tests/fixtures/` that read or write fields by label: `04-field-read`, `05-write-field`, `06-add-field`, `07-remove-field`, `08-rename-field-in-place`, `10-save-document-collection`, `11-create-new-record`, `12-add-record-to-existing-document`, `13-add-sibling-record`, `15-add-record-under-parent`, `17-batch-save`. `03-read-assert-extract` and `09-section-depth` were audited and do **not** change.
+- MODIFY the 11 in-package fixtures under `$PACKAGE/tests/fixtures/` that read or write fields by label: `04-field-read`, `05-write-field`, `06-add-field`, `07-remove-field`, `08-rename-field-in-place`, `10-save-document-collection`, `11-create-new-record`, `12-add-record-to-existing-document`, `13-add-sibling-record`, `15-add-record-under-parent`, `17-batch-save`. `03-read-assert-extract` was audited and does **not** change (it asserts an empty field list on a field-less record).
+- MODIFY `$PACKAGE/tests/fixtures/09-section-depth/integration.test.ts` — it does not access fields by label, but its persisted-content assertion pins the **generated** label of a canonical-miss write: keep the write `artist['owner'] = 'foo'` as-is and update the assertion to `**Owner:** foo`. That is its only change.
 - MODIFY the six `$PROJECT/tests/records` cases that access fields by label (`01`–`06`, covering `Artist`, `Years active`, `Active`, `Album`, `Producer`) — replace label access with the canonical names (`artist`, `yearsActive`, `active`, `album`, `producer`).
 - CREATE `$PACKAGE/tests/fixtures/18-canonical-name-round-trip/`.
 - CREATE promotion, conversion, and round-trip assertions in `$PACKAGE/tests/record-helpers/` (fixture data as sibling `.fixtures.ts` files).
@@ -338,7 +339,7 @@ Stage every source change, every updated fixture and test, and the new `18-canon
 - Verify all four promotion scenarios from Step 3 are asserted, including that the promoted field keeps its own label across a save.
 - Verify the rename validation order from Step 4, that every rejection leaves document and index untouched, and that `renameField` relabels via `nameToLabel(toName)`.
 - Verify `$PACKAGE/src/record/createRecord.test.ts` is untouched and its `Record field names starting with "__" are reserved` assertion still passes.
-- Verify fixtures `03-read-assert-extract` and `09-section-depth` were not modified (`git diff --stat`).
+- Verify fixture `03-read-assert-extract` was not modified (`git diff --stat`), and that `09-section-depth`'s only change is the persisted-label assertion (`**Owner:** foo`).
 - Verify no helper (`createFieldIndex`, `FieldIndex`, `getExposedFieldNames`, …) is exported from `$PACKAGE/src/index.ts` or `$PACKAGE/src/api/index.ts` — these modules stay private to `record/private`.
 - Verify the new test files follow the Step 6 layout: data-only `.fixtures.ts` siblings in `tests/record-helpers/`, `it.each` titles interpolating inputs with `%s`, no mocks or spies.
 - Verify neither forbidden assertion appears: no `labelToName(labelToName(x))`, and no `nameToLabel(labelToName(label)) === label` over an extracted label.
