@@ -51,13 +51,15 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 **Id:** `pin-art-md-dependencies`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Move `$PACKAGE` onto the exact art-md versions that expose the construct API, so the next iteration can compile against it.
 
 **Description:** Rewrites the `@art-md` dependency pins in both workspace packages, declares the codec package the fixtures already import, and refreshes the lock. No source file changes.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/pin-art-md-dependencies.md`
 
 **Changes:**
 
@@ -75,9 +77,9 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 #### Commits:
 
-| ID                        | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
-| ------------------------- | -------------------------------- | -------- | ----- | ---------- |
-| `pin-art-md-dependencies` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+| ID                        | Repository / Checkout / Branch   | Policy   | Hash  | Status  |
+| ------------------------- | -------------------------------- | -------- | ----- | ------- |
+| `pin-art-md-dependencies` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `READY` |
 
 ##### Commit: `pin-art-md-dependencies`
 
@@ -143,7 +145,7 @@ refactor(records): Create constructs through the codec.
 
 ### Next
 
-Both iterations are unblocked. Write the self-contained instruction files for `pin-art-md-dependencies` and `create-constructs-through-codec`, then delegate `pin-art-md-dependencies` first: it touches only manifests and the lock, so it cannot collide with the records source. Write `create-constructs-through-codec` against the post-`05a7a88` helpers — `setSectionField(field, value)`, `getSectionField(field)`, and `appendSectionField(section, name, value)`.
+`pin-art-md-dependencies` is `READY` with its instruction file and can be delegated now: it touches only the two manifests and the lock, so it cannot collide with the records source. Then write the instruction file for `create-constructs-through-codec` against the post-`05a7a88` helpers — `setSectionField(field, value)`, `getSectionField(field)`, and `appendSectionField(section, name, value)` — and delegate it once the pin commit has landed.
 
 ### Blockers
 
