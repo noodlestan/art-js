@@ -207,7 +207,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | Iteration: Define Field Name Contract            | `DONE`  |
 | Iteration: Index Property Access and Labels      | `DONE`  |
 | Iteration: Handle Collisions and Reserved Labels | `DONE`  |
-| Iteration: Document Field Name Access            | `READY` |
+| Iteration: Document Field Name Access            | `DONE`  |
 | Iteration: Prepare 0.1.0 Release                 | `READY` |
 
 ### Iteration: Define Field Name Contract
@@ -410,7 +410,7 @@ refactor(records): Resolve record fields through a name index.
 
 | ID                        | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
 | ------------------------- | -------------------------------- | -------- | --------- | ----------- |
-| `collisions-and-reserved` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `84dadcb` | `COMMITTED` |
+| `collisions-and-reserved` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `b970627` | `COMMITTED` |
 
 ##### Commit: `collisions-and-reserved`
 
@@ -430,7 +430,7 @@ fix(records): Enforce name collisions and reserved labels.
 
 **Id:** `document-field-name-access`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Ship one documented access model, with the breaking change and the single consumer's migration stated explicitly.
 
@@ -439,6 +439,8 @@ fix(records): Enforce name collisions and reserved labels.
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
 **Instructions:** `./instructions/document-field-name-access.md`
+
+**Report:** `./instructions/document-field-name-access__report.md`
 
 **Changes:**
 
@@ -451,9 +453,9 @@ fix(records): Enforce name collisions and reserved labels.
 
 #### Commits:
 
-| ID                      | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
-| ----------------------- | -------------------------------- | -------- | ----- | ---------- |
-| `document-field-access` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+| ID                      | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ----------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `document-field-access` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `1a370b9` | `COMMITTED` |
 
 ##### Commit: `document-field-access`
 
@@ -526,11 +528,11 @@ release(records): 0.1.0.
 
 ### Next
 
-Three iterations are `DONE` (`224deb6`, `05a7a88`, `84dadcb`; delegation reports recorded); two remain `READY` — delegate `document-field-name-access` next (instruction file written), then `prepare-0-1-0-release` (inlined instructions), which stops before publishing: the user reviews the release commit, publishes, and records confirmation. The release order is fixed: this plan publishes `0.1.0` first, and `Plan: Create Lib Records` publishes the consolidated `0.1.1` after its `Consolidate` iteration. Draft any follow-up instruction against the Feedback notes (delete-cell wording, codec field pattern, `dist` rebuild).
+Four iterations are `DONE` (`224deb6`, `05a7a88`, `b970627`, `1a370b9`; delegation reports recorded); only `prepare-0-1-0-release` remains `READY` — delegate it next; it stops before publishing: the user reviews the release commit, publishes, and records confirmation. The release order is fixed: this plan publishes `0.1.0` first, and `Plan: Create Lib Records` publishes the consolidated `0.1.1` after its `Consolidate` iteration. Draft any follow-up instruction against the Feedback notes (delete-cell wording, codec field pattern, `dist` rebuild).
 
 ### Blockers
 
-- **Missing instruction files** — none: every remaining iteration is delegatable (`handle-collisions-and-reserved-labels` and `document-field-name-access` as files, `prepare-0-1-0-release` inlined). Scope, grammar, index, and rename semantics are fully settled.
+- **Missing instruction files** — none: only `prepare-0-1-0-release` remains, carrying inlined `**Instructions:**`. Scope, grammar, index, and rename semantics are fully settled.
 
 ---
 
@@ -566,7 +568,8 @@ This section lists the operating instructions relevant to this work item.
 
 ### Evidence
 
-- **Commit `84dadcb` (`NOPUSH`)** — reserved-label abort at index construction with the exact `Field label "{label}" resolves to reserved name "{name}"` message, first-wins/promotion/guards pinned from the extraction path, fixtures `19`/`20`; `$PACKAGE` 38 files / 515 tests green, root `npm run ci` 8/8 inside the hook. Report `./instructions/handle-collisions-and-reserved-labels__report.md`.
+- **Commit `1a370b9` (`NOPUSH`)** — design Field Names section with all exact-label wording removed, three ADRs under `knowledge/adr/`, overview fixture map over `tests/fixtures/` 01–20, README migration notes; `CHANGELOG.md` untouched, no `src/` or `tests/` file in the commit; 515 tests + root `npm run ci` 8/8 green inside the hook. Report `./instructions/document-field-name-access__report.md`.
+- **Commit `b970627` (`NOPUSH`)** — reserved-label abort at index construction with the exact `Field label "{label}" resolves to reserved name "{name}"` message, first-wins/promotion/guards pinned from the extraction path, fixtures `19`/`20`; `$PACKAGE` 38 files / 515 tests green, root `npm run ci` 8/8 inside the hook. Report `./instructions/handle-collisions-and-reserved-labels__report.md`.
 - **Commit `05a7a88` (`NOPUSH`)** — every trap resolves through the extraction-time `name → field` index; `18-canonical-name-round-trip` proves byte-identical label-preserving saves; `$PACKAGE` 479 tests and `$PROJECT/tests/records` 34 tests green, root `npm run ci` 8/8 inside the hook. Report `./instructions/index-property-access-and-labels__report.md`.
 - **Canonical read** — `record.canonicalName` and `record.purpose` return the values of `**Canonical Name:**` and `**Purpose:**` from a real `package.art` fixture.
 - **Label preservation** — load, mutate one field, save a real package-record document and diff the output: every untouched label and the structure are identical.
