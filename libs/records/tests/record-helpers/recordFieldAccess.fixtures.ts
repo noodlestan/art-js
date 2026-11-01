@@ -6,6 +6,15 @@ export const accessFields = [
 
 export const accessRecordName = 'Test Record';
 
+// Codec-parseable twin of `accessFields`: digit-led labels cannot be parsed, so
+// the extraction-path guards run over `Purpose` and `Canonical Name` only.
+export const extractedAccessDocument = `## Test Record
+
+**Purpose:** First
+
+**Canonical Name:** Canonical
+`;
+
 export const readValueCases = [
 	['purpose', 'First'],
 	['canonicalName', 'Canonical'],

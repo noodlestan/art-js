@@ -1,7 +1,13 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import type { ArtRecord } from '../../src/index.js';
-import { createSectionRecord, getFieldNames, makeFieldInline } from '../helpers/records/index.js';
+import type { AdapterMock } from '../helpers/adapter/index.js';
+import {
+	createSectionRecord,
+	extractTestRecord,
+	getFieldNames,
+	makeFieldInline,
+} from '../helpers/records/index.js';
 
 import {
 	absentKeyCases,
@@ -13,6 +19,7 @@ import {
 	deleteTrueCases,
 	enumeratedCases,
 	expectedExposedKeys,
+	extractedAccessDocument,
 	memberFalseCases,
 	memberTrueCases,
 	readThrowCases,
@@ -162,5 +169,68 @@ describe('record field access', () => {
 
 	it('WHEN enumerating keys THEN exactly the exposed index names are listed in document order', () => {
 		expect(getFieldNames(record)).toEqual([...expectedExposedKeys]);
+	});
+});
+
+describe('record field access from an extracted record', () => {
+	let record: ArtRecord;
+	let filesystemRecords: AdapterMock;
+
+	beforeEach(async () => {
+		({ record, filesystemRecords } = await extractTestRecord(
+			extractedAccessDocument,
+			accessRecordName,
+		));
+	});
+
+	it.each(readThrowCases)(
+		'WHEN reading the reserved name "%s" from an extracted record THEN a TypeError is thrown',
+		name => {
+			expect(() => record[name]).toThrow(TypeError);
+		},
+	);
+
+	it.each(writeThrowCases)(
+		'WHEN writing the invalid name "%s" from an extracted record THEN a TypeError is thrown and nothing is appended',
+		(name, expectedMessage) => {
+			const labelsBefore = listFieldLabels(record);
+
+			expect(() => {
+				record[name] = 'Updated';
+			}).toThrow(expectedMessage);
+			expect(listFieldLabels(record)).toEqual(labelsBefore);
+		},
+	);
+
+	it.each(deleteHandleCases)(
+		'WHEN deleting the handle member "%s" from an extracted record THEN the proxy refuses with a TypeError',
+		name => {
+			expect(() => {
+				delete record[name];
+			}).toThrow(TypeError);
+		},
+	);
+
+	it('WHEN writing a canonical miss from an extracted record THEN the generated label is appended', () => {
+		// eslint-disable-next-line dot-notation
+		record['brandNew'] = 'Updated';
+
+		// eslint-disable-next-line dot-notation
+		expect(record['brandNew']).toBe('Updated');
+		expect(listFieldLabels(record)).toContain('Brand New');
+	});
+
+	it('WHEN a rename collision is rejected on an extracted record THEN the document and keys stay byte-identical', () => {
+		const documentBefore = filesystemRecords.getFileContent('_records/test.art');
+		const keysBefore = getFieldNames(record);
+		const sectionBefore = JSON.stringify(record.__section);
+
+		expect(() => {
+			record.renameField('purpose', 'canonicalName');
+		}).toThrow('Field name already exists: "canonicalName"');
+
+		expect(filesystemRecords.getFileContent('_records/test.art')).toBe(documentBefore);
+		expect(getFieldNames(record)).toEqual(keysBefore);
+		expect(JSON.stringify(record.__section)).toBe(sectionBefore);
 	});
 });

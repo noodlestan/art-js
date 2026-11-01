@@ -23,6 +23,11 @@ describe('record field promotion', () => {
 		expect(getFieldNames(record)).toEqual(['purpose']);
 	});
 
+	it('GIVEN duplicate labels WHEN enumerating keys THEN the name appears once and both fields are kept', () => {
+		expect(Object.keys(record).filter(key => key === 'purpose')).toEqual(['purpose']);
+		expect(record.__section.children).toHaveLength(2);
+	});
+
 	it('WHEN deleting the promoted name THEN the skipped duplicate is promoted', () => {
 		// eslint-disable-next-line dot-notation
 		expect(delete record['purpose']).toBe(true);
@@ -30,6 +35,7 @@ describe('record field promotion', () => {
 		// eslint-disable-next-line dot-notation
 		expect(record['purpose']).toBe('Second');
 		expect(getFieldNames(record)).toEqual(['purpose']);
+		expect(JSON.stringify(record.__section)).toContain('"name":"purpose"');
 	});
 
 	it('WHEN renaming the promoted name THEN the duplicate takes over the vacated name', () => {
