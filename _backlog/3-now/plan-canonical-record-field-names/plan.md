@@ -202,13 +202,13 @@ Execution occurs from `$WORKSPACE/`; package work is performed in `$PROJECT` on 
 
 This section lists the downstream work items produced, coordinated, or advanced by the plan, identifying blocking dependencies across resources of different owners.
 
-| Iteration                                        | Status     |
-| ------------------------------------------------ | ---------- |
-| Iteration: Define Field Name Contract            | `DONE`     |
-| Iteration: Index Property Access and Labels      | `DONE`     |
-| Iteration: Handle Collisions and Reserved Labels | `PLANNING` |
-| Iteration: Document Field Name Access            | `PLANNING` |
-| Iteration: Prepare 0.1.0 Release                 | `PLANNING` |
+| Iteration                                        | Status  |
+| ------------------------------------------------ | ------- |
+| Iteration: Define Field Name Contract            | `DONE`  |
+| Iteration: Index Property Access and Labels      | `DONE`  |
+| Iteration: Handle Collisions and Reserved Labels | `READY` |
+| Iteration: Document Field Name Access            | `READY` |
+| Iteration: Prepare 0.1.0 Release                 | `READY` |
 
 ### Iteration: Define Field Name Contract
 
@@ -385,13 +385,15 @@ refactor(records): Resolve record fields through a name index.
 
 **Id:** `handle-collisions-and-reserved-labels`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Make duplicate-name and reserved-label records fail deterministically instead of silently shadowing each other or a handle member.
 
 **Description:** Documents first-wins precedence for duplicate extracted names and what promotes a shadowed duplicate, aborts index construction when a label converts to a handle member, adds unit tests plus two fixtures, and re-verifies the mutation guards delivered by `index-property-access-and-labels` without re-implementing them.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/handle-collisions-and-reserved-labels.md`
 
 **Changes:**
 
@@ -400,7 +402,7 @@ refactor(records): Resolve record fields through a name index.
 - Extraction: when `labelToName(label)` yields `name`, `save`, `renameField`, `__section`, or a `__` prefix, throw `TypeError: Field label "{label}" resolves to reserved name "{name}"` from index construction in `createRecordCapsule` / `createFieldIndex`, so extraction, `addRecord`, and `createRecord` all fail before a handle can shadow the field. Empty sections never collide.
 - Mutation guards are not implemented here: the previous iteration delivers them; this iteration asserts the name-class table from the extraction path.
 - Add unit tests for both extraction rules, for promotion on delete and on rename, for the no-op case where a shadowed field is removed, and assert the mutation guards delivered by the previous iteration.
-- Add fixtures: `18-duplicate-field-names` (duplicate labels, first name wins) and `19-reserved-label-throws` (extraction error).
+- Add fixtures: `19-duplicate-field-names` (duplicate labels, first name wins) and `20-reserved-label-throws` (extraction error) — renumbered from `18`/`19`; `18` is `18-canonical-name-round-trip`.
 
 #### Commits:
 
@@ -426,13 +428,15 @@ fix(records): Enforce name collisions and reserved labels.
 
 **Id:** `document-field-name-access`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Ship one documented access model, with the breaking change and the single consumer's migration stated explicitly.
 
 **Description:** Rewrites the field-access and reserved-name sections of the design, updates every example to canonical field names, and refreshes the overview and README. The `0.1.0` CHANGELOG entry is owned by `prepare-0-1-0-release`.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/document-field-name-access.md`
 
 **Changes:**
 
@@ -467,7 +471,7 @@ docs(records): Document field name access.
 
 **Id:** `prepare-0-1-0-release`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Hand the user a reviewed, verified `0.1.0` release candidate — version and CHANGELOG already changed — without publishing.
 
@@ -475,7 +479,19 @@ docs(records): Document field name access.
 
 **Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
 
-**Pending Instructions:** — not yet rendered. This iteration carries `Purpose`, `Description`, and `Changes` only. Before it is dequeued, run `write-instructions` in inline mode to populate `**Instructions:**` from `$DOMAINS/plans/templates/instructions.tart`. Do not delegate this iteration until that field holds content.
+**Instructions:**
+
+Execute the Changes listed above.
+
+Before you start: run `npm ci` from `$WORKSPACE` and again from `$PROJECT` (Setting Up).
+
+Validate after the edits — from `$PACKAGE`: `npm run lint`, `npm run build`, `npm run test:unit`, `npm run test:integration`; from `$PROJECT`: `npm run ci`; from `$WORKSPACE`: `npm run ci`.
+
+After executing: commit `release-0-1-0` with the blueprint below from `$PROJECT` — the `pre-commit` hook runs `npm run clean`, `npm run extract`, `npm run ci`; fix any reported failure and retry — then confirm the branch is clean.
+
+STOP: do not publish. Report the release commit to the user for review and publishing; the user publishes `@art-js/records` and the `Confirm publication` follow-up records `npm info @art-js/records version`.
+
+Inlined instructions carry no separate report file — report the outcome in chat.
 
 **Changes:**
 
@@ -507,11 +523,11 @@ release(records): 0.1.0.
 
 ### Next
 
-Iterations `define-field-name-contract` and `index-property-access-and-labels` are `DONE` (`224deb6`, `05a7a88`; delegation reports recorded). Write the instruction files for `handle-collisions-and-reserved-labels` and `document-field-name-access` as each is dequeued — draft them against the Feedback notes (delete-cell wording, codec field pattern, `dist` rebuild for the external package). `prepare-0-1-0-release` is delegated with its inlined instructions — populate the `**Instructions:**` field first (see Feedback). Then commit the release preparation for the user to publish.
+Both delivered iterations are `DONE` (`224deb6`, `05a7a88`); the remaining three are `READY` — `handle-collisions-and-reserved-labels` and `document-field-name-access` have instruction files, `prepare-0-1-0-release` carries inlined `**Instructions:**`. Delegate them in order: collisions first, then docs, then the release preparation — which stops before publishing: the user reviews the release commit, publishes, and records confirmation. Draft any follow-up instruction against the Feedback notes (delete-cell wording, codec field pattern, `dist` rebuild).
 
 ### Blockers
 
-- **Missing instruction files** — `handle-collisions-and-reserved-labels` and `document-field-name-access` are `INSTRUCTIONS_SELF_CONTAINED_FILE` with no `instructions/{iteration.id}.md` yet; `prepare-0-1-0-release` is inlined and still `PLANNING`. Scope, grammar, index, and rename semantics are fully settled.
+- **Missing instruction files** — none: every remaining iteration is delegatable (`handle-collisions-and-reserved-labels` and `document-field-name-access` as files, `prepare-0-1-0-release` inlined). Scope, grammar, index, and rename semantics are fully settled.
 
 ---
 
