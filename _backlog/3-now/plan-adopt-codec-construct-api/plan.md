@@ -44,8 +44,8 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 | Iteration                                    | Status     |
 | -------------------------------------------- | ---------- |
-| Iteration: Pin Art MD Dependencies           | `READY`    |
-| Iteration: Create Constructs Through Codec   | `PLANNING` |
+| Iteration: Pin Art MD Dependencies           | `DONE`     |
+| Iteration: Create Constructs Through Codec   | `READY`    |
 | Iteration: Organise Record Private           | `PLANNING` |
 | Iteration: Organise Records Document Private | `PLANNING` |
 
@@ -53,7 +53,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 **Id:** `pin-art-md-dependencies`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Move `$PACKAGE` onto the exact art-md versions that expose the construct API, so the next iteration can compile against it.
 
@@ -79,9 +79,9 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 #### Commits:
 
-| ID                        | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
-| ------------------------- | -------------------------------- | -------- | ----- | ---------- |
-| `pin-art-md-dependencies` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+| ID                        | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ------------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `pin-art-md-dependencies` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `749f75f` | `COMMITTED` |
 
 ##### Commit: `pin-art-md-dependencies`
 
@@ -101,7 +101,7 @@ deps(records): Pin art-md packages.
 
 **Id:** `create-constructs-through-codec`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Delete the three private construct helpers and route the section-field read and write path through the injected codec, with no change in behaviour.
 
@@ -291,19 +291,19 @@ refactor(records): Regroup private document modules.
 
 ### Next
 
-The plan runs in four iterations. Only (1) and (2) are on the critical path:
+The plan runs in four iterations:
 
-1. `pin-art-md-dependencies` — `READY`, instruction file written. Manifests and lock only, so it cannot collide with the records source. Delegate now.
-2. `create-constructs-through-codec` — `PLANNING`, instruction file written against the post-`05a7a88` helpers (`setSectionField(field, value)`, `getSectionField(field)`, `appendSectionField(section, name, value)`) and the contexts that still have to carry the codec. Blocked on (1): `$PACKAGE` does not declare `@art-md/codec` yet. Delegate once (1) is committed.
+1. `pin-art-md-dependencies` — **`DONE` as `749f75f`** (hook green, not pushed). Both workspace edges are on `primitives`/`constructs` `0.0.7`, `@art-md/codec@0.0.5` is declared, and the lock was regenerated from scratch so the `fs-records` residual nests under its own package instead of shadowing `$TESTS`. The lesson is written into the instruction file and recorded as a Finding.
+2. `create-constructs-through-codec` — **`READY`**, instruction file written against the post-`05a7a88` helpers (`setSectionField(field, value)`, `getSectionField(field)`, `appendSectionField(section, name, value)`) and the contexts that still have to carry the codec. Its dependency is satisfied: `$PACKAGE` now declares `@art-md/codec@0.0.5`. Delegate now.
 3. `organise-record-private` — `PLANNING`, inlined. Blocked on (2): the folder layout is derived from the file set that survives the helper deletions, and both rewrite the same import graph.
-4. `organise-records-document-private` — `PLANNING`, inlined. **Independent of (1)–(3)**: that directory has no tests, no codec use, and no shared imports with `record/private`. It only rewrites one import outside `private/`, so it can be delegated at any slack moment — including in parallel with (1) or (2), though serial is safer for the shared checkout.
+4. `organise-records-document-private` — `PLANNING`, inlined. **Independent of (1)–(3)**: that directory has no tests, no codec use, and no shared imports with `record/private`. It only rewrites one import outside `private/`, so it can be delegated at any slack moment — including alongside (2), though serial is safer for the shared checkout.
 
-Serial rule for (2) and (3): they move files that `Plan: Canonical Record Field Names` references by path in its instruction files, so they belong after `release-0-1-0` rather than before those plans are archived. Iteration (4) carries no such constraint.
+Serial rule for (2) and (3): they move files that `Plan: Canonical Record Field Names` references by path in its instruction files, so they belong while that plan's iterations are settled rather than interleaved with a delegation of theirs. Iteration (4) carries no such constraint.
 
 ### Blockers
 
 - None — the write-path blocker closed when `index-property-access-and-labels` landed as `05a7a88`. Each iteration's own sequencing gate is listed under Next.
-- `@art-md/codec@0.0.5` is not yet declared by `$PACKAGE`; iteration (1) declares it, which is what unblocks (2).
+- None open. The `@art-md/codec@0.0.5` gate closed with `749f75f`; iteration (2) is `READY`.
 
 ---
 
