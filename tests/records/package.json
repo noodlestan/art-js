@@ -55,8 +55,8 @@
   "dependencies": {
     "@art-js/records": "*",
     "@art-lib/fs-records": "0.0.3",
-    "@art-md/codec": "0.0.3",
-    "@art-md/primitives": "0.0.6"
+    "@art-md/codec": "0.0.5",
+    "@art-md/primitives": "0.0.7"
   },
   "devDependencies": {
     "tsx": "4.23.15",

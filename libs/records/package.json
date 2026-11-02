@@ -50,10 +50,11 @@
     "ci": "npm run lint && npm run build && npm run test:unit && npm run test:integration"
   },
   "dependencies": {
-    "@art-md/constructs": "0.0.6",
-    "@art-md/primitives": "0.0.6"
+    "@art-md/constructs": "0.0.7",
+    "@art-md/primitives": "0.0.7"
   },
   "devDependencies": {
+    "@art-md/codec": "0.0.5",
     "vitest": "5.0.5"
   }
 }
