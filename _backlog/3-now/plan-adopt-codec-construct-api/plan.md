@@ -46,7 +46,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | -------------------------------------------- | ---------- |
 | Iteration: Pin Art MD Dependencies           | `DONE`     |
 | Iteration: Create Constructs Through Codec   | `DONE`     |
-| Iteration: Organise Record Private           | `PLANNING` |
+| Iteration: Organise Record Private           | `DONE`     |
 | Iteration: Organise Records Document Private | `PLANNING` |
 
 ### Iteration: Pin Art MD Dependencies
@@ -150,7 +150,7 @@ refactor(records): Create constructs through the codec.
 
 **Id:** `organise-record-private`
 
-**Status:** `PLANNING`
+**Status:** `DONE`
 
 **Purpose:** Regroup the flat 21-source-file `$PACKAGE/src/record/private` directory into four cohesive folders so each private file sits with the behaviour it belongs to, and delete the three one-line pass-through helpers whose only caller is the capsule, leaving 18.
 
@@ -212,9 +212,9 @@ Rules:
 
 #### Commits:
 
-| ID                        | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
-| ------------------------- | -------------------------------- | -------- | ----- | ---------- |
-| `organise-record-private` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+| ID                        | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ------------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `organise-record-private` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `27f15c0` | `COMMITTED` |
 
 ##### Commit: `organise-record-private`
 
@@ -302,9 +302,9 @@ refactor(records): Regroup private document modules.
 The plan runs in four iterations:
 
 1. `pin-art-md-dependencies` — **`DONE` as `749f75f`**.
-2. `create-constructs-through-codec` — **`DONE` as `63d07a5`** (hook green, not pushed). Deleted `createTextBlock`, `createTextExpression`, and `readText`; threaded `context.codec` through `RecordHandleContext` and `RecordsCollectionContext`; routed reads/writes/appends through `codec.toText`/`codec.create`. Fixtures untouched, behaviour preserved.
-3. `organise-record-private` — `PLANNING`, inlined. **Now unblocked.** Derives the folder layout from the file set that survives (2), and also deletes the `getSectionField`, `makeSectionDepthReadOnly`, and `makeSectionNameReadOnly` pass-throughs — each a one-line body whose only caller is `createRecordCapsule.ts` — folding their call sites into it. It rewrites the same import graph (2) just touched, so serial is preferred in this shared checkout.
-4. `organise-records-document-private` — `PLANNING`, inlined. **Independent of (1)–(3)**: that directory has no tests, no codec use, and no shared imports with `record/private`. It only rewrites one import outside `private/`, so it can be delegated at any slack moment — including alongside (3), though serial is safer for the shared checkout.
+2. `create-constructs-through-codec` — **`DONE` as `63d07a5`**. Deleted the three helpers, threaded codec contexts, routed reads/writes/appends through the codec.
+3. `organise-record-private` — **`DONE` as `27f15c0`** (hook green, not pushed). Regrouped into `field-name/`, `field-index/`, `section-field/`, `capsule/`; deleted `getSectionField`, `makeSectionDepthReadOnly`, `makeSectionNameReadOnly` and folded call sites into `createRecordCapsule.ts`.
+4. `organise-records-document-private` — `PLANNING`, inlined. **Independent of (1)–(3)**: that directory has no tests, no codec use, and no shared imports with `record/private`. It only rewrites one import outside `private/`, so it can be delegated at any slack moment. Serial not required here.
 
 Serial rule for (3): they move files that `Plan: Canonical Record Field Names` references by path in its instruction files, so they belong while that plan's iterations are settled rather than interleaved with a delegation of theirs. Iteration (4) carries no such constraint.
 
