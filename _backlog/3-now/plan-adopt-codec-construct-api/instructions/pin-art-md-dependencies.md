@@ -195,6 +195,17 @@ Run from `$PROJECT`:
 npm install
 ```
 
+**Placement hazard — read before installing.** `@art-lib/fs-records@0.0.3` pins `@art-md/primitives: 0.0.6`, so npm must keep one `0.0.6` copy somewhere. On an _existing_ tree npm reuses the current placement of `fs-records` and puts that `0.0.6` in the free slot beside it — `tests/records/node_modules/` — where it shadows `$TESTS`' own direct `0.0.7` edge. That yields `npm ls` `ELSPROBLEMS` and 6 × `TS2345` in the fixtures (`ArtCodec` from `0.0.6` lacks `create`/`toText`), and it is not repairable by a second `npm install`: npm 11.12.1 will not persist `overrides` into the lock either.
+
+Regenerate from scratch instead — this is the expected path, not a recovery:
+
+```bash
+rm -rf node_modules libs/records/node_modules tests/records/node_modules package-lock.json
+npm install
+```
+
+The fresh hoisting pass places `fs-records` at `$PROJECT/node_modules/@art-lib/fs-records` with the `0.0.6` copy nested _under_ it, where it shadows nothing. Confirm the placement in the lock: the `0.0.6` entry must read `node_modules/@art-lib/fs-records/node_modules/@art-md/primitives`.
+
 Expect the following entries to move, because `@art-md/codec@0.0.5` pins its siblings exactly:
 
 | Package              | Before                        | After        |
@@ -215,7 +226,7 @@ Required outcome:
 
 - `@art-js/records` and `@art-js/test-records` both resolve the same single `@art-md/codec@0.0.5`, now declared rather than reached by hoisting.
 - `@art-md/primitives@0.0.7` is the version resolved by every workspace package, `@art-md/constructs`, and `@art-md/codec`.
-- Exactly one duplicate remains: `@art-md/primitives@0.0.6` nested under `@art-lib/fs-records@0.0.3`. That is the documented residual — keep it, and do not run `npm dedupe`, `npm update`, or a hand-edited lock to remove it.
+- Exactly one duplicate remains: `@art-md/primitives@0.0.6` nested under `@art-lib/fs-records@0.0.3` at `node_modules/@art-lib/fs-records/node_modules/@art-md/primitives`. That is the documented residual — keep it, and do not run `npm dedupe`, `npm update`, a `package.json` `overrides` entry, or a hand-edited lock to remove it. If `npm ls` reports it as `invalid`, it is sitting one level too high (see the placement hazard above): regenerate from scratch rather than patching the tree.
 - Any other duplicate, or any `@art-md` package still at `0.0.4`, `0.0.5`, or `0.0.6` outside that residual, is a BLOCKER.
 
 If `npm install` rewrites a manifest other than the two you edited, revert that file and REPORT A BLOCKER with the diff.
