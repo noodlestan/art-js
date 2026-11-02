@@ -12,7 +12,7 @@
 
 **Purpose:** Create and read Art MD constructs through the codec instead of three local helper functions, so `@art-js/records` stops carrying a private copy of behaviour the codec now owns.
 
-**Description:** Pins `$PACKAGE` to `@art-md/primitives@0.0.7` and `@art-md/constructs@0.0.7`, adds `@art-md/codec@0.0.5` as a development dependency, deletes `createTextBlock`, `createTextExpression`, and `readText`, and threads the consumer-injected codec through the section-field read and write path and its tests.
+**Description:** Pins `$PACKAGE` to `@art-md/primitives@0.0.7` and `@art-md/constructs@0.0.7`, adds `@art-md/codec@0.0.5` as a development dependency, deletes `createTextBlock`, `createTextExpression`, and `readText`, threads the consumer-injected codec through the section-field read and write path and its tests, and finally deletes the `getSectionField`, `makeSectionDepthReadOnly`, and `makeSectionNameReadOnly` pass-throughs during the private-directory regroup.
 
 ## Mandatory Reading
 
@@ -36,7 +36,7 @@ This section lists the path variables used throughout the plan file and its down
 
 ## Summary
 
-Change `@art-js/records` so its section-field read and write path calls the codec the consumer already injects — `codec.create` for the natural block and expression constructs, `codec.toText` for reading a field — instead of the private `createTextBlock`, `createTextExpression`, and `readText` helpers, and move the package's art-md pins from `0.0.6` to the exact versions published by `Plan: Expose Construct Creation in Codec`: `@art-md/primitives@0.0.7`, `@art-md/constructs@0.0.7`, `@art-md/codec@0.0.5`. Scope is `$PACKAGE`, `$TESTS`, and `$PROJECT/package-lock.json`; the last two iterations then regroup the 21 source files that remain under `$PACKAGE/src/record/private` and the 12 under `$PACKAGE/src/records-document/private`.
+Change `@art-js/records` so its section-field read and write path calls the codec the consumer already injects — `codec.create` for the natural block and expression constructs, `codec.toText` for reading a field — instead of the private `createTextBlock`, `createTextExpression`, and `readText` helpers, and move the package's art-md pins from `0.0.6` to the exact versions published by `Plan: Expose Construct Creation in Codec`: `@art-md/primitives@0.0.7`, `@art-md/constructs@0.0.7`, `@art-md/codec@0.0.5`. Scope is `$PACKAGE`, `$TESTS`, and `$PROJECT/package-lock.json`; the last two iterations then regroup the 18 source files that remain under `$PACKAGE/src/record/private` — after this plan also deletes the `getSectionField`, `makeSectionDepthReadOnly`, and `makeSectionNameReadOnly` pass-throughs — and the 12 under `$PACKAGE/src/records-document/private`.
 
 ## Items:
 
@@ -152,9 +152,9 @@ refactor(records): Create constructs through the codec.
 
 **Status:** `PLANNING`
 
-**Purpose:** Regroup the flat 24-file `$PACKAGE/src/record/private` directory into four cohesive folders so each private file sits with the behaviour it belongs to.
+**Purpose:** Regroup the flat 21-source-file `$PACKAGE/src/record/private` directory into four cohesive folders so each private file sits with the behaviour it belongs to, and delete the three one-line pass-through helpers whose only caller is the capsule, leaving 18.
 
-**Description:** Moves the private modules into `field-name/`, `field-index/`, `section-field/`, and `capsule/`, leaving `types.ts` and `constants.ts` at the private root. Imports are rewritten to match; no behaviour, no export, and no public API changes. Runs after `create-constructs-through-codec`, so the layout is derived from the file set that survives the helper deletions.
+**Description:** Moves the private modules into `field-name/`, `field-index/`, `section-field/`, and `capsule/`, leaving `types.ts` and `constants.ts` at the private root. It also deletes `getSectionField.ts`, `makeSectionDepthReadOnly.ts`, and `makeSectionNameReadOnly.ts` — each a one-line pass-through with exactly one caller, `createRecordCapsule.ts` — and folds their call sites into that caller. Imports are rewritten to match; no behaviour, no export, and no public API changes. Runs after `create-constructs-through-codec`, so the layout is derived from the file set that survives the earlier helper deletions.
 
 **Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
 
@@ -179,8 +179,7 @@ Move the files into this layout — reshuffle freely inside each group, the grou
   - `createFieldIndex.ts` + its test
   - `getExposedFieldNames.ts` + its test
   - `listSectionFieldNames.ts` + its test
-- `section-field/` — read, write, delete, append on a resolved `SectionField`
-  - `getSectionField.ts`
+- `section-field/` — write, delete, append on a resolved `SectionField` (reads now call `context.codec.toText` directly)
   - `setSectionField.ts`
   - `deleteSectionField.ts`
   - `appendSectionField.ts`
@@ -188,9 +187,16 @@ Move the files into this layout — reshuffle freely inside each group, the grou
 - `capsule/` — the record proxy, its guards, and its context
   - `createRecordCapsule.ts`
   - `createRecordProxy.ts` + its test
-  - `defineReadOnlyProperty.ts`
-  - `makeSectionDepthReadOnly.ts`
-  - `makeSectionNameReadOnly.ts`
+  - `defineReadOnlyProperty.ts` — now called directly by `createRecordCapsule.ts`
+
+Delete the three pass-through helpers and fold their call sites into `createRecordCapsule.ts`:
+
+- Delete `$PACKAGE/src/record/private/getSectionField.ts`. Its body is already `codec.toText(field)`, so replace `return getSectionField(context.codec, field);` with `return context.codec.toText(field);` and drop the import.
+- Delete `$PACKAGE/src/record/private/makeSectionDepthReadOnly.ts`. Replace `makeSectionDepthReadOnly(context.section);` with `defineReadOnlyProperty(context.section, 'depth', context.section.depth);`.
+- Delete `$PACKAGE/src/record/private/makeSectionNameReadOnly.ts`. Replace **both** `makeSectionNameReadOnly(context.section);` calls (the `!nameIsMutable` guard and the end of `save()`) with `defineReadOnlyProperty(context.section, 'name', context.section.name);` and drop the import.
+- Add `import { defineReadOnlyProperty } from './defineReadOnlyProperty.js';` to `createRecordCapsule.ts`.
+
+After the edits, `grep -rn "getSectionField\|makeSectionDepthReadOnly\|makeSectionNameReadOnly" $PACKAGE/src $PACKAGE/tests` must print nothing.
 
 Verify: from `$PACKAGE`, `npm run lint`, `npm run build`, `npm run test:unit`, `npm run test:integration`; from `$PROJECT`, `npm run ci`. A wrong import fails `tsc --noEmit` and the build, so lint alone is not proof.
 
@@ -202,6 +208,7 @@ Rules:
 - RULE: do not rename files, merge files, change exports, or touch `$PACKAGE/src/index.ts`, `$PACKAGE/src/api/index.ts`, `$PACKAGE/tests/**`, or any `$TESTS` file.
 - RULE: co-located tests move with their source file; no test file is left at the private root.
 - RULE: no file outside `$PACKAGE/src/record/private/` moves or changes.
+- RULE: the three deleted helpers were private and never exported; add no replacement, alias, or re-export for them.
 
 #### Commits:
 
@@ -220,6 +227,7 @@ refactor(records): Regroup private record modules.
 
 - Move field-name, field-index, and section-field modules into their own folders.
 - Keep the capsule proxy and its guards together.
+- Delete the `getSectionField`, `makeSectionDepthReadOnly`, and `makeSectionNameReadOnly` pass-throughs.
 ```
 
 ### Iteration: Organise Records Document Private
@@ -295,7 +303,7 @@ The plan runs in four iterations:
 
 1. `pin-art-md-dependencies` — **`DONE` as `749f75f`**.
 2. `create-constructs-through-codec` — **`DONE` as `63d07a5`** (hook green, not pushed). Deleted `createTextBlock`, `createTextExpression`, and `readText`; threaded `context.codec` through `RecordHandleContext` and `RecordsCollectionContext`; routed reads/writes/appends through `codec.toText`/`codec.create`. Fixtures untouched, behaviour preserved.
-3. `organise-record-private` — `PLANNING`, inlined. **Now unblocked.** The folder layout is derived from the file set that survives the helper deletions and will rewrite the same import graph as (2) just did; serial is preferred in this shared checkout.
+3. `organise-record-private` — `PLANNING`, inlined. **Now unblocked.** Derives the folder layout from the file set that survives (2), and also deletes the `getSectionField`, `makeSectionDepthReadOnly`, and `makeSectionNameReadOnly` pass-throughs — each a one-line body whose only caller is `createRecordCapsule.ts` — folding their call sites into it. It rewrites the same import graph (2) just touched, so serial is preferred in this shared checkout.
 4. `organise-records-document-private` — `PLANNING`, inlined. **Independent of (1)–(3)**: that directory has no tests, no codec use, and no shared imports with `record/private`. It only rewrites one import outside `private/`, so it can be delegated at any slack moment — including alongside (3), though serial is safer for the shared checkout.
 
 Serial rule for (3): they move files that `Plan: Canonical Record Field Names` references by path in its instruction files, so they belong while that plan's iterations are settled rather than interleaved with a delegation of theirs. Iteration (4) carries no such constraint.
