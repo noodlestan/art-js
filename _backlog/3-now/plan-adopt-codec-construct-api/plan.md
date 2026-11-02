@@ -36,16 +36,18 @@ This section lists the path variables used throughout the plan file and its down
 
 ## Summary
 
-Change `@art-js/records` so its section-field read and write path calls the codec the consumer already injects — `codec.create` for the natural block and expression constructs, `codec.toText` for reading a field — instead of the private `createTextBlock`, `createTextExpression`, and `readText` helpers, and move the package's art-md pins from `0.0.6` to the exact versions published by `Plan: Expose Construct Creation in Codec`: `@art-md/primitives@0.0.7`, `@art-md/constructs@0.0.7`, `@art-md/codec@0.0.5`. Scope is `$PACKAGE`, `$TESTS`, and `$PROJECT/package-lock.json`.
+Change `@art-js/records` so its section-field read and write path calls the codec the consumer already injects — `codec.create` for the natural block and expression constructs, `codec.toText` for reading a field — instead of the private `createTextBlock`, `createTextExpression`, and `readText` helpers, and move the package's art-md pins from `0.0.6` to the exact versions published by `Plan: Expose Construct Creation in Codec`: `@art-md/primitives@0.0.7`, `@art-md/constructs@0.0.7`, `@art-md/codec@0.0.5`. Scope is `$PACKAGE`, `$TESTS`, and `$PROJECT/package-lock.json`; the last two iterations then regroup the 21 source files that remain under `$PACKAGE/src/record/private` and the 12 under `$PACKAGE/src/records-document/private`.
 
 ## Items:
 
 This section lists the downstream work items produced, coordinated, or advanced by the plan, identifying blocking dependencies across resources of different owners.
 
-| Iteration                                  | Status     |
-| ------------------------------------------ | ---------- |
-| Iteration: Pin Art MD Dependencies         | `READY`    |
-| Iteration: Create Constructs Through Codec | `PLANNING` |
+| Iteration                                    | Status     |
+| -------------------------------------------- | ---------- |
+| Iteration: Pin Art MD Dependencies           | `READY`    |
+| Iteration: Create Constructs Through Codec   | `PLANNING` |
+| Iteration: Organise Record Private           | `PLANNING` |
+| Iteration: Organise Records Document Private | `PLANNING` |
 
 ### Iteration: Pin Art MD Dependencies
 
@@ -144,15 +146,164 @@ refactor(records): Create constructs through the codec.
 - Call `codec.create` and `codec.toText` from the section-field read and write path.
 ```
 
+### Iteration: Organise Record Private
+
+**Id:** `organise-record-private`
+
+**Status:** `PLANNING`
+
+**Purpose:** Regroup the flat 24-file `$PACKAGE/src/record/private` directory into four cohesive folders so each private file sits with the behaviour it belongs to.
+
+**Description:** Moves the private modules into `field-name/`, `field-index/`, `section-field/`, and `capsule/`, leaving `types.ts` and `constants.ts` at the private root. Imports are rewritten to match; no behaviour, no export, and no public API changes. Runs after `create-constructs-through-codec`, so the layout is derived from the file set that survives the helper deletions.
+
+**Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
+
+**Instructions:**
+
+Execute the Changes listed below.
+
+Before you start: `npm ci` from `$WORKSPACE` and again from `$PROJECT` (Setting Up).
+
+Move the files into this layout — reshuffle freely inside each group, the group boundaries are what matters:
+
+- `types.ts`
+- `constants.ts`
+- `field-name/` — the canonical field name contract
+  - `isCanonicalFieldName.ts` + its test
+  - `isReservedFieldName.ts` + its test
+  - `assertFieldName.ts`
+  - `assertNotReservedFieldName.ts`
+  - `labelToName.ts` + its test
+  - `nameToLabel.ts` + its test
+- `field-index/` — the `name → field` index built at extraction
+  - `createFieldIndex.ts` + its test
+  - `getExposedFieldNames.ts` + its test
+  - `listSectionFieldNames.ts` + its test
+- `section-field/` — read, write, delete, append on a resolved `SectionField`
+  - `getSectionField.ts`
+  - `setSectionField.ts`
+  - `deleteSectionField.ts`
+  - `appendSectionField.ts`
+  - `isSectionField.ts`
+- `capsule/` — the record proxy, its guards, and its context
+  - `createRecordCapsule.ts`
+  - `createRecordProxy.ts` + its test
+  - `defineReadOnlyProperty.ts`
+  - `makeSectionDepthReadOnly.ts`
+  - `makeSectionNameReadOnly.ts`
+
+Verify: from `$PACKAGE`, `npm run lint`, `npm run build`, `npm run test:unit`, `npm run test:integration`; from `$PROJECT`, `npm run ci`. A wrong import fails `tsc --noEmit` and the build, so lint alone is not proof.
+
+After executing: commit `organise-record-private` with the blueprint below from `$PROJECT`. The `pre-commit` hook runs `npm run clean`, `npm run extract`, `npm run ci`; fix any reported failure and retry. Do **not** push.
+
+Rules:
+
+- RULE: imports stay relative with `.js` extensions; crossing a group boundary means one more `../`.
+- RULE: do not rename files, merge files, change exports, or touch `$PACKAGE/src/index.ts`, `$PACKAGE/src/api/index.ts`, `$PACKAGE/tests/**`, or any `$TESTS` file.
+- RULE: co-located tests move with their source file; no test file is left at the private root.
+- RULE: no file outside `$PACKAGE/src/record/private/` moves or changes.
+
+#### Commits:
+
+| ID                        | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
+| ------------------------- | -------------------------------- | -------- | ----- | ---------- |
+| `organise-record-private` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+
+##### Commit: `organise-record-private`
+
+**Repository:** Art JS
+
+**Message:**
+
+```text
+refactor(records): Regroup private record modules.
+
+- Move field-name, field-index, and section-field modules into their own folders.
+- Keep the capsule proxy and its guards together.
+```
+
+### Iteration: Organise Records Document Private
+
+**Id:** `organise-records-document-private`
+
+**Status:** `PLANNING`
+
+**Purpose:** Regroup the flat 12-file `$PACKAGE/src/records-document/private` directory so the placement strategies and the section-lookup helpers stop sitting side by side.
+
+**Description:** Moves the private modules into `placement/` and `sections/`, leaving `createRecordsCollection.ts` and `types.ts` at the private root. Imports are rewritten to match; no behaviour, no export, and no public API changes. This directory has no tests and shares no imports with `$PACKAGE/src/record/private`, so it is independent of the other three iterations and can be delegated whenever there is slack.
+
+**Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
+
+**Instructions:**
+
+Execute the Changes listed below.
+
+Before you start: `npm ci` from `$WORKSPACE` and again from `$PROJECT` (Setting Up).
+
+Move the files into this layout — reshuffle freely inside each group, the group boundaries are what matters:
+
+- `createRecordsCollection.ts` — the only file imported from outside `private/`
+- `types.ts`
+- `placement/` — decide where a record goes, one strategy per placement kind
+  - `resolveRecordPlacement.ts` — the dispatcher; the only one the collection calls
+  - `resolveAppendPlacement.ts`
+  - `resolvePrependPlacement.ts`
+  - `resolveSiblingPlacement.ts`
+  - `resolveRootPlacement.ts`
+- `sections/` — look a section up and measure it
+  - `collectSectionBlocks.ts`
+  - `findSectionContainer.ts`
+  - `findAnchorLocation.ts`
+  - `findFirstSectionIndex.ts`
+  - `getSectionDepth.ts`
+
+Verify: from `$PACKAGE`, `npm run lint`, `npm run build`, `npm run test:unit`, `npm run test:integration`; from `$PROJECT`, `npm run ci`. A wrong import fails `tsc --noEmit` and the build, so lint alone is not proof.
+
+After executing: commit `organise-records-document-private` with the blueprint below from `$PROJECT`. The `pre-commit` hook runs `npm run clean`, `npm run extract`, `npm run ci`; fix any reported failure and retry. Do **not** push.
+
+Rules:
+
+- RULE: imports stay relative with `.js` extensions; crossing a group boundary means one more `../`.
+- RULE: do not rename files, merge files, or change exports.
+- RULE: `records-document/createRecordsDocument.ts` is the only file outside `private/` that imports it; update that one import path and touch nothing else outside `private/`.
+- RULE: do not touch `$PACKAGE/src/record/**`, `$PACKAGE/tests/**`, or any `$TESTS` file — this iteration is independent of them.
+- RULE: `records-document/types.ts` and `$PACKAGE/src/index.ts` are unchanged; only the `private/` folder moves.
+
+#### Commits:
+
+| ID                                  | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
+| ----------------------------------- | -------------------------------- | -------- | ----- | ---------- |
+| `organise-records-document-private` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+
+##### Commit: `organise-records-document-private`
+
+**Repository:** Art JS
+
+**Message:**
+
+```text
+refactor(records): Regroup private document modules.
+
+- Separate the placement strategies from the section lookup helpers.
+```
+
 ## Work
 
 ### Next
 
-`pin-art-md-dependencies` is `READY` with its instruction file and can be delegated now: it touches only the two manifests and the lock, so it cannot collide with the records source. `create-constructs-through-codec` is `PLANNING` with its instruction file authored against the post-`05a7a88` helpers — `setSectionField(field, value)`, `getSectionField(field)`, and `appendSectionField(section, name, value)` — and the internal handles the codec still has to reach; delegate it once the pin commit has landed.
+The plan runs in four iterations. Only (1) and (2) are on the critical path:
+
+1. `pin-art-md-dependencies` — `READY`, instruction file written. Manifests and lock only, so it cannot collide with the records source. Delegate now.
+2. `create-constructs-through-codec` — `PLANNING`, instruction file written against the post-`05a7a88` helpers (`setSectionField(field, value)`, `getSectionField(field)`, `appendSectionField(section, name, value)`) and the contexts that still have to carry the codec. Blocked on (1): `$PACKAGE` does not declare `@art-md/codec` yet. Delegate once (1) is committed.
+3. `organise-record-private` — `PLANNING`, inlined. Blocked on (2): the folder layout is derived from the file set that survives the helper deletions, and both rewrite the same import graph.
+4. `organise-records-document-private` — `PLANNING`, inlined. **Independent of (1)–(3)**: that directory has no tests, no codec use, and no shared imports with `record/private`. It only rewrites one import outside `private/`, so it can be delegated at any slack moment — including in parallel with (1) or (2), though serial is safer for the shared checkout.
+
+Serial rule for (2) and (3): they move files that `Plan: Canonical Record Field Names` references by path in its instruction files, so they belong after `release-0-1-0` rather than before those plans are archived. Iteration (4) carries no such constraint.
 
 ### Blockers
 
-- None — the write-path blocker closed when `index-property-access-and-labels` landed as `05a7a88`.
+- None — the write-path blocker closed when `index-property-access-and-labels` landed as `05a7a88`. Each iteration's own sequencing gate is listed under Next.
+- `@art-md/codec@0.0.5` is not yet declared by `$PACKAGE`; iteration (1) declares it, which is what unblocks (2).
 
 ---
 
