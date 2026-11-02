@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { isCanonicalFieldName } from '../../src/record/private/isCanonicalFieldName.js';
+import { isCanonicalFieldName } from '../../src/record/private/field-name/isCanonicalFieldName.js';
 
 import { canonicalNameCases } from './isCanonicalFieldName.fixtures.js';
 

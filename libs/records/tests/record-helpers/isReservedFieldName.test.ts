@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { isCanonicalFieldName } from '../../src/record/private/isCanonicalFieldName.js';
-import { isReservedFieldName } from '../../src/record/private/isReservedFieldName.js';
+import { isCanonicalFieldName } from '../../src/record/private/field-name/isCanonicalFieldName.js';
+import { isReservedFieldName } from '../../src/record/private/field-name/isReservedFieldName.js';
 
 import {
 	canonicalReservedNameCases,

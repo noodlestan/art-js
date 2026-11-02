@@ -1,5 +1,5 @@
-import { createRecordCapsule } from './private/createRecordCapsule.js';
-import { createRecordProxy } from './private/createRecordProxy.js';
+import { createRecordCapsule } from './private/capsule/createRecordCapsule.js';
+import { createRecordProxy } from './private/capsule/createRecordProxy.js';
 import type { ArtRecord, RecordHandleContext } from './types.js';
 
 export function wrapSectionAsRecord(context: RecordHandleContext): ArtRecord {

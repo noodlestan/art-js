@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { isCanonicalFieldName } from '../../src/record/private/isCanonicalFieldName.js';
-import { labelToName } from '../../src/record/private/labelToName.js';
-import { nameToLabel } from '../../src/record/private/nameToLabel.js';
+import { isCanonicalFieldName } from '../../src/record/private/field-name/isCanonicalFieldName.js';
+import { labelToName } from '../../src/record/private/field-name/labelToName.js';
+import { nameToLabel } from '../../src/record/private/field-name/nameToLabel.js';
 
 import {
 	EXHAUSTIVE_ALPHABET,

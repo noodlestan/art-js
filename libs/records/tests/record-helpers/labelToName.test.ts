@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { labelToName } from '../../src/record/private/labelToName.js';
+import { labelToName } from '../../src/record/private/field-name/labelToName.js';
 
 import {
 	labelCasingJoiningCases,
