@@ -2,7 +2,7 @@
 
 **ID:** `adopt-codec-construct-api`
 
-**Status:** `WORKING`
+**Status:** `DELIVERED`
 
 **Template:** `$DOMAINS/plans/templates/plan.tart`
 
@@ -42,12 +42,12 @@ Change `@art-js/records` so its section-field read and write path calls the code
 
 This section lists the downstream work items produced, coordinated, or advanced by the plan, identifying blocking dependencies across resources of different owners.
 
-| Iteration                                    | Status     |
-| -------------------------------------------- | ---------- |
-| Iteration: Pin Art MD Dependencies           | `DONE`     |
-| Iteration: Create Constructs Through Codec   | `DONE`     |
-| Iteration: Organise Record Private           | `DONE`     |
-| Iteration: Organise Records Document Private | `PLANNING` |
+| Iteration                                    | Status |
+| -------------------------------------------- | ------ |
+| Iteration: Pin Art MD Dependencies           | `DONE` |
+| Iteration: Create Constructs Through Codec   | `DONE` |
+| Iteration: Organise Record Private           | `DONE` |
+| Iteration: Organise Records Document Private | `DONE` |
 
 ### Iteration: Pin Art MD Dependencies
 
@@ -234,7 +234,7 @@ refactor(records): Regroup private record modules.
 
 **Id:** `organise-records-document-private`
 
-**Status:** `PLANNING`
+**Status:** `DONE`
 
 **Purpose:** Regroup the flat 12-file `$PACKAGE/src/records-document/private` directory so the placement strategies and the section-lookup helpers stop sitting side by side.
 
@@ -279,9 +279,9 @@ Rules:
 
 #### Commits:
 
-| ID                                  | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
-| ----------------------------------- | -------------------------------- | -------- | ----- | ---------- |
-| `organise-records-document-private` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+| ID                                  | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ----------------------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `organise-records-document-private` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `95d3fcd` | `COMMITTED` |
 
 ##### Commit: `organise-records-document-private`
 
@@ -303,10 +303,10 @@ The plan runs in four iterations:
 
 1. `pin-art-md-dependencies` — **`DONE` as `749f75f`**.
 2. `create-constructs-through-codec` — **`DONE` as `63d07a5`**. Deleted the three helpers, threaded codec contexts, routed reads/writes/appends through the codec.
-3. `organise-record-private` — **`DONE` as `27f15c0`** (hook green, not pushed). Regrouped into `field-name/`, `field-index/`, `section-field/`, `capsule/`; deleted `getSectionField`, `makeSectionDepthReadOnly`, `makeSectionNameReadOnly` and folded call sites into `createRecordCapsule.ts`.
-4. `organise-records-document-private` — `PLANNING`, inlined. **Independent of (1)–(3)**: that directory has no tests, no codec use, and no shared imports with `record/private`. It only rewrites one import outside `private/`, so it can be delegated at any slack moment. Serial not required here.
+3. `organise-record-private` — **`DONE` as `27f15c0`**. Regrouped into `field-name/`, `field-index/`, `section-field/`, `capsule/`; deleted `getSectionField`, `makeSectionDepthReadOnly`, `makeSectionNameReadOnly` and folded call sites into `createRecordCapsule.ts`.
+4. `organise-records-document-private` — **`DONE` as `95d3fcd`** (hook green, not pushed). Regrouped into `placement/` and `sections/`, left `createRecordsCollection.ts` and `types.ts` at root; updated the single import in `createRecordsDocument.ts`.
 
-Serial rule for (3): they move files that `Plan: Canonical Record Field Names` references by path in its instruction files, so they belong while that plan's iterations are settled rather than interleaved with a delegation of theirs. Iteration (4) carries no such constraint.
+All iterations complete. Plan ready for next steps.
 
 ### Blockers
 
