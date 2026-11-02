@@ -5,8 +5,8 @@ import type { ArtRecord, RecordHandleContext } from '../../record/types.js';
 import { wrapSectionAsRecord } from '../../record/wrapSectionAsRecord.js';
 import type { AddRecordPosition, RecordsDocumentCollection } from '../types.js';
 
-import { collectSectionBlocks } from './collectSectionBlocks.js';
-import { resolveRecordPlacement } from './resolveRecordPlacement.js';
+import { resolveRecordPlacement } from './placement/resolveRecordPlacement.js';
+import { collectSectionBlocks } from './sections/collectSectionBlocks.js';
 import type { RecordsCollectionContext } from './types.js';
 
 export function createRecordsCollection(
