@@ -45,7 +45,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | Iteration                                    | Status     |
 | -------------------------------------------- | ---------- |
 | Iteration: Pin Art MD Dependencies           | `DONE`     |
-| Iteration: Create Constructs Through Codec   | `READY`    |
+| Iteration: Create Constructs Through Codec   | `DONE`     |
 | Iteration: Organise Record Private           | `PLANNING` |
 | Iteration: Organise Records Document Private | `PLANNING` |
 
@@ -101,7 +101,7 @@ deps(records): Pin art-md packages.
 
 **Id:** `create-constructs-through-codec`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Delete the three private construct helpers and route the section-field read and write path through the injected codec, with no change in behaviour.
 
@@ -129,9 +129,9 @@ deps(records): Pin art-md packages.
 
 #### Commits:
 
-| ID                                | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
-| --------------------------------- | -------------------------------- | -------- | ----- | ---------- |
-| `create-constructs-through-codec` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+| ID                                | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| --------------------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `create-constructs-through-codec` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `63d07a5` | `COMMITTED` |
 
 ##### Commit: `create-constructs-through-codec`
 
@@ -293,12 +293,12 @@ refactor(records): Regroup private document modules.
 
 The plan runs in four iterations:
 
-1. `pin-art-md-dependencies` — **`DONE` as `749f75f`** (hook green, not pushed). Both workspace edges are on `primitives`/`constructs` `0.0.7`, `@art-md/codec@0.0.5` is declared, and the lock was regenerated from scratch so the `fs-records` residual nests under its own package instead of shadowing `$TESTS`. The lesson is written into the instruction file and recorded as a Finding.
-2. `create-constructs-through-codec` — **`READY`**, instruction file written against the post-`05a7a88` helpers (`setSectionField(field, value)`, `getSectionField(field)`, `appendSectionField(section, name, value)`) and the contexts that still have to carry the codec. Its dependency is satisfied: `$PACKAGE` now declares `@art-md/codec@0.0.5`. Delegate now.
-3. `organise-record-private` — `PLANNING`, inlined. Blocked on (2): the folder layout is derived from the file set that survives the helper deletions, and both rewrite the same import graph.
-4. `organise-records-document-private` — `PLANNING`, inlined. **Independent of (1)–(3)**: that directory has no tests, no codec use, and no shared imports with `record/private`. It only rewrites one import outside `private/`, so it can be delegated at any slack moment — including alongside (2), though serial is safer for the shared checkout.
+1. `pin-art-md-dependencies` — **`DONE` as `749f75f`**.
+2. `create-constructs-through-codec` — **`DONE` as `63d07a5`** (hook green, not pushed). Deleted `createTextBlock`, `createTextExpression`, and `readText`; threaded `context.codec` through `RecordHandleContext` and `RecordsCollectionContext`; routed reads/writes/appends through `codec.toText`/`codec.create`. Fixtures untouched, behaviour preserved.
+3. `organise-record-private` — `PLANNING`, inlined. **Now unblocked.** The folder layout is derived from the file set that survives the helper deletions and will rewrite the same import graph as (2) just did; serial is preferred in this shared checkout.
+4. `organise-records-document-private` — `PLANNING`, inlined. **Independent of (1)–(3)**: that directory has no tests, no codec use, and no shared imports with `record/private`. It only rewrites one import outside `private/`, so it can be delegated at any slack moment — including alongside (3), though serial is safer for the shared checkout.
 
-Serial rule for (2) and (3): they move files that `Plan: Canonical Record Field Names` references by path in its instruction files, so they belong while that plan's iterations are settled rather than interleaved with a delegation of theirs. Iteration (4) carries no such constraint.
+Serial rule for (3): they move files that `Plan: Canonical Record Field Names` references by path in its instruction files, so they belong while that plan's iterations are settled rather than interleaved with a delegation of theirs. Iteration (4) carries no such constraint.
 
 ### Blockers
 
