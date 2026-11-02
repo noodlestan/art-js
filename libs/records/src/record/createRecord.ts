@@ -21,6 +21,7 @@ export function createRecord(context: RecordContext): ArtRecord {
 
 	const handleContext: RecordHandleContext = {
 		section,
+		codec: context.codec,
 		source,
 		nameIsMutable: true,
 		save: saveDocument,

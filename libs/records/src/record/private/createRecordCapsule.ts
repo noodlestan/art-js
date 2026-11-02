@@ -48,18 +48,18 @@ export function createRecordCapsule(context: RecordHandleContext): ArtRecordCaps
 			return undefined;
 		}
 
-		return getSectionField(field);
+		return getSectionField(context.codec, field);
 	}
 
 	function setField(name: FieldName, value: unknown): void {
 		const field = fieldIndex.get(name);
 		if (field !== undefined) {
-			setSectionField(field, value);
+			setSectionField(context.codec, field, value);
 			return;
 		}
 
 		assertFieldName(name);
-		appendSectionField(context.section, name, value);
+		appendSectionField(context.codec, context.section, name, value);
 		rebuildFieldIndex();
 	}
 

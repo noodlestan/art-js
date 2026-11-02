@@ -1,3 +1,4 @@
+import { createArtCodec } from '@art-md/codec';
 import { describe, expect, it } from 'vitest';
 
 import { createRecord } from '../createRecord.js';
@@ -5,7 +6,7 @@ import type { ArtRecord } from '../types.js';
 
 describe('createRecordProxy', () => {
 	function createTestRecord(): ArtRecord {
-		return createRecord({ codec: {} as never, contentSource: {} as never });
+		return createRecord({ codec: createArtCodec(), contentSource: {} as never });
 	}
 
 	it('GIVEN a reserved name WHEN reading THEN a TypeError is thrown', () => {

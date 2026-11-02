@@ -1,5 +1,5 @@
 import type { SectionBlock } from '@art-md/constructs';
-import type { ArtDocument, ArtDocumentSource } from '@art-md/primitives';
+import type { ArtCodec, ArtDocument, ArtDocumentSource } from '@art-md/primitives';
 
 export type SectionContainer = ArtDocument | SectionBlock;
 
@@ -20,6 +20,7 @@ export type SectionPlacement = {
 
 export type RecordsCollectionContext = {
 	readonly document: ArtDocument;
+	readonly codec: ArtCodec;
 	readonly source: ArtDocumentSource;
 	readonly save: () => Promise<void>;
 };

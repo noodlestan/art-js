@@ -1,12 +1,20 @@
-import type { FieldInline, SectionBlock } from '@art-md/constructs';
+import type { FieldInline, NaturalExpression, SectionBlock } from '@art-md/constructs';
+import type { ArtCodec } from '@art-md/primitives';
 
-import { createTextExpression } from './createTextExpression.js';
 import { nameToLabel } from './nameToLabel.js';
 import type { FieldName } from './types.js';
 
-export function appendSectionField(section: SectionBlock, name: FieldName, value: unknown): void {
+export function appendSectionField(
+	codec: ArtCodec,
+	section: SectionBlock,
+	name: FieldName,
+	value: unknown,
+): void {
 	const text = String(value);
-	const expression = createTextExpression(text);
+	const expression = codec.create<NaturalExpression>('NaturalExpression', {
+		type: 'text',
+		value: text,
+	});
 
 	const field: FieldInline = {
 		construct: 'FieldInline',

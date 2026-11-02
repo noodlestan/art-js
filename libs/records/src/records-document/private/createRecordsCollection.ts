@@ -15,6 +15,7 @@ export function createRecordsCollection(
 	function createRecordHandle(section: SectionBlock, nameIsMutable: boolean): ArtRecord {
 		const recordContext: RecordHandleContext = {
 			section,
+			codec: context.codec,
 			source: context.source,
 			document: context.document,
 			nameIsMutable,

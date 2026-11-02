@@ -26,6 +26,7 @@ export function createRecordsDocument<RecordFile>(
 		}
 		const collectionContext: RecordsCollectionContext = {
 			document,
+			codec: context.codec,
 			source,
 			save: saveDocument,
 		};

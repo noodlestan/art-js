@@ -1,11 +1,14 @@
+import { createArtCodec } from '@art-md/codec';
 import { describe, expect, it } from 'vitest';
 
 import { createRecord } from './createRecord.js';
 
+const codec = createArtCodec();
+
 describe('createRecord', () => {
 	it('WHEN called, creates a source-bound record with an empty h1 section', () => {
 		const record = createRecord({
-			codec: {} as never,
+			codec,
 			contentSource: {} as never,
 		});
 
@@ -17,7 +20,7 @@ describe('createRecord', () => {
 
 	it('WHEN assigning a field, reserves field names with a double-underscore prefix', () => {
 		const record = createRecord({
-			codec: {} as never,
+			codec,
 			contentSource: {} as never,
 		});
 

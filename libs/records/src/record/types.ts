@@ -18,6 +18,7 @@ export type RecordContext = {
 
 export type RecordHandleContext = {
 	readonly section: SectionBlock;
+	readonly codec: ArtCodec;
 	readonly source: ArtDocumentSource;
 	readonly document?: ArtDocument;
 	readonly nameIsMutable: boolean;

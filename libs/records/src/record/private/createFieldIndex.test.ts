@@ -1,3 +1,4 @@
+import { createArtCodec } from '@art-md/codec';
 import type { FieldInline, SectionBlock } from '@art-md/constructs';
 import type { ConstructBase } from '@art-md/primitives';
 import { describe, expect, it } from 'vitest';
@@ -85,7 +86,7 @@ describe('createFieldIndex', () => {
 	});
 
 	it('GIVEN a reserved label inserted past the guards WHEN rebuilding after a removal THEN the same TypeError is thrown', () => {
-		const record = createRecord({ codec: {} as never, contentSource: {} as never });
+		const record = createRecord({ codec: createArtCodec(), contentSource: {} as never });
 
 		// eslint-disable-next-line dot-notation
 		record['purpose'] = 'First';

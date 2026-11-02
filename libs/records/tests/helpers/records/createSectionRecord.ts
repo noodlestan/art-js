@@ -1,3 +1,4 @@
+import { createArtCodec } from '@art-md/codec';
 import type { FieldInline, NaturalExpression, SectionBlock } from '@art-md/constructs';
 
 import type { ArtRecord } from '../../../src/index.js';
@@ -19,10 +20,13 @@ export function makeFieldInline(name: string, value: string): FieldInline {
 }
 
 /**
- * Wraps a hand-built section as a record, bypassing the codec.
+ * Wraps a hand-built section as a record.
  *
- * @provides a record whose fields are exactly the supplied labels — including
- * labels the codec cannot parse, such as digit-led or non-ASCII ones.
+ * The section and its fields remain hand-built, so digit-led and non-ASCII
+ * labels bypass parsing, but field reads and writes go through the supplied
+ * codec.
+ *
+ * @provides a record whose fields are exactly the supplied labels.
  */
 export function createSectionRecord(name: string, fields: FieldInline[]): ArtRecord {
 	const section: SectionBlock = {
@@ -38,6 +42,7 @@ export function createSectionRecord(name: string, fields: FieldInline[]): ArtRec
 
 	return wrapSectionAsRecord({
 		section,
+		codec: createArtCodec(),
 		source: {} as never,
 		nameIsMutable: false,
 		save: saveSection,

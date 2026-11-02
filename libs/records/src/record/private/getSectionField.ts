@@ -1,6 +1,7 @@
-import { readText } from './readText.js';
+import type { ArtCodec } from '@art-md/primitives';
+
 import type { SectionField } from './types.js';
 
-export function getSectionField(field: SectionField): string {
-	return readText(field);
+export function getSectionField(codec: ArtCodec, field: SectionField): string {
+	return codec.toText(field);
 }
