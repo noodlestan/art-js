@@ -14,6 +14,7 @@ WIP tracker, structured like the session parking lot: **ACTIONABLE** (in progres
 
 ## PENDING
 
+- **Expand the fields API** — `Plan: Expand Fields API` at `$PROJECT/_backlog/6-plan/plan-expand-fields-api/plan.md`: write the fields spec (`design/fields.md`) first, then implement typed reads and writes.
 - **Raise test coverage thresholds** — in the plan's Consolidate iteration, after integration fixtures and unit coverage settle.
 
 ## BLOCKERS

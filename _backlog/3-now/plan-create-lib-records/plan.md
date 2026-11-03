@@ -10,7 +10,7 @@
 
 **Purpose:** Deliver `@art-js/records` v0.0.1 — source-bound record proxies over Art MD documents — through implementation, integration tests, publication, and downstream adoption in Art Works.
 
-**Description:** The package is implemented in `$PROJECT/libs/records` (provider `createArtDocumentRecords({ codec, createContentSource })` with `read(file) → { assertPresence, extract, save }`, and `createArtRecord({ codec, contentSource })`; records are proxies whose `save()` writes their document through the bound source) and exercised end to end by the fixture harness in `$PROJECT/tests/records`. Remaining work: adopt the published package in Art Works, consolidate fixes and coverage, then publish the consolidated `0.1.1` and refresh knowledge.
+**Description:** The package is implemented in `$PROJECT/libs/records` (provider `createArtDocumentRecords({ codec, createContentSource })` with `read(file) → { assertPresence, extract, save }`, and `createArtRecord({ codec, contentSource })`; records are proxies whose `save()` writes their document through the bound source) and exercised end to end by the fixture harness in `$PROJECT/tests/records`. Remaining work: adopt the published package in Art Works (done as `b955f3c`), consolidate test coverage and retire the stale runner, extend the fields API with typed reads and writes (`Plan: Expand Fields API`), then publish the consolidated `0.1.1` and refresh knowledge.
 
 Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/design/records.md` and `$PROJECT/libs/records/knowledge/overview.md` (the overview carries the use-case-to-fixture table and its WIP alignment list). Do not re-plan from this document's prose alone — the knowledge docs hold the contracts, shapes, and recipes.
 
@@ -33,15 +33,15 @@ Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/
 
 ## Items
 
-| Iteration                                                       | Status    |
-| --------------------------------------------------------------- | --------- |
-| Iteration: Prototype and Integration Tests                      | `DONE`    |
-| Iteration: Apply Noodlestan Conventions                         | `DONE`    |
-| Iteration: Align Use Cases, API, and Fixtures                   | `DONE`    |
-| Iteration: Add Integration Tests and Convert Fixtures to Vitest | `DONE`    |
-| Iteration: Publish and Consume in Art Works                     | `WORKING` |
-| Iteration: Consolidate                                          | `READY`   |
-| Iteration: Publish and Update Knowledge                         | `READY`   |
+| Iteration                                                       | Status  |
+| --------------------------------------------------------------- | ------- |
+| Iteration: Prototype and Integration Tests                      | `DONE`  |
+| Iteration: Apply Noodlestan Conventions                         | `DONE`  |
+| Iteration: Align Use Cases, API, and Fixtures                   | `DONE`  |
+| Iteration: Add Integration Tests and Convert Fixtures to Vitest | `DONE`  |
+| Iteration: Publish and Consume in Art Works                     | `DONE`  |
+| Iteration: Consolidate                                          | `READY` |
+| Iteration: Publish and Update Knowledge                         | `READY` |
 
 ### Iteration: Prototype and Integration Tests
 
@@ -250,14 +250,21 @@ refactor(records): Install @art-js/records 0.0.1.
 
 **Status:** `READY`
 
-**Purpose:** Stabilise the delivered surface: fixes, cleanup, and test coverage.
+**Purpose:** Make the coverage gate real and retire the stale test runner before the consolidated release.
+
+**Description:** The `libs/records` coverage thresholds already sit at the package convention, but no standard command evaluates them; the `tests/records` runner discovers zero cases and passes while testing nothing. This iteration wires coverage into CI, removes the dead runner and its leftovers, and updates the stale docs — no version bump; `publish-and-update-knowledge` owns the `0.1.1` release.
 
 **Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
 
 **Instructions:**
 
-1. Apply fixes and changes surfaced by alignment and Art Works adoption; raise the `libs/records` vitest coverage thresholds back up to the package convention once the fixture and unit suites cover the consolidated behaviour. This lands after `Plan: Canonical Record Field Names` ships `0.1.0`; do not bump the version here — `publish-and-update-knowledge` owns the `0.1.1` bump.
-2. Verify: `npm run lint`, `npm run build`, `npm run test` green with the raised thresholds; then commit per the blueprint below.
+1. Make the coverage gate real: add `test:ci` (`vitest run --coverage`) to `$PROJECT/libs/records/package.json` and run it from `ci`, matching the sibling packages (`libs/validator`, `libs/program`, `libs/bundler`); align the coverage `include`/`exclude` in `$PROJECT/libs/records/vitest.config.ts` with those siblings so `tests/helpers/**` is not measured as package source; keep the thresholds at the package convention (90/90/70/90) and confirm the suite passes them after any config change.
+2. Retire the dead runner: from `$PROJECT/tests/records/package.json` remove `scripts/test-records.ts`, the `test:script` script and its position inside `test:ci` (leaving `test:ci` integration-only), the `tsx` devDependency, and the `scripts` entry in `files` — the runner discovers 0 cases (all `run-test.ts` cases were deleted) and green-washes CI.
+3. Remove runner-only and orphaned modules: `$PROJECT/tests/records/src/runFixtureTests/`, `src/printFixtureTestReport.ts`, `src/types.ts`, the `src/index.ts` barrel once only the dead script consumed it, barrel-only `src/assert.ts` and `src/captureThrownMessage.ts`, `RUN_TEST_FILENAME` in `src/constants.ts` (keep the live `recordsPatterns`), and `$PACKAGE/tests/helpers/constants.ts` (zero importers).
+4. Update the stale runner docs: `$PROJECT/tests/records/_guide.md`, `$PROJECT/tests/records/README.md`, `$PACKAGE/knowledge/design/integration-tests.md`, and the testing section of `$PACKAGE/knowledge/design/records.md`.
+5. Mark `@art-js/test-records` as `private: true` — it is unpublished, has no dependents, and ships nothing.
+6. Verify: from `$PROJECT/tests/records` run `npm run ci` (integration green, no dead step); from `$PACKAGE` run `npm run lint`, `npm run build`, `npm run test:ci` (coverage printed and gated); from `$PROJECT` run `npm run ci` (green).
+7. Commit per the blueprint below — policy `MANUAL`: stage everything and stop; the user executes the commit.
 
 #### Commits:
 
@@ -267,14 +274,16 @@ refactor(records): Install @art-js/records 0.0.1.
 
 ##### Commit: `consolidate`
 
+**Repository:** Art JS
+
 **Message:**
 
 ```text
-fix(records): Consolidate delivered surface and restore coverage.
+fix(records): Consolidate test coverage and retire the stale runner.
 
-- Apply the fixes surfaced by Art Works adoption and use-case alignment.
-- Restore the package vitest coverage thresholds.
-- Tidy fixtures, helpers, and scripts left over from the runner conversion.
+- Wire the coverage gate into CI with thresholds at the package convention.
+- Remove the zero-case test-records runner and its leftover modules.
+- Update stale runner docs and mark the test package private.
 ```
 
 ### Iteration: Publish and Update Knowledge
@@ -324,7 +333,7 @@ docs(records): Update knowledge for the published release.
 
 ### Next
 
-`install-in-art-works` is **DONE** (`b955f3c` in `$ART_WORKS`) — `@art-js/records@0.1.0` is installed and the CLI consumes the records API. Next: `consolidate` (source only, no version bump), then `publish-and-update-knowledge` as the deliberate second release `0.1.1`.
+`install-in-art-works` is **DONE** (`b955f3c` in `$ART_WORKS`) — `@art-js/records@0.1.0` is installed and the CLI consumes the records API. Next: `consolidate` (no version bump), then the fields API extension in `Plan: Expand Fields API` (typed reads and writes), then `publish-and-update-knowledge` as the deliberate second release `0.1.1`.
 
 ### Blockers
 
