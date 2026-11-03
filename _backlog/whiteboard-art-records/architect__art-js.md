@@ -4,7 +4,7 @@
 
 **Agent ID:** `ART_JS`.
 
-**Repository:** `$PROJECT` = `$ART_JS` = `checkouts/art-js-planning` (planning checkout for the Art JS records library).
+**Repository:** `$PROJECT` = `$ART_JS` = `checkouts/art-js` (the Art JS checkout; the old `art-js-planning` checkout no longer exists).
 
 **Use cases:**
 
@@ -16,15 +16,15 @@
 
 **Planning:**
 
-- `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md` (phases 1 DONE, 2–4 DRAFT)
-- `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md` (`PLANNING`, 4 iterations, no instruction files yet)
-- `$ART_JS/_backlog/1-done/plan-design-lib-records/plan.md` (DONE — the approved design this whiteboard may challenge)
+- `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md` (phases 1–4 `DONE`, phase 5 `WORKING`)
+- `$ART_JS/_backlog/3-now/plan-create-lib-records/plan.md` (`WORKING`; tail iterations owned by another session)
+- `$ART_JS/_backlog/1-done/` — `plan-design-lib-records` (`DONE`), `plan-canonical-record-field-names` (`DELIVERED`, published `0.1.0`), `plan-adopt-codec-construct-api` (`DELIVERED`)
 
 **Code:** `$ART_JS/libs/records/`
 
-- Scaffold only — `src/index.ts` is `// placeholder`; modules `record/`, `capsule/`, `extract/`, `write-back/`, `proxy/`, `records/` are all to be created by `plan-create-lib-records`
-- `package.json` declares **no dependencies yet** — iteration 1 adds `@art-md/primitives@0.0.3`
-- `vitest.config.ts` — `passWithNoTests: true`, so CI is vacuous until the first test suite lands
+- Implemented: `src/record/`, `src/records-document/` (private modules regrouped 2026-11-02), fixtures under `libs/records/tests/fixtures/`, integration suite `$ART_JS/tests/records`
+- `package.json` declares `@art-md/primitives@0.0.7`, `@art-md/constructs@0.0.7`, `@art-md/codec@0.0.5` (dev)
+- 400+ tests green; root `npm run ci` 8/8 tasks
 
 **My scope:** I own `@art-js/records` — record identity (`ArtRecord`), extraction/presence assertion, anchored write-back with optional hash guard, transparent proxy field access, and the `Records` facade. It is a pure core library over content strings; it never touches the filesystem.
 
@@ -43,27 +43,27 @@
 - Lazy hydration, pull-based: capsule carries `_id` eagerly, hydrates the record on pull.
 - Implementation sequence fixed by module dependency chain: `record` → `capsule` → `extract` + `write-back` → `proxy` + `records` facade → exports → docs.
 
-**Execution context to reconcile:** `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md` says work happens on branch `building`; this checkout is on `main`. Will correct the plan before delegating iteration 1.
+**Execution context:** resolved — all plan iterations ran and committed on `main`; the `building` branch reference was retired with the plan revision.
 
 ### Deliverables and status
 
 | Deliverable                 | Status                                                                                                                         |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Milestone `art-records`     | `PLANNING` — phase 1 `DONE`, phases 2–4 `DRAFT`                                                                                |
+| Milestone `art-records`     | `WORKING` — phases 1–4 `DONE`, phase 5 `WORKING`                                                                               |
 | Plan `design-lib-records`   | `DONE` — artefacts: knowledge doc, `libs/records/` scaffold, canonical README titles (commits `49fe2d5`, `562c555`, `58bd610`) |
-| Plan `create-lib-records`   | `PLANNING` — 4 iterations `PLANNING`, **no instruction files written**, `libs/records/src/` has no modules                     |
+| Plan `create-lib-records`   | `WORKING` — v0.0.1 iterations `DONE`; tail (`consolidate`, `0.1.1`) owned by another session                                   |
 | `knowledge/records.md`      | Written — the model, flow, principles (records-are-source-of-truth, deterministic round-trips, no I/O)                         |
-| Published `@art-js/records` | **Not published.** `0.0.1` scaffold only, unpublished                                                                          |
+| Published `@art-js/records` | `0.1.0` published and confirmed (`npm info` → `0.1.0`, 2026-11-03); consumed by `$ART_WORKS` from `b955f3c`                    |
 | Blockers recorded           | None — `$ART_JS/_backlog/_parking-lot.md` is empty                                                                             |
 
 ### Relevant files
 
 - **Design/spec:** `$ART_JS/_backlog/1-done/plan-design-lib-records/plan__design.md` — full package spec (layout + every type and factory signature)
-- **Implementation plan:** `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md` — 4 iterations, unit-test matrix, commit blueprints
+- **Implementation plan:** `$ART_JS/_backlog/3-now/plan-create-lib-records/plan.md` — v0.0.1 iterations committed; tail replanned in session
 - **Knowledge:** `$ART_JS/knowledge/records.md` · `$ART_JS/knowledge/components.md` (Records `Status: SCAFFOLD`) · `$ART_JS/knowledge/index.md` · ADRs `$ART_JS/knowledge/adr/compiler.md`, `$ART_JS/knowledge/adr/configuration.md`
 - **Briefing:** `$ART_JS/_roadmap/_architect.md` (mostly empty; "Why / Use Cases / Vision / NFRs" listed as missing)
 - **Parking lot:** `$ART_JS/_backlog/_parking-lot.md`
-- **Scaffold:** `$ART_JS/libs/records/` — `_guide.md`, `README.md`, `package.json`, `vitest.config.ts`, placeholder `src/index.ts`
+- **Code:** `$ART_JS/libs/records/` — `src/` (record + records-document modules), `tests/fixtures/`, `_guide.md`, `README.md`, `package.json`, `vitest.config.ts`
 
 ### What I expect from upstream producers
 
@@ -74,7 +74,7 @@
 
 - **`$ART_LIB` adapter:** `ArtRecord` replaces its WIP `BaseRecordStructure`; `RecordPosition` replaces its duplicate `FSRecordPosition`; it implements `ArtContentSource` and calls `extractRecords`/`writeRecord`. ~~Re-read behaviour asked~~ Answered on the whiteboard: stateless per call, re-read after `writeContent()` — line anchors stand.
 - **`$ART_WORKS` CLI:** `Records<T>` facade per document (`assertPresence`, `extract`, `update`, `serialize`) for workspace-record discovery/reading/updating; record kinds `checkout`, `repository`, `namespace`, `package`, `project`, `npm-deployment`, `static-app-deployment`.
-- **Publishing:** consumers can only import `@art-js/records` after the workspace publish operation — not part of this plan.
+- **Publishing:** `@art-js/records@0.1.0` is published and importable; the consolidated `0.1.1` belongs to `plan-create-lib-records`'s tail.
 
 ### Assumptions, uncertainties, decisions needing input
 

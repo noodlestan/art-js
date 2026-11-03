@@ -102,13 +102,13 @@
 
 **Attachment:** [`./architect__art-js.md`](./architect__art-js.md)
 
-**Planning:** `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md`). Plan `BLOCKED` — synthetic record shape and codec serializer supply path must be resolved before delegation.
+**Planning:** `$ART_JS/_backlog/3-now/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md`) — `WORKING`, tail iterations (`consolidate`, the `0.1.1` release) owned by another session. Delivered: `plan-canonical-record-field-names` and `plan-adopt-codec-construct-api` at `_backlog/1-done/`. **Refresh 2026-11-03:** the old `4-next`/`BLOCKED` state is void — shape and codec-supply questions resolved, implementation shipped.
 
 **Goals:** Deliver `@art-js/records` — assert presence, extract records into lazily-hydrated capsules, mutate via proxy, write back at line anchors with opt-in hash guard. Pure library over content strings; no filesystem, no codec implementation.
 
-**Deliverables:** `ArtRecord{name}` (whole heading; no kind), capsules, the `Records<T>` facade, internal field-level write-back, and proxy/resolver factories. Design and plan need contract clarification; no implementation yet; unpublished.
+**Deliverables:** `ArtRecord{name}` (whole heading; no kind), capsules, the records facade, field-level write-back, and proxy field access — implemented and published as `@art-js/records@0.1.0` (2026-11-03), consumed by `$ART_WORKS` from `b955f3c`.
 
-**Open asks:** MANAGEMENT — decide the synthetic `createArtRecord` return shape; ART_MD — advise how to supply `ArtCodec` for pure serialization.
+**Open asks:** none — `ArtRecord{name}` decided (MANAGEMENT, 2026-10-14) and the consumer injects the codec (`RecordContext.codec`), so serialization needs no new ask.
 
 ### `ART_LIB`
 
@@ -116,7 +116,7 @@
 
 **Attachment:** [`./architect__art-lib.md`](./architect__art-lib.md)
 
-**Planning:** `$ART_LIB/_backlog/3-now/plan-add-fs-records-adapter/plan.md` — `DONE`, all 3 iterations `COMMITTED`; published `@art-lib/fs-records@0.0.2`. **Replan check 2026-10-18: no drift** — my only upstream pin is `@art-md/primitives@0.0.3`, imported as a type; `constructs@0.0.4` is not a dependency of this package and my instructions forbid adding it.
+**Planning:** `$ART_LIB/_backlog/3-now/plan-add-fs-records-adapter/plan.md` — `DONE`, all 3 iterations `COMMITTED`; published `@art-lib/fs-records@0.0.3` (current on npm). **Replan check 2026-10-18: no drift** — my only upstream pin is `@art-md/primitives@0.0.3`, imported as a type; `constructs@0.0.4` is not a dependency of this package and my instructions forbid adding it.
 
 **Goals:** FS adapter: gitignore-aware, pattern-driven discovery of record files; acquire and persist content; expose `FSContentSource implements ArtContentSource`. No record semantics, no template rendering.
 
@@ -137,13 +137,13 @@
 **Planning:**
 
 - `$ART_WORKS/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` (`DRAFT`)
-- `$ART_WORKS/_backlog/4-next/plan-art-work-cli-global-install/plan.md` (gated on `$ART_LIB`'s adapter delivery)
+- `$ART_WORKS/cli/workspace/_backlog/4-next/plan-art-work-cli-global-install/plan.md` (`PLANNING`; adapter gate lifted, `@art-js/records@0.1.0` installed as `b955f3c` — Step 7 blocker void)
 
 **Replan check 2026-10-18 — drift found and fixed.** Kind interpretation is now this CLI's job: `@art-js/records` carries no kind, and `discoverRecordFiles(kinds?)` filters by **filename**, which my record filenames do not encode (`_records/art-work.art` holds `## Repository: Art Work`; `_records/package.art` holds four `## Package Dependency:` sections). The read path calls `discoverRecordFiles()` **unfiltered** and filters by parsed heading kind in the CLI. Both corrections are in the milestone and the plan; my upstream pin stays `@art-md/primitives@0.0.3` (types only, no constructs dependency)..
 
 **Goals:** End consumer: discover record files, read records per document, persist writes. Record shapes and command behaviour unchanged.
 
-**Open asks:** none — both `@art-md` contracts agreed from call sites; delegation waits on `$ART_LIB` delivery.
+**Open asks:** none — both `@art-md` contracts agreed from call sites; `$ART_LIB` delivered and `@art-js/records@0.1.0` is installed, so `plan-art-work-cli-global-install` can resume (its recorded 404 blocker is stale).
 
 ### `ART_MD`
 
@@ -155,7 +155,7 @@
 
 **Goals:** Own the ground: source contracts, construct types, codec round-trip fidelity. Holds shapes stable; adds fixtures on request.
 
-**Deliverables:** `kind` deletion and the structural-fidelity reword are **delivered and published** — `@art-md/constructs@0.0.4` (kind-free `SectionBlock`) on npm since 2026-10-17, `main` at `448c87a`. Headings are never split, `SectionBlock.name` = whole heading text, the ADR records the fidelity decision. Nothing in flight.
+**Deliverables:** `kind` deletion and the structural-fidelity reword are **delivered and published** — `@art-md/constructs@0.0.4` (kind-free `SectionBlock`) on npm since 2026-10-17. Current wave (2026-11-02): `primitives@0.0.7`, `constructs@0.0.7`, `codec@0.0.5` (construct API: `create`/`toText`), `parser@0.0.6`, `serializer@0.0.6`, `bin@0.0.2`. Headings are never split, `SectionBlock.name` = whole heading text, the ADR records the fidelity decision.
 
 **Open asks:** none — both contracts `AGREED` (3/3 signed); bridge re-review delivered 2026-10-17.
 
@@ -204,7 +204,7 @@ Step 7 needs `@art-js/records`, absent from the plan dependencies and npm (404).
 
 ### Actionable
 
-- Resolve the records API blockers before delegating `implement-record-model`.
+- None.
 
 ### Pending/Questions
 
@@ -212,18 +212,17 @@ Step 7 needs `@art-js/records`, absent from the plan dependencies and npm (404).
 
 ### Blockers
 
-- `ART_JS`: record identity vs synthetic section contract and codec supply path unresolved.
-- `ART_WORK`: Step 7 needs unpublished `@art-js/records` (npm 404); its plan omits this dependency.
+- None — both former blockers are void: `ArtRecord{name}` decided (2026-10-14), codec consumer-injected, `@art-js/records@0.1.0` published and installed in `$ART_WORKS` (`b955f3c`).
 
 ## Planning
 
 Registration for plans under this board — each architect adds their row on their turn and keeps the status current.
 
-| Architect  | Plan                               | Status    | Next move                                                                                |
-| ---------- | ---------------------------------- | --------- | ---------------------------------------------------------------------------------------- |
-| `ART_JS`   | `plan-create-lib-records`          | `BLOCKED` | resolve synthetic record shape and serializer supply, then revise instructions           |
-| `ART_LIB`  | `plan-add-fs-records-adapter`      | `DONE`    | published `@art-lib/fs-records@0.0.2`; all 3 iterations committed                        |
-| `ART_WORK` | `plan-art-work-cli-global-install` | `BLOCKED` | Step 7 needs `@art-js/records`; `npm info` returns 404 and the plan omits the dependency |
+| Architect  | Plan                               | Status     | Next move                                                                             |
+| ---------- | ---------------------------------- | ---------- | ------------------------------------------------------------------------------------- |
+| `ART_JS`   | `plan-create-lib-records`          | `WORKING`  | `0.1.0` shipped; tail (`consolidate`, `0.1.1`) owned by another session               |
+| `ART_LIB`  | `plan-add-fs-records-adapter`      | `DONE`     | published `@art-lib/fs-records@0.0.2`; all 3 iterations committed                     |
+| `ART_WORK` | `plan-art-work-cli-global-install` | `PLANNING` | resume Step 7 facade extraction — `@art-js/records@0.1.0` installed, 404 blocker void |
 
 _Artefacts reviewed 2026-10-18: `$ART_WORKS/cli/work/_roadmap/6-plan/milestone-mvp-art-records/milestone.md` · `$ART_WORKS/_backlog/4-next/plan-art-work-cli-global-install/plan.md`._
 
@@ -240,7 +239,7 @@ _Others: register your plan and status here on your turn (e.g. `ART_LIB` → `pl
 
 ### @art-js/records
 
-- `VERDICT` — **ADVANCE, currently blocked** (producer `ART_JS`). Plan `$ART_JS/_backlog/4-next/plan-create-lib-records/plan.md`; resolve the synthetic record shape and serializer supply path before delegating.
+- `VERDICT` — **ADVANCE, delivered** (producer `ART_JS`). Plan `$ART_JS/_backlog/3-now/plan-create-lib-records/plan.md` — implemented; `@art-js/records@0.1.0` published and confirmed (`npm info` → `0.1.0`, 2026-11-03). Former shape/codec blockers void.
 - `AGREED` (owner authority — MANAGEMENT decision 2026-10-14) — **Identity: `ArtRecord{name}`.** `name` is the whole heading text (`## Checkout: Art Work` → `name: 'Checkout: Art Work'`). **Records carries no kind and parses nothing** — any `SectionBlock` is a record; heading interpretation (kind detection, `Kind: Name` splitting, kind→type mapping) belongs to consumers (a future `art-js/resources` layer). Supersedes the previous `ArtRecord{kind, name}` identity bullet.
 - `AGREED` (owner authority — MANAGEMENT decision 2026-10-14) — Public read API: `createRecords(source)` returns `Records<T>{assertPresence, extract, update, serialize}`. Internally, presence and extraction operate by exact heading name, with one capsule per section and no kinds filter. Consumers interpret headings.
 - `AGREED` — Internal write primitive: `writeRecord(content, capsule, {guard?})` is a pure line-splice; only changed field/heading lines are edited, and untouched content stays byte-identical. Guard is opt-in; persistence uses `FSContentSource.writeContent()`. Test same-name sections.
