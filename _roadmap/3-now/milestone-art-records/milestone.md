@@ -106,15 +106,15 @@ Consumers create a codec and a records provider, read a file into a per-document
 | 1     | Plan: Design Lib Records `_backlog/1-done/plan-design-lib-records/plan.md`                     | `DONE`      |
 | 2–5   | Plan: Create Lib Records `_backlog/3-now/plan-create-lib-records/plan.md`                      | `WORKING`   |
 | 5     | Plan: Canonical Record Field Names `_backlog/1-done/plan-canonical-record-field-names/plan.md` | `DELIVERED` |
-| 5     | Plan: Adopt Codec Construct API `_backlog/3-now/plan-adopt-codec-construct-api/plan.md`        | `WORKING`   |
+| 5     | Plan: Adopt Codec Construct API `_backlog/3-now/plan-adopt-codec-construct-api/plan.md`        | `DELIVERED` |
 
 ## Work
 
 ### Next
 
-- **Publish `@art-js/records@0.1.0`** — `Plan: Canonical Record Field Names` is `DELIVERED` at `_backlog/1-done/plan-canonical-record-field-names/plan.md` (commit `2c560c9`); the user publishes, records `npm info`, then the plan is archived. It stays listed here until then.
-- **Iteration `pin-art-md-dependencies`** of `_backlog/3-now/plan-adopt-codec-construct-api/plan.md`: move both workspace edges to the exact art-md `0.0.7`/`0.0.5` pins. `READY` and delegatable; it is the gate for the construct adoption work.
-- **Iteration `install-in-art-works`** of `_backlog/3-now/plan-create-lib-records/plan.md`: install the published records package in `$ART_WORKS` and verify the Step 7 extraction dependency.
+- **`@art-js/records@0.1.0` published** — `Plan: Canonical Record Field Names` is `DELIVERED` at `_backlog/1-done/plan-canonical-record-field-names/plan.md` (commit `2c560c9`) and `0.1.0` is available on npm. Update/archive follow-ups as needed.
+- **Plan: Adopt Codec Construct API** — `DELIVERED` (all iterations done: `749f75f`, `63d07a5`, `27f15c0`, `95d3fcd`). The codec construct API has been adopted and private modules regrouped.
+- **Iteration `install-in-art-works`** of `_backlog/3-now/plan-create-lib-records/plan.md`: install `@art-js/records@0.1.0` in `$ART_WORKS` and verify the Step 7 extraction dependency. After that, `consolidate` then `publish-and-update-knowledge` for `0.1.1`.
 
 ### Blockers
 
