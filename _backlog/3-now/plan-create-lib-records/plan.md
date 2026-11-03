@@ -203,7 +203,7 @@ test(records): Convert integration tests to Vitest.
 
 **ID:** `publish-and-consume-in-art-work`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Purpose:** Make `@art-js/records` installable and prove the Art Works consumption path.
 
@@ -219,7 +219,7 @@ test(records): Convert integration tests to Vitest.
 | ID                      | Repository / Checkout / Branch       | Policy   | Hash      | Status      |
 | ----------------------- | ------------------------------------ | -------- | --------- | ----------- |
 | `release-first-version` | `$PROJECT` / `$PROJECT` / `main`     | `MANUAL` | `65cdd54` | `COMMITTED` |
-| `install-in-art-works`  | `$ART_WORKS` / `$ART_WORKS` / `main` | `MANUAL` | TBD       | `AUTHORED`  |
+| `install-in-art-works`  | `$ART_WORKS` / `$ART_WORKS` / `main` | `MANUAL` | `b955f3c` | `COMMITTED` |
 
 ##### Commit: `release-first-version`
 
@@ -324,7 +324,7 @@ docs(records): Update knowledge for the published release.
 
 ### Next
 
-Install `@art-js/records@0.0.1` in `$ART_WORKS`, verify the Step 7 record-extraction dependency, and commit `install-in-art-works`. The tail of the plan then runs in order: `consolidate` (source only, no version bump), then `publish-and-update-knowledge` as the deliberate second release `0.1.1`, after `Plan: Canonical Record Field Names` publishes `0.1.0`.
+`install-in-art-works` is **DONE** (`b955f3c` in `$ART_WORKS`) — `@art-js/records@0.1.0` is installed and the CLI consumes the records API. Next: `consolidate` (source only, no version bump), then `publish-and-update-knowledge` as the deliberate second release `0.1.1`.
 
 ### Blockers
 
