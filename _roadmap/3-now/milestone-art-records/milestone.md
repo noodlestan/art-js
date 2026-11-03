@@ -106,15 +106,15 @@ Consumers create a codec and a records provider, read a file into a per-document
 | 1     | Plan: Design Lib Records `_backlog/1-done/plan-design-lib-records/plan.md`                     | `DONE`      |
 | 2–5   | Plan: Create Lib Records `_backlog/3-now/plan-create-lib-records/plan.md`                      | `WORKING`   |
 | 5     | Plan: Canonical Record Field Names `_backlog/1-done/plan-canonical-record-field-names/plan.md` | `DELIVERED` |
-| 5     | Plan: Adopt Codec Construct API `_backlog/3-now/plan-adopt-codec-construct-api/plan.md`        | `DELIVERED` |
+| 5     | Plan: Adopt Codec Construct API `_backlog/1-done/plan-adopt-codec-construct-api/plan.md`       | `DELIVERED` |
 
 ## Work
 
 ### Next
 
-- **`@art-js/records@0.1.0` published** — `Plan: Canonical Record Field Names` is `DELIVERED` at `_backlog/1-done/plan-canonical-record-field-names/plan.md` (commit `2c560c9`) and `0.1.0` is available on npm. Update/archive follow-ups as needed.
+- **`@art-js/records@0.1.0` published and confirmed** — `npm info @art-js/records version` returns `0.1.0` (2026-11-03). `Plan: Canonical Record Field Names` recorded the confirmation in its `Confirm publication` follow-up; archive when ready.
 - **Plan: Adopt Codec Construct API** — `DELIVERED` (all iterations done: `749f75f`, `63d07a5`, `27f15c0`, `95d3fcd`). The codec construct API has been adopted and private modules regrouped.
-- **Iteration `install-in-art-works`** of `_backlog/3-now/plan-create-lib-records/plan.md`: install `@art-js/records@0.1.0` in `$ART_WORKS` and verify the Step 7 extraction dependency. After that, `consolidate` then `publish-and-update-knowledge` for `0.1.1`.
+- **Iteration `install-in-art-works` — `DONE` as `b955f3c`** (Art Works side): `@art-js/records@0.1.0` installed in `cli/workspace/package.json`, resolved by `npm ls`, and already imported by the checkout reads/writes. The tail of `Plan: Create Lib Records` (`consolidate`, the `0.1.1` release) is being replanned and owned by another session.
 
 ### Blockers
 

@@ -528,7 +528,7 @@ release(records): 0.1.0.
 
 ### Next
 
-All five iterations are `DONE` (`224deb6`, `05a7a88`, `b970627`, `1a370b9`, `2c560c9`); the plan is `DELIVERED`. The user reviews release commit `2c560c9`, publishes `@art-js/records@0.1.0`, and records `npm info @art-js/records version` in the `Confirm publication` follow-up — then the plan can be archived. The release order stands: this plan publishes `0.1.0` first, and `Plan: Create Lib Records` publishes the consolidated `0.1.1` after its `Consolidate` iteration. Leftover feedback (delete-cell wording, codec field pattern, `dist` rebuild, `v0.0.1` doc references) feeds the follow-up plan.
+All five iterations are `DONE` (`224deb6`, `05a7a88`, `b970627`, `1a370b9`, `2c560c9`); the plan is `DELIVERED`. Published: `@art-js/records@0.1.0` is live and `npm info @art-js/records version` returns `0.1.0` (recorded in the `Confirm publication` follow-up, 2026-11-03) — the plan can be archived. The release order stands: this plan publishes `0.1.0` first, and `Plan: Create Lib Records` publishes the consolidated `0.1.1` after its `Consolidate` iteration. Leftover feedback (delete-cell wording, codec field pattern, `dist` rebuild, `v0.0.1` doc references) feeds the follow-up plan.
 
 ### Blockers
 
@@ -712,7 +712,7 @@ The following decisions are tactical and scoped to this plan only.
 - **Collision reporting** — detect duplicate extracted names at load time and report them, so a validator can flag a shadowed field before someone deletes the holder to reach it. Promotion makes every shadowed field reachable again once the holder vacates the name, but nothing surfaces the duplicate until then.
 - **Refresh the design's Testing section** — it still describes the retired `run-test.ts` runner and the external-only suite; out of scope for this plan.
 - **Drive the release out of the upstream plan** — mark `Iteration: Publish and Update Knowledge` in `Plan: Create Lib Records` against the `0.1.0` outcome; publishing is owned by this plan.
-- **Confirm publication** — after the user publishes, check `npm info @art-js/records version` and record the outcome in this plan.
+- **Confirm publication** — **`DONE` 2026-11-03**: `npm info @art-js/records version` returns `0.1.0`.
 
 ### Feedback
 

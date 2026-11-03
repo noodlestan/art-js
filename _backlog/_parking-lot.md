@@ -4,13 +4,13 @@ WIP tracker, structured like the session parking lot: **ACTIONABLE** (in progres
 
 ## Ongoing
 
-- **Deliver `@art-js/records` v0.0.1** — tracked in `$PROJECT/_backlog/3-now/plan-create-lib-records/plan.md`; implementation and fixture tests are green, with planning/alignment and release work remaining.
+- **Deliver `@art-js/records`** — `0.1.0` shipped from `Plan: Canonical Record Field Names`; the consolidation tail (`consolidate`, `0.1.1`) is tracked in `$PROJECT/_backlog/3-now/plan-create-lib-records/plan.md` and owned by another session.
 
 ---
 
 ## ACTIONABLE
 
-- **Align use cases, API, and fixtures** — execute the WIP list in `libs/records/knowledge/overview.md` as the next plan iteration.
+- None.
 
 ## PENDING
 
