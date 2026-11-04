@@ -2,7 +2,7 @@
 
 **ID:** `expand-fields-api`
 
-**Status:** `PLANNING`
+**Status:** `WORKING`
 
 **Template:** `$DOMAINS/plans/templates/plan.tart`
 
@@ -169,14 +169,14 @@ docs(records): Write the fields spec and restructure record knowledge.
 
 **Purpose:** Ship the expanded field API exactly as the spec defines it.
 
-**Description:** After the spec is written and reviewed, this plan checks that the spec meets the intent of every API change listed in the Scope, then instructions are written to implement it. API names are not fixed here — the spec owns them; this iteration stays a draft until then.
+**Description:** Executes `./instructions/implement-fields-spec.md` against the reviewed `design/fields.md`: string sets parsed through the codec with automatic block/inline form, `setFieldValue` over construct or readonly-array values, the markdown default accessor with `getFieldText`/`getFieldValue` reads, and the five reserved handle members — with the unit tests and both integration suites aligned to the spec. Every API name is owned by the spec, not by this plan.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
 
 **Changes:**
 
-- Implement every set/read change from the Scope as specified in `design/fields.md`: string (via `codec.parse`) and direct Art AST construct writes with automatic block/inline selection; proxy setter accepting `string | Construct`; specific set-string and set-construct methods; default proxy read returning markdown via `codec.serialize`; specific text read via `codec.toText`; raw construct read if not already in the API.
-- Before instructions are written: verify the spec covers the intent of all the Scope's API changes — anything the spec misses goes back into the spec first.
+- Implement every set/read change from the Scope as specified in `design/fields.md`: string (via `codec.parse`) and construct/readonly-array value sets with automatic block/inline selection; proxy setter accepting `string | number | boolean | Construct | readonly Construct[]`; the dedicated `setFieldMarkdown` and `setFieldValue` methods; default proxy read returning markdown via `codec.serialize`; `getFieldText` via `codec.toText`; `getFieldValue` as a deep clone of the field's value.
+- The instruction's preconditions pin the reviewed spec revision and BLOCK if the spec moves; anything a later review finds missing still goes back into the spec first.
 - Land the implementation with its tests, green at every commit.
 
 #### Commits:
@@ -195,7 +195,7 @@ docs(records): Write the fields spec and restructure record knowledge.
 feat(records): Expand the field API with the fields spec.
 
 - Parse string sets through the codec and choose the field form from the value.
-- Return markdown from the accessor and add text and construct reads.
+- Return markdown from the accessor and add text and value reads.
 - Reserve the five new handle members and align both suites with the spec.
 ```
 
@@ -207,8 +207,7 @@ feat(records): Expand the field API with the fields spec.
 
 ### Blockers
 
-- **`implement-fields-spec` is `READY` to delegate** — `./instructions/implement-fields-spec.md` is authored; its preconditions pin the reviewed spec revision (`setFieldValue` takes `Construct | readonly Construct[]`, containers incl. `Document` rejected, `getFieldValue` returns a deep clone of the value) and BLOCK if the spec moves again.
-- **API names intentionally open** — owned by `design/fields.md`, not by this plan; do not resolve them here.
+- None — both instructions are authored: iteration 1 `write-fields-spec` is `DONE` (`ec03d9d`), iteration 2 `implement-fields-spec` is `READY` to delegate, with its preconditions pinning the reviewed spec revision.
 
 ---
 
@@ -266,6 +265,7 @@ This section lists the operating instructions relevant to this work item.
 ### Follow Ups
 
 - **Tagged construct consistency** — all tagged constructs should expose their tags consistently (the raw value read vs `record.__section`); revisit alongside the field API.
+- **Post-ship docs pass** — after `implement-fields-spec` lands, flip the `Status:` line of `design/fields.md` and the v0.0.1 field-behaviour text in `records.md` (stale accessor examples included) to the implemented state; a separate small docs commit, outside both iterations.
 - The spec exists at `design/fields.md` — further follow-ups accumulate here as the implementation surfaces them.
 
 ### Feedback

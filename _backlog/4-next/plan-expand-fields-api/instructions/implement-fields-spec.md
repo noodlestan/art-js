@@ -15,6 +15,7 @@ RULE: If at any point you are instructed to **REPORT A BLOCKER** or you encounte
 **Preconditions:** the specification is the contract of this iteration. Confirm the contract revision you implement against before touching any file:
 
 ```bash
+export PACKAGE="${WORKSPACE:-$(pwd)}/checkouts/art-js/libs/records" # Setting Up runs from the workspace root; guards an unset $PACKAGE
 grep -q "setFieldValue(name: string, value: Construct | readonly Construct\[\]): void;" $PACKAGE/knowledge/design/fields.md && echo SIG-OK   # must print SIG-OK (methods block + Public API block)
 grep -q "Field value must not be a Document, SectionBlock, FieldBlock, or FieldInline" $PACKAGE/knowledge/design/fields.md && echo CONTAINER-OK  # must print CONTAINER-OK
 ! grep -q "same objects the section holds" $PACKAGE/knowledge/design/fields.md && echo NO-STALE  # must print NO-STALE
@@ -191,7 +192,7 @@ This section summarises the changes to be made in this iteration.
    - a single `Construct` → `[value]`, installed as-is without re-encoding through markdown.
    - a readonly array of constructs → its members, in order.
    - Container rejection **before** anything else — as the value, as an array member, or inside parsed string content: a `Document`, `SectionBlock`, `FieldBlock`, or `FieldInline` throws `TypeError: Field value must not be a Document, SectionBlock, FieldBlock, or FieldInline`. There is **no** `Document` unwrapping.
-   - Any other input (`null`, `undefined`, a plain object, an array that holds no constructs) throws `TypeError: Field value must be a string, number, boolean, or Art AST value`.
+   - Any other input (`null`, `undefined`, a plain object, an array whose members are not all constructs) throws `TypeError: Field value must be a string, number, boolean, or Art AST value`. An empty array is a **legal value**: like an empty string it produces empty content and clears the field to a bare label line, and `getFieldValue` then returns `[]`.
    - Classification: empty content → `FieldInline` with no children; exactly one paragraph `NaturalBlock` → `FieldInline` with the paragraph unwrapped to its expression children; all children are `NaturalExpression` → `FieldInline`; otherwise → `FieldBlock`. In the update route, a classification change converts the field construct **in place**, preserving `name`, `tags`, and `position`, then replaces `children`.
 2. The append route builds the same classified field with `name: nameToLabel(name)` and pushes it to `section.children` — it is no longer always `FieldInline`.
 3. Factor the shared `content(value)` + classification into one private module under `section-field/` (your naming; it is internal) so update and append cannot drift. Keep `setSectionField(codec, field, value)` and `appendSectionField(codec, section, name, value)` shapes unless the capsule needs a different seam — the capsule is the only consumer (`grep -rn "setSectionField\|appendSectionField" $PACKAGE/src`).
@@ -241,8 +242,8 @@ In `$PACKAGE/src/record/private/capsule/createRecordCapsule.ts`:
 2. Known correction areas:
    - Reserved-name fixtures: `$PACKAGE/tests/record-helpers/isReservedFieldName.fixtures.ts`, `recordReservedLabel.fixtures.ts`, and `src/record/private/field-name/isReservedFieldName.test.ts` — the reserved set is now nine; the reachable document collisions are eight (`Name`, `Save`, `Rename Field`, `Set Field Markdown`, `Set Field Value`, `Get Field Markdown`, `Get Field Text`, `Get Field Value`).
    - Read expectations: any accessor-style assertion whose value carries markup now expects markdown (`## Reading Field Values` gives the `031` before/after).
-   - Coercion: `null`/plain objects/empty arrays now throw instead of `String(value)`-coercing; `number`/`boolean` still store.
-3. Add direct unit coverage for: `content()` classification (all four rules), in-place form conversion preserving `name`/`tags`/`position`, empty string → bare label line, container rejection (value, array member, parsed content), `number`/`boolean` coercion, `setFieldValue` with an array of constructs, deep-clone isolation of `getFieldValue` (and `[]` for an empty field), markdown round-trip (`setFieldMarkdown` → read returns the input modulo parser normalisation), and the trailing-newline strip.
+   - Coercion: `null`/plain objects/arrays whose members are not all constructs now throw instead of `String(value)`-coercing; `number`/`boolean` still store.
+3. Add direct unit coverage for: `content()` classification (all four rules), in-place form conversion preserving `name`/`tags`/`position`, empty string → bare label line, container rejection (value, array member, parsed content), the empty value (`''` and `[]`) clearing to a bare label line, `number`/`boolean` coercion, `setFieldValue` with an array of constructs, deep-clone isolation of `getFieldValue` (and `[]` for an empty field), markdown round-trip (`setFieldMarkdown` → read returns the input modulo parser normalisation), and the trailing-newline strip.
 
 **Expected outcome:** unit suite green; every spec error message is asserted verbatim somewhere.
 
@@ -331,7 +332,7 @@ In `$PACKAGE/src/record/private/capsule/createRecordCapsule.ts`:
    ```
 
    - Only `$PACKAGE/src/**` and `$PACKAGE/tests/**` (plus `$TESTS/**` if Step 7 changed it) appear **as your modifications**.
-   - **Never** `$PACKAGE/knowledge/**`, never `package.json`, `package-lock.json`, `CHANGELOG.md`, `_backlog`, `_roadmap`, `dist`, `node_modules`.
+   - **Never** `$PACKAGE/knowledge/**` (its post-ship Status flip is a plan Follow Up, outside this iteration), never `package.json`, `package-lock.json`, `CHANGELOG.md`, `_backlog`, `_roadmap`, `dist`, `node_modules`.
 
 3. Stage the changed paths **explicitly** (file by file, or `git add $PACKAGE/src $PACKAGE/tests $TESTS/src $TESTS/fixtures` once you have confirmed those trees contain only your changes). Never `git add -A` or `git add .`.
 4. Check `git diff --cached --name-only` against your change list — it must match your change set exactly.
@@ -343,7 +344,7 @@ In `$PACKAGE/src/record/private/capsule/createRecordCapsule.ts`:
 feat(records): Expand the field API with the fields spec.
 
 - Parse string sets through the codec and choose the field form from the value.
-- Return markdown from the accessor and add text and construct reads.
+- Return markdown from the accessor and add text and value reads.
 - Reserve the five new handle members and align both suites with the spec.
 ```
 
@@ -362,6 +363,7 @@ The `pre-commit` hook declared in `$PROJECT/lefthook.yml` runs `npm run clean`, 
 - Verify the default accessor returns markdown: a field set with `` `x` `` reads back `` `x` ``; `getFieldText` on the same field reads `x`.
 - Verify `getFieldValue` returns a deep clone of the value (`readonly Construct[]`, `[]` for an empty field, `undefined` for a missing name) — mutating it does not change a subsequent read or the saved document.
 - Verify both container messages appear verbatim: `Field value must not be a Document, SectionBlock, FieldBlock, or FieldInline` and `Field value must be a string, number, boolean, or Art AST value`.
+- Verify the empty-value rule: `setFieldMarkdown(name, '')` and `setFieldValue(name, [])` each clear the field to a bare label line, and `getFieldValue` on it returns `[]`.
 - Verify the round-trip Evidence: the fixture showing `` **Location:** `x` `` surviving an update to another field, and a fenced-code write re-emitting its fence, passes.
 - Verify coverage: `npm run test:ci` from `$PACKAGE` passes 90/90/70/90.
 - Verify `npm run ci` passes from `$PACKAGE`, from `$TESTS`, and from `$PROJECT` (in that order).

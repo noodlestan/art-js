@@ -80,7 +80,7 @@ record.<fieldName> = value; // value: string | number | boolean | Construct | re
 - A **string becomes a parsed markdown fragment**: it is routed through `codec.parse`, exactly as `setFieldMarkdown` does. The spec chooses `codec.parse` over `codec.create` for the text node because the string-set contract requires markdown forms to survive (see [Setting from a string](#setting-from-a-string)), and because one string-input mechanism shared by the proxy and the dedicated method means the same input cannot behave differently depending on the route taken.
 - A **construct or readonly array of constructs** is routed exactly as `setFieldValue` does.
 - A **number or boolean is coerced with `String(value)`** and then routed as a string, so `record.count = 42` still stores `42` and `record.active = true` still stores `true`, exactly as v0.0.1 did.
-- Any other value — `null`, `undefined`, a plain object, an array that holds no constructs — is rejected with `TypeError: Field value must be a string, number, boolean, or Art AST value`. The blanket v0.0.1 `String(value)` coercion is gone; deleting a field is `delete record.<fieldName>`.
+- Any other value — `null`, `undefined`, a plain object, an array whose members are not all constructs — is rejected with `TypeError: Field value must be a string, number, boolean, or Art AST value`. An empty array is not rejected: like an empty string it clears the field (see [Automatic Form](#automatic-form)), and `getFieldValue` reads the cleared field back as `[]`. The blanket v0.0.1 `String(value)` coercion is gone; deleting a field is `delete record.<fieldName>`.
 
 The proxy setter never takes a form argument. Block versus inline follows the value (see [Automatic Form](#automatic-form)).
 
