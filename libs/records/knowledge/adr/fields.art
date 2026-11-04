@@ -1,0 +1,39 @@
+# Records - Field Decisions
+
+**Purpose:** Decisions about the field API in `@art-js/records` — the field-name decision index, the automatic form rule, the string-set route, and the read model.
+
+## Field Decision Index
+
+- Canonical field names — grammar, guarantees, converters, and label policy ([`canonical-field-names.art`](canonical-field-names.art)).
+- The `name → field` index — one index at extraction, first-wins, promotion on removal ([`field-name-index.art`](field-name-index.art)).
+- Rename by name — validation order, relabelling, and the forgotten spelling ([`rename-field-by-name.art`](rename-field-by-name.art)).
+
+## Decision: Automatic Field Form
+
+**Status:** Adopted
+
+**Context:** A field is either a `FieldInline` (phrasing on the label's line) or a `FieldBlock` (block content on its own lines). v0.0.1 created new fields inline and kept an existing field's form on update, so the shape of a write depended on where it landed rather than on what was written; letting the caller pick a form would push a codec-level distinction into every call site.
+
+**Decision:** The form is chosen from the value being set and the caller never selects it. The value's content — parsed from a `string` through `codec.parse`, or the consumer's construct, unwrapping `FieldInline`/`FieldBlock`/`Document` wrappers — classifies as empty, a single paragraph (unwrapped to its expressions), all-`NaturalExpression`, or block-level; those cases yield `FieldInline`, `FieldInline`, `FieldInline`, and `FieldBlock` respectively, converting an existing field in place while preserving `name`, `tags`, and position. The full rule lives in [`design/fields.md`](../design/fields.md) under Automatic Form.
+
+**Consequences:** No overload, option, or method takes a form; a phrasing-only value written to a block field converts it to inline (the old value is replaced either way), so keeping a field block-shaped means carrying block content in the value; new fields are no longer always inline.
+
+## Decision: Strings Parse as Markdown
+
+**Status:** Adopted
+
+**Context:** v0.0.1 coerced a written value with `String(value)` and stored it as one `codec.create('NaturalExpression', { type: 'text', … })` node (a `NaturalBlock` on block fields), so markdown syntax was stored literally — `` **Location:** `art-works` `` lost its backticks on the first update — and a string could not round-trip.
+
+**Decision:** Every string input — the proxy setter with a `string`, and `setFieldMarkdown(name, markdown)` — routes through `codec.parse(markdown)`, never through `codec.create` for a text node, so markdown forms survive set → save → read. The proxy setter accepts `string | Construct` only and rejects any other value with a `TypeError`; a construct input routes through `setFieldConstruct(name, construct)` unchanged. Literal text containing markdown characters is set as a construct or written escaped. The full rule lives in [`design/fields.md`](../design/fields.md) under Setting Field Values.
+
+**Consequences:** One string-input mechanism, so the same string behaves the same through the proxy and the dedicated method; consumers whose strings contain markdown characters must escape them or pass a text construct; code spans and emphasis now survive value updates.
+
+## Decision: Reads Split Into Markdown, Text, and Raw
+
+**Status:** Adopted
+
+**Context:** v0.0.1 had one field read — the proxy accessor through `codec.toText` — which type-erased the construct: markup was stripped, and a consumer could neither get the field's markdown nor inspect its Art AST.
+
+**Decision:** The default proxy accessor returns the value as markdown through `codec.serialize` over a `Document` wrapping the field's children, with the serializer's single trailing newline removed and the label excluded; `getFieldMarkdown(name)` is the explicit form of that read, `getFieldText(name)` preserves the old `codec.toText` behaviour as a dedicated method, and `getFieldConstruct(name)` exposes the live `FieldInline`/`FieldBlock`. The expanded handle members join the reserved names, so eight document labels now abort extraction. The full rule lives in [`design/fields.md`](../design/fields.md) under Reading Field Values.
+
+**Consequences:** Existing consumers that displayed the accessor's output now see markdown markers and backticks and move to `getFieldText` for the previous text; set → read round-trips through the markdown route; the reachable reserved-label set grows from three to eight (`Name`, `Save`, `Rename Field`, `Set Field Markdown`, `Set Field Construct`, `Get Field Markdown`, `Get Field Text`, `Get Field Construct`).

@@ -1,0 +1,83 @@
+# Records - Design Decisions
+
+**Purpose:** Decisions behind the records design — provider shape, collection type, the unified record handle, codec injection, placement and depth, the internal capsule, and save fidelity.
+
+## Decision: Provider Shape
+
+**Status:** Adopted
+
+**Context:** Consumers need one entry point that binds a codec and a file-to-content-source factory, while file discovery belongs to the filesystem adapter rather than to Records.
+
+**Decision:** `createRecordsDocument({ codec, createContentSource })` returns a provider; `read(file)` returns the collection for an existing document, `create(file)` for a new one. File discovery stays in `@art-lib/fs-records`.
+
+**Consequences:** One provider is configured once per consumer; each `read(file)` or `create(file)` call returns a collection for exactly that document. Art Work creates the codec and passes it in; Records performs no discovery of its own.
+
+## Decision: One Collection Type
+
+**Status:** Adopted
+
+**Context:** `read(file)` parses an existing document while `create(file)` binds an empty one; returning different types would make `addRecord()` availability depend on how the collection was obtained (MANAGEMENT, 2026-10-21).
+
+**Decision:** Both `read(file)` and `create(file)` return `RecordsDocumentCollection`, exposing `hasRecord`, `extract`, `addRecord`, and `save`.
+
+**Consequences:** Consumers learn one type and can add records after either call; a collection returned by `create(file)` writes nothing until its first save.
+
+## Decision: One Unified ArtRecord
+
+**Status:** Adopted
+
+**Context:** Extracted records and newly added records could be modelled as separate handle types, but their surface — field access, section access, save — is identical.
+
+**Decision:** One public `ArtRecord` covers both; the source is fixed at creation (by extraction, `addRecord()`, or `createRecord()`) and is immutable afterwards; `record.save()` is the persistence API. There is no `NewArtRecord` subtype, no `setSource()`, and no string-returning `update`/`serialize` surface.
+
+**Consequences:** Consumers treat the extracted and new-record flows identically; the heading name is identity and cannot be renamed after extraction.
+
+## Decision: Consumer-Injected Codec
+
+**Status:** Adopted
+
+**Context:** Codec configuration belongs to the consumer (Art Work creates and configures it), and Records must not own I/O or instantiate codecs.
+
+**Decision:** The codec is created by the consumer and injected into `createRecordsDocument`; Records implements no I/O and instantiates no codec.
+
+**Consequences:** Records depends only on the `@art-md/primitives` source, codec, and document contracts; consumers can swap codec configurations without Records changing, and tests inject their own codec.
+
+## Decision: Placement and Depth Derivation
+
+**Status:** Adopted
+
+**Context:** A new section needs both a position in the document and a heading depth; asking the caller for a depth would duplicate knowledge the anchor already carries (MANAGEMENT, 2026-10-21, 2026-10-22).
+
+**Decision:** `addRecord(position?)` places the new section relative to an anchor exactly as tabled under Creating New Records — `before`, `after`, `appendTo`, `prependTo`, or the no-argument document-root default — and derives the heading depth from the resolved insertion point; no argument appends to the document root at h1.
+
+**Consequences:** Callers never pass a depth; a foreign anchor (extracted from another file, standalone, or removed) throws `The placement anchor is not part of this document` and inserts nothing; a record appended to a populated document root may follow content at other depths, which a later validator may flag.
+
+## Decision: Read-Only Section Depth
+
+**Status:** Adopted
+
+**Context:** Placement fixes the depth of a section at creation; a mutable depth could desynchronise the heading level written on save (MANAGEMENT, 2026-10-21).
+
+**Decision:** `record.__section.depth` is read-only, and the heading level written on save always matches it.
+
+**Consequences:** Section depth is guarded at runtime like `record.__section.name`; relocating content means adding a record through placement rather than mutating depth.
+
+## Decision: No Public Capsule Surface
+
+**Status:** Adopted
+
+**Context:** The record proxy delegates to an internal capsule; exporting that seam would freeze its shape and block an internal replacement.
+
+**Decision:** The capsule and its context stay internal under `src/record/private/`; they are not exported, and `createRecordsDocument()` accepts no capsule factory option. `createRecord()` is the standalone record factory.
+
+**Consequences:** A reactive capsule can be introduced as an internal change to that seam without touching the public handle; consumers see one handle type, `ArtRecord`.
+
+## Decision: Whole-Document Save Fidelity
+
+**Status:** Adopted
+
+**Context:** Granular line-level writes and revision tokens add complexity the first release does not need; the source contract carries no revision token (MANAGEMENT, 2026-10-19).
+
+**Decision:** Save fidelity is whole-document codec serialization with structural (not byte) identity: all valid Markdown structure is preserved, while extraneous whitespace, CRLF line endings, heading indentation, and the final newline may be normalised per CommonMark. Granular writes and write guards are not part of v0.0.1.
+
+**Consequences:** Saving one `RecordsDocumentCollection` writes the whole document once and may include other in-memory mutations in that document; `create(file)` writes nothing until a save; consumers needing byte identity must compare parsed structure instead of bytes.
