@@ -2,7 +2,7 @@
 
 **ID:** `expand-fields-api`
 
-**Status:** `DRAFT`
+**Status:** `PLANNING`
 
 **Template:** `$DOMAINS/plans/templates/plan.tart`
 
@@ -115,16 +115,16 @@ Execution occurs from `$WORKSPACE/`; package work is performed in `$PROJECT` on 
 
 This section lists the downstream work items produced, coordinated, or advanced by the plan, identifying blocking dependencies across resources of different owners.
 
-| Iteration / Instructions                                                   | Status     |
-| -------------------------------------------------------------------------- | ---------- |
-| Iteration: Write Fields Spec `./instructions/write-fields-spec.md`         | `PLANNING` |
-| Iteration: Implement Fields Spec `./instructions/implement-fields-spec.md` | `DRAFT`    |
+| Iteration / Instructions                                                   | Status  |
+| -------------------------------------------------------------------------- | ------- |
+| Iteration: Write Fields Spec `./instructions/write-fields-spec.md`         | `READY` |
+| Iteration: Implement Fields Spec `./instructions/implement-fields-spec.md` | `DRAFT` |
 
 ### Iteration: Write Fields Spec
 
 **Id:** `write-fields-spec`
 
-**Status:** `PLANNING`
+**Status:** `READY`
 
 **Purpose:** Produce `design/fields.md` — the single specification of the records field API — with the knowledge base reorganised around it.
 
@@ -143,9 +143,9 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 #### Commits:
 
-| ID                  | Repository / Checkout / Branch   | Policy   | Hash  | Status        |
-| ------------------- | -------------------------------- | -------- | ----- | ------------- |
-| `write-fields-spec` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `PLACEHOLDER` |
+| ID                  | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
+| ------------------- | -------------------------------- | -------- | ----- | ---------- |
+| `write-fields-spec` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
 
 ##### Commit: `write-fields-spec`
 
@@ -201,11 +201,11 @@ feat(records): Expand the field API with the fields spec.
 
 ### Next
 
-Write the instruction file for `write-fields-spec` and delegate it — the spec writer owns every API name. When the spec lands, review it against the Scope's API-change list, then write the instructions for `implement-fields-spec`.
+Delegate `write-fields-spec` — its instruction file exists and the iteration is `READY`; the spec writer owns every API name. When the spec lands, review it against the Scope's API-change list, then write the instructions for `implement-fields-spec`.
 
 ### Blockers
 
-- **Instruction files not written yet** — both iterations project `./instructions/{iteration.id}.md`; none exists. Expected: the spec must exist before implementation instructions can be written.
+- **`implement-fields-spec` instruction not written yet** — it projects `./instructions/implement-fields-spec.md`; none exists. Expected: the spec must exist and pass the plan's Scope review before implementation instructions are written. `./instructions/write-fields-spec.md` now exists and the iteration is `READY` to delegate.
 - **API names intentionally open** — owned by `design/fields.md`, not by this plan; do not resolve them here.
 
 ---
