@@ -1,7 +1,5 @@
 import type { FSRecordsPattern } from '@art-lib/fs-records';
 
-export const RUN_TEST_FILENAME = 'run-test.ts';
-
 export const recordsPatterns: FSRecordsPattern[] = [
 	{
 		base: '.',

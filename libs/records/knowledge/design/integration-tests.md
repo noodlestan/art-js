@@ -120,11 +120,8 @@ Run from `$ROOT/tests/records/`:
 npm run test        # run the Vitest suite
 npm run test -- 02  # run cases whose path contains "02"
 npm run lint        # Prettier, ESLint, and TypeScript checks
-npm run build       # build the test package
-npm run ci          # lint, build, and tests
+npm run ci          # lint and tests
 ```
-
-The legacy script runner (`npm run test:script`) is still wired, but no case uses it and it discovers nothing.
 
 ## Use Cases
 
@@ -142,4 +139,4 @@ Change the case's `.art` files or its assertions, then run that case and the ful
 
 ### Skip a case
 
-Prefixing a directory with `_` only excludes its files from the legacy script runner; Vitest still discovers `fixtures/**/integration.test.ts`. Use `describe.skip` or `it.skip` when a case must stay out of the run, and remove it before committing.
+Use `describe.skip` or `it.skip` when a case must stay out of the run, and remove it before committing.

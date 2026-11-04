@@ -3,6 +3,6 @@
   "compilerOptions": {
     "types": ["node"]
   },
-  "include": ["src/", "scripts/", "fixtures/", "**/*.config.ts"],
+  "include": ["src/", "fixtures/", "**/*.config.ts"],
   "exclude": ["**/node_modules/", "**/dist/", "**/coverage/"]
 }

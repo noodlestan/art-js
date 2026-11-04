@@ -455,9 +455,9 @@ libs/records/src/
 
 ## Testing
 
-Integration tests live in `$PROJECT/tests/records` (package `@art-js/test-records`): one fixture directory per use case under `tests/records/fixtures/`, each holding record files plus a `run-test.ts` exporting `runTest()`. A runner discovers the directories, imports each `runTest`, and reports pass/fail; a directory prefixed with `_` is a known failure and is skipped until its code is ready. The fixture id is the directory name; the use-case-to-fixture map is maintained in [`../overview.md`](../overview.md).
+Integration tests live in `$PROJECT/tests/records` (package `@art-js/test-records`): one fixture directory per use case under `tests/records/fixtures/`, each holding record files plus a Vitest `integration.test.ts`. Vitest discovers `fixtures/**/integration.test.ts` and runs each case independently; a failure in one does not stop the others. The fixture id is the directory name; the use-case-to-fixture map is maintained in [`../overview.md`](../overview.md).
 
-Unit tests in `libs/records` stay minimal; behaviour is asserted through the fixture harness, which exercises the codec and the FS adapter end to end.
+Unit tests in `libs/records` stay minimal; behaviour is asserted through the fixture suite, which exercises the codec and the FS adapter end to end. `npm run test:ci` runs the full suite with coverage and gates it at the package convention — lines 90, functions 90, branches 70, statements 90 — measured over `src/`.
 
 ## Notes
 

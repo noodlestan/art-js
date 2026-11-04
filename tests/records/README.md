@@ -12,16 +12,15 @@ Make sure you read the [Art JS README](../../README.md) first.
 
 ### Scripts
 
-- `npm run test` — runs every fixture test case through the records harness
+- `npm run test` — runs every fixture test case
 - `npm run test -- 07` — runs only the cases whose directory name contains `07`
-
-Case directories prefixed with `_` are known failures: the harness reports them as skipped and never imports them (the same rule the art-md fixture tests apply). Unprefix a case to put it back in the run.
+- `npm run ci` — lints the package and runs the integration suite
 
 ### Fixtures
 
-Fixtures live under `fixtures/`, one directory per design use case. Each case holds the record files its scenario needs and a `run-test.ts` exporting `runTest()`, which wires the config, codec, and adapter against that case's own fixture directory, exercises the use case, asserts the results, and returns `Promise<void>` — failures throw instead of catching.
+Fixtures live under `fixtures/`, one directory per design use case. Each case holds the record files its scenario needs and an `integration.test.ts` that wires the config, codec, and adapter against that case's own fixture directory, exercises the use case, and asserts the results — failures throw instead of catching.
 
-The harness lives in `src/` and is entered from `scripts/test-records.ts`: it discovers the case directories, skips those prefixed with `_`, async imports each `run-test.ts`, grabs the `runTest` export, runs the cases in sequence with a try/catch per case, and reports status, duration, errors, and skipped cases. Running N cases in parallel comes later.
+The shared helpers live in `src/`: fixture copying and path resolution, record and field lookup, and temporary directory creation and cleanup. Every case runs independently; a failure in one does not stop the others.
 
 ## License
 

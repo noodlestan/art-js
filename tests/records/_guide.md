@@ -2,7 +2,7 @@
 
 The `@art-js/test-records` package provides integration tests for the record API through the codec and the FS records adapter.
 
-Every design use case is exercised by one fixture case directory: its record files plus a `run-test.ts` exporting `runTest()`. A runner discovers those directories, async imports each `runTest`, runs every case in sequence, and reports pass, duration, and error.
+Every design use case is exercised by one fixture case directory: its record files plus a Vitest `integration.test.ts`. Vitest discovers the cases with the `fixtures/**/integration.test.ts` pattern and runs each one independently.
 
 ## Recommended Reading
 
@@ -15,27 +15,20 @@ Agents SHOULD scan these files for definitions and resource locations when faced
 
 ```
 _records/           — package records
-src/                — harness: types, helpers, discovery loop, report
-scripts/            — CLI entry points
-fixtures/           — one directory per design use case: record files + run-test.ts
+src/                — shared test helpers
+fixtures/           — one directory per design use case: record files + integration.test.ts
 ```
 
-## Harness
+## Helpers
 
-Types, helpers, and script parts live in `src/`; `scripts/` only holds entry points.
+Shared helpers live in `src/`; each fixture case owns its `integration.test.ts`.
 
-- `src/types.ts` — `RunTest`, outcome, and report types.
-- `src/constants.ts` — fixture discovery pattern and `run-test.ts` filename.
-- `src/assert.ts`, `src/getFieldNames.ts` — assertion and record field helpers.
+- `src/constants.ts` — fixture discovery pattern.
 - `src/copyFixtureCase.ts`, `src/getFixtureDirectory.ts` — fixture copying and path resolution.
-- `src/runFixtureTests/runFixtureTests.ts` — discover case directories, skip those prefixed with `_`, async import `run-test.ts`, grab the `runTest` export, try/catch each run, sequence all cases.
-- `src/runFixtureTests/private/` — runner-only discovery, case execution, and outcome helpers.
-- `src/printFixtureTestReport.ts` — per-case status and error, skipped cases, then the summary.
-- `scripts/test-records.ts` — entry point: run, report, exit code (`0` when all pass, `2` otherwise).
+- `src/findRecordByName.ts`, `src/findRecordFileByPath.ts`, `src/getFieldNames.ts` — record and field lookup.
+- `src/tempDirs/` — temporary working directory creation and cleanup.
 
-Fixture tests do not catch: they throw and let the runner report (case 09 asserts its expected rejection inline). Running N cases in parallel comes later.
-
-A case directory prefixed with `_` is a known failure: the harness lists it as skipped and never imports it, the same rule the art-md fixture tests apply. Drop the prefix to put the case back in the run.
+Each case copies its fixture to a temporary directory, configures the codec and the filesystem adapter against the copy, exercises the Records API, and asserts the result; the checked-in fixture files are never modified. Assertions fail by throwing, and Vitest reports the failure.
 
 ## Records Management
 
@@ -87,5 +80,5 @@ Run from this package directory:
 npm run lint:fix # to fix formatting issues automatically
 npm run lint # to report other issues (prettier, eslint, tsc --noEmit)
 npm run test # to run all tests
-npm run build # to produce a full build
+npm run ci # lint and the integration suite
 ```
