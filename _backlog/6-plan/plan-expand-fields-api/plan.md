@@ -117,14 +117,14 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 | Iteration / Instructions                                                   | Status  |
 | -------------------------------------------------------------------------- | ------- |
-| Iteration: Write Fields Spec `./instructions/write-fields-spec.md`         | `READY` |
+| Iteration: Write Fields Spec `./instructions/write-fields-spec.md`         | `DONE`  |
 | Iteration: Implement Fields Spec `./instructions/implement-fields-spec.md` | `DRAFT` |
 
 ### Iteration: Write Fields Spec
 
 **Id:** `write-fields-spec`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Produce `design/fields.md` — the single specification of the records field API — with the knowledge base reorganised around it.
 
@@ -143,9 +143,9 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 #### Commits:
 
-| ID                  | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
-| ------------------- | -------------------------------- | -------- | ----- | ---------- |
-| `write-fields-spec` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+| ID                  | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `write-fields-spec` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `ec03d9d` | `COMMITTED` |
 
 ##### Commit: `write-fields-spec`
 
@@ -201,11 +201,11 @@ feat(records): Expand the field API with the fields spec.
 
 ### Next
 
-Delegate `write-fields-spec` — its instruction file exists and the iteration is `READY`; the spec writer owns every API name. When the spec lands, review it against the Scope's API-change list, then write the instructions for `implement-fields-spec`.
+`write-fields-spec` is **`DONE` as `ec03d9d`** (hook green, not pushed): `design/fields.md` written with the API names, field content extracted from `design/records.md`, decisions homed as `adr/records.art`/`adr/fields.art`, index and overview updated. Next: review the spec against the Scope's API-change list, then write the instructions for `implement-fields-spec` and flip it to `READY`.
 
 ### Blockers
 
-- **`implement-fields-spec` instruction not written yet** — it projects `./instructions/implement-fields-spec.md`; none exists. Expected: the spec must exist and pass the plan's Scope review before implementation instructions are written. `./instructions/write-fields-spec.md` now exists and the iteration is `READY` to delegate.
+- **`implement-fields-spec` instruction not written yet** — it projects `./instructions/implement-fields-spec.md`; none exists. The spec landed as `ec03d9d`; the remaining gate is the plan's review of `design/fields.md` against the Scope's API-change list, then the instruction is authored.
 - **API names intentionally open** — owned by `design/fields.md`, not by this plan; do not resolve them here.
 
 ---
