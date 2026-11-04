@@ -19,7 +19,7 @@ grep -c "^### Decisions" $PACKAGE/knowledge/design/records.md   # must print 2
 ls $PACKAGE/knowledge/adr/                                      # canonical-field-names.art, field-name-index.art, rename-field-by-name.art
 ```
 
-If either check fails (a concurrent session restructured the knowledge in the meantime, or the decisions sections moved), REPORT A BLOCKER with the actual state — do not improvise a different restructure.
+If either check fails (the decisions sections moved, or the knowledge no longer has the shape described here), REPORT A BLOCKER with the actual state — do not improvise a different restructure.
 
 ## How to Report Back to the Delegator
 

@@ -207,7 +207,7 @@ feat(records): Expand the field API with the fields spec.
 
 ### Blockers
 
-- **`implement-fields-spec` is `READY` to delegate** — `./instructions/implement-fields-spec.md` is authored; its preconditions pin the reviewed spec revision (`setFieldValue` takes `Construct | readonly Construct[]`, containers incl. `Document` rejected, `getFieldValue` returns a deep clone of the value) and BLOCK if the spec moves again. The instruction never stages or commits `libs/records/knowledge/**` — that tree is the concurrent session's.
+- **`implement-fields-spec` is `READY` to delegate** — `./instructions/implement-fields-spec.md` is authored; its preconditions pin the reviewed spec revision (`setFieldValue` takes `Construct | readonly Construct[]`, containers incl. `Document` rejected, `getFieldValue` returns a deep clone of the value) and BLOCK if the spec moves again.
 - **API names intentionally open** — owned by `design/fields.md`, not by this plan; do not resolve them here.
 
 ---
