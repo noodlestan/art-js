@@ -118,7 +118,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | Iteration / Instructions                                                   | Status  |
 | -------------------------------------------------------------------------- | ------- |
 | Iteration: Write Fields Spec `./instructions/write-fields-spec.md`         | `DONE`  |
-| Iteration: Implement Fields Spec `./instructions/implement-fields-spec.md` | `DRAFT` |
+| Iteration: Implement Fields Spec `./instructions/implement-fields-spec.md` | `READY` |
 
 ### Iteration: Write Fields Spec
 
@@ -165,7 +165,7 @@ docs(records): Write the fields spec and restructure record knowledge.
 
 **Id:** `implement-fields-spec`
 
-**Status:** `DRAFT`
+**Status:** `READY`
 
 **Purpose:** Ship the expanded field API exactly as the spec defines it.
 
@@ -181,9 +181,9 @@ docs(records): Write the fields spec and restructure record knowledge.
 
 #### Commits:
 
-| ID                     | Repository / Checkout / Branch   | Policy   | Hash  | Status        |
-| ---------------------- | -------------------------------- | -------- | ----- | ------------- |
-| `implement-fields-api` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `PLACEHOLDER` |
+| ID                     | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
+| ---------------------- | -------------------------------- | -------- | ----- | ---------- |
+| `implement-fields-api` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
 
 ##### Commit: `implement-fields-api`
 
@@ -194,18 +194,20 @@ docs(records): Write the fields spec and restructure record knowledge.
 ```text
 feat(records): Expand the field API with the fields spec.
 
-- (placeholder — authored when the spec is final)
+- Parse string sets through the codec and choose the field form from the value.
+- Return markdown from the accessor and add text and construct reads.
+- Reserve the five new handle members and align both suites with the spec.
 ```
 
 ## Work
 
 ### Next
 
-`write-fields-spec` is **`DONE` as `ec03d9d`** (hook green, not pushed): `design/fields.md` written with the API names, field content extracted from `design/records.md`, decisions homed as `adr/records.art`/`adr/fields.art`, index and overview updated. Next: review the spec against the Scope's API-change list, then write the instructions for `implement-fields-spec` and flip it to `READY`.
+`write-fields-spec` is **`DONE` as `ec03d9d`** (hook green, not pushed): `design/fields.md` written with the API names, field content extracted from `design/records.md`, decisions homed as `adr/records.art`/`adr/fields.art`, index and overview updated. The Scope review is complete — rulings applied to the spec: scalar writes coerce, container constructs (incl. `Document`) are rejected, reads split into markdown/text/raw-value with `getFieldValue` returning a deep clone of the field's value, `setFieldValue` takes `Construct | readonly Construct[]`, and the four field ADRs are merged into `adr/fields.art`. Next: `implement-fields-spec` is authored and `READY` — delegate it (spec revision pinned in the instruction's preconditions); its commit lands `feat(records): Expand the field API with the fields spec.`
 
 ### Blockers
 
-- **`implement-fields-spec` instruction not written yet** — it projects `./instructions/implement-fields-spec.md`; none exists. The spec landed as `ec03d9d`; the remaining gate is the plan's review of `design/fields.md` against the Scope's API-change list, then the instruction is authored.
+- **`implement-fields-spec` is `READY` to delegate** — `./instructions/implement-fields-spec.md` is authored; its preconditions pin the reviewed spec revision (`setFieldValue` takes `Construct | readonly Construct[]`, containers incl. `Document` rejected, `getFieldValue` returns a deep clone of the value) and BLOCK if the spec moves again. The instruction never stages or commits `libs/records/knowledge/**` — that tree is the concurrent session's.
 - **API names intentionally open** — owned by `design/fields.md`, not by this plan; do not resolve them here.
 
 ---
@@ -263,7 +265,8 @@ This section lists the operating instructions relevant to this work item.
 
 ### Follow Ups
 
-- None until the spec exists.
+- **Tagged construct consistency** — all tagged constructs should expose their tags consistently (the raw value read vs `record.__section`); revisit alongside the field API.
+- The spec exists at `design/fields.md` — further follow-ups accumulate here as the implementation surfaces them.
 
 ### Feedback
 

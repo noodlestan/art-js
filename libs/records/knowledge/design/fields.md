@@ -2,9 +2,9 @@
 
 **Status:** Specification — the expanded field surface below is the target API of `@art-js/records`, written by the `write-fields-spec` iteration of Plan: Expand Fields API and landed by `implement-fields-spec`. Until that iteration ships, [records.md](records.md) documents the implemented v0.0.1 behaviour.
 
-**Purpose:** Specify the complete field API: how a field value is set from a `string` or from an Art AST construct, which form the field takes, how it is read back as markdown, text, or raw construct, and how field names address it.
+**Purpose:** Specify the complete field API: how a field value is set from a `string` or from Art AST value constructs, which form the field takes, how it is read back as markdown, text, or raw value, and how field names address it.
 
-**Scope:** `@art-js/records` owns the field surface of the record handle: the proxy accessor and proxy setter, `setFieldMarkdown`, `setFieldConstruct`, `getFieldMarkdown`, `getFieldText`, `getFieldConstruct`, `renameField`, `delete`, and the field-name contract. Records, sections, placement, persistence, and the provider model are specified in [records.md](records.md).
+**Scope:** `@art-js/records` owns the field surface of the record handle: the proxy accessor and proxy setter, `setFieldMarkdown`, `setFieldValue`, `getFieldMarkdown`, `getFieldText`, `getFieldValue`, `renameField`, `delete`, and the field-name contract. Records, sections, placement, persistence, and the provider model are specified in [records.md](records.md).
 
 ## Usage
 
@@ -25,7 +25,7 @@ record.location = location;
 
 // The dedicated methods; the proxy setter delegates to these two.
 record.setFieldMarkdown('greeting', 'Hello, are _you_ there _world_?');
-record.setFieldConstruct('location', location);
+record.setFieldValue('location', location);
 ```
 
 ### Reading Fields
@@ -34,12 +34,12 @@ record.setFieldConstruct('location', location);
 record.greeting; // markdown — 'Hello, are _you_ there _world_?'
 record.getFieldMarkdown('greeting'); // same value the accessor returns
 record.getFieldText('greeting'); // text — 'Hello, are you there world?'
-record.getFieldConstruct('greeting'); // the FieldInline construct, label included
+record.getFieldValue('greeting'); // a deep clone of the field's value (its Art AST)
 ```
 
 ## Setting Field Values
 
-A field value is either a `string` or an Art AST construct. There is no third input shape: no freeform typed-value object, no `{ type, value }` literal on the handle. The form the resulting field takes is never requested by the caller (see [Automatic Form](#automatic-form)).
+A field value is a `string`, an Art AST value — a construct or a readonly array of constructs — or a `number`/`boolean` (coerced with `String(value)` and then routed exactly as a string). There is no other input shape: no freeform typed-value object, no `{ type, value }` literal on the handle. Anything else — `null`, `undefined`, a plain object, or a container construct (`Document`, `SectionBlock`, `FieldBlock`, `FieldInline`) — is rejected with a `TypeError`. The form the resulting field takes is never requested by the caller (see [Automatic Form](#automatic-form)).
 
 ### Setting from a string
 
@@ -51,11 +51,11 @@ A string is set through `codec.parse(markdown)` — the single string entry poin
 
 This replaces the v0.0.1 write, which coerced the value with `String(value)` and stored a single `codec.create('NaturalExpression', { type: 'text', … })` node (a `NaturalBlock` on block fields): markdown syntax was stored literally, so `` **Location:** `art-works` `` lost its backticks on the first update.
 
-To store literal text that contains markdown characters, set a construct instead — `setFieldConstruct` with a text `NaturalExpression` — or escape the characters in the string.
+To store literal text that contains markdown characters, set a value instead — `setFieldValue` with a text `NaturalExpression` — or escape the characters in the string.
 
-### Setting from an Art AST construct
+### Setting from an Art AST value
 
-A field can be set directly from any Art construct the consumer created — `Construct` from `@art-md/constructs`, the open union of every construct. The consumer builds it through `codec.create(name, …args)`, through `codec.getConstructFactory(name)`, or by hand, and passes it as-is; the value is installed without re-encoding it through markdown.
+A field can be set directly from Art AST the consumer created: a `Construct` from `@art-md/constructs` (the open union of every construct), or a readonly array of them. The consumer builds constructs through `codec.create(name, …args)`, through `codec.getConstructFactory(name)`, or by hand, and passes them as-is; the value is installed without re-encoding it through markdown.
 
 ````ts
 const code = codec.create<NaturalBlock>('NaturalBlock', {
@@ -64,36 +64,37 @@ const code = codec.create<NaturalBlock>('NaturalBlock', {
   value: '```typescript\nconst x = 42;\n```',
   children: [],
 });
-record.setFieldConstruct('codeExample', code);
+record.setFieldValue('codeExample', code);
 ````
 
-A construct that already wraps a value — a `FieldInline`, a `FieldBlock`, or a `Document` — contributes its children, not itself (see [Automatic Form](#automatic-form)).
+`Document`, `SectionBlock`, `FieldBlock`, and `FieldInline` are **rejected** — they are containers, and installing one would smuggle a nested field, a section, or a whole document past the form rules; `setFieldValue` throws `TypeError: Field value must not be a Document, SectionBlock, FieldBlock, or FieldInline` (see [Automatic Form](#automatic-form)).
 
 ### The proxy setter
 
-The proxy setter accepts `string | Construct`:
+The proxy setter accepts `string | number | boolean | Construct | readonly Construct[]`:
 
 ```ts
-record.<fieldName> = value; // value: string | Construct
+record.<fieldName> = value; // value: string | number | boolean | Construct | readonly Construct[]
 ```
 
 - A **string becomes a parsed markdown fragment**: it is routed through `codec.parse`, exactly as `setFieldMarkdown` does. The spec chooses `codec.parse` over `codec.create` for the text node because the string-set contract requires markdown forms to survive (see [Setting from a string](#setting-from-a-string)), and because one string-input mechanism shared by the proxy and the dedicated method means the same input cannot behave differently depending on the route taken.
-- A **construct** is routed exactly as `setFieldConstruct` does.
-- Any other value — `number`, `boolean`, `undefined`, a plain object — is rejected with a `TypeError`. The v0.0.1 `String(value)` coercion is gone; deleting a field is `delete record.<fieldName>`.
+- A **construct or readonly array of constructs** is routed exactly as `setFieldValue` does.
+- A **number or boolean is coerced with `String(value)`** and then routed as a string, so `record.count = 42` still stores `42` and `record.active = true` still stores `true`, exactly as v0.0.1 did.
+- Any other value — `null`, `undefined`, a plain object, an array that holds no constructs — is rejected with `TypeError: Field value must be a string, number, boolean, or Art AST value`. The blanket v0.0.1 `String(value)` coercion is gone; deleting a field is `delete record.<fieldName>`.
 
 The proxy setter never takes a form argument. Block versus inline follows the value (see [Automatic Form](#automatic-form)).
 
-### setFieldMarkdown and setFieldConstruct
+### setFieldMarkdown and setFieldValue
 
 Two dedicated methods make both write routes explicit and callable with a dynamic name:
 
 ```ts
 setFieldMarkdown(name: string, markdown: string): void;
-setFieldConstruct(name: string, construct: Construct): void;
+setFieldValue(name: string, value: Construct | readonly Construct[]): void;
 ```
 
 - `setFieldMarkdown` parses `markdown` through `codec.parse` and installs the resulting constructs as the field's value. It is the string-set method; the proxy setter with a string delegates here.
-- `setFieldConstruct` installs the consumer's construct as the field's value. It is the construct-set method; the proxy setter with a construct delegates here.
+- `setFieldValue` installs the consumer's constructs as the field's value. It is the value-set method; the proxy setter with a construct or array delegates here.
 
 Both create the field when `name` is not in the record's index (gated by the canonical grammar, labelled `nameToLabel(name)`), replace the value in place when it is, and throw the reserved-name `TypeError` for reserved names — see [Field and Section Behaviour](#field-and-section-behaviour) and [Reserved names](#reserved-names).
 
@@ -104,8 +105,10 @@ A field is a `FieldBlock` (block content on its own lines) or a `FieldInline` (p
 Given `content(value)`:
 
 1. `string` → `codec.parse(value).document.children` — the parsed fragment's children.
-2. `Construct` that is a `FieldInline`, `FieldBlock`, or `Document` → `value.children` — the wrapper is unwrapped, so a caller cannot smuggle a form in through a field construct.
-3. any other `Construct` → `[value]` — the construct itself is the content.
+2. a single `Construct` → `[value]` — the construct itself is the content.
+3. a readonly array of constructs → `value` — each member becomes content in order.
+
+Before any of this, the value is checked for containers: a `Document`, `SectionBlock`, `FieldBlock`, or `FieldInline` — as the value, as an array member, or inside parsed string content (the `**Y:** v` case) — is rejected with `TypeError: Field value must not be a Document, SectionBlock, FieldBlock, or FieldInline`, so neither a nested field nor a whole document can ever become a field's value.
 
 The form follows from `content`:
 
@@ -121,7 +124,7 @@ Writing to an existing field replaces its children and, when the classification 
 
 ## Reading Field Values
 
-Every read addresses the field's **value** — the label (`name`) is not part of any read result; it is available from [Reading raw](#reading-raw). A name that is not in the index returns `undefined` on all three reads.
+Every read addresses the field's **value** — the label (`name`) and the field container are not part of any read result; they stay reachable only by walking [`record.__section`](#field-and-section-behaviour). A name that is not in the index returns `undefined` on all three reads.
 
 ### Reading as markdown
 
@@ -157,38 +160,38 @@ Returns the rendered text of the field through `codec.toText(field)` — the v0.
 ### Reading raw
 
 ```ts
-getFieldConstruct(name: string): FieldInline | FieldBlock | undefined;
+getFieldValue(name: string): readonly Construct[] | undefined;
 ```
 
-Returns the field's Art AST construct — the `FieldInline` or `FieldBlock` bound to `name`, or `undefined`. The API does not already expose it: `record.__section` reaches field constructs only by walking `children` structurally, with no per-name accessor. The returned construct is the live one in the section, so its `name`, `tags`, and `children` are the document's own state.
+Returns a **deep clone of the field's value** — the constructs that make up the value, `undefined` when the name is not in the index, an empty array when the field exists but is empty. The label and tags are not included: the field container stays reachable only by walking `record.__section`, and there is no per-name accessor for it. The clone carries the document's current content, but mutations to it never touch the document or the `name → field` index: the record's own state changes only through set, rename, and delete.
 
 ## Field Forms and Fixtures
 
 The three Art MD fixtures at `$ART_MD/libs/constructs/test/fixtures/` are the field-form vocabulary the API must express on read and reproduce on write. Fixture ids are cited as `NNN-slug` with their `.md.json` Art AST snapshots.
 
-| Fixture                                   | Markdown form                                    | Art AST                                             | Read as markdown                          | Read as text                   | Write that reproduces it                                                                                              |
-| ----------------------------------------- | ------------------------------------------------ | --------------------------------------------------- | ----------------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
-| `025-field-block-with-code`               | `**Code Example:**` plus a fenced code block     | `FieldBlock` → `NaturalBlock` (`code`)              | the code block's markdown, fence included | the code value, fence included | `setFieldMarkdown` with the fenced string, or a code `NaturalBlock` through `setFieldConstruct` → block form (rule 4) |
-| `031-field-inline-with-inline-formatting` | `**Greeting:** Hello, are _you_ there _world_?`  | `FieldInline` → text/emphasis expressions           | `Hello, are _you_ there _world_?`         | `Hello, are you there world?`  | `setFieldMarkdown` with the single-line string → one paragraph unwrapped → inline form (rule 2)                       |
-| `032-field-inline-with-multiple-lines`    | `**Greeting:** Hello world!\n_How_ are **you**?` | `FieldInline` whose first text child ends with `\n` | `Hello world!\n_How_ are **you**?`        | `Hello world!\nHow are you?`   | `setFieldMarkdown` with the multi-line string → one paragraph unwrapped → inline form (rule 2)                        |
+| Fixture                                   | Markdown form                                    | Art AST                                             | Read as markdown                          | Read as text                   | Write that reproduces it                                                                                          |
+| ----------------------------------------- | ------------------------------------------------ | --------------------------------------------------- | ----------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `025-field-block-with-code`               | `**Code Example:**` plus a fenced code block     | `FieldBlock` → `NaturalBlock` (`code`)              | the code block's markdown, fence included | the code value, fence included | `setFieldMarkdown` with the fenced string, or a code `NaturalBlock` through `setFieldValue` → block form (rule 4) |
+| `031-field-inline-with-inline-formatting` | `**Greeting:** Hello, are _you_ there _world_?`  | `FieldInline` → text/emphasis expressions           | `Hello, are _you_ there _world_?`         | `Hello, are you there world?`  | `setFieldMarkdown` with the single-line string → one paragraph unwrapped → inline form (rule 2)                   |
+| `032-field-inline-with-multiple-lines`    | `**Greeting:** Hello world!\n_How_ are **you**?` | `FieldInline` whose first text child ends with `\n` | `Hello world!\n_How_ are **you**?`        | `Hello world!\nHow are you?`   | `setFieldMarkdown` with the multi-line string → one paragraph unwrapped → inline form (rule 2)                    |
 
-- **Read:** all three serialise their value through `codec.serialize` for the markdown read and through `codec.toText` for the text read; the raw read returns the `FieldBlock`/`FieldInline` itself.
-- **Write:** all three are produced by `codec.parse` plus the automatic-form classification — a string or a construct, never a form argument.
+- **Read:** all three serialise the field's value through `codec.serialize` for the markdown read and through `codec.toText` for the text read; the raw read returns a deep clone of that value.
+- **Write:** all three are produced by `codec.parse` plus the automatic-form classification — a string or a value, never a form argument.
 
 ## Public Field API
 
 Every name the spec introduces, in one place. These are members of `ArtRecord` (`design/records.md` → Public API); `createRecordsDocument`, `createRecord`, and the collection types are unaffected.
 
 ```ts
-import type { Construct, FieldBlock, FieldInline } from '@art-md/constructs';
+import type { Construct } from '@art-md/constructs';
 
 // proxy read:  record[fieldName]                    → string | undefined (markdown)
-// proxy write: record[fieldName] = value            → void, value: string | Construct
+// proxy write: record[fieldName] = value            → void, value: string | number | boolean | Construct | readonly Construct[]
 setFieldMarkdown(name: string, markdown: string): void;
-setFieldConstruct(name: string, construct: Construct): void;
+setFieldValue(name: string, value: Construct | readonly Construct[]): void;
 getFieldMarkdown(name: string): string | undefined;
 getFieldText(name: string): string | undefined;
-getFieldConstruct(name: string): FieldInline | FieldBlock | undefined;
+getFieldValue(name: string): readonly Construct[] | undefined; // deep clone of the field's value
 renameField(oldName: string, newName: string): void; // existing
 // delete record[fieldName]                          // existing
 ```
@@ -239,9 +242,9 @@ The guarantees are never conflated: a value update through an existing name touc
 
 ### Reserved names
 
-Handle members are reserved on the record proxy and every `__`-prefixed name is reserved for the API, so every handle accessor stays collision-free against dynamic field properties. `isReservedFieldName(name)` is true for any name with a `__` prefix and for the handle-member names `name`, `save`, `renameField`, `__section`, `setFieldMarkdown`, `setFieldConstruct`, `getFieldMarkdown`, `getFieldText`, and `getFieldConstruct`. Addressing a field by a reserved name throws a `TypeError` on read, write, and delete, and a document field label that resolves to a reserved name aborts extraction. The two predicates compose rather than overlap: `name` is canonical (syntax) and reserved (collision), and the guard rejects it because it is both.
+Handle members are reserved on the record proxy and every `__`-prefixed name is reserved for the API, so every handle accessor stays collision-free against dynamic field properties. `isReservedFieldName(name)` is true for any name with a `__` prefix and for the handle-member names `name`, `save`, `renameField`, `__section`, `setFieldMarkdown`, `setFieldValue`, `getFieldMarkdown`, `getFieldText`, and `getFieldValue`. Addressing a field by a reserved name throws a `TypeError` on read, write, and delete, and a document field label that resolves to a reserved name aborts extraction. The two predicates compose rather than overlap: `name` is canonical (syntax) and reserved (collision), and the guard rejects it because it is both.
 
-Eight collisions are reachable from a document — the labels `Name`, `Save`, `Rename Field`, `Set Field Markdown`, `Set Field Construct`, `Get Field Markdown`, `Get Field Text`, and `Get Field Construct` resolve to handle-member names and abort extraction with:
+Eight collisions are reachable from a document — the labels `Name`, `Save`, `Rename Field`, `Set Field Markdown`, `Set Field Value`, `Get Field Markdown`, `Get Field Text`, and `Get Field Value` resolve to handle-member names and abort extraction with:
 
 ```text
 TypeError: Field label "Name" resolves to reserved name "name"
@@ -271,8 +274,8 @@ Documents parsed by the Art MD codec only ever carry letter-led labels (`/^[A-Za
 
 A field property such as `record.repository` resolves by field name against the `name → field` index built from the section's `FieldInline` or `FieldBlock` children (see [Field Names](#field-names)). Reading a name that is not in the index returns `undefined`. Writing a name that is not in the index appends a new field at the end of `section.children` — gated by the canonical grammar, labelled `nameToLabel(name)`, and shaped by the value per [Automatic Form](#automatic-form); writing a name that is in the index replaces its value in place. `renameField(fromName, toName)` relabels the field bound to `fromName` with `nameToLabel(toName)` and preserves its position; the old spelling is forgotten. `delete record.repository` removes the construct bound to that name.
 
-`record.__section` exposes the complete `SectionBlock`, including its properties (`depth`, `tags`) and ordered children; field constructs read through [Reading raw](#reading-raw) are the same objects the section holds.
+`record.__section` exposes the complete `SectionBlock`, including its properties (`depth`, `tags`) and ordered children; field values read through [Reading raw](#reading-raw) are deep clones, never the section's own objects.
 
 ## Decisions
 
-Field decisions — the field-name index (`canonical-field-names`, `field-name-index`, `rename-field-by-name`), the automatic form rule, the string-set route, and the read model — are recorded in [`adr/fields.art`](../adr/fields.art). Records-level decisions are recorded in [`adr/records.art`](../adr/records.art).
+Field decisions — naming, index resolution, rename, automatic form, the string-write route, and the read model — are recorded in [`adr/fields.art`](../adr/fields.art). Records-level decisions are recorded in [`adr/records.art`](../adr/records.art).
