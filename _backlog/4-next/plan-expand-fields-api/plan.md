@@ -2,7 +2,7 @@
 
 **ID:** `expand-fields-api`
 
-**Status:** `WORKING`
+**Status:** `DELIVERED`
 
 **Template:** `$DOMAINS/plans/templates/plan.tart`
 
@@ -115,10 +115,10 @@ Execution occurs from `$WORKSPACE/`; package work is performed in `$PROJECT` on 
 
 This section lists the downstream work items produced, coordinated, or advanced by the plan, identifying blocking dependencies across resources of different owners.
 
-| Iteration / Instructions                                                   | Status  |
-| -------------------------------------------------------------------------- | ------- |
-| Iteration: Write Fields Spec `./instructions/write-fields-spec.md`         | `DONE`  |
-| Iteration: Implement Fields Spec `./instructions/implement-fields-spec.md` | `READY` |
+| Iteration / Instructions                                                   | Status |
+| -------------------------------------------------------------------------- | ------ |
+| Iteration: Write Fields Spec `./instructions/write-fields-spec.md`         | `DONE` |
+| Iteration: Implement Fields Spec `./instructions/implement-fields-spec.md` | `DONE` |
 
 ### Iteration: Write Fields Spec
 
@@ -165,13 +165,17 @@ docs(records): Write the fields spec and restructure record knowledge.
 
 **Id:** `implement-fields-spec`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Ship the expanded field API exactly as the spec defines it.
 
 **Description:** Executes `./instructions/implement-fields-spec.md` against the reviewed `design/fields.md`: string sets parsed through the codec with automatic block/inline form, `setFieldValue` over construct or readonly-array values, the markdown default accessor with `getFieldText`/`getFieldValue` reads, and the five reserved handle members — with the unit tests and both integration suites aligned to the spec. Every API name is owned by the spec, not by this plan.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/implement-fields-spec.md`
+
+**Report:** `./instructions/implement-fields-spec__report.md`
 
 **Changes:**
 
@@ -181,9 +185,9 @@ docs(records): Write the fields spec and restructure record knowledge.
 
 #### Commits:
 
-| ID                     | Repository / Checkout / Branch   | Policy   | Hash  | Status     |
-| ---------------------- | -------------------------------- | -------- | ----- | ---------- |
-| `implement-fields-api` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | (TBD) | `AUTHORED` |
+| ID                     | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ---------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `implement-fields-api` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `a87a7a4` | `COMMITTED` |
 
 ##### Commit: `implement-fields-api`
 
@@ -203,11 +207,11 @@ feat(records): Expand the field API with the fields spec.
 
 ### Next
 
-`write-fields-spec` is **`DONE` as `ec03d9d`** (hook green, not pushed): `design/fields.md` written with the API names, field content extracted from `design/records.md`, decisions homed as `adr/records.art`/`adr/fields.art`, index and overview updated. The Scope review is complete — rulings applied to the spec: scalar writes coerce, container constructs (incl. `Document`) are rejected, reads split into markdown/text/raw-value with `getFieldValue` returning a deep clone of the field's value, `setFieldValue` takes `Construct | readonly Construct[]`, and the four field ADRs are merged into `adr/fields.art`. Next: `implement-fields-spec` is authored and `READY` — delegate it (spec revision pinned in the instruction's preconditions); its commit lands `feat(records): Expand the field API with the fields spec.`
+Both iterations are `DONE`: the spec as `ec03d9d` and the implementation as `a87a7a4` (27 files, +1613/−27, `NOPUSH`, hook green; 610 package + 40 consumer tests, coverage 96.1/91.4/97.9/96.1 over the 90/90/70/90 gate). The plan is `DELIVERED`. Immediate next: the **post-ship docs pass** from Follow Ups — flip `design/fields.md`'s `Status:` line and the v0.0.1 field-behaviour text in `records.md` (stale accessor examples included) in one small docs commit — then `Plan: Create Lib Records` proceeds to `0.1.1`, which now carries this API.
 
 ### Blockers
 
-- None — both instructions are authored: iteration 1 `write-fields-spec` is `DONE` (`ec03d9d`), iteration 2 `implement-fields-spec` is `READY` to delegate, with its preconditions pinning the reviewed spec revision.
+- None — both iterations are `DONE`; the post-ship docs pass is tracked under Follow Ups.
 
 ---
 
@@ -237,6 +241,7 @@ This section lists the operating instructions relevant to this work item.
 
 ### Evidence
 
+- **Commit `a87a7a4` (`NOPUSH`)** — the spec implemented as written: `classifySectionFieldValue` (parse/classify/reject with both verbatim `TypeError`s, scalars coerce, empty array clears), markdown default read via `codec.serialize` + newline strip, `getFieldText` byte-for-byte old accessor, `getFieldValue` deep clone, five reserved handle members (nine entries / eight reachable label collisions). 27 files, +1613/−27; `$PACKAGE` 610 tests at coverage 96.1/91.4/97.9/96.1 (gate 90/90/70/90), `$TESTS` 40 tests, repo `npm run ci` 8/8 in the hook; round-trip Evidence pinned by `21-code-span-round-trip` (7 cases), plus new fixtures `22-automatic-form`, `23-value-set`, `24-rejected-values`, and consumer fixture `08-field-value-reads`. Report: `./instructions/implement-fields-spec__report.md`.
 - The spec exists at `design/fields.md` and every item in the Scope's API-change list is covered by it, verifiable section by section.
 - `design/records.md` contains no field content or decisions after the restructure; `knowledge/index.md` lists `design/fields.md` and both new ADRs; `knowledge/overview.md` summarises `records` and `fields` separately with no duplicated content.
 - Field-form examples in the spec are traced to Art MD fixtures (`025`, `031`, `032` and their `.md.json` Art AST pairs).
@@ -270,4 +275,5 @@ This section lists the operating instructions relevant to this work item.
 
 ### Feedback
 
-- None.
+- **Implementation observation (2026-11-05)** — an empty `FieldInline` (Automatic Form rule 1, the bare label line) serialises as `**Label:**&#x20;` — the codec's own escaping of the empty inline; it re-parses to the same empty `FieldInline` with `children: []`, so the round trip is stable. Asserted structurally in the unit suites; worth one line in the post-ship docs pass.
+- No persisted-markdown expectation needed changing: both suites were green against the new implementation on first run.
