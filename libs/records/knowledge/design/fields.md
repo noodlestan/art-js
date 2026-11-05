@@ -1,6 +1,6 @@
 # Design: Fields
 
-**Status:** Specification — the expanded field surface below is the target API of `@art-js/records`, written by the `write-fields-spec` iteration of Plan: Expand Fields API and landed by `implement-fields-spec`. Until that iteration ships, [records.md](records.md) documents the implemented v0.0.1 behaviour.
+**Status:** Shipped — the expanded field surface below is the implemented API of `@art-js/records`, landed by `implement-fields-spec` (commit `a87a7a4`); [records.md](records.md) documents the surrounding records model.
 
 **Purpose:** Specify the complete field API: how a field value is set from a `string` or from Art AST value constructs, which form the field takes, how it is read back as markdown, text, or raw value, and how field names address it.
 

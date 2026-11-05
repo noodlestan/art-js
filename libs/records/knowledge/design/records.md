@@ -353,7 +353,7 @@ How a field resolves against the index, is set, read, renamed, and deleted is sp
 
 ## Persistence and Fidelity
 
-`record.save()` and `RecordsDocumentCollection.save()` both delegate to `ArtDocumentSource.writeDocument()`: the source serializes the whole document with the injected codec, then hands the resulting content to its `ArtContentSource`, which persists it. The records package contains no serialization or I/O implementation of its own and never returns a Markdown string to the consumer.
+`record.save()` and `RecordsDocumentCollection.save()` both delegate to `ArtDocumentSource.writeDocument()`: the source serializes the whole document with the injected codec, then hands the resulting content to its `ArtContentSource`, which persists it. The records package contains no serialization or I/O implementation of its own — field reads return markdown strings through the default accessor as specified in [fields.md](fields.md), while persistence goes through the source above.
 
 The v0.0.1 fidelity contract is the Art MD codec contract: **structural round-trip, not byte identity.** All valid Markdown structure — sections, fields, nesting, order — is preserved; extraneous whitespace, CRLF line endings, heading indentation, and the final newline may be normalised per CommonMark. Granular (line-level) writes and write guards are not part of v0.0.1 (MANAGEMENT decision, 2026-10-19): saves are whole-document, and the source contract carries no revision token.
 
