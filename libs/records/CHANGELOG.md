@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 0.2.0
+
+### Changed
+
+- **Field Reads:** the default accessor returns a field's value as markdown; consumers that displayed the previous markup-stripped output move to `getFieldText`, and `getFieldValue` returns a deep clone of the value's Art AST.
+- **Field Writes:** strings parse through `codec.parse` with the block/inline form chosen from the value; the proxy setter and `setFieldValue` accept a construct or a readonly array of constructs; `number`/`boolean` coerce to string; containers (`Document`, `SectionBlock`, `FieldBlock`, `FieldInline`) and other inputs throw `TypeError`.
+- **Consolidation:** coverage is gated in CI through `test:ci` at the package convention, the retired zero-case test runner is gone, and the integration docs describe the Vitest suite.
+
+### Added
+
+- **Field Methods:** `setFieldMarkdown`, `setFieldValue`, `getFieldMarkdown`, `getFieldText`, and `getFieldValue` on the record handle; the five names are reserved like the existing handle members.
+
 ## 0.1.0
 
 ### Changed
