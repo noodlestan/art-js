@@ -40,7 +40,7 @@ Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/
 | Iteration: Align Use Cases, API, and Fixtures                   | `DONE`  |
 | Iteration: Add Integration Tests and Convert Fixtures to Vitest | `DONE`  |
 | Iteration: Publish and Consume in Art Works                     | `DONE`  |
-| Iteration: Consolidate                                          | `READY` |
+| Iteration: Consolidate                                          | `DONE`  |
 | Iteration: Publish and Update Knowledge                         | `READY` |
 
 ### Iteration: Prototype and Integration Tests
@@ -248,7 +248,7 @@ refactor(records): Install @art-js/records 0.0.1.
 
 **ID:** `consolidate`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Make the coverage gate real and retire the stale test runner before the consolidated release.
 
@@ -268,9 +268,9 @@ refactor(records): Install @art-js/records 0.0.1.
 
 #### Commits:
 
-| ID            | Repository / Checkout / Branch   | Policy   | Hash    | Status     |
-| ------------- | -------------------------------- | -------- | ------- | ---------- |
-| `consolidate` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `(TBD)` | `AUTHORED` |
+| ID            | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ------------- | -------------------------------- | -------- | --------- | ----------- |
+| `consolidate` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `be7b09d` | `COMMITTED` |
 
 ##### Commit: `consolidate`
 
@@ -333,7 +333,7 @@ docs(records): Update knowledge for the published release.
 
 ### Next
 
-`install-in-art-works` is **DONE** (`b955f3c` in `$ART_WORKS`) — `@art-js/records@0.1.0` is installed and the CLI consumes the records API. Next: `consolidate` (no version bump), then the fields API extension in `Plan: Expand Fields API` (typed reads and writes), then `publish-and-update-knowledge` as the deliberate second release `0.1.1`.
+`install-in-art-works` is **DONE** (`b955f3c` in `$ART_WORKS`) and `consolidate` is **DONE** (`be7b09d` — coverage gate wired at 90/90/70/90 through `test:ci`, the zero-case `test-records` runner and its leftovers retired, stale runner docs updated, test package `private`). `Plan: Expand Fields API` is `DELIVERED` (`a87a7a4`, integrated `d7223e8`), so the only remaining iteration here is `publish-and-update-knowledge` — the deliberate second release `0.1.1`, which carries the new field API. Its docs-pass precondition belongs to that plan's Follow Up (`fields.md` Status flip + `records.md` v0.0.1 accessor text).
 
 ### Blockers
 

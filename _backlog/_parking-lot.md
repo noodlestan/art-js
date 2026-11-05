@@ -4,7 +4,7 @@ WIP tracker, structured like the session parking lot: **ACTIONABLE** (in progres
 
 ## Ongoing
 
-- **Deliver `@art-js/records`** — `0.1.0` shipped from `Plan: Canonical Record Field Names`; the consolidation tail (`consolidate`, `0.1.1`) is tracked in `$PROJECT/_backlog/3-now/plan-create-lib-records/plan.md` and owned by another session.
+- **Deliver `@art-js/records`** — `0.1.0` shipped, `consolidate` landed (`be7b09d`), and the fields API is delivered (`a87a7a4`); only the consolidated `0.1.1` release remains, tracked in `$PROJECT/_backlog/3-now/plan-create-lib-records/plan.md`.
 
 ---
 
@@ -14,8 +14,7 @@ WIP tracker, structured like the session parking lot: **ACTIONABLE** (in progres
 
 ## PENDING
 
-- **Expand the fields API** — `Plan: Expand Fields API` at `$PROJECT/_backlog/4-next/plan-expand-fields-api/plan.md`: write the fields spec (`design/fields.md`) first, then implement typed reads and writes.
-- **Raise test coverage thresholds** — in the plan's Consolidate iteration, after integration fixtures and unit coverage settle.
+- None — the fields API shipped with `implement-fields-spec` and the coverage gate is enforced by `consolidate`.
 
 ## BLOCKERS
 
