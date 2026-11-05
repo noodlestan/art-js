@@ -102,7 +102,7 @@
 
 **Attachment:** [`./architect__art-js.md`](./architect__art-js.md)
 
-**Planning:** `$ART_JS/_backlog/3-now/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md`) — `WORKING`, tail iterations (`consolidate`, the `0.1.1` release) owned by another session. Delivered: `plan-canonical-record-field-names` and `plan-adopt-codec-construct-api` at `_backlog/1-done/`. **Refresh 2026-11-03:** the old `4-next`/`BLOCKED` state is void — shape and codec-supply questions resolved, implementation shipped.
+**Planning:** `$ART_JS/_backlog/3-now/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md`) — `WORKING`, tail iterations (`consolidate`, the `0.2.0` release) owned by another session. Delivered: `plan-canonical-record-field-names` and `plan-adopt-codec-construct-api` at `_backlog/1-done/`. **Refresh 2026-11-03:** the old `4-next`/`BLOCKED` state is void — shape and codec-supply questions resolved, implementation shipped.
 
 **Goals:** Deliver `@art-js/records` — assert presence, extract records into lazily-hydrated capsules, mutate via proxy, write back at line anchors with opt-in hash guard. Pure library over content strings; no filesystem, no codec implementation.
 
@@ -220,7 +220,7 @@ Registration for plans under this board — each architect adds their row on the
 
 | Architect  | Plan                               | Status     | Next move                                                                             |
 | ---------- | ---------------------------------- | ---------- | ------------------------------------------------------------------------------------- |
-| `ART_JS`   | `plan-create-lib-records`          | `WORKING`  | `0.1.0` shipped; tail (`consolidate`, `0.1.1`) owned by another session               |
+| `ART_JS`   | `plan-create-lib-records`          | `WORKING`  | `0.1.0` shipped; tail (`consolidate`, `0.2.0`) owned by another session               |
 | `ART_LIB`  | `plan-add-fs-records-adapter`      | `DONE`     | published `@art-lib/fs-records@0.0.2`; all 3 iterations committed                     |
 | `ART_WORK` | `plan-art-work-cli-global-install` | `PLANNING` | resume Step 7 facade extraction — `@art-js/records@0.1.0` installed, 404 blocker void |
 
