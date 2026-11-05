@@ -107,7 +107,7 @@ Consumers create a codec and a records provider, read a file into a per-document
 | 2–5   | Plan: Create Lib Records `_backlog/3-now/plan-create-lib-records/plan.md`                      | `WORKING`   |
 | 5     | Plan: Canonical Record Field Names `_backlog/1-done/plan-canonical-record-field-names/plan.md` | `DELIVERED` |
 | 5     | Plan: Adopt Codec Construct API `_backlog/1-done/plan-adopt-codec-construct-api/plan.md`       | `DELIVERED` |
-| 5     | Plan: Expand Fields API `_backlog/4-next/plan-expand-fields-api/plan.md`                       | `DELIVERED` |
+| 5     | Plan: Expand Fields API `_backlog/1-done/plan-expand-fields-api/plan.md`                       | `DELIVERED` |
 
 ## Work
 

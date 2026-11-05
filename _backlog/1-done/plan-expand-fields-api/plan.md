@@ -270,7 +270,7 @@ This section lists the operating instructions relevant to this work item.
 ### Follow Ups
 
 - **Tagged construct consistency** — all tagged constructs should expose their tags consistently (the raw value read vs `record.__section`); revisit alongside the field API.
-- **Post-ship docs pass** — after `implement-fields-spec` lands, flip the `Status:` line of `design/fields.md` and the v0.0.1 field-behaviour text in `records.md` (stale accessor examples included) to the implemented state; a separate small docs commit, outside both iterations.
+- **Post-ship docs pass** — DONE as `1a9b73c`: `design/fields.md`'s Status flipped to shipped at `a87a7a4`, and `records.md`'s "never returns a Markdown string" claim restated as the documented markdown default.
 - The spec exists at `design/fields.md` — further follow-ups accumulate here as the implementation surfaces them.
 
 ### Feedback
