@@ -1,3 +1,5 @@
+import type { Construct } from '@art-md/constructs';
+
 import type { RecordHandleContext } from '../../types.js';
 import { createFieldIndex } from '../field-index/createFieldIndex.js';
 import { listSectionFieldNames } from '../field-index/listSectionFieldNames.js';
@@ -7,6 +9,7 @@ import { isReservedFieldName } from '../field-name/isReservedFieldName.js';
 import { nameToLabel } from '../field-name/nameToLabel.js';
 import { appendSectionField } from '../section-field/appendSectionField.js';
 import { deleteSectionField } from '../section-field/deleteSectionField.js';
+import { readSectionFieldMarkdown } from '../section-field/readSectionFieldMarkdown.js';
 import { setSectionField } from '../section-field/setSectionField.js';
 import type { ArtRecordCapsule, FieldIndex, FieldName } from '../types.js';
 
@@ -46,7 +49,29 @@ export function createRecordCapsule(context: RecordHandleContext): ArtRecordCaps
 			return undefined;
 		}
 
+		return readSectionFieldMarkdown(context.codec, field);
+	}
+
+	function getFieldMarkdown(name: FieldName): string | undefined {
+		return getField(name);
+	}
+
+	function getFieldText(name: FieldName): string | undefined {
+		const field = fieldIndex.get(name);
+		if (field === undefined) {
+			return undefined;
+		}
+
 		return context.codec.toText(field);
+	}
+
+	function getFieldValue(name: FieldName): readonly Construct[] | undefined {
+		const field = fieldIndex.get(name);
+		if (field === undefined) {
+			return undefined;
+		}
+
+		return structuredClone(field.children);
 	}
 
 	function setField(name: FieldName, value: unknown): void {
@@ -59,6 +84,14 @@ export function createRecordCapsule(context: RecordHandleContext): ArtRecordCaps
 		assertFieldName(name);
 		appendSectionField(context.codec, context.section, name, value);
 		rebuildFieldIndex();
+	}
+
+	function setFieldMarkdown(name: FieldName, markdown: string): void {
+		setField(name, markdown);
+	}
+
+	function setFieldValue(name: FieldName, value: Construct | readonly Construct[]): void {
+		setField(name, value);
 	}
 
 	function renameField(oldName: FieldName, newName: FieldName): void {
@@ -120,6 +153,11 @@ export function createRecordCapsule(context: RecordHandleContext): ArtRecordCaps
 		setName,
 		getField,
 		setField,
+		setFieldMarkdown,
+		setFieldValue,
+		getFieldMarkdown,
+		getFieldText,
+		getFieldValue,
 		renameField,
 		deleteField,
 		fieldNames: getFieldNames,

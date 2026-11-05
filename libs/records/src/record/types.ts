@@ -1,4 +1,4 @@
-import type { SectionBlock } from '@art-md/constructs';
+import type { Construct, SectionBlock } from '@art-md/constructs';
 import type {
 	ArtCodec,
 	ArtContentSource,
@@ -28,6 +28,11 @@ export type RecordHandleContext = {
 export type ArtRecord = {
 	name: string;
 	__section: RecordSection;
+	setFieldMarkdown(name: string, markdown: string): void;
+	setFieldValue(name: string, value: Construct | readonly Construct[]): void;
+	getFieldMarkdown(name: string): string | undefined;
+	getFieldText(name: string): string | undefined;
+	getFieldValue(name: string): readonly Construct[] | undefined;
 	renameField(oldName: string, newName: string): void;
 	save(): Promise<void>;
 	[fieldName: string]: unknown;

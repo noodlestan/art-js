@@ -7,6 +7,16 @@ describe('isReservedFieldName', () => {
 		expect(isReservedFieldName('save')).toBe(true);
 	});
 
+	it.each([
+		'setFieldMarkdown',
+		'setFieldValue',
+		'getFieldMarkdown',
+		'getFieldText',
+		'getFieldValue',
+	])('GIVEN the new handle member "%s" THEN it is reserved', name => {
+		expect(isReservedFieldName(name)).toBe(true);
+	});
+
 	it('GIVEN the reserved prefix THEN it is reserved', () => {
 		expect(isReservedFieldName('__private')).toBe(true);
 	});

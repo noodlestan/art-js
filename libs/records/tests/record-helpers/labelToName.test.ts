@@ -43,6 +43,9 @@ describe('labelToName', () => {
 
 	it.each(labelNoWordCases)('WHEN label "%s" provided THEN a TypeError is thrown', label => {
 		expect(() => labelToName(label)).toThrow(TypeError);
+		expect(() => labelToName(label)).toThrow(
+			'Field label must contain at least one word character',
+		);
 	});
 
 	it.each(labelNameCases)(

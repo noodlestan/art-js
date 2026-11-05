@@ -1,20 +1,21 @@
-import type { NaturalBlock, NaturalExpression } from '@art-md/constructs';
+import type { BlockContent, NaturalExpression } from '@art-md/constructs';
 import type { ArtCodec } from '@art-md/primitives';
 
-import type { SectionField } from '../types.js';
+import type { SectionField, SectionFieldForm } from '../types.js';
+
+import { classifySectionFieldValue } from './classifySectionFieldValue.js';
+
+type MutableSectionField = {
+	construct: SectionFieldForm;
+	children: NaturalExpression[] | BlockContent[];
+};
 
 export function setSectionField(codec: ArtCodec, field: SectionField, value: unknown): void {
-	const text = String(value);
+	const classified = classifySectionFieldValue(codec, value);
 
-	if (field.construct === 'FieldInline') {
-		const expression = codec.create<NaturalExpression>('NaturalExpression', {
-			type: 'text',
-			value: text,
-		});
-		field.children = [expression];
-		return;
-	}
+	// The field converts in place: identity, name, tags, and position stay untouched.
+	const mutableField: MutableSectionField = field;
 
-	const block = codec.create<NaturalBlock>('NaturalBlock', { value: text, children: [] });
-	field.children = [block];
+	mutableField.construct = classified.form;
+	mutableField.children = classified.children;
 }

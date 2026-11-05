@@ -9,6 +9,11 @@ export const reservedLabelCases = [
 	['Rename Field', 'renameField'],
 	['RenameField', 'renameField'],
 	['rename field', 'renameField'],
+	['Set Field Markdown', 'setFieldMarkdown'],
+	['Set Field Value', 'setFieldValue'],
+	['Get Field Markdown', 'getFieldMarkdown'],
+	['Get Field Text', 'getFieldText'],
+	['Get Field Value', 'getFieldValue'],
 ] as const;
 
 // `__`-prefixed labels are separators to the converter: they register as plain names.

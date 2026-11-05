@@ -42,7 +42,17 @@ export const deleteTrueCases = ['purpose', '3A33'] as const;
 
 export const deleteFalseCases = ['brandNew'] as const;
 
-export const deleteHandleCases = ['name', 'save', 'renameField', '__section'] as const;
+export const deleteHandleCases = [
+	'name',
+	'save',
+	'renameField',
+	'__section',
+	'setFieldMarkdown',
+	'setFieldValue',
+	'getFieldMarkdown',
+	'getFieldText',
+	'getFieldValue',
+] as const;
 
 export const deleteThrowCases = [
 	['__foo', 'Record field names starting with "__" are reserved'],
@@ -54,6 +64,11 @@ export const memberTrueCases = [
 	'save',
 	'renameField',
 	'__section',
+	'setFieldMarkdown',
+	'setFieldValue',
+	'getFieldMarkdown',
+	'getFieldText',
+	'getFieldValue',
 	'purpose',
 	'3A33',
 ] as const;

@@ -1,3 +1,5 @@
+import type { Construct } from '@art-md/constructs';
+
 import type { ArtRecord } from '../../types.js';
 import { getExposedFieldNames } from '../field-index/getExposedFieldNames.js';
 import { assertNotReservedFieldName } from '../field-name/assertNotReservedFieldName.js';
@@ -25,6 +27,26 @@ export function createRecordProxy(capsule: ArtRecordCapsule): ArtRecord {
 		capsule.renameField(oldName, newName);
 	}
 
+	function setFieldMarkdown(name: string, markdown: string): void {
+		capsule.setFieldMarkdown(name, markdown);
+	}
+
+	function setFieldValue(name: string, value: Construct | readonly Construct[]): void {
+		capsule.setFieldValue(name, value);
+	}
+
+	function getFieldMarkdown(name: string): string | undefined {
+		return capsule.getFieldMarkdown(name);
+	}
+
+	function getFieldText(name: string): string | undefined {
+		return capsule.getFieldText(name);
+	}
+
+	function getFieldValue(name: string): readonly Construct[] | undefined {
+		return capsule.getFieldValue(name);
+	}
+
 	function saveRecord(): Promise<void> {
 		return capsule.save();
 	}
@@ -47,6 +69,31 @@ export function createRecordProxy(capsule: ArtRecordCapsule): ArtRecord {
 		value: renameField,
 	};
 
+	const setFieldMarkdownDescriptor = {
+		configurable: true,
+		value: setFieldMarkdown,
+	};
+
+	const setFieldValueDescriptor = {
+		configurable: true,
+		value: setFieldValue,
+	};
+
+	const getFieldMarkdownDescriptor = {
+		configurable: true,
+		value: getFieldMarkdown,
+	};
+
+	const getFieldTextDescriptor = {
+		configurable: true,
+		value: getFieldText,
+	};
+
+	const getFieldValueDescriptor = {
+		configurable: true,
+		value: getFieldValue,
+	};
+
 	const saveDescriptor = {
 		configurable: true,
 		value: saveRecord,
@@ -56,6 +103,11 @@ export function createRecordProxy(capsule: ArtRecordCapsule): ArtRecord {
 		name: nameDescriptor,
 		__section: sectionDescriptor,
 		renameField: renameFieldDescriptor,
+		setFieldMarkdown: setFieldMarkdownDescriptor,
+		setFieldValue: setFieldValueDescriptor,
+		getFieldMarkdown: getFieldMarkdownDescriptor,
+		getFieldText: getFieldTextDescriptor,
+		getFieldValue: getFieldValueDescriptor,
 		save: saveDescriptor,
 	};
 
