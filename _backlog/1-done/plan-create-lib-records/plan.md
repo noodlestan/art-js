@@ -2,7 +2,7 @@
 
 **ID:** `create-lib-records`
 
-**Status:** `WORKING`
+**Status:** `DELIVERED`
 
 **Template:** `$DOMAINS/plans/templates/plan.tart`
 
@@ -33,15 +33,15 @@ Design authority and full API/usage reference: `$PROJECT/libs/records/knowledge/
 
 ## Items
 
-| Iteration                                                       | Status  |
-| --------------------------------------------------------------- | ------- |
-| Iteration: Prototype and Integration Tests                      | `DONE`  |
-| Iteration: Apply Noodlestan Conventions                         | `DONE`  |
-| Iteration: Align Use Cases, API, and Fixtures                   | `DONE`  |
-| Iteration: Add Integration Tests and Convert Fixtures to Vitest | `DONE`  |
-| Iteration: Publish and Consume in Art Works                     | `DONE`  |
-| Iteration: Consolidate                                          | `DONE`  |
-| Iteration: Publish and Update Knowledge                         | `READY` |
+| Iteration                                                       | Status |
+| --------------------------------------------------------------- | ------ |
+| Iteration: Prototype and Integration Tests                      | `DONE` |
+| Iteration: Apply Noodlestan Conventions                         | `DONE` |
+| Iteration: Align Use Cases, API, and Fixtures                   | `DONE` |
+| Iteration: Add Integration Tests and Convert Fixtures to Vitest | `DONE` |
+| Iteration: Publish and Consume in Art Works                     | `DONE` |
+| Iteration: Consolidate                                          | `DONE` |
+| Iteration: Publish and Update Knowledge                         | `DONE` |
 
 ### Iteration: Prototype and Integration Tests
 
@@ -290,7 +290,7 @@ fix(records): Consolidate test coverage and retire the stale runner.
 
 **ID:** `publish-and-update-knowledge`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Ship `@art-js/records@0.2.0` and leave the knowledge docs describing the shipped state.
 
@@ -303,10 +303,10 @@ fix(records): Consolidate test coverage and retire the stale runner.
 
 #### Commits:
 
-| ID                     | Repository / Checkout / Branch   | Policy   | Hash    | Status     |
-| ---------------------- | -------------------------------- | -------- | ------- | ---------- |
-| `release-consolidated` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `(TBD)` | `AUTHORED` |
-| `update-knowledge`     | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `(TBD)` | `AUTHORED` |
+| ID                     | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ---------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `release-consolidated` | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `66b9549` | `COMMITTED` |
+| `update-knowledge`     | `$PROJECT` / `$PROJECT` / `main` | `MANUAL` | `44a4697` | `COMMITTED` |
 
 ##### Commit: `release-consolidated`
 
@@ -333,7 +333,7 @@ docs(records): Update knowledge for the published release.
 
 ### Next
 
-`install-in-art-works` is **DONE** (`b955f3c` in `$ART_WORKS`) and `consolidate` is **DONE** (`be7b09d` — coverage gate wired at 90/90/70/90 through `test:ci`, the zero-case `test-records` runner and its leftovers retired, stale runner docs updated, test package `private`). `Plan: Expand Fields API` is `DELIVERED` (`a87a7a4`, integrated `d7223e8`), so the only remaining iteration here is `publish-and-update-knowledge` — the deliberate second release `0.2.0`, which carries the new field API. Its docs-pass precondition belongs to that plan's Follow Up (`fields.md` Status flip + `records.md` v0.0.1 accessor text).
+All six iterations are `DONE`: `install-in-art-works` (`b955f3c`), `consolidate` (`be7b09d`), and the release tail — `release-consolidated` `66b9549` shipped `@art-js/records@0.2.0` (the second release, carrying the expanded field API), `update-knowledge` `44a4697` refreshed the knowledge for it. The plan is `DELIVERED`; nothing remains here.
 
 ### Blockers
 

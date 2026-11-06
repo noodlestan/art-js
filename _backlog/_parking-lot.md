@@ -4,7 +4,7 @@ WIP tracker, structured like the session parking lot: **ACTIONABLE** (in progres
 
 ## Ongoing
 
-- **Deliver `@art-js/records`** — `0.1.0` shipped, `consolidate` landed (`be7b09d`), and the fields API is delivered (`a87a7a4`); only the consolidated `0.2.0` release remains, tracked in `$PROJECT/_backlog/3-now/plan-create-lib-records/plan.md`.
+- None.
 
 ---
 

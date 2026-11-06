@@ -2,7 +2,7 @@
 
 **ID:** `art-records`
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Template:** `$DOMAINS/milestones/templates/milestone.tart`
 
@@ -31,13 +31,13 @@ Consumers create a codec and a records provider, read a file into a per-document
 
 ## Phases
 
-| Index | Name                   | Status    |
-| ----- | ---------------------- | --------- |
-| #1    | Define record model    | `DONE`    |
-| #2    | Extraction API         | `DONE`    |
-| #3    | Persist through source | `DONE`    |
-| #4    | Proxy field access     | `DONE`    |
-| #5    | Align, publish, adopt  | `WORKING` |
+| Index | Name                   | Status |
+| ----- | ---------------------- | ------ |
+| #1    | Define record model    | `DONE` |
+| #2    | Extraction API         | `DONE` |
+| #3    | Persist through source | `DONE` |
+| #4    | Proxy field access     | `DONE` |
+| #5    | Align, publish, adopt  | `DONE` |
 
 ### Phase: 1 — Define record model
 
@@ -93,7 +93,7 @@ Consumers create a codec and a records provider, read a file into a per-document
 
 **Description:** Execute the remaining plan iterations: use-case/fixture alignment, npm publication, Art Work consumption, consolidation and coverage, knowledge refresh.
 
-**Status:** `WORKING`
+**Status:** `DONE`
 
 **Dependencies:**
 
@@ -104,7 +104,7 @@ Consumers create a codec and a records provider, read a file into a per-document
 | Phase | Resource / Record                                                                              | Status      |
 | ----- | ---------------------------------------------------------------------------------------------- | ----------- |
 | 1     | Plan: Design Lib Records `_backlog/1-done/plan-design-lib-records/plan.md`                     | `DONE`      |
-| 2–5   | Plan: Create Lib Records `_backlog/3-now/plan-create-lib-records/plan.md`                      | `WORKING`   |
+| 2–5   | Plan: Create Lib Records `_backlog/1-done/plan-create-lib-records/plan.md`                     | `DELIVERED` |
 | 5     | Plan: Canonical Record Field Names `_backlog/1-done/plan-canonical-record-field-names/plan.md` | `DELIVERED` |
 | 5     | Plan: Adopt Codec Construct API `_backlog/1-done/plan-adopt-codec-construct-api/plan.md`       | `DELIVERED` |
 | 5     | Plan: Expand Fields API `_backlog/1-done/plan-expand-fields-api/plan.md`                       | `DELIVERED` |
@@ -112,10 +112,6 @@ Consumers create a codec and a records provider, read a file into a per-document
 ## Work
 
 ### Next
-
-- **`@art-js/records@0.1.0` published and confirmed** — `npm info @art-js/records version` returns `0.1.0` (2026-11-03). `Plan: Canonical Record Field Names` recorded the confirmation in its `Confirm publication` follow-up; archive when ready.
-- **Plan: Adopt Codec Construct API** — `DELIVERED` (all iterations done: `749f75f`, `63d07a5`, `27f15c0`, `95d3fcd`). The codec construct API has been adopted and private modules regrouped.
-- **Iteration `install-in-art-works` — `DONE` as `b955f3c`** (Art Works side): `@art-js/records@0.1.0` installed in `cli/workspace/package.json`, resolved by `npm ls`, and already imported by the checkout reads/writes. The tail moved: `consolidate` landed as `be7b09d` (coverage gate real, dead runner retired) and `Plan: Expand Fields API` is `DELIVERED` (`a87a7a4` → `d7223e8`) — only `publish-and-update-knowledge`, the `0.2.0` release, remains to close phase #5.
 
 ### Blockers
 
