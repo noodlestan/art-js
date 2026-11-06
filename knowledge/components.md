@@ -18,11 +18,11 @@ Program execution engine for Art modules. Executes parsed Art modules and manage
 
 ### Records (`@art-js/records`)
 
-**Status:** PROTOTYPE
+**Status:** SHIPPED (v0.2.0)
 
-Record identity, discovery, extraction, update and serialisation for Markdown documents. Record modelling extracted from `SectionBlock` and `Field` constructs, with an extraction and presence-assertion API, write-back with positioning anchors and an optional content-hash guard, and optional `ProxyObject`-based transparent field access.
+Record identity, extraction, update and serialisation for Markdown documents. Record modelling extracted from `SectionBlock` and field constructs, with an extraction and presence-assertion API, whole-document write-back with positioning anchors, and a proxy handle exposing section structure plus the field API: markdown, text, and Art-AST value reads; markdown-string and Art-AST value writes with the block/inline form chosen from the value.
 
-Primary types: `ArtRecord`, `ArtRecordCapsule`, `Records`.
+Primary types: `ArtRecord`, `RecordSection`, `RecordsDocument`, `RecordsDocumentCollection`.
 
 ### Validator (`@art-js/validator`)
 

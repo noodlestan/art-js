@@ -1,6 +1,6 @@
 # Design: Records
 
-**Status:** v0.0.1 design — implemented in `$PROJECT/libs/records`, exercised by the integration fixtures in `$PROJECT/tests/records`; CI green.
+**Status:** Shipped in `@art-js/records@0.2.0` — implemented in `$PROJECT/libs/records`, exercised by the fixture suites in `$PACKAGE/tests/fixtures` and `$PROJECT/tests/records`; CI green.
 
 **Purpose:** Define the record API consumers use to read documents, receive source-bound record proxies, mutate them, and save through their source.
 
@@ -281,7 +281,7 @@ Saving each `RecordsDocumentCollection` once writes each document once — one w
 These are the exact exports of `src/index.ts`.
 
 ```ts
-import type { SectionBlock } from '@art-md/constructs';
+import type { Construct, SectionBlock } from '@art-md/constructs';
 import type { ArtCodec, ArtContentSource } from '@art-md/primitives';
 
 export type RecordSection = Omit<SectionBlock, 'name' | 'depth'> & {
@@ -293,6 +293,11 @@ export type ArtRecord = {
   name: string;
   __section: RecordSection;
   renameField(oldName: string, newName: string): void;
+  setFieldMarkdown(name: string, markdown: string): void;
+  setFieldValue(name: string, value: Construct | readonly Construct[]): void;
+  getFieldMarkdown(name: string): string | undefined;
+  getFieldText(name: string): string | undefined;
+  getFieldValue(name: string): readonly Construct[] | undefined;
   save(): Promise<void>;
   [fieldName: string]: unknown;
 };

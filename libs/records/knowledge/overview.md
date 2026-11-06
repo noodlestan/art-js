@@ -18,7 +18,7 @@
 ### Fields
 
 - Set a field from a markdown string or an Art AST construct; the block/inline shape follows the value rather than the caller ([`design/fields.md`](design/fields.md)).
-- Read a field back as markdown through the default accessor, as text, or as its raw Art AST construct.
+- Read a field back as markdown through the default accessor, as text, or as a deep clone of its value's Art AST.
 - Address fields by canonical name through the `name → field` index, and rename or delete them by name.
 
 ## Use Cases
@@ -30,11 +30,11 @@ Each use case is exercised by a fixture directory under `$PACKAGE/tests/fixtures
 | Set up the records provider (codec, adapter, provider)        | v0.0.1 | `createRecordsDocument({ codec, createContentSource })`                | `01-setup-provider`                                   |
 | Discover record files                                         | v0.0.1 | `@art-lib/fs-records` adapter                                          | `02-discover-record-files`                            |
 | Check that a record exists and extract its sections           | v0.0.1 | `recordsDocument.hasRecord(name)`, `await recordsDocument.extract()`   | `03-read-assert-extract`                              |
-| Read fields by canonical field name                           | v0.0.1 | [Fields — Reading Field Values](design/fields.md)                      | `04-field-read`                                       |
-| Write an existing field                                       | v0.0.1 | [Fields — Setting Field Values](design/fields.md)                      | `05-write-field`                                      |
-| Add a field                                                   | v0.0.1 | [Fields — Setting Field Values](design/fields.md)                      | `06-add-field`                                        |
-| Remove a field                                                | v0.0.1 | [Fields — Field and Section Behaviour](design/fields.md)               | `07-remove-field`                                     |
-| Rename a field by name                                        | v0.0.1 | [Fields — Field Names](design/fields.md)                               | `08-rename-field-in-place`                            |
+| Read fields by canonical field name                           | v0.1.0 | [Fields — Reading Field Values](design/fields.md)                      | `04-field-read`                                       |
+| Write an existing field                                       | v0.1.0 | [Fields — Setting Field Values](design/fields.md)                      | `05-write-field`                                      |
+| Add a field                                                   | v0.1.0 | [Fields — Setting Field Values](design/fields.md)                      | `06-add-field`                                        |
+| Remove a field                                                | v0.1.0 | [Fields — Field and Section Behaviour](design/fields.md)               | `07-remove-field`                                     |
+| Rename a field by name                                        | v0.1.0 | [Fields — Field Names](design/fields.md)                               | `08-rename-field-in-place`                            |
 | Inspect section structure and depth                           | v0.0.1 | `record.__section`                                                     | `09-section-depth`                                    |
 | Persist every in-memory record of a document with one save    | v0.0.1 | `await record.save()` / collection `save()`                            | `10-save-document-collection`                         |
 | Create a new record in a new file                             | v0.0.1 | `await recordsDocument.create(file)`, then `addRecord()`               | `11-create-new-record`                                |
@@ -44,13 +44,16 @@ Each use case is exercised by a fixture directory under `$PACKAGE/tests/fixtures
 | Append or prepend a record under a parent record              | v0.0.1 | `addRecord({ appendTo: record })` / `addRecord({ prependTo: record })` | `15-add-record-under-parent`                          |
 | Reject parent placement with a foreign anchor                 | v0.0.1 | `addRecord({ appendTo: foreign })` throws and inserts nothing          | `16-add-record-under-parent-throws-on-foreign-anchor` |
 | Batch save across documents                                   | v0.0.1 | per-document `save()` via `Promise.all`                                | `17-batch-save`                                       |
-| Update by canonical name, keeping the loaded label            | v0.0.1 | [Fields — Field Names](design/fields.md)                               | `18-canonical-name-round-trip`                        |
-| Resolve duplicate field names: first wins, promote on removal | v0.0.1 | [Fields — Field Names](design/fields.md)                               | `19-duplicate-field-names`                            |
-| Abort extraction when a label resolves to a reserved name     | v0.0.1 | [Fields — Reserved names](design/fields.md)                            | `20-reserved-label-throws`                            |
+| Update by canonical name, keeping the loaded label            | v0.1.0 | [Fields — Field Names](design/fields.md)                               | `18-canonical-name-round-trip`                        |
+| Resolve duplicate field names: first wins, promote on removal | v0.1.0 | [Fields — Field Names](design/fields.md)                               | `19-duplicate-field-names`                            |
+| Abort extraction when a label resolves to a reserved name     | v0.1.0 | [Fields — Reserved names](design/fields.md)                            | `20-reserved-label-throws`                            |
+| Survive a code span across an update of another field         | v0.2.0 | [Fields — Reading Field Values](design/fields.md)                      | `21-code-span-round-trip`                             |
+| Choose the block/inline form from the value                   | v0.2.0 | [Fields — Automatic Form](design/fields.md#automatic-form)             | `22-automatic-form`                                   |
+| Set a field from a construct or an array of constructs        | v0.2.0 | [Fields — Setting Field Values](design/fields.md)                      | `23-value-set`                                        |
+| Reject container and invalid field values                     | v0.2.0 | [Fields — Setting Field Values](design/fields.md)                      | `24-rejected-values`                                  |
 
 ### WIP: use-case and fixture alignment
 
-- "Set up the records provider" is a recipe rather than a consumer outcome; every fixture performs it, and `01-setup-provider` covers it end to end.
 - The reactive use cases have no fixtures until the reactive capsule variant lands (v1).
 
 ## Flow
@@ -73,5 +76,3 @@ Each use case is exercised by a fixture directory under `$PACKAGE/tests/fixtures
 - `record.save()` is a source-bound operation, not a `string`-returning use case; serialization happens inside the injected `ArtDocumentSource`.
 - v0.0.1 fidelity is whole-document codec serialization with structural (not byte) identity: whitespace, CRLF, and the final newline may be normalised. Granular writes and write guards are deferred (MANAGEMENT decision, 2026-10-19). See the design document's "Persistence and Fidelity" section.
 - Design decisions live in [`adr/records.art`](adr/records.art) and [`adr/fields.art`](adr/fields.art).
-
-## Pending
