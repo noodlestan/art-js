@@ -1,10 +1,10 @@
 # Design: Fields
 
-**Status:** Shipped — the expanded field surface below is the implemented API of `@art-js/records`, landed by `implement-fields-spec` (commit `a87a7a4`); [records.md](records.md) documents the surrounding records model.
+**Status:** Shipped — the expanded field surface below is the implemented API of `@art-js/records`, landed by `implement-fields-spec` (commit `a87a7a4`); the label-repair additions ([Relabeling a Field](#relabeling-a-field), [Reading and Writing by Label](#reading-and-writing-by-label)) are specified here and land with `implement-label-repair-api`; [records.md](records.md) documents the surrounding records model.
 
-**Purpose:** Specify the complete field API: how a field value is set from a `string` or from Art AST value constructs, which form the field takes, how it is read back as markdown, text, or raw value, and how field names address it.
+**Purpose:** Specify the complete field API: how a field value is set from a `string` or from Art AST value constructs, which form the field takes, how it is read back as markdown, text, or raw value, how field names address it, and how a stored label is repaired and a value is addressed by stored label.
 
-**Scope:** `@art-js/records` owns the field surface of the record handle: the proxy accessor and proxy setter, `setFieldMarkdown`, `setFieldValue`, `getFieldMarkdown`, `getFieldText`, `getFieldValue`, `renameField`, `delete`, and the field-name contract. Records, sections, placement, persistence, and the provider model are specified in [records.md](records.md).
+**Scope:** `@art-js/records` owns the field surface of the record handle: the proxy accessor and proxy setter, `setFieldMarkdown`, `setFieldValue`, `getFieldMarkdown`, `getFieldText`, `getFieldValue`, `renameField`, `delete`, and the field-name contract. The label-repair members — `relabelField` and the five `…ByLabel` twins — are specified here and land with `implement-label-repair-api`. Records, sections, placement, persistence, and the provider model are specified in [records.md](records.md).
 
 ## Usage
 
@@ -122,9 +122,51 @@ Writing to an existing field replaces its children and, when the classification 
 - The old value is fully replaced either way, so a block field set to a phrasing-only value becomes an inline field — to keep a field block-shaped, the value must carry block content (a fenced code string, a code `NaturalBlock`).
 - Appending a new field to `section.children` uses the same classification; new fields are no longer always inline.
 
+## Relabeling a Field
+
+A stored label can be repaired in place. `relabelField` is the repair counterpart to `renameField`: a rename can only ever write the derived `nameToLabel` spelling, so renaming `npmPackageDeployment` persists `Npm Package Deployment` however the consumer would spell it by hand — the house-spelling gap stated in [Derived labels](#derived-labels). A relabel rewrites the stored label while the field keeps its **name**, its **position in `section.children`**, its **tags**, and its **value**:
+
+```ts
+relabelField(name: string, label: string): void;
+```
+
+- **Address.** The operation takes a field **name** and resolves it through the [`name → field` index](#the-name--field-index), so it always operates on the first-wins holder of that name. A shadowed duplicate is not addressable by it.
+- **Validation before mutation.** Everything is validated before anything is written, in this order:
+  1. A reserved `name` → `TypeError`.
+  2. An absent `name` → the not-found error `renameField` already uses: `Error('Field not found: {name}')`.
+  3. Then the three label gates:
+     - the label must contain at least one word character — `labelToName`'s own precondition, `TypeError: Field label must contain at least one word character`;
+     - the label must re-parse as a field under the codec's `FIELD_TEXT_PATTERN` (`/^[A-Za-z][A-Za-z ]*:(?:\s|$)/` — letter-led, letters and spaces only, with no leading or trailing whitespace), so save → reload keeps the field and its spelling;
+     - the label must re-derive the field's current name: `labelToName(label) === name`.
+
+  A rejected relabel leaves the document and the index untouched.
+
+- **Index effect.** Only `field.name` changes; index keys are unchanged — every index key stays identical, no rekey, no promotion, no first-wins shift — and position, tags, and value are untouched. The re-derivation gate is what makes that invariant safe: the capsule rebuilds the index from labels after every structural mutation, so a label that stopped deriving its key would be silently rekeyed by the next unrelated mutation.
+- **No grammar, no reservation on labels.** The canonical grammar keeps gating API-supplied names only (see [Canonical grammar](#canonical-grammar)): relabel supplies a label, not a name, so the grammar never applies to it. Reservation never applies to a label either — a label that resolves to a reserved name cannot exist in an indexed record, because extraction aborts on it (see [Reserved names](#reserved-names)).
+- **Shadowed duplicates.** Relabel never promotes and never reaches them: it addresses the first-wins holder by name, so a shadowed field keeps its own label and its place in `section.children`. The holder may end up sharing the identical label with a shadowed field — first-wins and the reload still hold, because both fields derive the same name and extraction keeps the first. Their values are reached through the by-label accessors of the next section.
+- **Composition.** `renameField` followed by relabel yields a custom spelling for a renamed field: the rename moves the field onto its new name with the derived label, and the relabel rewrites that label to the consumer's preferred spelling. The gates are exactly what make an arbitrary spelling safe to persist — they prove the spelling survives a reload and still derives the renamed field's name.
+
+## Reading and Writing by Label
+
+Addressing changes; value semantics do not. Each of the five value methods — `setFieldMarkdown`, `setFieldValue`, `getFieldMarkdown`, `getFieldText`, `getFieldValue` — gains a label-addressed twin, and every name lands here, following Conventions: TypeScript (verb-first, `Field` in the middle of every per-field method, `ByLabel` marking the addressing difference):
+
+```ts
+setFieldMarkdownByLabel(label: string, markdown: string): void;
+setFieldValueByLabel(label: string, value: Construct | readonly Construct[]): void;
+getFieldMarkdownByLabel(label: string): string | undefined;
+getFieldTextByLabel(label: string): string | undefined;
+getFieldValueByLabel(label: string): readonly Construct[] | undefined;
+```
+
+- **Addressing.** The argument is the exact stored label. The lookup scans `section.children` in document order and takes the first field carrying that label — no `labelToName` conversion, no index involvement — so a field whose label is shadowed by an earlier duplicate, and which is therefore unreachable by name, is reachable here.
+- **Reads.** `getFieldMarkdownByLabel`, `getFieldTextByLabel`, and `getFieldValueByLabel` return exactly what their name-addressed twins return, and `undefined` when no field carries the label; the value read stays a deep clone.
+- **Writes.** `setFieldMarkdownByLabel` and `setFieldValueByLabel` **throw** when no field carries the label; they **never create** a field — creation stays name-addressed, labelled with the derived `nameToLabel(name)` — and a value write never changes the stored label.
+- **Value semantics unchanged.** `codec.parse`, the automatic block/inline form, container rejection, and form conversion preserving name, tags, and position are exactly the name-addressed behaviours (see [Setting Field Values](#setting-field-values) and [Automatic Form](#automatic-form)); addressing is the only difference. A value write needs no index rebuild because the label does not change.
+- **Coexistence with the `0.2.0` surface.** `setFieldMarkdown`, `setFieldValue`, `getFieldMarkdown`, `getFieldText`, `getFieldValue`, `renameField`, and `delete` keep every existing signature and behaviour; the proxy accessor and setter routes are untouched; the new members are additions only.
+
 ## Reading Field Values
 
-Every read addresses the field's **value** — the label (`name`) and the field container are not part of any read result; they stay reachable only by walking [`record.__section`](#field-and-section-behaviour). A name that is not in the index returns `undefined` on all three reads.
+Every read addresses the field's **value** — values are addressable by name and by stored label (see [Reading and Writing by Label](#reading-and-writing-by-label)); the label (`name`) and the field container are not part of any read result, and the field **container** and label enumeration remain reachable only by walking [`record.__section`](#field-and-section-behaviour). A name that is not in the index returns `undefined` on all three reads.
 
 ### Reading as markdown
 
@@ -163,7 +205,7 @@ Returns the rendered text of the field through `codec.toText(field)` — the v0.
 getFieldValue(name: string): readonly Construct[] | undefined;
 ```
 
-Returns a **deep clone of the field's value** — the constructs that make up the value, `undefined` when the name is not in the index, an empty array when the field exists but is empty. The label and tags are not included: the field container stays reachable only by walking `record.__section`, and there is no per-name accessor for it. The clone carries the document's current content, but mutations to it never touch the document or the `name → field` index: the record's own state changes only through set, rename, and delete.
+Returns a **deep clone of the field's value** — the constructs that make up the value, `undefined` when the name is not in the index, an empty array when the field exists but is empty. The label and tags are not included: values are addressable by name and by stored label, but the field **container** and label enumeration remain reachable only by walking `record.__section`, with no accessor for them. The clone carries the document's current content, but mutations to it never touch the document or the `name → field` index: the record's own state changes only through set, rename, relabel, and delete.
 
 ## Field Forms and Fixtures
 
@@ -193,14 +235,21 @@ getFieldMarkdown(name: string): string | undefined;
 getFieldText(name: string): string | undefined;
 getFieldValue(name: string): readonly Construct[] | undefined; // deep clone of the field's value
 renameField(oldName: string, newName: string): void; // existing
+// label repair — specified here, landing with `implement-label-repair-api`:
+relabelField(name: string, label: string): void; // rewrite the stored label, name unchanged
+setFieldMarkdownByLabel(label: string, markdown: string): void;
+setFieldValueByLabel(label: string, value: Construct | readonly Construct[]): void;
+getFieldMarkdownByLabel(label: string): string | undefined;
+getFieldTextByLabel(label: string): string | undefined;
+getFieldValueByLabel(label: string): readonly Construct[] | undefined; // deep clone by label
 // delete record[fieldName]                          // existing
 ```
 
-Naming follows Conventions: TypeScript — verb-first (`set`, `get`, `rename`, `delete`), `Field` in the middle of every per-field method, no abbreviations, `type` declarations only. The public index signature of `ArtRecord` stays `[fieldName: string]: unknown`; the runtime value behind a field read is a markdown string or `undefined`. Every method above is a handle member and therefore a reserved name (see [Reserved names](#reserved-names)).
+Naming follows Conventions: TypeScript — verb-first (`set`, `get`, `rename`, `relabel`, `delete`), `Field` in the middle of every per-field method, `ByLabel` marking the label-addressed twins, no abbreviations, `type` declarations only. The public index signature of `ArtRecord` stays `[fieldName: string]: unknown`; the runtime value behind a field read is a markdown string or `undefined`. Every method above is a handle member and therefore a reserved name (see [Reserved names](#reserved-names)).
 
 ## Field Names
 
-Records address fields by **field name**, never by the label written in the document. A field name is either derived from the stored label at extraction (`labelToName`) or supplied by the consumer through the API. The stored label itself is never rewritten by a value update.
+Records address fields by **field name**, never by the label written in the document. A field name is either derived from the stored label at extraction (`labelToName`) or supplied by the consumer through the API. The stored label itself is never rewritten by a value update: `renameField` and `relabelField` are the two operations that rewrite one — rename with the derived `nameToLabel` spelling, relabel with a gate-checked spelling of the same name (see [Relabeling a Field](#relabeling-a-field)).
 
 ### Canonical grammar
 
@@ -242,9 +291,9 @@ The guarantees are never conflated: a value update through an existing name touc
 
 ### Reserved names
 
-Handle members are reserved on the record proxy and every `__`-prefixed name is reserved for the API, so every handle accessor stays collision-free against dynamic field properties. `isReservedFieldName(name)` is true for any name with a `__` prefix and for the handle-member names `name`, `save`, `renameField`, `__section`, `setFieldMarkdown`, `setFieldValue`, `getFieldMarkdown`, `getFieldText`, and `getFieldValue`. Addressing a field by a reserved name throws a `TypeError` on read, write, and delete, and a document field label that resolves to a reserved name aborts extraction. The two predicates compose rather than overlap: `name` is canonical (syntax) and reserved (collision), and the guard rejects it because it is both.
+Handle members are reserved on the record proxy and every `__`-prefixed name is reserved for the API, so every handle accessor stays collision-free against dynamic field properties. `isReservedFieldName(name)` is true for any name with a `__` prefix and for the fifteen handle-member names `name`, `save`, `renameField`, `__section`, `setFieldMarkdown`, `setFieldValue`, `getFieldMarkdown`, `getFieldText`, `getFieldValue`, `relabelField`, `setFieldMarkdownByLabel`, `setFieldValueByLabel`, `getFieldMarkdownByLabel`, `getFieldTextByLabel`, and `getFieldValueByLabel`. Addressing a field by a reserved name throws a `TypeError` on read, write, and delete, and a document field label that resolves to a reserved name aborts extraction. The two predicates compose rather than overlap: `name` is canonical (syntax) and reserved (collision), and the guard rejects it because it is both.
 
-Eight collisions are reachable from a document — the labels `Name`, `Save`, `Rename Field`, `Set Field Markdown`, `Set Field Value`, `Get Field Markdown`, `Get Field Text`, and `Get Field Value` resolve to handle-member names and abort extraction with:
+Fourteen collisions are reachable from a document — the original eight plus the six label-repair labels. The labels `Name`, `Save`, `Rename Field`, `Set Field Markdown`, `Set Field Value`, `Get Field Markdown`, `Get Field Text`, `Get Field Value`, `Relabel Field`, `Set Field Markdown By Label`, `Set Field Value By Label`, `Get Field Markdown By Label`, `Get Field Text By Label`, and `Get Field Value By Label` resolve to handle-member names and abort extraction with:
 
 ```text
 TypeError: Field label "Name" resolves to reserved name "name"
@@ -254,7 +303,7 @@ A `__`-prefixed **name** is reserved for the API gate and never enters the index
 
 ### The name → field index
 
-Extraction builds one `name → field` index per record, in document order, mapping `labelToName(label)` to the field construct; the first occurrence of a name wins and later duplicates stay in the section, shadowed. Every access trap is an index lookup — no trap scans section fields or converts a label at access time. Removing the indexed field — by `delete`, or by a `renameField` that vacates the name — promotes the next duplicate, and the promoted field keeps its own stored label (`**Purpose:** Second` promotes under `purpose:` unchanged).
+Extraction builds one `name → field` index per record, in document order, mapping `labelToName(label)` to the field construct; the first occurrence of a name wins and later duplicates stay in the section, shadowed. Every name-addressed access trap is an index lookup — no name-addressed trap scans section fields or converts a label at access time; the by-label accessors are the one exception, scanning section fields for an exact stored label without converting it (see [Reading and Writing by Label](#reading-and-writing-by-label)). Removing the indexed field — by `delete`, or by a `renameField` that vacates the name — promotes the next duplicate, and the promoted field keeps its own stored label (`**Purpose:** Second` promotes under `purpose:` unchanged).
 
 Mutation guards follow the name classes:
 
@@ -264,7 +313,7 @@ Mutation guards follow the name classes:
 
 ### Derived labels
 
-A new field created through the API is labelled `nameToLabel(name)`: `brandNew` → `Brand New`, `npmPackageDeployment` → `Npm Package Deployment`. The derived label may not match how a consumer would spell the label by hand — a stated limitation of the one-way converter, not a bug.
+A new field created through the API is labelled `nameToLabel(name)`: `brandNew` → `Brand New`, `npmPackageDeployment` → `Npm Package Deployment`. The derived label may not match how a consumer would spell the label by hand — a stated limitation of the one-way converter, not a bug, and the gap [Relabeling a Field](#relabeling-a-field) repairs in place.
 
 ### Codec constraint
 
@@ -272,10 +321,10 @@ Documents parsed by the Art MD codec only ever carry letter-led labels (`/^[A-Za
 
 ## Field and Section Behaviour
 
-A field property such as `record.repository` resolves by field name against the `name → field` index built from the section's `FieldInline` or `FieldBlock` children (see [Field Names](#field-names)). Reading a name that is not in the index returns `undefined`. Writing a name that is not in the index appends a new field at the end of `section.children` — gated by the canonical grammar, labelled `nameToLabel(name)`, and shaped by the value per [Automatic Form](#automatic-form); writing a name that is in the index replaces its value in place. `renameField(fromName, toName)` relabels the field bound to `fromName` with `nameToLabel(toName)` and preserves its position; the old spelling is forgotten. `delete record.repository` removes the construct bound to that name.
+A field property such as `record.repository` resolves by field name against the `name → field` index built from the section's `FieldInline` or `FieldBlock` children (see [Field Names](#field-names)). Reading a name that is not in the index returns `undefined`. Writing a name that is not in the index appends a new field at the end of `section.children` — gated by the canonical grammar, labelled `nameToLabel(name)`, and shaped by the value per [Automatic Form](#automatic-form); writing a name that is in the index replaces its value in place. `renameField(fromName, toName)` relabels the field bound to `fromName` with `nameToLabel(toName)` and preserves its position; the old spelling is forgotten, and rename is one of the two operations that rewrite a stored label. `relabelField(name, label)` is the other: it keeps the name, the position, the tags, the value, and every index key, and rewrites only the label, gated as specified in [Relabeling a Field](#relabeling-a-field); label-addressed value reads and writes are specified in [Reading and Writing by Label](#reading-and-writing-by-label). `delete record.repository` removes the construct bound to that name.
 
 `record.__section` exposes the complete `SectionBlock`, including its properties (`depth`, `tags`) and ordered children; field values read through [Reading raw](#reading-raw) are deep clones, never the section's own objects.
 
 ## Decisions
 
-Field decisions — naming, index resolution, rename, automatic form, the string-write route, and the read model — are recorded in [`adr/fields.art`](../adr/fields.art). Records-level decisions are recorded in [`adr/records.art`](../adr/records.art).
+Field decisions — naming, index resolution, rename, label repair and by-label access, automatic form, the string-write route, and the read model — are recorded in [`adr/fields.art`](../adr/fields.art). Records-level decisions are recorded in [`adr/records.art`](../adr/records.art).

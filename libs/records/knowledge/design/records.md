@@ -293,11 +293,17 @@ export type ArtRecord = {
   name: string;
   __section: RecordSection;
   renameField(oldName: string, newName: string): void;
+  relabelField(name: string, label: string): void;
   setFieldMarkdown(name: string, markdown: string): void;
   setFieldValue(name: string, value: Construct | readonly Construct[]): void;
   getFieldMarkdown(name: string): string | undefined;
   getFieldText(name: string): string | undefined;
   getFieldValue(name: string): readonly Construct[] | undefined;
+  setFieldMarkdownByLabel(label: string, markdown: string): void;
+  setFieldValueByLabel(label: string, value: Construct | readonly Construct[]): void;
+  getFieldMarkdownByLabel(label: string): string | undefined;
+  getFieldTextByLabel(label: string): string | undefined;
+  getFieldValueByLabel(label: string): readonly Construct[] | undefined;
   save(): Promise<void>;
   [fieldName: string]: unknown;
 };
@@ -334,7 +340,7 @@ export function createRecordsDocument<RecordFile>(
 export function createRecord(options: RecordContext): ArtRecord;
 ```
 
-The field members of `ArtRecord` — the dynamic accessor, `renameField`, and the expanded set/read surface — are specified in [fields.md](fields.md).
+The field members of `ArtRecord` — the dynamic accessor, `renameField`, `relabelField`, the expanded set/read surface, and the by-label twins — are specified in [fields.md](fields.md).
 
 ### Reserved names
 
@@ -354,7 +360,7 @@ Records produced by a collection — through `extract()` or `addRecord()` — sh
 
 ## Field and Section Behaviour
 
-How a field resolves against the index, is set, read, renamed, and deleted is specified in [fields.md](fields.md).
+How a field resolves against the index, is set, read, renamed, relabelled, and deleted — and how a value is addressed by stored label — is specified in [fields.md](fields.md).
 
 ## Persistence and Fidelity
 
