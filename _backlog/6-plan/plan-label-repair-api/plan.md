@@ -128,10 +128,10 @@ Execution occurs from `$WORKSPACE/`; package work is performed in `$PROJECT` on 
 
 This section lists the downstream work items produced, coordinated, or advanced by the plan, identifying blocking dependencies across resources of different owners.
 
-| Iteration / Instructions                                                       | Status  |
-| ------------------------------------------------------------------------------ | ------- |
-| Iteration: Write Label Repair Spec `./instructions/write-label-repair-spec.md` | `DONE`  |
-| Iteration: Implement Label Repair API                                          | `DRAFT` |
+| Iteration / Instructions                                                             | Status  |
+| ------------------------------------------------------------------------------------ | ------- |
+| Iteration: Write Label Repair Spec `./instructions/write-label-repair-spec.md`       | `DONE`  |
+| Iteration: Implement Label Repair API `./instructions/implement-label-repair-api.md` | `READY` |
 
 ### Iteration: Write Label Repair Spec
 
@@ -185,13 +185,15 @@ docs(records): Specify label repair and by-label field access.
 
 **Id:** `implement-label-repair-api`
 
-**Status:** `DRAFT`
+**Status:** `READY`
 
 **Purpose:** Ship the label-repair surface exactly as the reviewed spec defines it, green at every commit, across the package and both suites.
 
 **Description:** Adds the relabel operation and the by-label value accessors as handle members with the spec's gates, grows the reserved-name set so no new member silently shadows a field, and lands the unit tests, fixture-table cases, two new in-package fixtures, and one external consumer fixture alongside the source — every public name taken verbatim from the reviewed `design/fields.md`.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/implement-label-repair-api.md`
 
 **Changes:**
 
@@ -213,9 +215,9 @@ docs(records): Specify label repair and by-label field access.
 
 #### Commits:
 
-| ID                           | Repository / Checkout / Branch   | Policy   | Hash    | Status        |
-| ---------------------------- | -------------------------------- | -------- | ------- | ------------- |
-| `implement-label-repair-api` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `(TBD)` | `PLACEHOLDER` |
+| ID                           | Repository / Checkout / Branch   | Policy   | Hash    | Status     |
+| ---------------------------- | -------------------------------- | -------- | ------- | ---------- |
+| `implement-label-repair-api` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `(TBD)` | `AUTHORED` |
 
 ##### Commit: `implement-label-repair-api`
 
@@ -236,11 +238,11 @@ build(records): Add label repair and by-label field access.
 
 ### Next
 
-`write-label-repair-spec` is **`DONE` as `f74746f`** (4 knowledge paths only, `NOPUSH`, not pushed; delegation report committed with the integration): relabel semantics and the five by-label access twins are specified in `design/fields.md`, the two ADR clauses amended, `records.md`'s `ArtRecord` type and `index.md` refreshed. Next: review the spec against this plan's intent, then author `./instructions/implement-label-repair-api.md` and flip `implement-label-repair-api` to `READY`.
+Instruction `./instructions/implement-label-repair-api.md` exists; iteration `implement-label-repair-api` is `READY` and awaits the delegator, with the shipped spec revision pinned at `f74746f` in its preconditions. The architect's exception ruling puts the iteration's `knowledge/overview.md` and `README.md` refresh bullet (plan bullet 4) back in scope for this instruction; the four contract files stay forbidden.
 
 ### Blockers
 
-- None — the spec has landed (`f74746f`); `implement-label-repair-api` stays `DRAFT` until the spec passes review and its instruction is written.
+- None — the spec has landed (`f74746f`), passed review, and the instruction exists; `implement-label-repair-api` (`READY`) awaits the delegator.
 
 ---
 
