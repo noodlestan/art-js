@@ -12,7 +12,7 @@
 
 **Purpose:** Give `@art-js/records` a label-repair escape hatch: rewrite a stored field label in place without changing the field's name, and read and write field values by their stored label.
 
-**Description:** Stored labels are never rewritten by a value update, `renameField` always writes the derived `nameToLabel` spelling (a rename of `npmPackageDeployment` persists `Npm Package Deployment`), and a field whose stored label is shadowed by an earlier duplicate is reachable only by walking `record.__section`. This plan first extends the fields specification — which owns every field API name — with the relabel semantics and the raw by-label accessors, then implements that spec next to the shipped `0.2.0` surface, in two iterations and two `NOPUSH` commits, with no version bump and no publish.
+**Description:** Stored labels are never rewritten by a value update, `renameField` always writes the derived `nameToLabel` spelling (a rename of `npmPackageDeployment` persists `Npm Package Deployment`), and a field whose stored label is shadowed by an earlier duplicate is reachable only by walking `record.__section`. This plan first extends the fields specification — which owns every field API name — with the relabel semantics and the raw by-label accessors, then implements that spec next to the shipped `0.2.0` surface, in three iterations and three `NOPUSH` commits — the last one recording the surface under `UNRELEASED` in the package changelog — with no version bump and no publish.
 
 ## Mandatory Reading
 
@@ -132,6 +132,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | ------------------------------------------------------------------------------------ | ------- |
 | Iteration: Write Label Repair Spec `./instructions/write-label-repair-spec.md`       | `DONE`  |
 | Iteration: Implement Label Repair API `./instructions/implement-label-repair-api.md` | `READY` |
+| Iteration: Write Unreleased Changelog                                                | `DRAFT` |
 
 ### Iteration: Write Label Repair Spec
 
@@ -232,17 +233,72 @@ build(records): Add label repair and by-label field access.
 - Reserve the new handle members and cover both suites with fixtures.
 ```
 
+### Iteration: Write Unreleased Changelog
+
+**Id:** `write-unreleased-changelog`
+
+**Status:** `DRAFT`
+
+**Purpose:** Record the label-repair surface in the package changelog under `UNRELEASED`, so the next release plan inherits a ready-made entry instead of reconstructing it.
+
+**Description:** Adds an `UNRELEASED` section to `$PACKAGE/CHANGELOG.md` listing the six new APIs — `relabelField` and the five by-label twins — with the grown reserved-name note (fifteen names, fourteen reachable collision labels) and the explicit statement that the `0.2.0` name-addressed surface is unchanged. No version bump and no publish: moving the entry under a version heading is the release plan's job.
+
+**Instructions Mode:** `INSTRUCTIONS_INLINED_IN_ITERATION`
+
+**Instructions:**
+
+Execute the Changes listed above.
+
+Before starting: run `npm ci` from `$WORKSPACE` and from `$PROJECT` (Setting Up).
+
+Validate after the edits — from `$PACKAGE`: `npm run lint`; from `$PROJECT`: `npm run ci`.
+
+After executing: stage exactly `$PACKAGE/CHANGELOG.md` (never `git add -A`), then commit `unreleased-label-repair-changelog` with the blueprint below from `$PROJECT` — the pre-commit hook runs `npm run clean`, `npm run extract`, `npm run ci`; fix any reported failure and retry. Do not push. STOP: no version bump, no publish — the entry stays under `UNRELEASED`.
+
+Inlined instructions carry no separate report file — report the outcome in chat.
+
+**Changes:**
+
+- Add an `UNRELEASED` section at the top of `$PACKAGE/CHANGELOG.md` (above `## 0.2.0`, matching the file's `### Added` / `### Changed` house style) with:
+  - **Added — Label Repair:** `relabelField(name, label)` rewrites a stored label in place while keeping the field's name, position, tags, and value; the label must re-parse through the codec and re-derive the field's current name.
+  - **Added — By-Label Access:** `setFieldMarkdownByLabel`, `setFieldValueByLabel`, `getFieldMarkdownByLabel`, `getFieldTextByLabel`, and `getFieldValueByLabel` read and write field values by exact stored label, reaching fields shadowed by an earlier duplicate; reads return `undefined` on a miss, writes throw, neither creates.
+  - **Changed — Reserved Names:** the six new handle members join the reserved set (fifteen names); labels resolving to them abort extraction (fourteen reachable collision labels); the `0.2.0` name-addressed surface is unchanged.
+- Keep the entry truthful to the shipped spec (`design/fields.md`, pinned `f74746f`) — no claim beyond what the spec states; no file other than `$PACKAGE/CHANGELOG.md` changes.
+
+**Dependencies:**
+
+- Iteration: Implement Label Repair API.
+
+#### Commits:
+
+| ID                                  | Repository / Checkout / Branch   | Policy   | Hash    | Status     |
+| ----------------------------------- | -------------------------------- | -------- | ------- | ---------- |
+| `unreleased-label-repair-changelog` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `(TBD)` | `AUTHORED` |
+
+##### Commit: `unreleased-label-repair-changelog`
+
+**Repository:** Art JS
+
+**Message:**
+
+```text
+docs(records): Add the UNRELEASED label repair changelog entry.
+
+- Record relabelField and the five by-label twins under UNRELEASED.
+- Note the grown reserved set: fifteen names, fourteen collision labels.
+```
+
 ---
 
 ## Work
 
 ### Next
 
-Instruction `./instructions/implement-label-repair-api.md` exists; iteration `implement-label-repair-api` is `READY` and awaits the delegator, with the shipped spec revision pinned at `f74746f` in its preconditions. The architect's exception ruling puts the iteration's `knowledge/overview.md` and `README.md` refresh bullet (plan bullet 4) back in scope for this instruction; the four contract files stay forbidden.
+Instruction `./instructions/implement-label-repair-api.md` exists; iteration `implement-label-repair-api` is `READY` and awaits the delegator, with the shipped spec revision pinned at `f74746f` in its preconditions. The architect's exception ruling puts the iteration's `knowledge/overview.md` and `README.md` refresh bullet (plan bullet 4) back in scope for this instruction; the four contract files stay forbidden. Behind it, iteration `write-unreleased-changelog` (`DRAFT`, inlined instructions) records the surface under `UNRELEASED` in `$PACKAGE/CHANGELOG.md`.
 
 ### Blockers
 
-- None — the spec has landed (`f74746f`), passed review, and the instruction exists; `implement-label-repair-api` (`READY`) awaits the delegator.
+- None — the spec has landed (`f74746f`), passed review, and the instruction exists; `implement-label-repair-api` (`READY`) awaits the delegator, and `write-unreleased-changelog` (`DRAFT`) follows it.
 
 ---
 
@@ -269,7 +325,7 @@ This section lists the operating instructions relevant to this work item.
 - **Changing a field's name through relabel** — relabel moves spelling only within the same derived name (`labelToName(newLabel) === name`); name changes stay with `renameField`, and creating a field with a custom label stays out — a new field is always labelled `nameToLabel(name)`.
 - **Label-addressed relabel** — relabel is name-addressed and therefore always reaches the first-wins holder; giving a shadowed duplicate its own addressable identity (a rekey) is a follow-up, not this plan.
 - **Label enumeration on the handle** — no `fieldLabels`-style listing member; enumeration stays on `Object.keys` for names and `record.__section` for raw labels.
-- **Version bump, CHANGELOG, publishing** — release ownership stays outside this plan; the next release carries the surface.
+- **Version bump and publishing** — release ownership stays outside this plan: no `package.json` version change and no publish. The `UNRELEASED` changelog entry is written here (iteration `write-unreleased-changelog`), but moving it under a version heading belongs to the next release.
 - **Art MD changes** — the codec's field pattern and constructs are read-only reference; the pre-existing digit-bearing-label reload gap is not fixed here.
 - **Editing `_backlog/1-done`** — both origin plans are reference-only; nothing under `_backlog/1-done/` is modified.
 - **Consumer migration** — no `$ART_WORKS` changes.
@@ -307,13 +363,14 @@ This section lists the operating instructions relevant to this work item.
 - **`$PACKAGE/knowledge/index.md`** — refreshed document purposes.
 - **`$PACKAGE/knowledge/overview.md`** — use cases and the fixture map for the new fixtures.
 - **`$PACKAGE/README.md`** — the field surface and the grown reserved-name note.
+- **`$PACKAGE/CHANGELOG.md`** — the `UNRELEASED` entry for the label-repair surface (iteration `write-unreleased-changelog`).
 
 ### Follow Ups
 
 - **Label-addressed relabel** — if a validator needs to give a shadowed duplicate its own addressable identity (a rekey), design it as a separate operation; not part of this plan.
 - **Label enumeration** — a handle-level raw-label listing if walking `__section` proves costly.
 - **Codec pattern vs digit-bearing labels** — derived labels containing digits (`a333` → `A333`) do not re-parse as fields; fix in Art MD or gate creation — recorded here because relabel's gate reuses the pattern.
-- **Release** — version bump, CHANGELOG, and publish are owned by the next release plan.
+- **Release** — version bump and publish are owned by the next release plan, which inherits the `UNRELEASED` changelog entry written here.
 - **Inherited follow-ups** — collision reporting, acronym-preserving labels, and the Art Works migration stay in `Plan: Canonical Record Field Names`.
 
 ### Feedback
