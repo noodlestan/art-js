@@ -16,7 +16,7 @@
 
 **Planning:**
 
-- `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md` (phases 1–4 `DONE`, phase 5 `WORKING`)
+- `$ART_JS/_roadmap/1-done/milestone-art-records/milestone.md` (all five phases `DONE`, milestone `DONE`)
 - `$ART_JS/_backlog/1-done/plan-create-lib-records/plan.md` (`DELIVERED`)
 - `$ART_JS/_backlog/1-done/` — `plan-design-lib-records` (`DONE`), `plan-canonical-record-field-names` (`DELIVERED`, published `0.1.0`), `plan-adopt-codec-construct-api` (`DELIVERED`)
 

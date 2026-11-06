@@ -57,12 +57,12 @@ Design the `@art-js/records` package API, including abstract record primitives (
 
 ### Upstream Work
 
-| Kind                  | Path                                                         | Role                                                                         |
-| --------------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------- |
-| Parking Lot           | `$PROJECT/_backlog/_parking-lot.md`                          | Tracks short-term actionables, pending questions, and blockers.              |
-| Architecture Briefing | `$PROJECT/_roadmap/_architect.md`                            | Art JS principles, NFRs, milestones.                                         |
-| Milestone             | `$PROJECT/_roadmap/3-now/milestone-art-records/milestone.md` | Coordinates this plan within the Art records milestone.                      |
-| Milestone             | `$ART_MD/_roadmap/1-done/milestone-art-codec/milestone.md`   | Upstream codec and source contracts (`@art-md/primitives`, `@art-md/codec`). |
+| Kind                  | Path                                                          | Role                                                                         |
+| --------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Parking Lot           | `$PROJECT/_backlog/_parking-lot.md`                           | Tracks short-term actionables, pending questions, and blockers.              |
+| Architecture Briefing | `$PROJECT/_roadmap/_architect.md`                             | Art JS principles, NFRs, milestones.                                         |
+| Milestone             | `$PROJECT/_roadmap/1-done/milestone-art-records/milestone.md` | Coordinates this plan within the Art records milestone.                      |
+| Milestone             | `$ART_MD/_roadmap/1-done/milestone-art-codec/milestone.md`    | Upstream codec and source contracts (`@art-md/primitives`, `@art-md/codec`). |
 
 ### Required Skills
 

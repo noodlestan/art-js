@@ -102,7 +102,7 @@
 
 **Attachment:** [`./architect__art-js.md`](./architect__art-js.md)
 
-**Planning:** `$ART_JS/_backlog/1-done/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md`) — `DELIVERED`: `consolidate` landed as `be7b09d`, `@art-js/records@0.2.0` shipped (`66b9549`), plan at `_backlog/1-done/`. Delivered: `plan-canonical-record-field-names`, `plan-adopt-codec-construct-api`, and `plan-create-lib-records` at `_backlog/1-done/`. **Refresh 2026-11-03:** the old `4-next`/`BLOCKED` state is void — shape and codec-supply questions resolved, implementation shipped.
+**Planning:** `$ART_JS/_backlog/1-done/plan-create-lib-records/plan.md` (parent: `$ART_JS/_roadmap/1-done/milestone-art-records/milestone.md`) — `DELIVERED`: `consolidate` landed as `be7b09d`, `@art-js/records@0.2.0` shipped (`66b9549`), plan at `_backlog/1-done/`. Delivered: `plan-canonical-record-field-names`, `plan-adopt-codec-construct-api`, and `plan-create-lib-records` at `_backlog/1-done/`. **Refresh 2026-11-03:** the old `4-next`/`BLOCKED` state is void — shape and codec-supply questions resolved, implementation shipped.
 
 **Goals:** Deliver `@art-js/records` — assert presence, extract records into lazily-hydrated capsules, mutate via proxy, write back at line anchors with opt-in hash guard. Pure library over content strings; no filesystem, no codec implementation.
 
