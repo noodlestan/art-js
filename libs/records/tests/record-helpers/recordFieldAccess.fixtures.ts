@@ -52,6 +52,12 @@ export const deleteHandleCases = [
 	'getFieldMarkdown',
 	'getFieldText',
 	'getFieldValue',
+	'relabelField',
+	'setFieldMarkdownByLabel',
+	'setFieldValueByLabel',
+	'getFieldMarkdownByLabel',
+	'getFieldTextByLabel',
+	'getFieldValueByLabel',
 ] as const;
 
 export const deleteThrowCases = [
@@ -69,6 +75,12 @@ export const memberTrueCases = [
 	'getFieldMarkdown',
 	'getFieldText',
 	'getFieldValue',
+	'relabelField',
+	'setFieldMarkdownByLabel',
+	'setFieldValueByLabel',
+	'getFieldMarkdownByLabel',
+	'getFieldTextByLabel',
+	'getFieldValueByLabel',
 	'purpose',
 	'3A33',
 ] as const;

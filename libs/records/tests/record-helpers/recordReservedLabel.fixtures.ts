@@ -14,6 +14,32 @@ export const reservedLabelCases = [
 	['Get Field Markdown', 'getFieldMarkdown'],
 	['Get Field Text', 'getFieldText'],
 	['Get Field Value', 'getFieldValue'],
+	['Relabel Field', 'relabelField'],
+	['Set Field Markdown By Label', 'setFieldMarkdownByLabel'],
+	['Set Field Value By Label', 'setFieldValueByLabel'],
+	['Get Field Markdown By Label', 'getFieldMarkdownByLabel'],
+	['Get Field Text By Label', 'getFieldTextByLabel'],
+	['Get Field Value By Label', 'getFieldValueByLabel'],
+] as const;
+
+// The fourteen labels reachable from a document that abort extraction — the
+// original eight plus the six label-repair labels. `__section` is not among
+// them: `labelToName` never emits a `__` prefix.
+export const reachableCollisionLabels = [
+	'Name',
+	'Save',
+	'Rename Field',
+	'Set Field Markdown',
+	'Set Field Value',
+	'Get Field Markdown',
+	'Get Field Text',
+	'Get Field Value',
+	'Relabel Field',
+	'Set Field Markdown By Label',
+	'Set Field Value By Label',
+	'Get Field Markdown By Label',
+	'Get Field Text By Label',
+	'Get Field Value By Label',
 ] as const;
 
 // `__`-prefixed labels are separators to the converter: they register as plain names.

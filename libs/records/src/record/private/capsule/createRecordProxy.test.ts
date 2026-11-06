@@ -84,4 +84,42 @@ describe('createRecordProxy', () => {
 			delete record['brandNew'];
 		}).toThrow(TypeError);
 	});
+
+	const labelRepairMembers = [
+		'relabelField',
+		'setFieldMarkdownByLabel',
+		'setFieldValueByLabel',
+		'getFieldMarkdownByLabel',
+		'getFieldTextByLabel',
+		'getFieldValueByLabel',
+	] as const;
+
+	it.each(labelRepairMembers)(
+		'GIVEN the "%s" handle member WHEN reading it THEN it is the member function, not a field',
+		member => {
+			const record = createTestRecord();
+			const descriptor = Object.getOwnPropertyDescriptor(record, member);
+
+			expect(typeof record[member]).toBe('function');
+			expect(descriptor).toMatchObject({ configurable: true, enumerable: false });
+			expect(Object.keys(record)).not.toContain(member);
+			expect(member in record).toBe(true);
+		},
+	);
+
+	it.each(labelRepairMembers)(
+		'GIVEN the "%s" handle member WHEN writing or deleting it THEN the proxy refuses with a TypeError',
+		member => {
+			const record = createTestRecord();
+			const fieldTarget = record as unknown as Record<string, unknown>;
+
+			expect(() => {
+				fieldTarget[member] = 'Updated';
+			}).toThrow(TypeError);
+			expect(() => {
+				delete fieldTarget[member];
+			}).toThrow(TypeError);
+			expect(Object.keys(record)).not.toContain(member);
+		},
+	);
 });

@@ -221,4 +221,87 @@ describe('createRecordCapsule', () => {
 		expect(typeof record.getFieldText).toBe('function');
 		expect(typeof record.getFieldValue).toBe('function');
 	});
+
+	it('GIVEN a derived label WHEN relabelling to the house spelling THEN only the stored label changes', () => {
+		const record = createTestRecord();
+
+		record.setFieldMarkdown('npmPackageDeployment', 'Build the package');
+		const keysBefore = Object.keys(record);
+
+		record.relabelField('npmPackageDeployment', 'NPM Package Deployment');
+
+		expect(JSON.stringify(record.__section)).toContain('"name":"NPM Package Deployment"');
+		expect(record.getFieldMarkdown('npmPackageDeployment')).toBe('Build the package');
+		expect(Object.keys(record)).toEqual(keysBefore);
+	});
+
+	it('GIVEN a rejected relabel WHEN running the gates THEN they fire in the spec order and nothing changes', () => {
+		const record = createTestRecord();
+
+		record.setFieldMarkdown('purpose', 'First');
+		const sectionBefore = JSON.stringify(record.__section);
+		const keysBefore = Object.keys(record);
+
+		expect(() => {
+			record.relabelField('save', 'Save');
+		}).toThrow('Reserved record field name: "save"');
+		expect(() => {
+			record.relabelField('missing', 'Missing');
+		}).toThrow('Field not found: missing');
+		expect(() => {
+			record.relabelField('purpose', '   ');
+		}).toThrow('Field label must contain at least one word character');
+		expect(() => {
+			record.relabelField('purpose', '3A33');
+		}).toThrow('Invalid record field label: "3A33"');
+		expect(() => {
+			record.relabelField('purpose', 'Other Name');
+		}).toThrow('Field label "Other Name" does not match field name "purpose"');
+
+		expect(JSON.stringify(record.__section)).toBe(sectionBefore);
+		expect(Object.keys(record)).toEqual(keysBefore);
+	});
+
+	it('GIVEN label-addressed reads WHEN resolving an exact label THEN hits reach the field and misses return undefined', () => {
+		const record = createTestRecord();
+
+		record.setFieldMarkdown('purpose', 'First');
+
+		expect(record.getFieldMarkdownByLabel('Purpose')).toBe('First');
+		expect(record.getFieldTextByLabel('Purpose')).toBe('First');
+		expect(record.getFieldValueByLabel('Purpose')).toHaveLength(1);
+		expect(record.getFieldMarkdownByLabel('purpose')).toBeUndefined();
+		expect(record.getFieldTextByLabel('purpose')).toBeUndefined();
+		expect(record.getFieldValueByLabel('purpose')).toBeUndefined();
+	});
+
+	it('GIVEN a label-addressed write miss WHEN resolving it THEN it throws and never creates a field', () => {
+		const record = createTestRecord();
+
+		record.setFieldMarkdown('purpose', 'First');
+		const childrenBefore = record.__section.children.length;
+
+		// A non-canonical label must never reach the name grammar: the miss
+		// reports the label itself, not an invalid field name.
+		expect(() => {
+			record.setFieldMarkdownByLabel('Not Canonical', 'Updated');
+		}).toThrow('Field not found: Not Canonical');
+		expect(() => {
+			record.setFieldValueByLabel('Missing', []);
+		}).toThrow('Field not found: Missing');
+
+		expect(record.__section.children).toHaveLength(childrenBefore);
+	});
+
+	it('GIVEN a label-addressed write hit WHEN routing it THEN the value semantics are the name-addressed ones', () => {
+		const record = createTestRecord();
+
+		record.setFieldMarkdown('purpose', 'First');
+
+		record.setFieldMarkdownByLabel('Purpose', '```typescript\nconst x = 42;\n```');
+
+		expect(record.getFieldTextByLabel('Purpose')).toContain('const x = 42;');
+		expect(record.getFieldMarkdown('purpose')).toContain('```typescript');
+		expect(JSON.stringify(record.__section)).toContain('"name":"Purpose"');
+	});
 });

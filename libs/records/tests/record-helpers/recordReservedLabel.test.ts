@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
+import { isReservedFieldName } from '../../src/record/private/field-name/isReservedFieldName.js';
+import { labelToName } from '../../src/record/private/field-name/labelToName.js';
 import {
 	createSectionRecord,
 	extractTestRecord,
@@ -9,12 +11,21 @@ import {
 
 import {
 	nonReservedLabelCases,
+	reachableCollisionLabels,
 	reservedLabelCases,
 	reservedLabelRecordName,
 	reservedLabelValue,
 } from './recordReservedLabel.fixtures.js';
 
 describe('record reserved labels', () => {
+	it('GIVEN the reserved labels WHEN counting the reachable collisions THEN fourteen labels resolve to the fourteen reserved names', () => {
+		expect(reachableCollisionLabels).toHaveLength(14);
+
+		for (const label of reachableCollisionLabels) {
+			expect(isReservedFieldName(labelToName(label))).toBe(true);
+			expect(reservedLabelCases.some(([caseLabel]) => caseLabel === label)).toBe(true);
+		}
+	});
 	it.each(reservedLabelCases)(
 		'WHEN extracting the "%s" label that converts to "%s" THEN the reserved-name TypeError is thrown',
 		async (label, reservedName) => {

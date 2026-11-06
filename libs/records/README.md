@@ -8,7 +8,7 @@ This package is part of the [Art JS toolkit](../../README.md) toolkit.
 
 ## Usage
 
-Fields are addressed by **canonical field names** — `/^[a-z][a-zA-Z0-9]*$/` — derived once from the stored document label at extraction. A value update never rewrites the label; new fields and renames write labels derived with `nameToLabel`.
+Fields are addressed by **canonical field names** — `/^[a-z][a-zA-Z0-9]*$/` — derived once from the stored document label at extraction. A value update never rewrites the label; new fields and renames write labels derived with `nameToLabel`, and `relabelField(name, label)` repairs a stored label in place while the field keeps its name, position, tags, and value. The five value methods also have `…ByLabel` twins that read and write by exact stored label, reaching a field shadowed by an earlier duplicate.
 
 Given a provider created with `createRecordsDocument({ codec, createContentSource })` (see the [design document](knowledge/design/records.md)):
 
@@ -27,10 +27,13 @@ packageRecord.__section; // the complete SectionBlock
 
 packageRecord.repository = 'art-js'; // appends `**Repository:** art-js`
 packageRecord.renameField('repository', 'checkout'); // relabels it `**Checkout:** art-js`
+packageRecord.relabelField('canonicalName', 'Canonical name'); // rewrites only the stored label
+packageRecord.setFieldMarkdownByLabel('Canonical name', '@art-js/records'); // value write by stored label
+packageRecord.getFieldValueByLabel('Canonical name'); // the value's Art AST, by stored label
 await packageRecord.save(); // writes the document once
 ```
 
-A field label that resolves to a reserved name (`Name`, `Save`, `Rename Field`) aborts `extract()` with a `TypeError`; `record.name`, `record.__section`, `record.save()`, and `record.renameField()` stay handle members.
+A field label that resolves to a reserved name aborts `extract()` with a `TypeError`; `record.name`, `record.__section`, `record.save()`, `record.renameField()`, and `record.relabelField()` stay handle members. The reserved set holds the fifteen handle-member names — `name`, `save`, `renameField`, `__section`, the five name-addressed value methods, `relabelField`, and the five `…ByLabel` twins — and the fourteen labels reachable from a document (`Name`, `Save`, `Rename Field`, `Set Field Markdown`, `Set Field Value`, `Get Field Markdown`, `Get Field Text`, `Get Field Value`, `Relabel Field`, `Set Field Markdown By Label`, `Set Field Value By Label`, `Get Field Markdown By Label`, `Get Field Text By Label`, `Get Field Value By Label`) abort with `TypeError: Field label "{label}" resolves to reserved name "{name}"`.
 
 ## Migrating from 0.0.x
 

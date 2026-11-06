@@ -27,6 +27,10 @@ export function createRecordProxy(capsule: ArtRecordCapsule): ArtRecord {
 		capsule.renameField(oldName, newName);
 	}
 
+	function relabelField(name: string, label: string): void {
+		capsule.relabelField(name, label);
+	}
+
 	function setFieldMarkdown(name: string, markdown: string): void {
 		capsule.setFieldMarkdown(name, markdown);
 	}
@@ -45,6 +49,26 @@ export function createRecordProxy(capsule: ArtRecordCapsule): ArtRecord {
 
 	function getFieldValue(name: string): readonly Construct[] | undefined {
 		return capsule.getFieldValue(name);
+	}
+
+	function setFieldMarkdownByLabel(label: string, markdown: string): void {
+		capsule.setFieldMarkdownByLabel(label, markdown);
+	}
+
+	function setFieldValueByLabel(label: string, value: Construct | readonly Construct[]): void {
+		capsule.setFieldValueByLabel(label, value);
+	}
+
+	function getFieldMarkdownByLabel(label: string): string | undefined {
+		return capsule.getFieldMarkdownByLabel(label);
+	}
+
+	function getFieldTextByLabel(label: string): string | undefined {
+		return capsule.getFieldTextByLabel(label);
+	}
+
+	function getFieldValueByLabel(label: string): readonly Construct[] | undefined {
+		return capsule.getFieldValueByLabel(label);
 	}
 
 	function saveRecord(): Promise<void> {
@@ -67,6 +91,11 @@ export function createRecordProxy(capsule: ArtRecordCapsule): ArtRecord {
 	const renameFieldDescriptor = {
 		configurable: true,
 		value: renameField,
+	};
+
+	const relabelFieldDescriptor = {
+		configurable: true,
+		value: relabelField,
 	};
 
 	const setFieldMarkdownDescriptor = {
@@ -94,6 +123,31 @@ export function createRecordProxy(capsule: ArtRecordCapsule): ArtRecord {
 		value: getFieldValue,
 	};
 
+	const setFieldMarkdownByLabelDescriptor = {
+		configurable: true,
+		value: setFieldMarkdownByLabel,
+	};
+
+	const setFieldValueByLabelDescriptor = {
+		configurable: true,
+		value: setFieldValueByLabel,
+	};
+
+	const getFieldMarkdownByLabelDescriptor = {
+		configurable: true,
+		value: getFieldMarkdownByLabel,
+	};
+
+	const getFieldTextByLabelDescriptor = {
+		configurable: true,
+		value: getFieldTextByLabel,
+	};
+
+	const getFieldValueByLabelDescriptor = {
+		configurable: true,
+		value: getFieldValueByLabel,
+	};
+
 	const saveDescriptor = {
 		configurable: true,
 		value: saveRecord,
@@ -103,11 +157,17 @@ export function createRecordProxy(capsule: ArtRecordCapsule): ArtRecord {
 		name: nameDescriptor,
 		__section: sectionDescriptor,
 		renameField: renameFieldDescriptor,
+		relabelField: relabelFieldDescriptor,
 		setFieldMarkdown: setFieldMarkdownDescriptor,
 		setFieldValue: setFieldValueDescriptor,
 		getFieldMarkdown: getFieldMarkdownDescriptor,
 		getFieldText: getFieldTextDescriptor,
 		getFieldValue: getFieldValueDescriptor,
+		setFieldMarkdownByLabel: setFieldMarkdownByLabelDescriptor,
+		setFieldValueByLabel: setFieldValueByLabelDescriptor,
+		getFieldMarkdownByLabel: getFieldMarkdownByLabelDescriptor,
+		getFieldTextByLabel: getFieldTextByLabelDescriptor,
+		getFieldValueByLabel: getFieldValueByLabelDescriptor,
 		save: saveDescriptor,
 	};
 

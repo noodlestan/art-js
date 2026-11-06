@@ -41,6 +41,12 @@ export type ArtRecordCapsule = {
 	getFieldText(name: string): string | undefined;
 	getFieldValue(name: string): readonly Construct[] | undefined;
 	renameField(oldName: string, newName: string): void;
+	relabelField(name: string, label: string): void;
+	setFieldMarkdownByLabel(label: string, markdown: string): void;
+	setFieldValueByLabel(label: string, value: Construct | readonly Construct[]): void;
+	getFieldMarkdownByLabel(label: string): string | undefined;
+	getFieldTextByLabel(label: string): string | undefined;
+	getFieldValueByLabel(label: string): readonly Construct[] | undefined;
 	deleteField(name: string): boolean;
 	fieldNames(): string[];
 	save(): Promise<void>;
