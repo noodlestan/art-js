@@ -2,7 +2,7 @@
 
 **ID:** `art-records`
 
-**Status:** `DONE`
+**Status:** `WORKING`
 
 **Template:** `$DOMAINS/milestones/templates/milestone.tart`
 
@@ -31,13 +31,14 @@ Consumers create a codec and a records provider, read a file into a per-document
 
 ## Phases
 
-| Index | Name                   | Status |
-| ----- | ---------------------- | ------ |
-| #1    | Define record model    | `DONE` |
-| #2    | Extraction API         | `DONE` |
-| #3    | Persist through source | `DONE` |
-| #4    | Proxy field access     | `DONE` |
-| #5    | Align, publish, adopt  | `DONE` |
+| Index | Name                   | Status    |
+| ----- | ---------------------- | --------- |
+| #1    | Define record model    | `DONE`    |
+| #2    | Extraction API         | `DONE`    |
+| #3    | Persist through source | `DONE`    |
+| #4    | Proxy field access     | `DONE`    |
+| #5    | Align, publish, adopt  | `DONE`    |
+| #6    | Label repair           | `WORKING` |
 
 ### Phase: 1 — Define record model
 
@@ -99,6 +100,18 @@ Consumers create a codec and a records provider, read a file into a per-document
 
 - Plan: `_backlog/3-now/plan-create-lib-records/plan.md`
 
+### Phase: 6 — Label repair
+
+**Goal:** Give consumers a label-repair escape hatch: rewrite a stored label in place and address field values by stored label.
+
+**Description:** Execute Plan: Label Repair API. The fields-spec extension landed as `f74746f`; the implementation iteration `implement-label-repair-api` is `READY` with its instruction committed as `ad4e092`.
+
+**Status:** `WORKING`
+
+**Dependencies:**
+
+- Plan: `_backlog/3-now/plan-label-repair-api/plan.md`
+
 ## Items
 
 | Phase | Resource / Record                                                                              | Status      |
@@ -108,10 +121,13 @@ Consumers create a codec and a records provider, read a file into a per-document
 | 5     | Plan: Canonical Record Field Names `_backlog/1-done/plan-canonical-record-field-names/plan.md` | `DELIVERED` |
 | 5     | Plan: Adopt Codec Construct API `_backlog/1-done/plan-adopt-codec-construct-api/plan.md`       | `DELIVERED` |
 | 5     | Plan: Expand Fields API `_backlog/1-done/plan-expand-fields-api/plan.md`                       | `DELIVERED` |
+| 6     | Plan: Label Repair API `_backlog/3-now/plan-label-repair-api/plan.md`                          | `DRAFT`     |
 
 ## Work
 
 ### Next
+
+- **Iteration `implement-label-repair-api`** of `_backlog/3-now/plan-label-repair-api/plan.md` — `READY`; instruction `./instructions/implement-label-repair-api.md` pins the spec at `f74746f` (instruction commit `ad4e092`). Delegate now; iteration `write-label-repair-spec` is already `DONE` as `f74746f`.
 
 ### Blockers
 
