@@ -128,22 +128,24 @@ Execution occurs from `$WORKSPACE/`; package work is performed in `$PROJECT` on 
 
 This section lists the downstream work items produced, coordinated, or advanced by the plan, identifying blocking dependencies across resources of different owners.
 
-| Iteration / Instructions              | Status  |
-| ------------------------------------- | ------- |
-| Iteration: Write Label Repair Spec    | `DRAFT` |
-| Iteration: Implement Label Repair API | `DRAFT` |
+| Iteration / Instructions                                                       | Status     |
+| ------------------------------------------------------------------------------ | ---------- |
+| Iteration: Write Label Repair Spec `./instructions/write-label-repair-spec.md` | `PLANNING` |
+| Iteration: Implement Label Repair API                                          | `DRAFT`    |
 
 ### Iteration: Write Label Repair Spec
 
 **Id:** `write-label-repair-spec`
 
-**Status:** `DRAFT`
+**Status:** `PLANNING`
 
 **Purpose:** Pin the relabel semantics and the raw by-label accessors in `design/fields.md` — the single spec that owns every field API name — before any code changes.
 
 **Description:** Extends the shipped fields spec with the label-repair surface: the relabel contract (in-place stored-label rewrite preserving name, position, tags, and value; validation-before-mutation gates; index invariance; shadowed-duplicate behaviour), the by-label read/write accessors (addressing-only difference; miss behaviour; never creates), and the grown reserved-name set; amends the no-escape-hatch decisions, keeps `records.md`'s public type accurate, and refreshes the knowledge index. No source or test change in this iteration.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/write-label-repair-spec.md`
 
 **Changes:**
 
@@ -162,9 +164,9 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 #### Commits:
 
-| ID                        | Repository / Checkout / Branch   | Policy   | Hash    | Status        |
-| ------------------------- | -------------------------------- | -------- | ------- | ------------- |
-| `write-label-repair-spec` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `(TBD)` | `PLACEHOLDER` |
+| ID                        | Repository / Checkout / Branch   | Policy   | Hash    | Status     |
+| ------------------------- | -------------------------------- | -------- | ------- | ---------- |
+| `write-label-repair-spec` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `(TBD)` | `AUTHORED` |
 
 ##### Commit: `write-label-repair-spec`
 
@@ -234,11 +236,11 @@ build(records): Add label repair and by-label field access.
 
 ### Next
 
-Nothing is delegated yet: both iterations are `DRAFT`. On approval of this plan, refine `write-label-repair-spec` to `PLANNING` and write its self-contained instructions; the spec commit lands before anything else is planned into instructions.
+Instruction `./instructions/write-label-repair-spec.md` exists; iteration `write-label-repair-spec` is `PLANNING` and awaits the delegator — nothing else is delegated. `implement-label-repair-api` stays `DRAFT` until the spec commit lands and the plan is checked against it.
 
 ### Blockers
 
-- None.
+- None — the instruction exists and `write-label-repair-spec` (`PLANNING`) awaits the delegator; `implement-label-repair-api` stays `DRAFT` behind the spec commit.
 
 ---
 
