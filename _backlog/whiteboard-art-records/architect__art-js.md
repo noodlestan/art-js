@@ -17,7 +17,7 @@
 **Planning:**
 
 - `$ART_JS/_roadmap/3-now/milestone-art-records/milestone.md` (phases 1–4 `DONE`, phase 5 `WORKING`)
-- `$ART_JS/_backlog/3-now/plan-create-lib-records/plan.md` (`WORKING`; tail iterations owned by another session)
+- `$ART_JS/_backlog/1-done/plan-create-lib-records/plan.md` (`DELIVERED`)
 - `$ART_JS/_backlog/1-done/` — `plan-design-lib-records` (`DONE`), `plan-canonical-record-field-names` (`DELIVERED`, published `0.1.0`), `plan-adopt-codec-construct-api` (`DELIVERED`)
 
 **Code:** `$ART_JS/libs/records/`
@@ -47,14 +47,14 @@
 
 ### Deliverables and status
 
-| Deliverable                 | Status                                                                                                                         |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Milestone `art-records`     | `WORKING` — phases 1–4 `DONE`, phase 5 `WORKING`                                                                               |
-| Plan `design-lib-records`   | `DONE` — artefacts: knowledge doc, `libs/records/` scaffold, canonical README titles (commits `49fe2d5`, `562c555`, `58bd610`) |
-| Plan `create-lib-records`   | `WORKING` — v0.0.1 iterations `DONE`; tail (`consolidate`, `0.2.0`) owned by another session                                   |
-| `knowledge/records.md`      | Written — the model, flow, principles (records-are-source-of-truth, deterministic round-trips, no I/O)                         |
-| Published `@art-js/records` | `0.1.0` published and confirmed (`npm info` → `0.1.0`, 2026-11-03); consumed by `$ART_WORKS` from `b955f3c`                    |
-| Blockers recorded           | None — `$ART_JS/_backlog/_parking-lot.md` is empty                                                                             |
+| Deliverable                 | Status                                                                                                                                         |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Milestone `art-records`     | `WORKING` — phases 1–4 `DONE`, phase 5 `WORKING`                                                                                               |
+| Plan `design-lib-records`   | `DONE` — artefacts: knowledge doc, `libs/records/` scaffold, canonical README titles (commits `49fe2d5`, `562c555`, `58bd610`)                 |
+| Plan `create-lib-records`   | `DELIVERED` — all iterations `DONE`; `consolidate` landed (`be7b09d`), `@art-js/records@0.2.0` shipped (`66b9549`), plan at `_backlog/1-done/` |
+| `knowledge/records.md`      | Written — the model, flow, principles (records-are-source-of-truth, deterministic round-trips, no I/O)                                         |
+| Published `@art-js/records` | `0.1.0` published and confirmed (`npm info` → `0.1.0`, 2026-11-03); consumed by `$ART_WORKS` from `b955f3c`                                    |
+| Blockers recorded           | None — `$ART_JS/_backlog/_parking-lot.md` is empty                                                                                             |
 
 ### Relevant files
 
@@ -74,7 +74,7 @@
 
 - **`$ART_LIB` adapter:** `ArtRecord` replaces its WIP `BaseRecordStructure`; `RecordPosition` replaces its duplicate `FSRecordPosition`; it implements `ArtContentSource` and calls `extractRecords`/`writeRecord`. ~~Re-read behaviour asked~~ Answered on the whiteboard: stateless per call, re-read after `writeContent()` — line anchors stand.
 - **`$ART_WORKS` CLI:** `Records<T>` facade per document (`assertPresence`, `extract`, `update`, `serialize`) for workspace-record discovery/reading/updating; record kinds `checkout`, `repository`, `namespace`, `package`, `project`, `npm-deployment`, `static-app-deployment`.
-- **Publishing:** `@art-js/records@0.1.0` is published and importable; the consolidated `0.2.0` belongs to `plan-create-lib-records`'s tail.
+- **Publishing:** `@art-js/records@0.1.0` and `@art-js/records@0.2.0` are published and importable; `plan-create-lib-records` is `DELIVERED` at `_backlog/1-done/`.
 
 ### Assumptions, uncertainties, decisions needing input
 

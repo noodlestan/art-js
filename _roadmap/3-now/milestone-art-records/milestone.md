@@ -115,7 +115,7 @@ Consumers create a codec and a records provider, read a file into a per-document
 
 ### Blockers
 
-- None. The earlier delegation gate is void: v0.0.1 is implemented and CI-green; remaining work is tracked in the plan iterations.
+- None.
 
 ## Operating Instructions
 
