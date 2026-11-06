@@ -2,7 +2,7 @@
 
 **ID:** `label-repair-api`
 
-**Status:** `DRAFT`
+**Status:** `DELIVERED`
 
 **Template:** `$DOMAINS/plans/templates/plan.tart`
 
@@ -131,7 +131,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | Iteration / Instructions                                                             | Status  |
 | ------------------------------------------------------------------------------------ | ------- |
 | Iteration: Write Label Repair Spec `./instructions/write-label-repair-spec.md`       | `DONE`  |
-| Iteration: Implement Label Repair API `./instructions/implement-label-repair-api.md` | `READY` |
+| Iteration: Implement Label Repair API `./instructions/implement-label-repair-api.md` | `DONE`  |
 | Iteration: Write Unreleased Changelog                                                | `DRAFT` |
 
 ### Iteration: Write Label Repair Spec
@@ -186,7 +186,7 @@ docs(records): Specify label repair and by-label field access.
 
 **Id:** `implement-label-repair-api`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Ship the label-repair surface exactly as the reviewed spec defines it, green at every commit, across the package and both suites.
 
@@ -216,9 +216,9 @@ docs(records): Specify label repair and by-label field access.
 
 #### Commits:
 
-| ID                           | Repository / Checkout / Branch   | Policy   | Hash    | Status     |
-| ---------------------------- | -------------------------------- | -------- | ------- | ---------- |
-| `implement-label-repair-api` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `(TBD)` | `AUTHORED` |
+| ID                           | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ---------------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `implement-label-repair-api` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `cc17409` | `COMMITTED` |
 
 ##### Commit: `implement-label-repair-api`
 
@@ -294,11 +294,11 @@ docs(records): Add the UNRELEASED label repair changelog entry.
 
 ### Next
 
-Instruction `./instructions/implement-label-repair-api.md` exists; iteration `implement-label-repair-api` is `READY` and awaits the delegator, with the shipped spec revision pinned at `f74746f` in its preconditions. The architect's exception ruling puts the iteration's `knowledge/overview.md` and `README.md` refresh bullet (plan bullet 4) back in scope for this instruction; the four contract files stay forbidden. Behind it, iteration `write-unreleased-changelog` (`DRAFT`, inlined instructions) records the surface under `UNRELEASED` in `$PACKAGE/CHANGELOG.md`.
+Terminal for this delegation: `write-label-repair-spec` is `DONE` (`f74746f`) and `implement-label-repair-api` is `DONE` (`cc17409`, 26 files, `NOPUSH`, coverage 96.6/92.4/98.2/96.6 over the gate) — the label-repair surface is specified and shipped to `dist` with fixtures `25-`, `26-`, external `09-`, and the `overview.md`/`README.md` refresh. The plan is `DELIVERED`. The only open item is `write-unreleased-changelog` (`DRAFT`, inlined) — the next delegation records the surface under `UNRELEASED` in `$PACKAGE/CHANGELOG.md`.
 
 ### Blockers
 
-- None — the spec has landed (`f74746f`), passed review, and the instruction exists; `implement-label-repair-api` (`READY`) awaits the delegator, and `write-unreleased-changelog` (`DRAFT`) follows it.
+- None — both shipped iterations are `DONE`; `write-unreleased-changelog` (`DRAFT`) is the remaining queued work.
 
 ---
 
