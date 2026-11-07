@@ -104,7 +104,7 @@ Consumers create a codec and a records provider, read a file into a per-document
 
 **Goal:** Give consumers a label-repair escape hatch: rewrite a stored label in place and address field values by stored label.
 
-**Description:** Execute Plan: Label Repair API. The fields-spec extension landed as `f74746f`; the implementation iteration `implement-label-repair-api` is `READY` with its instruction committed as `ad4e092`.
+**Description:** Execute Plan: Label Repair API. The fields spec landed as `f74746f` and the implementation as `cc17409` (fixtures `25-`/`26-`/external `09-`, coverage over the gate); the remaining iteration `write-unreleased-changelog` records the surface under `UNRELEASED` in the package changelog.
 
 **Status:** `WORKING`
 
@@ -121,13 +121,13 @@ Consumers create a codec and a records provider, read a file into a per-document
 | 5     | Plan: Canonical Record Field Names `_backlog/1-done/plan-canonical-record-field-names/plan.md` | `DELIVERED` |
 | 5     | Plan: Adopt Codec Construct API `_backlog/1-done/plan-adopt-codec-construct-api/plan.md`       | `DELIVERED` |
 | 5     | Plan: Expand Fields API `_backlog/1-done/plan-expand-fields-api/plan.md`                       | `DELIVERED` |
-| 6     | Plan: Label Repair API `_backlog/3-now/plan-label-repair-api/plan.md`                          | `DRAFT`     |
+| 6     | Plan: Label Repair API `_backlog/3-now/plan-label-repair-api/plan.md`                          | `WORKING`   |
 
 ## Work
 
 ### Next
 
-- **Iteration `implement-label-repair-api`** of `_backlog/3-now/plan-label-repair-api/plan.md` — `READY`; instruction `./instructions/implement-label-repair-api.md` pins the spec at `f74746f` (instruction commit `ad4e092`). Delegate now; iteration `write-label-repair-spec` is already `DONE` as `f74746f`.
+- **Iteration `write-unreleased-changelog`** of `_backlog/3-now/plan-label-repair-api/plan.md` — `READY`, inlined (its text in the plan is the instruction): record the label-repair surface under `UNRELEASED` in `$PACKAGE/CHANGELOG.md`, staging that one file. This is the last open item of phase #6 — the spec (`f74746f`) and implementation (`cc17409`) are `DONE`.
 
 ### Blockers
 

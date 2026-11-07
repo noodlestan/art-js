@@ -2,7 +2,7 @@
 
 **ID:** `label-repair-api`
 
-**Status:** `DELIVERED`
+**Status:** `WORKING`
 
 **Template:** `$DOMAINS/plans/templates/plan.tart`
 
@@ -132,7 +132,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
 | ------------------------------------------------------------------------------------ | ------- |
 | Iteration: Write Label Repair Spec `./instructions/write-label-repair-spec.md`       | `DONE`  |
 | Iteration: Implement Label Repair API `./instructions/implement-label-repair-api.md` | `DONE`  |
-| Iteration: Write Unreleased Changelog                                                | `DRAFT` |
+| Iteration: Write Unreleased Changelog                                                | `READY` |
 
 ### Iteration: Write Label Repair Spec
 
@@ -237,7 +237,7 @@ build(records): Add label repair and by-label field access.
 
 **Id:** `write-unreleased-changelog`
 
-**Status:** `DRAFT`
+**Status:** `READY`
 
 **Purpose:** Record the label-repair surface in the package changelog under `UNRELEASED`, so the next release plan inherits a ready-made entry instead of reconstructing it.
 
@@ -294,11 +294,11 @@ docs(records): Add the UNRELEASED label repair changelog entry.
 
 ### Next
 
-Terminal for this delegation: `write-label-repair-spec` is `DONE` (`f74746f`) and `implement-label-repair-api` is `DONE` (`cc17409`, 26 files, `NOPUSH`, coverage 96.6/92.4/98.2/96.6 over the gate) — the label-repair surface is specified and shipped to `dist` with fixtures `25-`, `26-`, external `09-`, and the `overview.md`/`README.md` refresh. The plan is `DELIVERED`. The only open item is `write-unreleased-changelog` (`DRAFT`, inlined) — the next delegation records the surface under `UNRELEASED` in `$PACKAGE/CHANGELOG.md`.
+Terminal for this delegation: `write-label-repair-spec` is `DONE` (`f74746f`) and `implement-label-repair-api` is `DONE` (`cc17409`, 26 files, `NOPUSH`, coverage 96.6/92.4/98.2/96.6 over the gate) — the label-repair surface is specified and shipped to `dist` with fixtures `25-`, `26-`, external `09-`, and the `overview.md`/`README.md` refresh. The plan is `WORKING` until the changelog iteration lands. The only open item is `write-unreleased-changelog` (`READY`, inlined) — the next delegation records the surface under `UNRELEASED` in `$PACKAGE/CHANGELOG.md`.
 
 ### Blockers
 
-- None — both shipped iterations are `DONE`; `write-unreleased-changelog` (`DRAFT`) is the remaining queued work.
+- None — both shipped iterations are `DONE`; `write-unreleased-changelog` (`READY`, inlined) is the remaining queued work — delegate immediately.
 
 ---
 
