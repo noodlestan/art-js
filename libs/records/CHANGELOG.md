@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## UNRELEASED
+
+### Added
+
+- **Label Repair:** `relabelField(name, label)` rewrites a stored label in place while keeping the field's name, position, tags, and value; the label must re-parse through the codec and re-derive the field's current name.
+- **By-Label Access:** `setFieldMarkdownByLabel`, `setFieldValueByLabel`, `getFieldMarkdownByLabel`, `getFieldTextByLabel`, and `getFieldValueByLabel` read and write field values by exact stored label, reaching fields shadowed by an earlier duplicate; reads return `undefined` on a miss, writes throw, neither creates.
+
+### Changed
+
+- **Reserved Names:** the six new handle members join the reserved set (fifteen names); labels resolving to them abort extraction (fourteen reachable collision labels); the `0.2.0` name-addressed surface is unchanged.
+
 ## 0.2.0
 
 ### Changed
