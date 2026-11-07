@@ -2,7 +2,7 @@
 
 **ID:** `label-repair-api`
 
-**Status:** `WORKING`
+**Status:** `DELIVERED`
 
 **Template:** `$DOMAINS/plans/templates/plan.tart`
 
@@ -128,11 +128,11 @@ Execution occurs from `$WORKSPACE/`; package work is performed in `$PROJECT` on 
 
 This section lists the downstream work items produced, coordinated, or advanced by the plan, identifying blocking dependencies across resources of different owners.
 
-| Iteration / Instructions                                                             | Status  |
-| ------------------------------------------------------------------------------------ | ------- |
-| Iteration: Write Label Repair Spec `./instructions/write-label-repair-spec.md`       | `DONE`  |
-| Iteration: Implement Label Repair API `./instructions/implement-label-repair-api.md` | `DONE`  |
-| Iteration: Write Unreleased Changelog                                                | `READY` |
+| Iteration / Instructions                                                             | Status |
+| ------------------------------------------------------------------------------------ | ------ |
+| Iteration: Write Label Repair Spec `./instructions/write-label-repair-spec.md`       | `DONE` |
+| Iteration: Implement Label Repair API `./instructions/implement-label-repair-api.md` | `DONE` |
+| Iteration: Write Unreleased Changelog                                                | `DONE` |
 
 ### Iteration: Write Label Repair Spec
 
@@ -237,7 +237,7 @@ build(records): Add label repair and by-label field access.
 
 **Id:** `write-unreleased-changelog`
 
-**Status:** `READY`
+**Status:** `DONE`
 
 **Purpose:** Record the label-repair surface in the package changelog under `UNRELEASED`, so the next release plan inherits a ready-made entry instead of reconstructing it.
 
@@ -271,9 +271,9 @@ Inlined instructions carry no separate report file — report the outcome in cha
 
 #### Commits:
 
-| ID                                  | Repository / Checkout / Branch   | Policy   | Hash    | Status     |
-| ----------------------------------- | -------------------------------- | -------- | ------- | ---------- |
-| `unreleased-label-repair-changelog` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `(TBD)` | `AUTHORED` |
+| ID                                  | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| ----------------------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `unreleased-label-repair-changelog` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `651bee6` | `COMMITTED` |
 
 ##### Commit: `unreleased-label-repair-changelog`
 
@@ -294,11 +294,11 @@ docs(records): Add the UNRELEASED label repair changelog entry.
 
 ### Next
 
-Terminal for this delegation: `write-label-repair-spec` is `DONE` (`f74746f`) and `implement-label-repair-api` is `DONE` (`cc17409`, 26 files, `NOPUSH`, coverage 96.6/92.4/98.2/96.6 over the gate) — the label-repair surface is specified and shipped to `dist` with fixtures `25-`, `26-`, external `09-`, and the `overview.md`/`README.md` refresh. The plan is `WORKING` until the changelog iteration lands. The only open item is `write-unreleased-changelog` (`READY`, inlined) — the next delegation records the surface under `UNRELEASED` in `$PACKAGE/CHANGELOG.md`.
+Terminal — all three iterations are `DONE`: `write-label-repair-spec` (`f74746f`), `implement-label-repair-api` (`cc17409`), and `write-unreleased-changelog` (`651bee6`, the `UNRELEASED` entry in `$PACKAGE/CHANGELOG.md`). The plan is `DELIVERED`; moving the entry under a version heading, with its bump and publish, belongs to the next release plan.
 
 ### Blockers
 
-- None — both shipped iterations are `DONE`; `write-unreleased-changelog` (`READY`, inlined) is the remaining queued work — delegate immediately.
+- None — every iteration is `DONE` and the plan is `DELIVERED`.
 
 ---
 
