@@ -61,7 +61,7 @@ Changes are confined to one package's source, knowledge, and docs, its in-packag
 
 **Changes:**
 
-- Iteration `spec-copy-on-write-repair` — rewrite `$PACKAGE/knowledge/design/fields.md` (the by-label section becomes the repair-helpers section, `__section` gains snapshot semantics, the Public Field API loses the five signatures, reserved counts drop to ten names and nine collision labels), amend `$PACKAGE/knowledge/adr/fields.art` (the copy-on-write decision and the by-label-members reversal), keep `$PACKAGE/knowledge/design/records.md` accurate (public type, apply API, placement bridge, usage), and refresh `$PACKAGE/knowledge/index.md`. No `src/` or `tests/` change.
+- Iteration `spec-copy-on-write-repair` — rewrite `$PACKAGE/knowledge/design/fields.md` (the by-label section becomes the repair-helpers section, `__section` gains snapshot semantics, the Public Field API loses the five signatures, reserved counts drop to ten names and nine collision labels), amend `$PACKAGE/knowledge/adr/fields.art` (the copy-on-write decision and the deletion of the by-label decision), keep `$PACKAGE/knowledge/design/records.md` accurate (public type, apply API, placement bridge, usage), and refresh `$PACKAGE/knowledge/index.md`. No `src/` or `tests/` change.
 - Iteration `implement-copy-on-write-repair` — implement the reviewed spec: the proxy snapshot, the collection's handle→section `WeakMap` and `replaceRecordSection`, the bridge-based anchor resolution, the two pure helpers as public exports, the end-to-end removal of the five `…ByLabel` members and their reserved names, the rewritten repair fixtures, the replaced live-section contract tests, and the `$PACKAGE/README.md` plus `$PACKAGE/knowledge/overview.md` refresh.
 - Iteration `rewrite-unreleased-changelog` — rewrite the `UNRELEASED` entry in `$PACKAGE/CHANGELOG.md` to match the shipped surface.
 
@@ -131,23 +131,25 @@ Execution occurs from `$WORKSPACE/`; package work is performed in `$PROJECT` on 
 
 This section lists the downstream work items produced, coordinated, or advanced by the plan, identifying blocking dependencies across resources of different owners.
 
-| Iteration / Instructions                                                                     | Status  |
-| -------------------------------------------------------------------------------------------- | ------- |
-| Iteration: Specify Copy-On-Write Repair `./instructions/spec-copy-on-write-repair.md`        | `DRAFT` |
-| Iteration: Implement Copy-On-Write Repair `./instructions/implement-copy-on-write-repair.md` | `DRAFT` |
-| Iteration: Rewrite Unreleased Changelog                                                      | `DRAFT` |
+| Iteration / Instructions                                                                     | Status     |
+| -------------------------------------------------------------------------------------------- | ---------- |
+| Iteration: Specify Copy-On-Write Repair `./instructions/spec-copy-on-write-repair.md`        | `PLANNING` |
+| Iteration: Implement Copy-On-Write Repair `./instructions/implement-copy-on-write-repair.md` | `DRAFT`    |
+| Iteration: Rewrite Unreleased Changelog                                                      | `DRAFT`    |
 
 ### Iteration: Specify Copy-On-Write Repair
 
 **Id:** `spec-copy-on-write-repair`
 
-**Status:** `DRAFT`
+**Status:** `PLANNING`
 
-**Purpose:** Pin the copy-on-write contract, the apply API, the two repair helpers, and the by-label reversal in the spec before any code moves.
+**Purpose:** Pin the copy-on-write contract, the apply API, the two repair helpers, and the removal of the by-label surface from the spec before any code moves.
 
-**Description:** Rewrites the fields spec's by-label section into the repair-helpers section, gives `record.__section` per-access snapshot semantics, drops the five `…ByLabel` signatures from the Public Field API and the reserved counts (fifteen → ten names, fourteen → nine collision labels), adds the copy-on-write decision and reverses the by-label members in `adr/fields.art`, aligns `records.md`'s public type, apply API, placement bridge, and usage recipe, and refreshes the knowledge index. No source or test change.
+**Description:** Rewrites the fields spec's by-label section into the repair-helpers section, gives `record.__section` per-access snapshot semantics, drops the five `…ByLabel` signatures from the Public Field API and the reserved counts (fifteen → ten names, fourteen → nine collision labels), adds the copy-on-write decision and deletes the by-label decision from `adr/fields.art`, aligns `records.md`'s public type, apply API, placement bridge, and usage recipe, and refreshes the knowledge index. No source or test change.
 
 **Instructions Mode:** `INSTRUCTIONS_SELF_CONTAINED_FILE`
+
+**Instructions:** `./instructions/spec-copy-on-write-repair.md`
 
 **Changes:**
 
@@ -165,7 +167,7 @@ This section lists the downstream work items produced, coordinated, or advanced 
   - The `ArtRecord` type in `## Public API` loses the five `…ByLabel` signatures; `__section` is documented as a per-access snapshot.
   - `RecordsDocumentCollection` gains `replaceRecordSection(record: ArtRecord, section: SectionBlock): ArtRecord`; the export block gains the `getObscuredFields` and `renameObscuredField` value exports.
   - `### Mutating and Saving Records` stops telling consumers to change section properties through `record.__section` and shows the copy-and-apply flow instead — including removing a duplicate by editing the copy, and an inline content source (the four-method object over a markdown string, as the package's own test helpers already do) so a repair can start from a string without any filesystem adapter; the placement paragraph states that anchors resolve through the collection's private handle→section bridge with the foreign-anchor error unchanged; the Record Model note records the snapshot and the apply choke point.
-- Refresh the document purposes in `$PACKAGE/knowledge/index.md` so both field rows mention the copy-on-write repair flow and the helper reversal.
+- Refresh the document purposes in `$PACKAGE/knowledge/index.md` so both field rows mention the copy-on-write repair flow and the two repair helpers.
 - Read the work being reworked — `$PROJECT/_backlog/3-now/plan-label-repair-api/plan.md` — and the origin plan's Not In Scope and Follow Ups (`$PROJECT/_backlog/1-done/plan-canonical-record-field-names/plan.md`) for reference only; never edit anything under `_backlog/`.
 
 **Dependencies:**
@@ -174,9 +176,9 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 #### Commits:
 
-| ID                          | Repository / Checkout / Branch   | Policy   | Hash    | Status        |
-| --------------------------- | -------------------------------- | -------- | ------- | ------------- |
-| `spec-copy-on-write-repair` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `(TBD)` | `PLACEHOLDER` |
+| ID                          | Repository / Checkout / Branch   | Policy   | Hash    | Status     |
+| --------------------------- | -------------------------------- | -------- | ------- | ---------- |
+| `spec-copy-on-write-repair` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `(TBD)` | `AUTHORED` |
 
 ##### Commit: `spec-copy-on-write-repair`
 
@@ -377,13 +379,13 @@ Open decisions resolved during planning, with the trade-off written out:
 - **(a) `renameObscuredField` takes an explicit `newName`** — signature `renameObscuredField(section, field, newName)`. The only derivable key, `labelToName(field.name)`, is occupied by the winner by definition, so a no-target form would always throw in the only case it exists for. Auto-derived keys are rejected: a later `rebuildFieldIndex()` re-derives from labels and silently reverts any divergence between key and label. Settle-after-winner-vacated is sound but near-zero power — promotion already does it. The explicit target mirrors `renameField` (the stored label is rewritten to `nameToLabel(newName)`, so the key survives rebuilds), and custom spellings of the new key compose with `relabelField` after apply.
 - **(b) helpers take the working section** — `record.__section` hands every caller a different clone, so uniqueness checked against it would not be checked against the copy being built. More decisively, the uniqueness that matters — the rename target being unoccupied — is invisible to apply-time validation, because duplicate derived keys are legal shadowing. Helpers therefore stay pure functions over the caller's working copy, `replaceRecordSection` keeps the structural validation, and the explicit working-copy open call was rejected: it would add an open/commit state machine that the apply API already is.
 - **(c) capsule/context seams, no test-only exposure** — both contract tests are rewritten over a section the test owns and hands to `createRecordCapsule`, so they still pin rebuild validation and capsule-driven cache invalidation through the real code path; the public half of the promotion splice case becomes a snapshot-immunity assertion. Test-only exposure of live state would re-create the leak this architecture exists to remove.
-- **No history in knowledge** — every knowledge rewrite (`design/`, `adr/`, `README.md`, `overview.md`, `CHANGELOG.md`) reads as if the by-label members never existed: they were never part of a consumable release, so the knowledge base carries no reversal, no removal note, and no decision about them. The plan file may record the reversal (planning history); the specs may not.
+- **No history in knowledge** — every knowledge rewrite (`design/`, `adr/`, `index.md`, `README.md`, `overview.md`, `CHANGELOG.md`) reads as if the by-label members never existed: they were never part of a consumable release, so the knowledge base carries no reversal, no removal note, and no decision about them. The plan file may record the reversal (planning history); the specs may not.
 - **(d) documented dead handle, no runtime brand** — enforcement looks cheap (a revocable proxy, a generation flag) but is incomplete: `extract()` can return several handles over one section and only the passed handle would be revoked, so a stale handle would still read detached fields; complete enforcement needs section-scoped bookkeeping plus a check on every member, which is a foot-gun for future members. The apply API returns the only valid successor and the spec states the contract; enforcement is recorded as a Follow Up.
 
 ### Knowledge to Update
 
 - **`$PACKAGE/knowledge/design/fields.md`** — the repair-helpers section, snapshot semantics, the Public Field API block, Reserved names, and the Status/Scope lines (iteration 1).
-- **`$PACKAGE/knowledge/adr/fields.art`** — the copy-on-write decision and the by-label-members reversal (iteration 1).
+- **`$PACKAGE/knowledge/adr/fields.art`** — the copy-on-write decision and the deletion of the by-label decision (iteration 1).
 - **`$PACKAGE/knowledge/design/records.md`** — the `ArtRecord` type, the apply API and helper exports, the usage recipe, and the placement bridge (iteration 1).
 - **`$PACKAGE/knowledge/index.md`** — refreshed document purposes (iteration 1).
 - **`$PACKAGE/README.md`** — the field surface, the by-label examples, and the reserved-name note (iteration 2).
