@@ -131,17 +131,17 @@ Execution occurs from `$WORKSPACE/`; package work is performed in `$PROJECT` on 
 
 This section lists the downstream work items produced, coordinated, or advanced by the plan, identifying blocking dependencies across resources of different owners.
 
-| Iteration / Instructions                                                                     | Status     |
-| -------------------------------------------------------------------------------------------- | ---------- |
-| Iteration: Specify Copy-On-Write Repair `./instructions/spec-copy-on-write-repair.md`        | `PLANNING` |
-| Iteration: Implement Copy-On-Write Repair `./instructions/implement-copy-on-write-repair.md` | `DRAFT`    |
-| Iteration: Rewrite Unreleased Changelog                                                      | `DRAFT`    |
+| Iteration / Instructions                                                                     | Status  |
+| -------------------------------------------------------------------------------------------- | ------- |
+| Iteration: Specify Copy-On-Write Repair `./instructions/spec-copy-on-write-repair.md`        | `DONE`  |
+| Iteration: Implement Copy-On-Write Repair `./instructions/implement-copy-on-write-repair.md` | `DRAFT` |
+| Iteration: Rewrite Unreleased Changelog                                                      | `DRAFT` |
 
 ### Iteration: Specify Copy-On-Write Repair
 
 **Id:** `spec-copy-on-write-repair`
 
-**Status:** `PLANNING`
+**Status:** `DONE`
 
 **Purpose:** Pin the copy-on-write contract, the apply API, the two repair helpers, and the removal of the by-label surface from the spec before any code moves.
 
@@ -176,9 +176,9 @@ This section lists the downstream work items produced, coordinated, or advanced 
 
 #### Commits:
 
-| ID                          | Repository / Checkout / Branch   | Policy   | Hash    | Status     |
-| --------------------------- | -------------------------------- | -------- | ------- | ---------- |
-| `spec-copy-on-write-repair` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `(TBD)` | `AUTHORED` |
+| ID                          | Repository / Checkout / Branch   | Policy   | Hash      | Status      |
+| --------------------------- | -------------------------------- | -------- | --------- | ----------- |
+| `spec-copy-on-write-repair` | `$PROJECT` / `$PROJECT` / `main` | `NOPUSH` | `d0cd786` | `COMMITTED` |
 
 ##### Commit: `spec-copy-on-write-repair`
 
@@ -311,11 +311,11 @@ docs(records): Rewrite the UNRELEASED repair entry.
 
 ### Next
 
-Draft the three iterations into delegatable instructions (`write-instructions`) and mark them `READY` for the delegator; iteration `spec-copy-on-write-repair` goes first — the spec pins every name before any code moves. The plan stays `DRAFT` until then.
+`spec-copy-on-write-repair` is **`DONE` as `71e1075`** (four knowledge paths only, `NOPUSH`, precondition pinned at `f74746f`, history-free audit empty, hook green): the copy-on-write repair flow, the two section helpers, the snapshot semantics, and the apply contract are specified in `design/fields.md`, with the ADR, `records.md`, and `index.md` aligned. The next gate is the iteration 2 instruction (`./instructions/implement-copy-on-write-repair.md`) — it stays `DRAFT` until the architect clears it; the plan stays `DRAFT` until then too.
 
 ### Blockers
 
-- None — the plan is `DRAFT`; iteration instructions are not yet written (see Next).
+- None — iteration 1 is `DONE` (`71e1075`); iteration 2's instruction awaits the architect's clearance before it can leave `DRAFT`.
 
 ---
 
