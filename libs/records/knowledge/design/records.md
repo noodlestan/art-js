@@ -105,7 +105,7 @@ console.log(project.__section);
 
 ### Mutating and Saving Records
 
-The extracted record is already a proxy and retains its document source. Consumers change fields through property access, change section properties through `record.__section`, then call `record.save()`.
+The extracted record is already a proxy and retains its document source. Consumers change **fields** through property access and the field members; **section** changes go through the copy-and-apply flow: `record.__section` returns a snapshot — a deep clone of the live section — per access, owned by the caller and never mutated back into the record; repair the copy with `getObscuredFields` and `renameObscuredField`, remove a duplicate by editing the copy's `children` directly, apply it with `replaceRecordSection`, and use the returned handle for everything that follows, `save()` included.
 
 ```ts
 import { join } from 'node:path';
@@ -159,6 +159,50 @@ await project.save();
 ```
 
 Fields are set, read, renamed, and deleted by name — the field contract lives in [fields.md](fields.md). The record heading is identity and cannot be renamed after extraction. Section depth is read-only: placement fixes it at creation (see Creating New Records) and the heading level written on save always matches it. `save()` writes the containing document once through the record's bound source; other in-memory edits to that document are included in the same write.
+
+A repair can start from a string with no filesystem adapter — an inline content source over a markdown string, the same content-source object shape the package's own test helpers build:
+
+```ts
+import { createRecordsDocument, getObscuredFields, renameObscuredField } from '@art-js/records';
+import { createArtCodec, type PartialArtCodecConfig } from '@art-md/codec';
+import type { ArtCodec, ArtContentSource } from '@art-md/primitives';
+
+const codecOptions: PartialArtCodecConfig = {};
+const codec: ArtCodec = createArtCodec(codecOptions);
+
+const markdown = '## Playlist: Road Trip\n\n**Purpose:** First\n\n**purpose:** Second\n';
+const writes: string[] = [];
+const contentSource: ArtContentSource = {
+  type: 'inline',
+  uri: 'inline:playlist.art',
+  maybeContent: markdown,
+  async readContent() {
+    return markdown;
+  },
+  async writeContent(content: string) {
+    writes.push(content);
+  },
+};
+
+const playlistRecords = createRecordsDocument<string>({
+  codec,
+  createContentSource: () => contentSource,
+});
+const playlistDocument = await playlistRecords.read('playlist.art');
+const records = await playlistDocument.extract();
+const playlist = records.find(candidate => candidate.name === 'Playlist: Road Trip');
+if (playlist === undefined) {
+  throw new Error('Playlist: Road Trip section not found');
+}
+
+const section = playlist.__section; // a snapshot per access — the caller owns it
+const [shadowed] = getObscuredFields(section); // '**purpose:** Second'
+renameObscuredField(section, shadowed, 'purposeSecond');
+const applied = playlistDocument.replaceRecordSection(playlist, section); // content-copy, fresh capsule
+await applied.save(); // through the returned handle; `writes` holds the saved markdown
+```
+
+The full copy-and-apply flow, the two section helpers, and the dead-handle contract are specified in [fields.md — Repairing Obscured Fields](fields.md#repairing-obscured-fields).
 
 ### Creating New Records
 
@@ -227,7 +271,7 @@ await record.save();
 
 New sections are always placed relative to existing sections, never before a container's own fields: `prependTo` inserts before the parent's first child section if one exists and at the end of the parent's children otherwise; appends always target the end. The same rule governs the no-argument document-root default and containers without any sections. A record appended to a document root keeps any preceding content in place, including sections at other depths; a later validator may flag that state (MANAGEMENT, 2026-10-21, 2026-10-22).
 
-Anchors are records extracted from the same collection. Adding to a populated document is supported: read the file with `read(file)`, then call `addRecord()`. Placement never asks the caller for a depth: the new section's depth is derived from the resolved insertion point. Every anchor must belong to the collection's document, meaning its `__section` must be on the document's construct tree. An anchor extracted from another file, returned by `createRecord()` before its first save, or since removed from the tree is _foreign_; all four placements throw `The placement anchor is not part of this document` and insert nothing.
+Anchors are records extracted from the same collection. Adding to a populated document is supported: read the file with `read(file)`, then call `addRecord()`. Placement never asks the caller for a depth: the new section's depth is derived from the resolved insertion point. Every anchor must belong to the collection's document: the collection resolves the anchor's section through its private handle→section bridge rather than reading `anchor.__section` — a snapshot is a clone, never the tree's own object — and that section must be on the document's construct tree. An anchor extracted from another file, returned by `createRecord()` before its first save, or since removed from the tree is _foreign_; all four placements throw `The placement anchor is not part of this document` and insert nothing.
 
 ### Batch Saving Records
 
@@ -281,7 +325,7 @@ Saving each `RecordsDocumentCollection` once writes each document once — one w
 These are the exact exports of `src/index.ts`.
 
 ```ts
-import type { Construct, SectionBlock } from '@art-md/constructs';
+import type { Construct, FieldBlock, FieldInline, SectionBlock } from '@art-md/constructs';
 import type { ArtCodec, ArtContentSource } from '@art-md/primitives';
 
 export type RecordSection = Omit<SectionBlock, 'name' | 'depth'> & {
@@ -299,11 +343,6 @@ export type ArtRecord = {
   getFieldMarkdown(name: string): string | undefined;
   getFieldText(name: string): string | undefined;
   getFieldValue(name: string): readonly Construct[] | undefined;
-  setFieldMarkdownByLabel(label: string, markdown: string): void;
-  setFieldValueByLabel(label: string, value: Construct | readonly Construct[]): void;
-  getFieldMarkdownByLabel(label: string): string | undefined;
-  getFieldTextByLabel(label: string): string | undefined;
-  getFieldValueByLabel(label: string): readonly Construct[] | undefined;
   save(): Promise<void>;
   [fieldName: string]: unknown;
 };
@@ -320,6 +359,7 @@ export type RecordsDocumentCollection = {
   hasRecord(name: string): Promise<boolean>;
   extract(): Promise<ArtRecord[]>;
   addRecord(position?: AddRecordPosition): ArtRecord;
+  replaceRecordSection(record: ArtRecord, section: SectionBlock): ArtRecord;
   save(): Promise<void>;
 };
 
@@ -338,9 +378,17 @@ export function createRecordsDocument<RecordFile>(
 ): RecordsDocument<RecordFile>;
 
 export function createRecord(options: RecordContext): ArtRecord;
+
+export function getObscuredFields(section: SectionBlock): (FieldBlock | FieldInline)[];
+
+export function renameObscuredField(
+  section: SectionBlock,
+  field: FieldBlock | FieldInline,
+  newName: string,
+): void;
 ```
 
-The field members of `ArtRecord` — the dynamic accessor, `renameField`, `relabelField`, the expanded set/read surface, and the by-label twins — are specified in [fields.md](fields.md).
+The field members of `ArtRecord` — the dynamic accessor, `renameField`, `relabelField`, and the expanded set/read surface — are specified in [fields.md](fields.md); the standalone repair helpers `getObscuredFields` and `renameObscuredField` and the copy-on-write flow are specified in [fields.md — Repairing Obscured Fields](fields.md#repairing-obscured-fields).
 
 ### Reserved names
 
@@ -354,13 +402,13 @@ The field-name contract — canonical grammar, the two guarantees, `labelToName`
 
 One public `ArtRecord` type covers both extracted and newly created records. There is no `NewArtRecord` subtype and no `setSource()`: the source is provided when the record is created — by extraction, by `addRecord()` on a collection, or by `createRecord()` — and is immutable afterwards.
 
-The proxy delegates field access, `renameField`, and `save()` to an internal record capsule. The capsule and its context are implementation details under `src/record/private/`: they are not exported, and `createRecordsDocument()` accepts no capsule factory option. A reactive capsule would be introduced as an internal change to that seam.
+The proxy serves `record.__section` snapshots and delegates field access, `renameField`, and `save()` to an internal record capsule; the capsule mutates the live section internally. Every apply crosses the collection through `replaceRecordSection` — validate → content-copy → re-extract — the single choke point for a future reactive capsule factory. The capsule and its context are implementation details under `src/record/private/`: they are not exported, and `createRecordsDocument()` accepts no capsule factory option.
 
 Records produced by a collection — through `extract()` or `addRecord()` — share the collection's document and source. `createRecord()` is the standalone factory: it binds a content source to an empty section at depth 1 and, on first save, wraps that section in a document of its own. The collection route is preferred because it shares one document and one source across every record in the file.
 
 ## Field and Section Behaviour
 
-How a field resolves against the index, is set, read, renamed, relabelled, and deleted — and how a value is addressed by stored label — is specified in [fields.md](fields.md).
+How a field resolves against the index, is set, read, renamed, relabelled, and deleted — and how an obscured field is repaired on a caller-owned snapshot — is specified in [fields.md](fields.md).
 
 ## Persistence and Fidelity
 

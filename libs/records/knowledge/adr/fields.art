@@ -6,25 +6,25 @@
 
 **Status:** Adopted
 
-**Decision:** Fields are addressed by field name — one address space, no label fallback, no dual mode. A canonical field name matches `/^[a-z][a-zA-Z0-9]*$/`, and only names supplied through the API must be canonical; API-created fields carry the derived label of their name. Extracted names come from the stored label as-is: never rejected for failing the grammar, never rewritten by a value update. A stored label does not round-trip by design; the only required round trip is name → derived label → name. The escape hatch is relabel plus by-label value access — `relabelField` rewrites a stored label in place and the `…ByLabel` twins read and write values by exact stored label; `record.__section` remains the only route to the field container and to label enumeration. The API provides separate predicates for syntax and for reservation; they compose rather than overlap.
+**Decision:** Fields are addressed by field name — one address space, no label fallback, no dual mode. A canonical field name matches `/^[a-z][a-zA-Z0-9]*$/`, and only names supplied through the API must be canonical; API-created fields carry the derived label of their name. Extracted names come from the stored label as-is: never rejected for failing the grammar, never rewritten by a value update. A stored label does not round-trip by design; the only required round trip is name → derived label → name.
 
 ## Decision: The name → field Index
 
 **Status:** Adopted
 
-**Decision:** Extraction builds one name → field index per record in document order; the first occurrence of a name wins and later duplicates stay in the section, shadowed. Name-addressed access resolves through the index; the by-label accessors scan section fields for an exact stored label without converting it; no access path converts a label at access time. Removing the indexed field, by delete or by a rename that vacates the name, promotes the next duplicate, which keeps its own stored label. A label that resolves to a reserved name aborts construction, so the document cannot be extracted until the label is fixed. Access guards follow the name classes: reserved names reject every operation, the canonical grammar gates creation only, and a delete that removes nothing reports failure.
+**Decision:** Extraction builds one name → field index per record in document order; the first occurrence of a name wins and later duplicates stay in the section, shadowed. Name-addressed access resolves through the index; no access path scans the live section for a label — the repair helpers operate on caller-owned copies, never on live state — and no access path converts a label at access time. Removing the indexed field, by delete or by a rename that vacates the name, promotes the next duplicate, which keeps its own stored label. A label that resolves to a reserved name aborts construction, so the document cannot be extracted until the label is fixed. Access guards follow the name classes: reserved names reject every operation, the canonical grammar gates creation only, and a delete that removes nothing reports failure.
 
 ## Decision: Rename by Name
 
 **Status:** Adopted
 
-**Decision:** Renaming operates on names, never labels, and validates before mutating anything: both names are checked for reservation, the source must exist, and the target must be canonical and unoccupied — in that order, with the collision check last so a rejected rename leaves the record untouched. On success the field is relabelled to the derived label of the target name, its position is preserved, and the old spelling is forgotten. The source name is not held to the canonical grammar — it may be any extracted name — while the target must be. Vacating the source name promotes a shadowed duplicate if one exists. Relabelling is the one operation that rewrites a stored label.
+**Decision:** Renaming operates on names, never labels, and validates before mutating anything: both names are checked for reservation, the source must exist, and the target must be canonical and unoccupied — in that order, with the collision check last so a rejected rename leaves the record untouched. On success the field is relabelled to the derived label of the target name, its position is preserved, and the old spelling is forgotten. The source name is not held to the canonical grammar — it may be any extracted name — while the target must be.
 
 ## Decision: Automatic Field Form
 
 **Status:** Adopted
 
-**Decision:** Whether a field is inline or block is chosen from the value being set — the caller never selects it, and no overload, option, or method takes a form. Content that is empty or purely phrasing, including a single parsed paragraph, becomes inline; any block-level content becomes block. Writing to an existing field replaces its value and converts its form in place when the classification changes, preserving name, tags, and position — so a phrasing-only value makes a block field inline, and keeping it block-shaped means carrying block content. `Document`, field, and section containers are rejected as values, so neither a nested field nor a whole document can ever become a field's value.
+**Decision:** Whether a field is inline or block is chosen from the value being set — the caller never selects it, and no overload, option, or method takes a form. Content that is empty or purely phrasing, including a single parsed paragraph, becomes inline; any block-level content becomes block. Writing to an existing field replaces its value and converts its form in place when the classification changes, preserving name, tags, and position. `Document`, field, and section containers are rejected as values.
 
 ## Decision: Strings Parse as Markdown
 
@@ -38,8 +38,16 @@
 
 **Decision:** The API provides three separate reads of a field value: markdown, as the default access; text, preserving the previous markup-stripped rendering; and the raw value as a deep clone of the field's value — a clone, never the live object, so a consumer cannot desynchronise the record by mutating what it read. Consumers that displayed the default read see markdown markers after the change and move to the text read for the previous behaviour. The expanded accessors are reserved names, so the set of document labels that abort extraction grows accordingly.
 
-## Decision: Label Repair and By-Label Access
+## Decision: Copy on read
 
 **Status:** Adopted
 
-**Decision:** A stored label can be repaired in place: `relabelField(name, label)` resolves the name through the index — the first-wins holder only, never a shadowed duplicate — and validates everything before mutating: reserved or absent name first, then the three label gates (at least one word character, a re-parse under the codec's field pattern so save → reload keeps the field and its spelling, and re-derivation of the field's current name). On success only `field.name` changes, so index keys are unchanged — no rekey, no promotion, no first-wins shift — and position, tags, and value are untouched; a rejected relabel leaves the document and the index untouched. The canonical grammar keeps gating API-supplied names only, and reservation never applies to a label, because a label resolving to a reserved name cannot exist in an indexed record. Value access gains label-addressed twins of the five value methods: addressing changes only — the exact stored label, first field in document order carrying it, no conversion and no index involvement — reads return `undefined` on a miss, writes throw on a miss, neither ever creates a field, and the value semantics are exactly the name-addressed ones. Every new handle member is reserved, so the extraction-abort set grows with it. The names are owned by `design/fields.md` (spec first). The boundary: no label-addressed rekey of a shadowed duplicate ships here, because a divergent label would be rekeyed by the next index rebuild and belongs with promotion and collision reporting.
+**Decision:** `record.__section` is a per-access snapshot the caller owns — every access returns a deep clone of the live section, current at the moment of access, and mutations to it never reach the record — while the capsule keeps mutating the live section internally for its own field operations.
+
+## Decision: Repair by replacing entire record.
+
+**Status:** Adopted
+
+**Context:** Multitple fields with the same label, or colliding field names derived from labels, are not accessible via the record (first field name wins). An API for repairing obscured fields must be provided.
+
+**Decision:** Repair runs on `record.__section` working copy: the two helpers (`getObscuredFields`, `renameObscuredField`) are pure over the copy, and deleting a duplicate is a direct `children` edit on the copy, not needing the record. Every apply crosses the collection: `replaceRecordSection` validates the incoming copy, applies it by content-copy — never an object swap, so document membership and anchor identity survive — and re-extracts the record with a fresh capsule (compatible with future reactive `capsuleFactory`).
