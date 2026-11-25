@@ -50,4 +50,4 @@
 
 **Context:** Multitple fields with the same label, or colliding field names derived from labels, are not accessible via the record (first field name wins). An API for repairing obscured fields must be provided.
 
-**Decision:** Repair runs on `record.__section` working copy: the two helpers (`getObscuredFields`, `renameObscuredField`) are pure over the copy, and deleting a duplicate is a direct `children` edit on the copy, not needing the record. Every apply crosses the collection: `replaceRecordSection` validates the incoming copy, applies it by content-copy — never an object swap, so document membership and anchor identity survive — and re-extracts the record with a fresh capsule (compatible with future reactive `capsuleFactory`).
+**Decision:** Repair runs on the `record.__section` working copy: `getObscuredFields` and `renameObscuredField` are standalone helpers; `renameObscuredField` changes only the supplied field's label. Deleting a duplicate edits the copy's `children`. Apply content-copies through the collection and returns a fresh handle.

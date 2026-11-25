@@ -12,15 +12,14 @@ These are your instructions.
 
 RULE: If at any point you are instructed to **REPORT A BLOCKER** or you encounter a commit with `policy` set to `MANUAL` execute the instruction in the "## How to Report Back to the Delegator" section below and STOP processing any other instructions.
 
-RULE: This iteration is **documentation-only**. The ONLY paths you may stage are the four knowledge files: `$PACKAGE/knowledge/design/fields.md`, `$PACKAGE/knowledge/adr/fields.art`, `$PACKAGE/knowledge/design/records.md`, `$PACKAGE/knowledge/index.md`. Never `git add -A`, never `git add .`. Forbidden: `$PACKAGE/knowledge/overview.md`, `$PACKAGE/README.md`, and `$PACKAGE/CHANGELOG.md` (iterations 2 and 3 own them), anything under `$PACKAGE/src`, `$PACKAGE/tests`, `$PROJECT/tests/records`, anything under `$PROJECT/_backlog/`, manifests, and `dist`. Nothing under `$PROJECT/_backlog/1-done/` is ever edited — the origin plan is reference only.
+RULE: This iteration is **documentation-only**. The ONLY paths you may stage are the four knowledge files: `$PACKAGE/knowledge/design/fields.md`, `$PACKAGE/knowledge/adr/fields.art`, `$PACKAGE/knowledge/design/records.md`, `$PACKAGE/knowledge/index.md`. Never `git add -A`, never `git add .`. Forbidden: `$PACKAGE/knowledge/overview.md`, `$PACKAGE/README.md`, and `$PACKAGE/CHANGELOG.md` (iterations 2 and 3 own them), anything under `$PACKAGE/src`, `$PACKAGE/tests`, `$PROJECT/tests/records`, anything under `$PROJECT/_backlog/`, manifests, and `dist`.
 
 RULE: **History-free knowledge.** Every file you write must read as if the five `…ByLabel` members never existed: no "removed", no "reversed", no "never released", no "replaced by", no residual example, count note, or footnote naming them. The plan file and the commit message carry that history; the knowledge must not.
 
-**Precondition:** pin the shipped spec you are reworking. Before touching any file, confirm the structure you are rewriting matches what the plan describes:
+**Precondition:** Before editing, confirm the current documents match the expected structure:
 
 ```bash
 cd $PROJECT
-git log -1 --format=%h -- libs/records/knowledge/design/fields.md                   # must print f74746f
 grep -c "^## Reading and Writing by Label" libs/records/knowledge/design/fields.md  # must print 1
 grep -c "^## Relabeling a Field" libs/records/knowledge/design/fields.md            # must print 1
 grep -c "ByLabel" libs/records/knowledge/design/fields.md                           # must print 16
@@ -29,11 +28,9 @@ grep -c "^## Decision: Label Repair and By-Label Access" \
   libs/records/knowledge/adr/fields.art                                             # must print 1
 grep -c "ByLabel" libs/records/knowledge/design/records.md                          # must print 5
 grep -ci "by-label" libs/records/knowledge/index.md                                 # must print 2
-test -f _backlog/3-now/plan-label-repair-api/plan.md && echo upstream-ok
-test -f _backlog/1-done/plan-canonical-record-field-names/plan.md && echo origin-ok
 ```
 
-If any check fails — a heading moved, a count changed, the pin drifted, an origin file is missing — REPORT A BLOCKER with the actual state and STOP: do not improvise a different edit.
+If any check fails, REPORT A BLOCKER with the actual state and STOP: do not improvise a different edit.
 
 ## How to Report Back to the Delegator
 
@@ -69,19 +66,15 @@ The plan workflow (see the entry point guide → Planning Workflow → Working T
 
 Write the copy-on-write repair surface into `$PACKAGE/knowledge/design/fields.md` — the single specification of the records field API, and the place every field API name lives: the repair section that replaces `## Reading and Writing by Label` (the copy-and-apply flow, the two section helpers `getObscuredFields(section)` and `renameObscuredField(section, field, newName)`, `__section` as a per-access snapshot the caller owns, the direct `children` edit for dropping a duplicate, and the dead-handle contract of `replaceRecordSection`); then align the rest of the knowledge — the Public Field API block, the reserved-name counts (ten names, nine collision labels), the Status and Scope lines, the ADR (the new copy-on-write decision, the by-label decision gone as if never written), the `ArtRecord` type, apply API, recipe, and placement in `records.md`, and the knowledge index. Commit as `docs(records): Specify copy-on-write repair and section helpers.`
 
-This is a **specification** iteration: you write documentation, not code. The plan states intent only — you name every API, following Conventions: TypeScript. The implementation of the spec is the next iteration (`implement-copy-on-write-repair`), which stays `DRAFT` until this spec lands.
-
-Commit `spec-copy-on-write-repair` is `NOPUSH`.
+This is a **specification** iteration: write documentation, not code. The implementation follows this specification in `implement-copy-on-write-repair`.
 
 ## Mandatory Reading
 
 ::READ `$PROJECT/node_modules/@noodlestan/conventions-typescript/art/index.md` — Conventions: TypeScript (for the API signatures you write into the spec).
 
-- design: `$PACKAGE/knowledge/design/fields.md` — the shipped spec you rewrite, pinned `f74746f`; read it end to end before writing.
+- design: `$PACKAGE/knowledge/design/fields.md` — read it end to end before writing.
 - design: `$PACKAGE/knowledge/design/records.md` — the `ArtRecord` public type, the collection type, the usage recipe, and the placement paragraph you keep accurate.
 - adr: `$PACKAGE/knowledge/adr/fields.art` — the field decisions; one decision is deleted, one is added, two clauses are amended.
-- reference: `$PROJECT/_backlog/3-now/plan-label-repair-api/plan.md` — the work whose surface this plan reworks. **Reference only.**
-- reference: `$PROJECT/_backlog/1-done/plan-canonical-record-field-names/plan.md` — Not In Scope ("Label escape hatches") and Follow Ups: the origin of this work. **Reference only — never edit anything under `_backlog/1-done/`.**
 - reference: `$ART_MD/libs/constructs/src/parser/fields/constants.ts` — `FIELD_TEXT_PATTERN`, the codec gate `renameObscuredField` mirrors for its derived labels.
 - knowledge: `$PACKAGE/knowledge/index.md` — the register you refresh.
 - guide: `$PACKAGE/_guide.md` — package layout and operating instructions.
@@ -151,25 +144,24 @@ npm run ci # lint, test and build
 
 This section summarises the changes to be made in this iteration.
 
-- Step 1 / 7 — Read the origin follow-ups and inventory every by-label claim
-- Step 2 / 7 — Replace the by-label section with the repair section in `design/fields.md`
-- Step 3 / 7 — Update the spec's Public Field API, Reserved names, wording, and Status/Scope
-- Step 4 / 7 — Rework `adr/fields.art`: add copy-on-write, delete the by-label decision
-- Step 5 / 7 — Update `records.md`: types, apply API, recipe, placement
-- Step 6 / 7 — Refresh `index.md` and run the history-free audit
-- Step 7 / 7 — Verify and commit `spec-copy-on-write-repair`
+- Step 1 / 8 — Read the current package contract
+- Step 2 / 8 — Specify the repair section in `design/fields.md`
+- Step 3 / 8 — Update the Public Field API, Reserved names, and wording
+- Step 4 / 8 — Update `adr/fields.art`
+- Step 5 / 8 — Update `records.md`
+- Step 6 / 8 — Refresh `index.md` and run the history-free audit
+- Step 7 / 8 — Verify and stage the spec
+- Step 8 / 8 — Commit `spec-copy-on-write-repair`
 
 ## Steps
 
-### Step `1 / 7` — Read the origin follow-ups and inventory every by-label claim
+### Step `1 / 8` — Read the current package contract
 
-**Description:** Know exactly which claims, signatures, counts, and pointers the copy-on-write surface overturns, before writing a word.
+**Description:** Identify the claims, signatures, counts, and pointers to update.
 
 **Instructions:**
 
-1. Read `$PROJECT/_backlog/1-done/plan-canonical-record-field-names/plan.md` — Not In Scope entry "Label escape hatches" and the Follow Ups entry "Label-writing repair API". That follow-up is the intent you are turning into a spec: records stop exposing their live section, repair runs on a copy, the collection applies it back. Reference only: never edit this file or anything else under `_backlog/1-done/`.
-2. Read `$PROJECT/_backlog/3-now/plan-label-repair-api/plan.md` — the delivered work whose surface this spec replaces; its `UNRELEASED` changelog entry is rewritten by a later iteration, not by you.
-3. Read `$PACKAGE/knowledge/design/fields.md` end to end (pinned `f74746f`) and mark every passage the rewrite touches:
+1. Read `$PACKAGE/knowledge/design/fields.md` end to end and mark every passage the rewrite touches:
    - `## Reading and Writing by Label` — the whole section, replaced.
    - The Scope line (the "label-repair members" sentence) and the Status line (the "land with `implement-label-repair-api`" claim).
    - The Public Field API block: the five `…ByLabel` signatures and the naming sentence that describes `ByLabel` as the addressing marker.
@@ -177,16 +169,16 @@ This section summarises the changes to be made in this iteration.
    - Reading Field Values intro and Reading raw ("values are addressable by name and by stored label").
    - Field and Section Behaviour (the label-addressed reads/writes sentence, and the `record.__section` sentence that must gain snapshot semantics).
    - The closing Decisions pointer.
-4. Read `$PACKAGE/knowledge/adr/fields.art` and mark: `## Decision: Label Repair and By-Label Access` (deleted outright), the escape-hatch clause inside `Canonical Field Names`, and the by-label scan clause inside `The name → field Index`. Every other decision stays byte-identical.
-5. Read `$PACKAGE/knowledge/design/records.md` and mark: the five `…ByLabel` signatures in the `ArtRecord` type, the field-members pointer line, `### Mutating and Saving Records` (the "change section properties through `record.__section`" recipe), the placement paragraph (the anchor `__section` sentence), the Record Model note, and the Field and Section Behaviour pointer ("how a value is addressed by stored label").
-6. Read `$PACKAGE/knowledge/index.md` — the two purposes that mention by-label access.
-7. Read the codec gate `FIELD_TEXT_PATTERN` in `$ART_MD/libs/constructs/src/parser/fields/constants.ts` — the round trip `renameObscuredField`'s derived label must survive.
+2. Read `$PACKAGE/knowledge/adr/fields.art` and mark the decisions to amend.
+3. Read `$PACKAGE/knowledge/design/records.md` and mark the public type, usage recipe, placement, and model sections to update.
+4. Read `$PACKAGE/knowledge/index.md` and identify the document purposes to refresh.
+5. Read the codec gate `FIELD_TEXT_PATTERN` in `$ART_MD/libs/constructs/src/parser/fields/constants.ts`.
 
 **Expected outcome:** an inventory (kept in your working notes, summarised in the report) of every section, signature, count, and pointer to rewrite, and of every clause to keep byte-identical.
 
 **Verify:** no file changed yet; `git status --short` is empty.
 
-### Step `2 / 7` — Replace the by-label section with the repair section in `design/fields.md`
+### Step `2 / 8` — Replace the by-label section with the repair section in `design/fields.md`
 
 **Description:** Specify the copy-on-write repair flow and the two helpers — the plan states the intent; this section decides and names them.
 
@@ -196,8 +188,8 @@ This section summarises the changes to be made in this iteration.
    - **The flow.** Read a snapshot with `record.__section` → `getObscuredFields(section)` → `renameObscuredField(section, field, newName)` → optionally drop a duplicate by editing the copy's `children` directly → `RecordsDocumentCollection.replaceRecordSection(record, section)` → use the returned handle → `save()` → reload. Every step except the grab and the apply is section-scoped: no helper takes a record.
    - **The snapshot is a plain Art AST the caller owns.** It may be edited freely, including removing a duplicate field by splicing `children`; deletion needs neither a helper nor the record. Exactly two helpers exist.
    - **`getObscuredFields(section)`** returns the actual obscured field objects of that section (`FieldBlock | FieldInline` constructs from `@art-md/constructs`) in document order; a field is obscured when an earlier sibling derives the same key under `labelToName`. It never mutates anything.
-   - **`renameObscuredField(section, field, newName)`** validates before mutating, in this order: `field` must be a member of the given `section` (identity — a field from another copy is rejected); `newName` must be canonical (`/^[a-z][a-zA-Z0-9]*$/`) and not reserved; `nameToLabel(newName)` must re-parse as a field under the codec's label pattern (so save → reload keeps it); and no other field in `section` may derive `newName`. On success only the field's stored label changes to `nameToLabel(newName)` — position, tags, and value untouched. A rejected rename leaves the copy untouched.
-   - **Apply contract.** `replaceRecordSection(record, section)` lives on `RecordsDocumentCollection`: it resolves the record's live section through the collection, validates the incoming copy, applies it by content-copy — never an object swap, so document membership and anchor identity survive — re-extracts the record with a fresh capsule, and returns the new handle. **The old handle's field surface is dead: every field read, write, enumeration, rename, relabel, and delete through it is invalid; callers must use the returned handle.**
+   - **`renameObscuredField(section, field, newName)`** requires `field` to belong to `section` by identity and be obscured; otherwise throw `TypeError('Field is not obscured; use record.renameField instead')`. Validate `newName` as canonical and non-reserved, require its derived label to re-parse under the codec pattern, and require its key to be unoccupied. On success, change only the supplied field's label.
+   - **Apply contract.** `replaceRecordSection(record, section)` requires a current collection-owned handle, matching section name and depth, and a valid field index; it content-copies into the same live section and returns a fresh handle. **The old handle's field surface is dead; use the returned handle.**
    - **Snapshot semantics.** Every `record.__section` access returns a deep clone of the live section: mutations to it never reach the record, it is current at the moment of access, and section-level changes go through `replaceRecordSection`.
    - **Coexistence.** The shipped `0.2.0` surface (`setFieldMarkdown`, `setFieldValue`, `getFieldMarkdown`, `getFieldText`, `getFieldValue`, `renameField`, `delete`) and `relabelField` keep every existing signature and behaviour; the proxy accessor and setter routes are untouched.
 
@@ -205,7 +197,7 @@ This section summarises the changes to be made in this iteration.
 
 **Verify:** `grep -c "^## Repairing Obscured Fields" $PACKAGE/knowledge/design/fields.md` prints `1`; `grep -c "^## Reading and Writing by Label" $PACKAGE/knowledge/design/fields.md` prints `0`; both helper signatures appear; `npm run lint` from `$PACKAGE` is green.
 
-### Step `3 / 7` — Update the spec's Public Field API, Reserved names, wording, and Status/Scope
+### Step `3 / 8` — Update the spec's Public Field API, Reserved names, and wording
 
 **Description:** Make the rest of the spec consistent with the new repair section, history-free.
 
@@ -222,13 +214,13 @@ This section summarises the changes to be made in this iteration.
 
 **Verify:** `grep -c "ByLabel" $PACKAGE/knowledge/design/fields.md` prints `0`; `grep -ci "by-label" $PACKAGE/knowledge/design/fields.md` prints `0`; `grep -c "fifteen" $PACKAGE/knowledge/design/fields.md` prints `0`; `grep -c "Fourteen" $PACKAGE/knowledge/design/fields.md` prints `0`; `grep -c "^## Relabeling a Field" $PACKAGE/knowledge/design/fields.md` still prints `1`; `npm run lint` from `$PACKAGE` is green.
 
-### Step `4 / 7` — Rework `adr/fields.art`: add copy-on-write, delete the by-label decision
+### Step `4 / 8` — Update `adr/fields.art`
 
 **Description:** Record the new decision and remove the old one outright, so the ADR reads as if it was never written.
 
 **Instructions:**
 
-1. Add `## Decision: Copy-On-Write Repair` to `$PACKAGE/knowledge/adr/fields.art`, in the file's established format (`## Decision: …`, `**Status:** Adopted`, one `**Decision:**` paragraph): `__section` is a per-access snapshot the caller owns; the capsule keeps mutating the live section internally; the two helpers are pure over the caller's working copy and no helper takes a record; deleting a duplicate is a direct `children` edit on the copy; every apply crosses the collection (validate → content-copy → re-extract), so a future reactive `capsuleFactory` lands at one choke point and helpers never touch live state; the apply returns the new handle and the old handle's field surface is documented dead; the escape hatch for a shadowed field is `relabelField` plus the repair helpers; the names are owned by `design/fields.md` (spec first).
+1. Add `## Decision: Copy-On-Write Repair` to `$PACKAGE/knowledge/adr/fields.art`: `__section` is a per-access snapshot; the standalone helpers operate on the caller's copy; `renameObscuredField` changes only the supplied field's label; deleting a duplicate edits the copy's `children`; apply returns a fresh handle and retires the old handle.
 2. **Delete** `## Decision: Label Repair and By-Label Access` entirely, absorbing anything still true (`relabelField`'s gates and index invariance) into the new decision. The file must read as if that decision was never written: no "reversed", no "removed", no "never released", and no naming of the five members anywhere in the file.
 3. Amend `Canonical Field Names`: replace the escape-hatch clause ("relabel plus by-label value access — … the `…ByLabel` twins read and write values by exact stored label") with wording that points at the new decision — the escape hatch is `relabelField` plus the repair helpers; `record.__section` remains the only route to the field container and to label enumeration, as a snapshot.
 4. Amend `The name → field Index`: replace the by-label scan clause with — name-addressed access resolves through the index; no access path scans the live section for a label (the helpers operate on caller-owned copies, never on live state).
@@ -238,7 +230,7 @@ This section summarises the changes to be made in this iteration.
 
 **Verify:** `grep -c "^## Decision: Label Repair and By-Label Access" $PACKAGE/knowledge/adr/fields.art` prints `0`; `grep -c "ByLabel" $PACKAGE/knowledge/adr/fields.art` prints `0`; `grep -ci "by-label" $PACKAGE/knowledge/adr/fields.art` prints `0`; `grep -c "^## Decision:" $PACKAGE/knowledge/adr/fields.art` prints `7`; `git diff -- $PACKAGE/knowledge/adr/fields.art` shows one added decision, one deleted decision, and two amended clauses only; `npm run lint` from `$PACKAGE` is green.
 
-### Step `5 / 7` — Update `records.md`: types, apply API, recipe, placement
+### Step `5 / 8` — Update `records.md`
 
 **Description:** Keep the records design's public surface, usage recipe, and placement contract in step with the spec.
 
@@ -255,7 +247,7 @@ This section summarises the changes to be made in this iteration.
 
 **Verify:** `grep -c "ByLabel" $PACKAGE/knowledge/design/records.md` prints `0`; `grep -ci "by-label" $PACKAGE/knowledge/design/records.md` prints `0`; `grep -c "replaceRecordSection" $PACKAGE/knowledge/design/records.md` is at least `2`; `grep -c "getObscuredFields" $PACKAGE/knowledge/design/records.md` is at least `1`; `npm run lint` from `$PACKAGE` is green.
 
-### Step `6 / 7` — Refresh `index.md` and run the history-free audit
+### Step `6 / 8` — Refresh `index.md` and run the history-free audit
 
 **Description:** Keep the knowledge register in step, then prove no by-label trace survives in any of the four files.
 
@@ -280,9 +272,9 @@ This section summarises the changes to be made in this iteration.
 
 **Verify:** the audit command prints nothing; `npm run lint` from `$PACKAGE` is green.
 
-### Step `7 / 7` — Verify and commit `spec-copy-on-write-repair`
+### Step `7 / 8` — Verify and stage the spec
 
-**Description:** Run the full verification, stage exactly the four knowledge paths, and record the spec.
+**Description:** Run verification and confirm the change set.
 
 **Instructions:**
 
@@ -297,7 +289,7 @@ This section summarises the changes to be made in this iteration.
 
    Only the four knowledge paths may appear — `$PACKAGE/knowledge/design/fields.md`, `$PACKAGE/knowledge/adr/fields.art`, `$PACKAGE/knowledge/design/records.md`, `$PACKAGE/knowledge/index.md` — plus `./instructions/spec-copy-on-write-repair__report.md` once rendered. No `src`, no `tests`, no `package.json`, no `package-lock.json`, no `CHANGELOG.md`, no `README.md`, no `knowledge/overview.md`, no `_roadmap`, no `dist`, nothing under `_backlog/`.
 
-4. Stage the four paths explicitly, file by file:
+4. Stage the four paths explicitly. Never `git add -A` or `git add .`.
 
    ```bash
    git add $PACKAGE/knowledge/design/fields.md
@@ -306,10 +298,11 @@ This section summarises the changes to be made in this iteration.
    git add $PACKAGE/knowledge/index.md
    ```
 
-   Never `git add -A` and never `git add .`.
-
 5. Leave `./instructions/spec-copy-on-write-repair__report.md` **unstaged** — the delegator commits it.
-6. Commit from `$PROJECT`.
+
+#### Commit: `spec-copy-on-write-repair`
+
+**Policy:** `NOPUSH` — commit; do not push.
 
 **Message:**
 
@@ -320,7 +313,7 @@ docs(records): Specify copy-on-write repair and section helpers.
 - Reverse the by-label members and record the copy-on-write decisions.
 ```
 
-The `pre-commit` hook declared in `$PROJECT/lefthook.yml` runs `npm run clean`, `npm run extract`, and `npm run ci` (prettier over the repo, then `turbo run ci` across all packages) — a hook failure fails the commit; fix the reported failure and retry. Do **not** push (`NOPUSH`) and do **not** run `npm version`, `npm publish`, or any release command: this plan ships no version bump and no publish.
+The pre-commit hook runs `npm run clean`, `npm run extract`, and `npm run ci`. Do not run release commands.
 
 ---
 
@@ -329,7 +322,7 @@ The `pre-commit` hook declared in `$PROJECT/lefthook.yml` runs `npm run clean`, 
 **Instructions:**
 
 - Verify the commit exists locally and was **not** pushed (`NOPUSH`).
-- Verify only the four knowledge paths were committed: `design/fields.md`, `adr/fields.art`, `design/records.md`, `knowledge/index.md`. No source, test, manifest, lock, changelog, README, overview, backlog, or roadmap file is part of the commit; nothing under `_backlog/1-done/` appears in `git status` at all.
+- Verify only the four knowledge paths were committed: `design/fields.md`, `adr/fields.art`, `design/records.md`, `knowledge/index.md`. No source, test, manifest, lock, changelog, README, overview, backlog, or roadmap file is part of the commit.
 - Verify `## Repairing Obscured Fields` states the full flow, exactly two helpers with section-scoped signatures, the snapshot-is-owned editability (direct `children` removal), `renameObscuredField`'s four gates with validation-before-mutation, and the dead-handle contract.
 - Verify the reserved counts: ten member names and nine reachable collision labels, enumerated with no fifth `…ByLabel` label.
 - Verify `grep -c "ByLabel"` prints `0` in `fields.md`, `adr/fields.art`, and `records.md`, and the Step 6 audit prints nothing across all four files.

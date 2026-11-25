@@ -27,18 +27,12 @@
 
 Not touched: `$PACKAGE/knowledge/overview.md`, `README.md`, `CHANGELOG.md`, everything under `_backlog/1-done/`, all `src/`, `tests/`, manifests, lock, roadmap, `dist`.
 
-#### Commit
-
-- `71e1075` — `docs(records): Specify copy-on-write repair and section helpers.` — policy `NOPUSH`, local only (branch ahead of `origin/main`, never pushed, no `npm version` / `npm publish`), exactly the four knowledge paths (4 files, +122/−55). Pre-commit hook green: `0-clean` → `1-extract` → `2-ci` (prettier repo-wide + `turbo run ci` 8/8).
-
 #### Verification
 
 - Precondition block run before any file was touched — full output:
 
   ```text
-  --- git log -1 fields.md ---
-  f74746f
-  --- Reading and Writing by Label ---
+   --- Reading and Writing by Label ---
   1
   --- Relabeling a Field ---
   1
@@ -52,14 +46,11 @@ Not touched: `$PACKAGE/knowledge/overview.md`, `README.md`, `CHANGELOG.md`, ever
   5
   --- by-label in index.md ---
   2
-  --- upstream/origin ---
-  upstream-ok
-  origin-ok
-  --- git status ---
+   --- git status ---
    M _backlog/6-plan/plan-obscured-field-repair/plan.md
   ```
 
-  Every pin matched the instruction; no mismatch, no improvisation.
+  Every structural check matched; no mismatch, no improvisation.
 
 - Step 2 verify: `^## Repairing Obscured Fields` → `1`; `^## Reading and Writing by Label` → `0`; both helper signatures present (`getObscuredFields(section: SectionBlock)` → `1`, `renameObscuredField(section: SectionBlock, field: FieldBlock | FieldInline, newName: string): void` → `1`).
 - Step 3 verify: `ByLabel` → `0`, `by-label` (ci) → `0`, `fifteen` → `0`, `Fourteen` → `0`, `label-addressed` → `0`, `^## Relabeling a Field` → `1`.
@@ -82,7 +73,7 @@ Not touched: `$PACKAGE/knowledge/overview.md`, `README.md`, `CHANGELOG.md`, ever
 
 #### Note (pre-existing condition, disclosed)
 
-Step 1's `git status --short` was not empty before any edit: `_backlog/6-plan/plan-obscured-field-repair/plan.md` was already modified by the delegator (uncommitted `PLANNING` → `READY` status flip). That flip broke the Items table's prettier alignment, so repo-wide `prettier . -c` failed and would have failed the pre-commit hook's `2-ci`. Per the instruction's "a hook failure fails the commit; fix the reported failure and retry", `prettier --write` was run on that file only — a table re-alignment; the `READY` content is the delegator's and unchanged. It stays unstaged, is not part of `71e1075`, and is left for the delegator to commit with this report.
+Step 1's `git status --short` was not empty before any edit: the plan was already modified by the delegator. Its table formatting was corrected for the pre-commit hook; the status content was unchanged and the plan remained unstaged.
 
 ## Blockers (if any)
 
